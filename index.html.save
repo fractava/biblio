@@ -1,0 +1,208 @@
+CD<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8">
+		<title>Biblio</title>
+		<link rel='stylesheet' type='text/css' href='/css/style.css'>
+		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+		<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+		<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+		<script src="/js/functions.js"></script>
+		<style>
+			.book_div_left{background-color: white;border-right: 1px solid #eee;padding-right: 1%;padding-left: 1%;width: 48%;}
+			.book_div_right{background-color: white;border-left: 1px solid #eee;padding-right: 1%;padding-left: 1%;width: 48%;}
+			.book_div_horizontal{width: 100%;display: flex;flex-shrink: 0;}
+			.book_input_div{display: flex;}
+		</style>
+	</head>
+	<body onload="onload();">
+		<div id="particles-js"></div>
+		<div style="display: none;" class="count-particles"> <span class="js-count-particles">--</span> particles </div>
+		<svg style="width: 0px;height: 0px;">
+			<defs>
+				<linearGradient id="color_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+					<stop offset="0%" style="stop-color:#e22828;stop-opacity:1"></stop>
+					<stop offset="100%" style="stop-color:#ff8c2f;stop-opacity:1"></stop>
+				</linearGradient>
+			</defs>
+		</svg>
+		<svg>
+			<defs>
+				<g id="search_icon">
+					<path fill="url(#color_gradient)" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+					<path d="M0 0h24v24H0z" fill="none"></path>
+				</g>
+			</defs>
+		</svg>
+		<svg>
+			<defs>
+				<g id="search_icon_white">
+					<path fill="white" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+					<path d="M0 0h24v24H0z" fill="none"></path>
+				</g>
+			</defs>
+		</svg>
+		<div id="login_div">
+			<h1 id="login_h">Login</h1>
+			<p id="login_error_message" style="color:red;margin: 3px;"></p>
+			<form name="login_form" id="login_form" onsubmit="return false">
+				<input type="text" class="login_input input_gray input_focus_color" id="login_email" placeholder="Email" autocomplete="username" autofocus>
+				<input autocomplete="current-password" type="password" class="login_input input_gray input_focus_color" id="login_passwort" placeholder="Passwort">
+				<br>
+				<button style="width: 30%;" id="login_button" onclick="login();" class="button">Login</button>
+			</form>
+		</div>
+		<div id="main">
+			<div style="display: none;height: 5%;" id="nav_div">
+				<ul class="nav_ul">
+					<li class="nav_li"><a class="nav_a" id="nav_item_side1" onclick="switchToSide(1);">Medien E/A</a></li>
+					<li class="nav_li"><a class="nav_a" id="nav_item_side2" onclick="switchToSide(2);">Katalogisierung</a></li>
+					<li class="nav_li"><a class="nav_a" id="nav_item_side3" onclick="switchToSide(3);">Schüler</a></li>
+					<li class="nav_li"><a class="nav_a" id="nav_item_side4" onclick="switchToSide(4);">Listen</a></li>
+					<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
+				</ul>
+			</div>
+			<div style="display: none;height: 95%;width: 100%;" id="books_div">
+				<div style="height: 100%;width: 100%;display: flex;flex-direction: row;flex-wrap: wrap;flex-flow: column;">
+					<div class="book_div_horizontal">
+						<div class="book_div_left">
+							<h1 style="text-align: center">Medium zurückgeben</h1>
+						</div>
+						<div class="book_div_right">
+							<h1 style="text-align: center">Medium ausleihen</h1>
+						</div>
+					</div>
+					<div class="book_div_horizontal">
+						<div class="book_div_left">
+							
+						</div>
+						<div class="book_div_right">
+							<form style="margin: auto;" onsubmit="return false">
+								<select onchange="refreshBooksTable();" class="ausleihen_schüler_select" id="ausleihen_schüler_select" name="state"></select>
+							</form>
+							<br>
+						</div>
+					</div>
+					<div class="book_div_horizontal">
+						<div class="book_div_left">
+							<div class="book_input_div">
+								<input style="width:70%;" id="media_return_input" placeholder="Barcode" autocomplete="off" onkeydown = "if (event.keyCode == 13){return_media_instance($('#media_return_input')[0].value,function (data){$('#buch_zurückgeben_input')[0].value='';refreshBooksTable();});}" type="text" class="input_gray input_focus_color">
+								<button style="width: 30%;margin: 10px 0 10px 0;" onclick="return_media_instance($('#media_return_input')[0].value,function (data){$('#buch_zurückgeben_input')[0].value='';refreshBooksTable();});" class="button">zurückgeben</button>
+							</div>
+						</div>
+						<div class="book_div_right">
+							<div class="book_input_div">
+								<input style="width: 70%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
+								<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box',0);" class="button">ausleihen</button>
+							</div>
+							<div class="book_input_div">
+								<input style="width: 70%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
+								<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday',1);" class="button">Ferienausleihe</button>
+							</div>
+							<br>
+						</div>
+					</div>
+					<div class="book_div_horizontal">
+						<div class="book_div_left">
+							<h2 style="text-align: center;">Zuletzt zurückgegeben:</h2>
+							<table class="table" id="return_history_table" style="margin: auto;width: 100%;">
+								<tr class="tr">
+									<th class="td">Buch</th>
+									<th class="td">Barcode</th>
+									<th class="td">Schüler</th>
+									<th class="td">Zeit</th>
+									<th class="td">rückgängig</th>
+								</tr>
+							</table>
+						</div>
+						<div class="book_div_right">
+							<h2 style="text-align: center;">Medien des Schülers:</h2>
+							<table class="table" style="margin: auto;width: 100%;" id="ausleihen_tabelle">
+								<tr class="tr_headline">
+									<td class="td">Name</td>
+									<td class="td">Barcode</td>
+									<td class="td">überfällig</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div style="flex-grow: 15;" class="book_div_horizontal">
+						<div class="book_div_left"></div>
+						<div class="book_div_right"></div>
+					</div>
+				</div>
+			</div>
+			<div style="display: none;width: 100%;" id="katalogisierung_div">
+				<h1 style="text-align: center;">Katalogisierung</h1>
+				<div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
+					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
+						<input type="text" id="media_search_input" class="input_gray input_focus_color search_input">
+						<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshMediaSearch();" class="search_button">
+							<use xlink:href="#search_icon"/>
+						</svg>
+					</div>
+					<div style="width: 100%;">
+						<table style="width: 90%;margin: auto;" id="media_search_table" class="table">
+							<th class="td">id</th>
+							<th class="td">Titel</th>
+							<th class="td">Autor</th>
+							<th class="td">Verlag</th>
+							<th class="td">Preis</th>
+							<th class="td">Schuljahr</th>
+							<th class="td">Typ</th>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div style="display: none;width:100%" id="schüler_div">
+				<h1 style="text-align: center">Schüler</h1>
+				<div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
+					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
+						<input type="text" id="student_search_input" class="input_gray input_focus_color search_input">
+						<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshStudentSearch();" class="search_button">
+							<use xlink:href="#search_icon"/>
+						</svg>
+					</div>
+					<div style="width: 100%;">
+						<table style="width: 90%;margin: auto;" id="student_search_table" class="table">
+							<th class="td">id</th>
+							<th class="td">Name</th>
+							<th class="td">Geburtstag</th>
+							<th class="td">Klasse</th>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div style="display: none;" id="listen_div">
+				<h1 style="text-align: center;">Listen</h1>
+				<details open>
+					<summary>Überfällige Medien</summary>
+					<table class="table" id="overdue_table">
+						<tr class="tr">
+							<th class="td">Medium Name</th>
+							<th class="td">Barcode</th>
+							<th class="td">Schüler Name</th>
+							<th class="td">Klasse</th>
+						</tr>
+					</table>
+				</details>
+				<br>
+				<details open>
+					<summary>Ferienausleihe</summary>
+					<table class="table" id="overdue_holiday_table">
+						<tr>
+							<th class="td">Medium Name</th>
+							<th class="td">Barcode</th>
+							<th class="td">Schüler Name</th>
+							<th class="td">Klasse</th>
+						</tr>
+					</table>
+				</details>
+			</div>
+		</div>
+	</body>
+</html>

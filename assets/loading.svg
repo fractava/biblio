@@ -1,0 +1,9 @@
+<svg>
+<defs>
+<linearGradient id="color_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+	<stop offset="0%" style="stop-color:#e22828;stop-opacity:1"></stop>
+	<stop offset="100%" style="stop-color:#ff8c2f;stop-opacity:1"></stop>
+</linearGradient>
+</defs>
+<circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}" fill="none" stroke-linecap="round" r="40" stroke-width="4" stroke="url(#color_gradient)" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(214.081 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle>
+</svg>
