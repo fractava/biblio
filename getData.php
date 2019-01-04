@@ -9,32 +9,60 @@ if(isset($_GET["requested_data"])){
 			echo "true";
 		break;
 		case "students_list":
-			$schueler = new SimpleXMLElement("<studentslist></studentslist>");
+			$students = new SimpleXMLElement("<studentslist></studentslist>");
 
 			$statement = $pdo->prepare("SELECT id , name , class_id FROM students;");
 			$statement->execute();
 
-			$statement2 = $pdo->prepare("SELECT id , name FROM classes;");
-			$statement2->execute();
-			$classes = $statement2->fetch();
-
 			while($row = $statement->fetch()){
-				//var_dump($classes);
-				$xml_row = $schueler->addChild('student');
+				$xml_row = $students->addChild('student');
 				$xml_row->addAttribute('id',$row['id']);
 				$xml_row->addAttribute('name',$row['name']);
+
 				$statement2 = $pdo->prepare("SELECT id , name FROM classes WHERE id = :class_id;");
 				$statement2->execute(array("class_id" => $row['class_id']));
+
 				$xml_row->addAttribute('class', $statement2->fetch()["name"]);
 			}
 			header('Content-Type: text/xml');
-			echo $schueler->asXML();
+			echo $students->asXML();
+		break;
+		case "subjects_list":
+			$subjects = new SimpleXMLElement("<subjectslist></subjectslist>");
+			$statement = $pdo->prepare("SELECT id , name FROM subjects;");
+			$statement->execute();
+
+			while($row = $statement->fetch()){
+				$xml_row = $subjects->addChild('subject');
+				$xml_row->addAttribute('id',$row['id']);
+				$xml_row->addAttribute('name',$row['name']);
+			}
+			header('Content-Type: text/xml');
+			echo $subjects->asXML();
+		break;
+		case "dates_list":
+			if(isset($_GET["holiday"])){
+				if($_GET["holiday"] == 1 || $_GET["holiday"] == 0){
+					$dates = new SimpleXMLElement("<dateslist></dateslist>");
+					$statement = $pdo->prepare("SELECT id , date , name FROM loaned_until_dates WHERE holiday = :holiday;");
+					$statement->execute(array("holiday" => $_GET["holiday"]));
+
+					while($row = $statement->fetch()){
+						$xml_row = $dates->addChild('date');
+						$xml_row->addAttribute('id',$row['id']);
+						$xml_row->addAttribute('date',$row['date']);
+						$xml_row->addAttribute('name',$row['name']);
+					}
+					header('Content-Type: text/xml');
+					echo $dates->asXML();
+				}
+			}
 		break;
 		case "books_of_student":
-			if(isset($_GET["student_id"])){ 
+			if(isset($_GET["student_id"])){
 				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :student_id;"); 
                         	$statement->execute(array("student_id" => $_GET["student_id"]));
-				$books = new SimpleXMLElement("<books></books>"); 
+				$books = new SimpleXMLElement("<books></books>");
 				while($row = $statement->fetch()){
 					$xml_row = $books->addChild('book');
 					$xml_row->addAttribute('media_id',$row['media_id']);

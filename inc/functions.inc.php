@@ -74,6 +74,17 @@ function random_string() {
 	}	
 	return $str;
 }
+function sonderzeichen($string){
+	$string = str_replace("ä", "ae", $string);
+	$string = str_replace("ü", "ue", $string);
+	$string = str_replace("ö", "oe", $string);
+	$string = str_replace("Ä", "Ae", $string);
+	$string = str_replace("Ü", "Ue", $string);
+	$string = str_replace("Ö", "Oe", $string);
+	$string = str_replace("ß", "ss", $string);
+
+	return $string;
+}
 
 /**
  * Returns the URL to the site without the script name

@@ -13,19 +13,23 @@ if(isset($_POST["action"])){
 		case "lent_media_instance":
 			if(isset($_POST["student_id"]) && isset($_POST["barcode"])){
 				if(!media_instance_exists($_POST["barcode"])){
+					http_response_code(400);
 					echo "Media doesnt exist";
 					exit();
 				}
 				if(!student_exists($_POST["student_id"])){
+					http_response_code(400);
 					echo "Student doesnt exist";
 					exit();
 				}
 				if(media_instance_loaned($_POST["barcode"])){
+					http_response_code(400);
 					echo "Media already loaned";
 					exit();
 				}
 				if(!(($_POST["holiday"] == "1") || ($_POST["holiday"] == "0"))){
-					echo "holiday not correctly set";
+					http_response_code(400);
+					echo "Holiday not correctly set";
 					exit();
 				}
 				lend_media_instance($_POST["barcode"] , $_POST["student_id"], "2019-07-31", $_POST["holiday"]);
