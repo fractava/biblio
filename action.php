@@ -12,6 +12,13 @@ if(isset($_POST["action"])){
 		break;
 		case "lent_media_instance":
 			if(isset($_POST["student_id"]) && isset($_POST["barcode"])){
+				if(isset($_POST["until"]) && validateDate($_POST["until"],'Y-m-d')){
+					$until = $_POST["until"];
+				}else{
+					http_response_code(400);
+					echo "Until not correctly set";
+					exit();
+				}
 				if(!media_instance_exists($_POST["barcode"])){
 					http_response_code(400);
 					echo "Media doesnt exist";
@@ -32,13 +39,14 @@ if(isset($_POST["action"])){
 					echo "Holiday not correctly set";
 					exit();
 				}
-				lend_media_instance($_POST["barcode"] , $_POST["student_id"], "2019-07-31", $_POST["holiday"]);
+				lend_media_instance($_POST["barcode"] , $_POST["student_id"], $until , $_POST["holiday"]);
 				echo "success";
 			}
 		break;
 		case "return_media_instance":
 			if(isset($_POST["barcode"])){
 				if(!media_instance_exists($_POST["barcode"])){
+					http_response_code(400);
 					echo "Media doesnt exist";
 					exit();
 				}

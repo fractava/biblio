@@ -5,11 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Biblio</title>
 		<link rel='stylesheet' type='text/css' href='/css/style.css'>
-		<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/functions.js" async></script>
+		<script src="/js/snowstorm-min.js" async></script>
 	</head>
 	<body onload="onload();"> 
 		<p style="position: absolute; bottom: 15px;left: 0px; right: 0px;color:red;" id="loading_error"></p>
@@ -103,18 +105,18 @@
 					</div>
 					<div class="book_div_padding book_div_right">
 						<div class="book_input_div">
-							<input style="width: 40%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
+							<input style="width: 40%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box','date_select',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
 							<select class="select" id="date_select">
 								<option value="">Datum auswählen</option>
 							</select>
-							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box',0);" class="button">ausleihen</button>
+							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button">ausleihen</button>
 						</div>
 						<div class="book_input_div">
-							<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
+							<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
 							<select class="select" id="date_select_holiday">
 								<option value="">Datum auswählen</option>
 							</select>
-							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday',1);" class="button">Ferienausleihe</button>
+							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button">Ferienausleihe</button>
 						</div>
 						<br>
 					</div>
@@ -152,10 +154,18 @@
 				<h1 style="text-align: center;">Katalogisierung</h1>
 				<div id="media_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
-						<input type="text" id="media_search_input" class="input_gray input_focus_color search_input">
-						<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshMediaSearch();" class="search_button">
-							<use xlink:href="#search_icon"/>
-						</svg>
+						<div style="display: flex;flex-direction: row;align-items: center;">
+							<input type="text" id="media_search_input" class="input_gray input_focus_color search_input">
+							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshMediaSearch();" class="search_button">
+								<use xlink:href="#search_icon"/>
+							</svg>
+						</div>
+						<select style="margin-left: 12px;" class="select" id="catalog_subject_select">
+							<option value="-1">alle Fächer</option>
+						</select>
+						<select class="select" id="catalog_school_year_select">
+							<option value="-1">alle Jahrgangsstufen</option>
+						</select>
 					</div>
 					<div style="width: 100%;">
 						<table style="width: 90%;margin: auto;" id="media_search_table" class="table">
@@ -170,17 +180,46 @@
 					</div>
 				</div>
 				<div id="media_search_side2" style="display: none;">
-					<table id="media_details_table" class="table">
+					<table id="media_details_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
-							<td class="td">Titel</td>
-							<td class="td">Bla</td>
+							<th class="td">Titel</th>
+							<td class="td"></td>
 						</tr>
 						<tr>
-							<td class="td">Fach</td>
-							<td class="td">hallo</td>
+							<th class="td">Fach</th>
+							<td class="td"></td>
+						</tr>
+						<tr>
+							<th class="td">Jahrgangsstufe</th>
+							<td class="td"></td>
+						</tr>
+						<tr>
+							<th class="td">Autor</th>
+							<td class="td"></td>
+						</tr>
+						<tr>
+							<th class="td">Verlag</th>
+							<td class="td"></td>
+						</tr>
+						<tr>
+							<th class="td">Preis</th>
+							<td class="td"></td>
+						</tr>
+						<tr>
+							<th class="td">Typ</th>
+							<td class="td"></td>
 						</tr>
 					</table>
-						<!-- <svg><use xlink:href="#loading_color"/></svg> -->
+					<br>
+					<h2 style="text-align: center;">Exemplare</h2>
+					<table id="media_details_instances_table" style="margin-left: auto; margin-right: auto;" class="table">
+						<tr>
+							<th class="td">Barcode</td>
+							<th class="td">ausgeliehen an</th>
+							<th class="td">ausgeliehen bis</th>
+							<th class="td">Ferienausleihe</th>
+						</tr>
+					</table>
 				</div>
 			</div>
 			<div style="display: none;width:100%" id="schüler_div">
@@ -202,9 +241,9 @@
 					</div>
 				</div>
 			</div>
-			<div style="display: none;" id="listen_div">
+			<div style="display: none;width: 100%;" id="listen_div">
 				<h1 style="text-align: center;">Listen</h1>
-				<details open>
+				<details style="width: 75%;margin: auto;" open>
 					<summary>Überfällige Medien</summary>
 					<table class="table" id="overdue_table">
 						<tr class="tr">
@@ -216,7 +255,7 @@
 					</table>
 				</details>
 				<br>
-				<details open>
+				<details style="width: 75%;margin: auto;" open>
 					<summary>Ferienausleihe</summary>
 					<table class="table" id="overdue_holiday_table">
 						<tr>

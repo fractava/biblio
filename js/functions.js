@@ -1,25 +1,39 @@
 // ================================================
 //Events
 function onload(){
-	site = 0;
+	last_href = "";
 	md = new MobileDetect(window.navigator.userAgent);
 	configure_particles_js();
-	check_if_already_logged_in(function (){
-		$( "html" ).removeClass( "loading" );
-	});
+	configureSelect2();
+	check_if_already_logged_in();
 }
 function onlogin(){
-	configureSelect2();
-	refresh_date_inputs();
+	if(findGetParameter("side") && findGetParameter("side") != 0){
+		switchToSide(parseInt(findGetParameter("side")));
+	}else{
+		switchToSide(1);
+	}
+
 	auto_refresh(true);
-	setInterval(function(){auto_refresh();}, 750);
+
+	auto_refresh_interval = setInterval(function(){auto_refresh();}, 750);
+	still_logged_in_interval = setInterval(function(){check_if_still_logged_in();}, 3000);
+
+	if(isChristmas()){
+		snowStorm.toggleSnow();
+	}
+}
+function onlogout(){
+	clearTimeout(still_logged_in_interval);
+	if(isChristmas()){
+		snowStorm.toggleSnow();
+	}
 }
 
 // ================================================
 //Configure Functions
 function configureSelect2(){
-	$('#lend_student_select').select2({ width: '100%' });
-	refresh_students_list();
+	$('#lend_student_select').select2({width: '100%'});
 }
 function configure_particles_js(){
 	if(isChristmas()){
@@ -50,24 +64,38 @@ function logout(){
 			//$("#main").animate({height: "0"});
 			//$("#main").animate({width: "0"});
 			logout_animation();
+			onlogout();
 		}
 	});
 }
-function check_if_already_logged_in(callback){
+function check_if_already_logged_in(){
 	get_data({requested_data : "logged_in"},
 		function(data , status){
 			if(data=="true"){
 				onlogin();
 				login_animation(true);
 			}
-			callback();
+			$( "html" ).removeClass( "loading" );
 		},function(){
-			$(".loading").css("background","#333 url(/assets/error.gif) no-repeat 50% 50%;");
-			console.log("error");
+			//$(".loading").css("background","#333 url(/assets/error.gif) no-repeat 50% 50%;");
+			$(".loading").addClass("loading_error");
+			//$(".loading").removeClass("loading");
+			console.log("Verbindung zum Server fehlgeschlagen");
+			setTimeout(function(){check_if_already_logged_in();},1000);
 		}
 	);
 }
-
+function check_if_still_logged_in(){
+	get_data({requested_data : "logged_in"},
+		function(data , status){
+			if(data !="true"){
+				switchToSide(0);
+				logout_animation();
+				onlogout();
+			}
+		},function(){}
+	);
+}
 // ================================================
 //Animations
 function login_animation(fast){
@@ -79,7 +107,7 @@ function login_animation(fast){
 
 	$("#main").animate({height: "100%",width: "100%"},speed,function(){$("#particles-js").hide();});
 	$("#nav_div").show(speed);
-	switchToSide(1);
+	//switchToSide(1);
 }
 function logout_animation(fast){
 	if(fast){
@@ -90,6 +118,21 @@ function logout_animation(fast){
 	$("#particles-js").show();
 	$("#main").animate({height: "0",width: "0"},speed);
 }
+function switch_color_scheme(color_scheme){
+	switch(color_scheme){
+		case 0:
+			background_color = "white";
+			text_color = "black";
+		break;
+		case 1:
+			background_color = "rgb(35,35,35)";
+			text_color = "white";
+		break;
+
+	}
+	$("div , h1 , h2 , h3 , select , .select2-selection__rendered").css("color",text_color);
+	$("div , select , .select2-selection").css("background-color",background_color);
+}
 function switchToSide(show_side){
 	//0 Login
 	//1 Bücher E/A
@@ -99,44 +142,32 @@ function switchToSide(show_side){
 	//5 Benutzer
 	//6 Admin
 
-	last_site = site;
-	site = show_side;
+	side = show_side;
+	var side_names = ["Login","Bücher E/A","Katalogisierung","Schüler","Listen","Benutzer","Admin"];
 	var sides = ["login_div","books_div","katalogisierung_div","schüler_div","listen_div"];
-	//$("#"+sides[show_side-1]).animate({ left: '-100%' }, 500,function (){$("#"+sides[show_side-1]).hide();$("#"+sides[show_side]).show();$("#"+sides[show_side]).animate({ left: '0px' }, 500);});
+
 	for(i = 0; i <= sides.length;i++){
-		//$("#"+sides[i]).css({ position: 'relative' });
 		if(show_side == i){
-			//$("#nav_item_side"+i).css("text-decoration","underline");
-			//$("#nav_item_side"+i).css("text-decoration-color","orange");
-			//$("#nav_item_side"+i).css("border-bottom-color","orange");
-			//$("#nav_item_side"+i).css("border-bottom-width", "5px");
 			$("#nav_item_side"+i).addClass("nav_a_selected");
 			$("#"+sides[i]).show();
-			//$("#"+sides[i]).show();
-			//$("#"+sides[i]).animate({ left: '0px' });
-			//$("#"+sides[i-1]).animate({ left: '-100%' }, 500,function (){$("#"+sides[i-1]).hide();$("#"+sides[i]).show();$("#"+sides[i]).animate({ left: '0px' }, 500);});
 		}else{
-			//$("#nav_item_side"+i).css("border-bottom-width", "0");
 			$("#nav_item_side"+i).removeClass("nav_a_selected");
-			//$("#nav_item_side"+i).css("border-bottom-color","transparent");
-			//$("#"+sides[i]).hide();
-			//$("#"+sides[i]).animate({ left: '-100%' },(function(elem_id){
-			//	$(elem_id).hide();
-			//})("#"+sides[i]));
 			$("#"+sides[i]).hide();
 		}
 	}
-	/*
-	$("#"+sides[last_site]).animate({ left: '-100%' },(function(elem_id){
-		$(elem_id).hide();
-	})("#"+sides[last_site]));
-
-	$("#"+sides[show_side]).show();
-	$("#"+sides[show_side]).animate({ left: '0px'});*/
+	window.history.pushState(null, side_names[show_side], '?side='+show_side);
+	document.title = side_names[show_side];
+}
+function check_for_href_change(){
+	if(window.location.href != last_href){
+		switchToSide(parseInt(findGetParameter("side")));
+	}
+	last_href = window.location.href;
 }
 function switch_media_search_side(show_side){
 	//0 Search Input and List
 	//1 Media Details and Media Instances
+
 	var sides = ["media_search_side1","media_search_side2"];
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
@@ -185,10 +216,10 @@ function isChristmas(){
 // ================================================
 //Networking
 function get_data(parameters,callback_sucess,callback_fail){
-	get_request("getData.php",parameters,"xml",callback_sucess,callback_fail);
+	get_request("/getData.php",parameters,"xml",callback_sucess,callback_fail);
 }
 function action(parameters,callback_sucess,callback_fail){
-	post_request("action.php",parameters,"text",callback_sucess,callback_fail);
+	post_request("/action.php",parameters,"text",callback_sucess,callback_fail);
 }
 function get_request(url,parameters,type,callback_sucess,callback_fail){
 	let jqxhr = $.get(url, parameters, function(data,textStatus,jqXHR){callback_sucess(data,textStatus,jqXHR);});
@@ -202,11 +233,13 @@ function post_request(url,parameters,type,callback_sucess,callback_fail){
 // Refresh Functions
 function auto_refresh(everything){
 		if(everything){
+			refresh_students_list();
 			refreshMediaSearch();
 			refreshStudentSearch();
 			refresh_lists_overdue_tables();
+			refresh_date_inputs();
 		}else{
-			switch(site){
+			switch(side){
 				case 2:
 					refreshMediaSearch();
 					break;
@@ -220,8 +253,9 @@ function auto_refresh(everything){
 		}
 }
 function refresh_students_list(){
-	$("#lend_media_error_message").text("");
-	var jqxhr = $.get( "getData.php",{"requested_data":"students_list"}, function( data ) {
+	clear_text("#lend_media_error_message");
+	get_data({requested_data : "students_list"},
+	function(data , status){
 		$xml = $(data);
 		$students = $xml.find("student");
 
@@ -231,42 +265,46 @@ function refresh_students_list(){
 		for(i = 0; i < $students.length; i++){
 			$('#lend_student_select').append(new Option($students[i].getAttribute('name')+" "+$students[i].getAttribute('class'),$students[i].getAttribute('id'),false,false));
 		}
-        });
-	jqxhr.fail(function(){
+        },
+	function(){
 		$("#lend_media_error_message").text("Fehler beim Abrufen der Schülerliste vom Server. Nächster Versuch in 3 Sekunden.");
 		setTimeout(function(){refresh_students_list();}, 3000);
 	});
 }
-function refresh_date_inputs(){
-	$.get( "getData.php",{"requested_data": "dates_list","holiday": "0"}, function( data ) {
+function refresh_date_input(holiday,date_select_id,error_message_id,auto_retry){
+	get_data({"requested_data": "dates_list","holiday": holiday},
+	function(data , status){
 		$xml = $(data);
 		$dates = $xml.find("date");
 
-		$('#date_select').empty().trigger("change");
-		$('#date_select').append(new Option("Datum auswählen","",false,false));
+		$(date_select_id).empty().trigger("change");
+		//$(date_select_id).append(new Option("Datum auswählen","",false,false));
 
 		for(i = 0; i < $dates.length; i++){
-			$('#date_select').append(new Option($dates[i].getAttribute('name'),$dates[i].getAttribute('date'),false,false));
+			$(date_select_id).append(new Option($dates[i].getAttribute('name'),$dates[i].getAttribute('date'),false,false));
 		}
-	});
-	$.get( "getData.php",{"requested_data": "dates_list","holiday": "1"}, function( data ) {
-		$xml = $(data);
-		$dates = $xml.find("date");
-
-		$('#date_select_holiday').empty().trigger("change");
-		$('#date_select_holiday').append(new Option("Datum auswählen","",false,false));
-
-		for(i = 0; i < $dates.length; i++){
-			$('#date_select_holiday').append(new Option($dates[i].getAttribute('name'),$dates[i].getAttribute('date'),false,false));
+	},
+	function(){
+		if(error_message_id){
+			$(error_message_id).text("Fehler beim Abrufen der Datumsliste vom Server. Nächster Versuch in 3 Sekunden.");
+		}
+		if(auto_retry){
+			setTimeout(function(hoilday,date_select_id,error_message_id,auto_retry){refresh_date_input(hoilday,date_select_id,error_message_id,auto_retry);}, 3000);
 		}
 	});
 }
+function refresh_date_inputs(){
+	refresh_date_input(0,'#date_select','#lend_media_error_message',true);
+	refresh_date_input(1,'#date_select_holiday','#lend_media_error_message',true);
+}
 function refreshBooksTable(){
 	clear_text("#lend_media_error_message");
-	var jqxhr = $.get( "getData.php",{"requested_data":"books_of_student","student_id": $("#lend_student_select")[0].value}, function(data) {
-		xmlDoc = $.parseXML( data );
-		$xml = $( xmlDoc );
+
+	get_data({"requested_data":"books_of_student","student_id": $("#lend_student_select")[0].value},
+	function(data, status) {
+		$xml = $(data);
 		$books = $xml.find( "book" );
+
 		$("#ausleihen_tabelle").empty();
 		add_row_to_table("ausleihen_tabelle",["Name","Barcode","überfällig"],true);
 		for(i = 0; i < $books.length; i++){
@@ -282,42 +320,36 @@ function refreshBooksTable(){
 			}
 			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text],false);
 		}
-	},"text");
-	jqxhr.fail(function(){
+	},
+	function(){
 		$("#lend_media_error_message").text("Fehler beim Abrufen der Daten vom Server. Nächster Versuch in 3 Sekunden.");
-		setTimeout(function(){refreshBooksTable();$("#lend_media_error_message").text("");}, 3000);
+		setTimeout(function(){refreshBooksTable();}, 3000);
+	});
+}
+function refresh_overdue_table(holiday,table_id){
+	get_data({"requested_data" : "overdue_medias","holiday" : holiday},
+	function(data, status){
+		$xml = $(data);
+		$books = $xml.find("book");
+
+		$('#'+table_id).empty();
+		add_row_to_table(table_id,["Medium Name","Barcode","Schüler Name","Klasse"],true);
+
+		for(let i = 0; i < $books.length; i++){
+			add_row_to_table(table_id,[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),$books[i].getAttribute("loaned_to_name"),$books[i].getAttribute("class_name")],false);
+		}
+	},
+	function(){
 	});
 }
 function refresh_lists_overdue_tables(){
-	$.get("getData.php",{"requested_data" : "overdue_medias"},function(data){
-		xmlDoc = $.parseXML( data );
-		$xml = $( xmlDoc );
-		$books = $xml.find( "book" );
-
-		$("#overdue_table").empty();
-		add_row_to_table("overdue_table",["Medium Name","Barcode","Schüler Name","Klasse"],true);
-
-		for(let i = 0; i < $books.length; i++){
-			add_row_to_table("overdue_table",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),$books[i].getAttribute("loaned_to_name"),$books[i].getAttribute("class_name")],false);
-		}
-	},"text");
-	$.get("getData.php",{"requested_data" : "overdue_holiday_medias"},function(data){
-		xmlDoc = $.parseXML( data );
-		$xml = $( xmlDoc );
-		$books = $xml.find( "book" );
-
-		$("#overdue_holiday_table").empty();
-		add_row_to_table("overdue_holiday_table",["Medium Name","Barcode","Schüler Name","Klasse"],true);
-
-		for(let i = 0; i < $books.length; i++){
-			add_row_to_table("overdue_holiday_table",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),$books[i].getAttribute("loaned_to_name"),$books[i].getAttribute("class_name")],false);
-		}
-	},"text");
+	refresh_overdue_table(0,"overdue_table");
+	refresh_overdue_table(1,"overdue_holiday_table");
 }
 function refreshStudentSearch(){
-	$.get("getData.php",{"requested_data" : "search_student", "search" : $("#student_search_input")[0].value},function(data){
-		xmlDoc = $.parseXML( data );
-		$xml = $( xmlDoc );
+	get_data({"requested_data" : "search_student", "search" : $("#student_search_input")[0].value},
+	function(data, status){
+		$xml = $(data);
 		$students = $xml.find( "student" );
 
 		$("#student_search_table").empty();
@@ -326,12 +358,14 @@ function refreshStudentSearch(){
 		for(let i = 0; i < $students.length; i++){
 			add_row_to_table("student_search_table",[$students[i].getAttribute("id"),$students[i].getAttribute("name"),$students[i].getAttribute("birthday"),$students[i].getAttribute("class_name")],false);
 		}
-	},"text");
+	},
+	function(){
+	});
 }
 function refreshMediaSearch(){
-	$.get("getData.php",{"requested_data" : "search_media", "search" : $("#media_search_input")[0].value},function(data){
-		xmlDoc = $.parseXML( data );
-		$xml = $( xmlDoc );
+	get_data({"requested_data" : "search_media", "search" : $("#media_search_input")[0].value},
+	function(data, status){
+		$xml = $(data);
 		$medias = $xml.find( "media" );
 
 		$("#media_search_table").empty();
@@ -340,46 +374,57 @@ function refreshMediaSearch(){
 		for(let i = 0; i < $medias.length; i++){
 			add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1);");
 		}
-	},"text");
+	},
+	function(){
+	});
 }
 
 // ================================================
 // Actions
-function lend_media_instance(student_id, barcode, holiday, callback){
+function lend_media_instance(student_id, barcode, until, holiday, callback){
 	$("#return_media_error_message").text("");
-	var jqxhr = $.post("action.php",{"action" : "lent_media_instance", "student_id" : student_id, "barcode" : barcode,"holiday": holiday},function (data){callback(data)});
+	var jqxhr = $.post("action.php",{"action" : "lent_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},function (data){callback(data)});
 	jqxhr.fail(function(response){
 		if(response.status == 400){
 			$("#lend_media_error_message").text(response.responseText);
 			setTimeout(function(){$("#lend_media_error_message").text("")},3000);
 		}else{
-			$("#lend_media_error_message").text("Fehler beim Senden der Daten zum Server.");
+			$("#lend_media_error_message").text("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
 			setTimeout(function(){$("#lend_media_error_message").text("")},3000);
 		}
 	});
 }
-function return_media_instance(barcode, callback){
+function return_media_instance(barcode,callback){
 	$.get("getData.php",{"requested_data" : "media_instance_infos", "barcode" : $("#media_return_input")[0].value},function(data1){
 		xmlDoc = $.parseXML( data1 );
 		$xml = $( xmlDoc );
 		$media = $xml.find( "media" );
 		infos = $media;
 
-		$.post("action.php",{"action" : "return_media_instance", "barcode" : barcode},function (data,infos){callback(data,infos)});
+		//$.post("action.php",{"action" : "return_media_instance", "barcode" : barcode},function (data,infos){callback(data,infos)});
+		action({"action" : "return_media_instance", "barcode" : barcode},
+		function(data, status){
+			callback(data,status)
+		},
+		function(){
+			$('#return_media_error_message').text("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
+			setTimeout(function(){return_button_clicked();},3000);
+		});
 	},"text");
 }
 
 // ================================================
 // Action Button Handler
-function lend_button_clicked(input_box_id, holiday){
-	lend_media_instance($('#lend_student_select')[0].value,$('#'+input_box_id)[0].value,holiday, function(data){
+function lend_button_clicked(input_box_id, date_select_id, holiday){
+	lend_media_instance($('#lend_student_select')[0].value,$('#'+input_box_id)[0].value,$('#'+date_select_id)[0].value,holiday, function(data){
 		$('#'+input_box_id)[0].value = '';
 		refreshBooksTable();
 	});
 }
 function return_button_clicked(){
+		clear_text('#return_media_error_message');
 		return_media_instance($('#media_return_input')[0].value,function (data,media0){
-			add_row_to_table("return_history_table",[infos[0].getAttribute("title"),$('#media_return_input')[0].value,infos[0].getAttribute("loaned_to_name"),getHour()+":"+getMinute(),"rückgängig"],false);
+			add_row_to_table("return_history_table",[infos[0].getAttribute("title"),$('#media_return_input')[0].value,infos[0].getAttribute("loaned_to_name"),getHour()+":"+getMinute(),"rückgängig"],false,[false,false,false,false,"alert('Feature noch nicht verfügbar')"]);
 			$('#media_return_input')[0].value='';
 			refreshBooksTable();
 		});
@@ -390,10 +435,18 @@ function return_button_clicked(){
 function add_row_to_table(table_id,column_array,headline,onclick_array){
 	let tr = document.createElement('tr');
 	for(let i=0; i < column_array.length; i++){
-		if(headline){
-			var td = document.createElement('th');
-		}else{
-			var td = document.createElement('td');
+		if(typeof headline === "boolean"){
+			if(headline == true){
+				var td = document.createElement('th');
+			}else{
+				var td = document.createElement('td');
+			}
+		}else if(Array.isArray(headline)){
+			if(headline[i] == true){
+				var td = document.createElement('th');
+			}else{
+				var td = document.createElement('td');
+			}
 		}
 		td.classList.add("td");
 		if(onclick_array){
@@ -420,4 +473,26 @@ function clear_input_box(input){
 }
 function clear_text(object){
 	$(object).text("");
+}
+function escapeHtml(text) {
+	var map = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		"'": '&#039;'
+	};
+	return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+function findGetParameter(parameterName) {
+	var result = null,
+	tmp = [];
+	location.search
+		.substr(1)
+		.split("&")
+		.forEach(function (item) {
+			tmp = item.split("=");
+			if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+		});
+	return result;
 }

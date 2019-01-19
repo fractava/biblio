@@ -57,7 +57,10 @@ function check_user() {
 function is_checked_in() {
 	return isset($_SESSION['userid']);
 }
- 
+function validateDate($date, $format = 'Y-m-d H:i:s'){
+	$d = DateTime::createFromFormat($format, $date);
+	return $d && $d->format($format) == $date;
+}
 /**
  * Returns a random string
  */
