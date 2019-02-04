@@ -100,13 +100,13 @@ function error($error_msg) {
 }
 function permission_list(){
 	global $pdo;
-	global $user;
+	//global $user;
 
 	$statement = $pdo->prepare("SELECT * FROM grades WHERE id = :grade_id LIMIT 1;");
-	$statement->execute(array("grade_id" => $user["grade"]));
+	$statement->execute(array("grade_id" => check_user()["grade"]));
 	$permissions = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-	return $permissions;
+	return $permissions[0];
 }
 function permission_granted($permission_name){
 	return permission_list()[$permission_name] == 1;

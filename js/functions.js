@@ -1,7 +1,8 @@
 // ================================================
 //Events
 function onload(){
-	last_href = "";
+	pause_on_idle();
+	//setInterval(function(){console.log(idle_time_minutes)},5000);
 
 	media_search_order_by = "title";
 	media_search_reverse = false;
@@ -22,7 +23,7 @@ function onlogin(){
 	auto_refresh(true);
 
 	auto_refresh_interval = setInterval(function(){auto_refresh();}, 750);
-	still_logged_in_interval = setInterval(function(){check_if_still_logged_in();}, 3000);
+	still_logged_in_interval = setInterval(function(){check_if_still_logged_in();}, 10000);
 
 	if(isChristmas()){
 		snowStorm.toggleSnow();
@@ -206,11 +207,8 @@ function input_to_text(input_element_id){
 	$("#"+input_element_id).parent()[0].appendChild(text);
 	$("#"+input_element_id).remove();
 }
-function check_for_href_change(){
-	if(window.location.href != last_href){
-		switchToSide(parseInt(findGetParameter("side")));
-	}
-	last_href = window.location.href;
+window.onpopstate = function(event) {
+	switchToSide(parseInt(findGetParameter("side")));
 }
 function switch_media_search_side(show_side){
 	//0 Search Input and List
@@ -279,26 +277,43 @@ function post_request(url,parameters,type,callback_sucess,callback_fail){
 }
 // ================================================
 // Refresh Functions
+function pause_on_idle(){
+	idle_time_minutes = 0;
+	setInterval(function(){idle_time_minutes++}, 60000);
+
+	function reset_idle_time(){
+		idle_time_minutes = 0;
+	}
+
+	window.onmousemove = reset_idle_time;
+	window.onmousedown = reset_idle_time;
+	window.ontouchstart = reset_idle_time;
+	window.onclick = reset_idle_time;
+	window.onkeypress = reset_idle_time;
+}
 function auto_refresh(everything){
 		if(everything){
 			refresh_students_list();
 			refreshMediaSearch();
-			refreshStudentSearch();
+			refresh_student_search();
 			refresh_lists_overdue_tables();
 			refresh_date_inputs();
 			refresh_subjects_list();
 			refresh_school_years_list();
+			refresh_classes_list();
 		}else{
-			switch(side){
-				case 2:
-					refreshMediaSearch();
-					break;
-				case 3:
-					refreshStudentSearch();
-					break;
-				case 4:
-					refresh_lists_overdue_tables();
-					break;
+			if(document.hidden == false && idle_time_minutes < 2){
+				switch(side){
+					case 2:
+						refreshMediaSearch();
+						break;
+					case 3:
+						refresh_student_search();
+						break;
+					case 4:
+						refresh_lists_overdue_tables();
+						break;
+				}
 			}
 		}
 }
@@ -320,6 +335,20 @@ function refresh_students_list(){
 		$("#lend_media_error_message").text("Fehler beim Abrufen der Schülerliste vom Server. Nächster Versuch in 3 Sekunden.");
 		setTimeout(function(){refresh_students_list();}, 3000);
 	});
+}
+function refresh_classes_list(){
+	get_data({requested_data : "classes_list"},
+	function(data , status){
+		$xml = $(data);
+		$classes = $xml.find("class");
+
+		$('#students_class_select').empty().trigger("change");
+		$('#students_class_select').append(new Option("alle Klassen",-1,false,false));
+
+		for(i = 0; i < $classes.length; i++){
+			$('#students_class_select').append(new Option($classes[i].getAttribute('name'),$classes[i].getAttribute('id'),false,false));
+		}
+	},function(){});
 }
 function refresh_subjects_list(){
 	get_data({requested_data : "subjects_list"},
@@ -425,8 +454,8 @@ function refresh_lists_overdue_tables(){
 	refresh_overdue_table(0,"overdue_table");
 	refresh_overdue_table(1,"overdue_holiday_table");
 }
-function refreshStudentSearch(){
-	get_data({"requested_data" : "search_student", "search" : $("#student_search_input")[0].value},
+function refresh_student_search(){
+	get_data({"requested_data" : "search_student", "search" : $("#student_search_input")[0].value, "class_id" : $("#students_class_select")[0].value},
 	function(data, status){
 		$xml = $(data);
 		$students = $xml.find( "student" );
@@ -522,7 +551,7 @@ function return_media_instance(barcode,callback){
 function lend_button_clicked(input_box_id, date_select_id, holiday){
 	lend_media_instance($('#lend_student_select')[0].value,$('#'+input_box_id)[0].value,$('#'+date_select_id)[0].value,holiday, function(data){
 		//$('#'+input_box_id)[0].value = '';
-		clear_text(input_box_id);
+		clear_input_box("#"+input_box_id);
 		refreshBooksTable();
 	});
 }

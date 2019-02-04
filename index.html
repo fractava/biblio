@@ -6,8 +6,8 @@
 		<title>Biblio</title>
 		<link rel='stylesheet' type='text/css' href='/css/style.css'>
 		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+		<link href="/css/select2.min.css" rel="stylesheet" />
 		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/functions.js" async></script>
@@ -232,10 +232,15 @@
 				<h1 style="text-align: center">Schüler</h1>
 				<div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
-						<input type="text" id="student_search_input" class="input_gray input_focus_color search_input">
-						<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshStudentSearch();" class="search_button">
-							<use xlink:href="#search_icon"/>
-						</svg>
+						<div style="display: flex;flex-direction: row;align-items: center;">
+							<input type="text" id="student_search_input" class="input_gray input_focus_color search_input">
+							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshStudentSearch();" class="search_button">
+								<use xlink:href="#search_icon"/>
+							</svg>
+						</div>
+						<select style="margin-left: 12px;" class="select" id="students_class_select">
+							<option value="-1">alle Klassen</option>
+						</select>
 					</div>
 					<div style="width: 100%;">
 						<table style="width: 90%;margin: auto;" id="student_search_table" class="table">
@@ -274,6 +279,7 @@
 				</details>
 			</div>
 			<div id="admin_div" class="side">
+				<h1 style="text-align: center;">Verwaltung</h1>
 				<div id="admin_navigation_div">
 					
 				</div>

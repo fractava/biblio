@@ -11,7 +11,7 @@ if(isset($_GET["requested_data"])){
 		case "permission_list":
 			$permissions = new SimpleXMLElement("<permission_list></permission_list>");
 
-			foreach(permission_list()[0] as $name => $permission){
+			foreach(permission_list() as $name => $permission){
 				if($name != "name" && $name != "id"){
 					$xml_row = $permissions->addChild($name);
 					$xml_row->addAttribute("value",$permission);
@@ -20,6 +20,22 @@ if(isset($_GET["requested_data"])){
 
 			header('Content-Type: text/xml');
 			echo $permissions->asXML();
+		break;
+		case "classes_list":
+			$classes = new SimpleXMLElement("<classeslist></classeslist>");
+
+			$statement = $pdo->prepare("SELECT * FROM classes;");
+			$statement->execute();
+
+			while($row = $statement->fetch()){
+				$xml_row = $classes->addChild('class');
+				$xml_row->addAttribute('id',$row['id']);
+				$xml_row->addAttribute('name',$row['name']);
+				$xml_row->addAttribute('school_year',$row['school_year']);
+			}
+
+			header('Content-Type: text/xml');
+			echo $classes->asXML();
 		break;
 		case "students_list":
 			$students = new SimpleXMLElement("<studentslist></studentslist>");
@@ -185,24 +201,26 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "search_student":
-			if(isset($_GET["search"])){
+			if(isset($_GET["search"]) && isset($_GET["class_id"])){
 				$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search;");
 				$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
 				$students = new SimpleXMLElement("<students></students>");
 
 				while($row = $statement->fetch()){
-					$xml_row = $students->addChild('student');
-					$xml_row->addAttribute('id',$row['id']);
-					$xml_row->addAttribute('name',$row['name']);
-					$xml_row->addAttribute('class_id',$row['class_id']);
-					$xml_row->addAttribute('birthday',$row['birthday']);
+					if(($row['class_id'] == $_GET["class_id"]) || $_GET["class_id"] == -1){
+						$xml_row = $students->addChild('student');
+						$xml_row->addAttribute('id',$row['id']);
+						$xml_row->addAttribute('name',$row['name']);
+						$xml_row->addAttribute('class_id',$row['class_id']);
+						$xml_row->addAttribute('birthday',$row['birthday']);
 
-					$statement2 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
-					$statement2->execute(array("class_id" => $row['class_id']));
-					$class_row = $statement2->fetch();
+						$statement2 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
+						$statement2->execute(array("class_id" => $row['class_id']));
+						$class_row = $statement2->fetch();
 
-					$xml_row->addAttribute('class_name',$class_row['name']);
-					$xml_row->addAttribute('school_year',$class_row['school_year']);
+						$xml_row->addAttribute('class_name',$class_row['name']);
+						$xml_row->addAttribute('school_year',$class_row['school_year']);
+					}
 				}
 				header('Content-Type: text/xml');
 				echo $students->asXML();
