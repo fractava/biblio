@@ -1,11 +1,14 @@
 // ================================================
 //Events
 function onload(){
+	logged_in = false;
 	pause_on_idle();
 	//setInterval(function(){console.log(idle_time_minutes)},5000);
 
 	media_search_order_by = "title";
 	media_search_reverse = false;
+	student_search_order_by = "name";
+	student_search_reverse = false;
 
 	md = new MobileDetect(window.navigator.userAgent);
 	//sorttable.init();
@@ -14,6 +17,8 @@ function onload(){
 	check_if_already_logged_in();
 }
 function onlogin(){
+	logged_in = true;
+
 	if(findGetParameter("side") && findGetParameter("side") != 0){
 		switchToSide(parseInt(findGetParameter("side")));
 	}else{
@@ -31,6 +36,8 @@ function onlogin(){
 	check_permissions();
 }
 function onlogout(){
+	logged_in = false;
+
 	clearTimeout(still_logged_in_interval);
 	if(isChristmas()){
 		snowStorm.toggleSnow();
@@ -81,6 +88,8 @@ function check_if_already_logged_in(){
 			if(data=="true"){
 				onlogin();
 				login_animation(true);
+			}else{
+				switchToSide(0);
 			}
 			$( "html" ).removeClass( "loading" );
 		},function(){
@@ -197,6 +206,21 @@ function text_to_input(text_element_id){
 	$("#"+text_element_id).parent()[0].appendChild(input);
 	$("#"+text_element_id).remove();
 }
+function th_to_input(th_element_id){
+	$("#"+th_element_id).attr("onclick","");
+	var input = document.createElement('input');
+	$(input).attr("type","text");
+	//$(input).attr("id",th_element_id);
+	$(input).attr("onkeypress","if (event.keyCode==13){input_to_th($(this).parent()[0].id);}");
+
+	input.classList.add("input_gray");
+	input.classList.add("input_focus_color");
+
+	input.value = $("#"+th_element_id).text();
+
+	$("#"+th_element_id).text("");
+	$("#"+th_element_id)[0].appendChild(input);
+}
 function input_to_text(input_element_id){
 	var text = document.createElement('p');
 	$(text).attr("id",input_element_id);
@@ -207,14 +231,23 @@ function input_to_text(input_element_id){
 	$("#"+input_element_id).parent()[0].appendChild(text);
 	$("#"+input_element_id).remove();
 }
-window.onpopstate = function(event) {
-	switchToSide(parseInt(findGetParameter("side")));
+function input_to_th(th_element_id){
+	$("#"+th_element_id).text($("#"+th_element_id).children()[0].value);
+	$("#"+th_element_id).attr("onclick","th_to_input(this.id);");
 }
-function switch_media_search_side(show_side){
+window.onpopstate = function(event) {
+	if(logged_in){
+		switchToSide(parseInt(findGetParameter("side")));
+	}
+}
+function switch_media_search_side(show_side, media_instance_id){
 	//0 Search Input and List
 	//1 Media Details and Media Instances
 
 	var sides = ["media_search_side1","media_search_side2"];
+	if(show_side == 1){
+		refresh_media_editing_details(media_instance_id);
+	}
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
 			$("#"+sides[i]).show();
@@ -294,7 +327,7 @@ function pause_on_idle(){
 function auto_refresh(everything){
 		if(everything){
 			refresh_students_list();
-			refreshMediaSearch();
+			refresh_media_search();
 			refresh_student_search();
 			refresh_lists_overdue_tables();
 			refresh_date_inputs();
@@ -305,7 +338,7 @@ function auto_refresh(everything){
 			if(document.hidden == false && idle_time_minutes < 2){
 				switch(side){
 					case 2:
-						refreshMediaSearch();
+						refresh_media_search();
 						break;
 					case 3:
 						refresh_student_search();
@@ -316,6 +349,9 @@ function auto_refresh(everything){
 				}
 			}
 		}
+}
+function refresh_media_editing_details(media_instance_id){
+	
 }
 function refresh_students_list(){
 	clear_text("lend_media_error_message");
@@ -455,20 +491,38 @@ function refresh_lists_overdue_tables(){
 	refresh_overdue_table(1,"overdue_holiday_table");
 }
 function refresh_student_search(){
-	get_data({"requested_data" : "search_student", "search" : $("#student_search_input")[0].value, "class_id" : $("#students_class_select")[0].value},
+	get_data({"requested_data" : "search_student", "order_by" : student_search_order_by, "search" : $("#student_search_input")[0].value, "class_id" : $("#students_class_select")[0].value},
 	function(data, status){
 		$xml = $(data);
 		$students = $xml.find( "student" );
 
 		$("#student_search_table").empty();
-		add_row_to_table("student_search_table",["id","Name","Geburtstag","Klasse"],true);
+		add_row_to_table("student_search_table",["id","Name"/*,"Geburtstag"*/,"Klasse"],true,["student_search_order('id');","student_search_order('name');"]);
 
-		for(let i = 0; i < $students.length; i++){
-			add_row_to_table("student_search_table",[$students[i].getAttribute("id"),$students[i].getAttribute("name"),$students[i].getAttribute("birthday"),$students[i].getAttribute("class_name")],false);
+		function add_row(i){
+			add_row_to_table("student_search_table",[$students[i].getAttribute("id"),$students[i].getAttribute("name")/*,$students[i].getAttribute("birthday")*/,$students[i].getAttribute("class_name")],false);
+		}
+
+		if(student_search_reverse == true){
+			for(let i = $students.length-1; i >= 0; i--){
+				add_row(i);
+			}
+		}else{
+			for(let i = 0; i < $students.length; i++){
+				add_row(i);
+			}
 		}
 	},
 	function(){
 	});
+}
+function student_search_order(order_by){
+	if(student_search_order_by == order_by){
+		student_search_reverse = !student_search_reverse;
+	}else{
+		student_search_order_by = order_by;
+		student_search_reverse = false;
+	 }
 }
 function media_search_order(order_by){
 	if(media_search_order_by == order_by){
@@ -478,7 +532,7 @@ function media_search_order(order_by){
 		media_search_reverse = false;
 	}
 }
-function refreshMediaSearch(){
+function refresh_media_search(){
 	get_data({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year" : $("#catalog_school_year_select")[0].value},
 	function(data, status){
 		$xml = $(data);
@@ -487,16 +541,17 @@ function refreshMediaSearch(){
 		$("#media_search_table").empty();
 		add_row_to_table("media_search_table",["id","Titel","Autor","Verlag","Preis","Schuljahr","Typ"],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');","media_search_order('school_year');"]);
 
-		function addRow(i){
+		function add_row(i){
 			add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1);");
 		}
+
 		if(media_search_reverse == true){
 			for(let i = $medias.length-1; i >= 0; i--){
-				addRow(i);
+				add_row(i);
 			}
 		}else{
 			for(let i = 0; i < $medias.length; i++){
-				addRow(i);
+				add_row(i);
 			}
 		}
 	},

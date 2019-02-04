@@ -202,7 +202,22 @@ if(isset($_GET["requested_data"])){
 		break;
 		case "search_student":
 			if(isset($_GET["search"]) && isset($_GET["class_id"])){
-				$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search;");
+				if(isset($_GET["order_by"])){
+					switch($_GET["order_by"]){
+						case "id":
+							$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search ORDER BY id;");
+						break;
+						case "name":
+							$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search ORDER BY name;");
+						break;
+						default:
+							$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search;");
+						break;
+					}
+				}else{
+					$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search;");
+				}
+
 				$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
 				$students = new SimpleXMLElement("<students></students>");
 
@@ -212,7 +227,7 @@ if(isset($_GET["requested_data"])){
 						$xml_row->addAttribute('id',$row['id']);
 						$xml_row->addAttribute('name',$row['name']);
 						$xml_row->addAttribute('class_id',$row['class_id']);
-						$xml_row->addAttribute('birthday',$row['birthday']);
+						//$xml_row->addAttribute('birthday',$row['birthday']);
 
 						$statement2 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
 						$statement2->execute(array("class_id" => $row['class_id']));
@@ -254,7 +269,6 @@ if(isset($_GET["requested_data"])){
 					}
 				}else{
 					$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search;");
-					$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
 				}
 
 				$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
