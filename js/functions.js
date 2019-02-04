@@ -360,7 +360,7 @@ function refresh_media_editing_details(media_id1){
 		$instances = $xml.find("media_instance");
 
 		for(i = 0; i < $instances.length; i++){
-			add_row_to_table("media_details_instances_table",["<input type='checkbox'></input>",$instances[i].getAttribute("barcode"),$instances[i].getAttribute("loaned_to_name"),$instances[i].getAttribute("loaned_until"),$instances[i].getAttribute("holiday")],false,false,[true]);
+			add_row_to_table("media_details_instances_table",["<input type='checkbox' class='media_search_instance_checkbox' instance_barcode='"+$instances[i].getAttribute("barcode")+"'></input>",$instances[i].getAttribute("barcode"),$instances[i].getAttribute("loaned_to_name"),$instances[i].getAttribute("loaned_until"),$instances[i].getAttribute("holiday")],false,false,[true]);
 		}
 	},
 	function(){});
@@ -612,7 +612,17 @@ function return_media_instance(barcode,callback){
 		});
 	},"text");
 }
+function get_selected_media_instances(){
+	checkboxes = $(".media_search_instance_checkbox");
+	barcodes = [];
 
+	for(i = 0; i < checkboxes.length; i++){
+		if(checkboxes[i].checked){
+			barcodes.push($(checkboxes[i]).attr("instance_barcode"));
+		}
+	}
+	console.log(barcodes);
+}
 // ================================================
 // Action Button Handler
 function lend_button_clicked(input_box_id, date_select_id, holiday){
