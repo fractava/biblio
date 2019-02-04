@@ -8,6 +8,19 @@ if(isset($_GET["requested_data"])){
 		case "logged_in":
 			echo "true";
 		break;
+		case "permission_list":
+			$permissions = new SimpleXMLElement("<permission_list></permission_list>");
+
+			foreach(permission_list()[0] as $name => $permission){
+				if($name != "name" && $name != "id"){
+					$xml_row = $permissions->addChild($name);
+					$xml_row->addAttribute("value",$permission);
+				}
+			}
+
+			header('Content-Type: text/xml');
+			echo $permissions->asXML();
+		break;
 		case "students_list":
 			$students = new SimpleXMLElement("<studentslist></studentslist>");
 
@@ -39,6 +52,19 @@ if(isset($_GET["requested_data"])){
 			}
 			header('Content-Type: text/xml');
 			echo $subjects->asXML();
+		break;
+		case "school_years_list":
+			$school_years = new SimpleXMLElement("<schoolyearslist></schoolyearslist>");
+			$statement = $pdo->prepare("SELECT id , name FROM school_years;");
+			$statement->execute();
+
+			while($row = $statement->fetch()){
+				$xml_row = $school_years->addChild('school_year');
+				$xml_row->addAttribute('id',$row['id']);
+				$xml_row->addAttribute('name',$row['name']);
+			}
+			header('Content-Type: text/xml');
+			echo $school_years->asXML();
 		break;
 		case "dates_list":
 			if(isset($_GET["holiday"])){
@@ -183,26 +209,59 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "search_media":
-			if(isset($_GET["search"])){
-				$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search;");
+			if(isset($_GET["search"]) && isset($_GET["subject_id"]) && isset($_GET["school_year"])){
+				if(isset($_GET["order_by"])){
+					switch($_GET["order_by"]){
+						case "id":
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY id;");
+						break;
+						case "title":
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY title;");
+						break;
+						case "author":
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY author;");
+						break;
+						case "publisher":
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY publisher;");
+						break;
+						case "price":
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY price;");
+						break;
+						case "school_year":
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY school_year;");
+						break;
+						default:
+							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search;");
+						break;
+					}
+				}else{
+					$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search;");
+					$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
+				}
+
 				$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
 				$medias = new SimpleXMLElement("<medias></medias>");
 
 				while($row = $statement->fetch()){
-					$xml_row = $medias->addChild('media');
-					$xml_row->addAttribute('id',$row['id']);
-					$xml_row->addAttribute('title',$row['title']);
-					$xml_row->addAttribute('author',$row['author']);
-					$xml_row->addAttribute('publisher',$row['publisher']);
-					$xml_row->addAttribute('price',$row['price']);
-					$xml_row->addAttribute('school_year',$row['school_year']);
-					$xml_row->addAttribute('type_id',$row['type_id']);
+					if(($row['subject_id'] == $_GET["subject_id"]) || $_GET["subject_id"] == -1){
+						if(($row['school_year'] == $_GET["school_year"]) || $_GET["school_year"] == -1){
+							$xml_row = $medias->addChild('media');
+							$xml_row->addAttribute('id',$row['id']);
+							$xml_row->addAttribute('title',$row['title']);
+							$xml_row->addAttribute('author',$row['author']);
+							$xml_row->addAttribute('publisher',$row['publisher']);
+							$xml_row->addAttribute('price',$row['price']);
+							$xml_row->addAttribute('school_year',$row['school_year']);
+							$xml_row->addAttribute('subject_id',$row['subject_id']);
+							$xml_row->addAttribute('type_id',$row['type_id']);
 
-					$statement2 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
-					$statement2->execute(array("type_id" => $row['type_id']));
-					$types_row = $statement2->fetch();
+							$statement2 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
+							$statement2->execute(array("type_id" => $row['type_id']));
+							$types_row = $statement2->fetch();
 
-					$xml_row->addAttribute('type',$types_row['name']);
+							$xml_row->addAttribute('type',$types_row['name']);
+						}
+					}
 				}
 				header('Content-Type: text/xml');
 				echo $medias->asXML();

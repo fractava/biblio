@@ -20,7 +20,7 @@ if(isset($_POST['email']) && isset($_POST['passwort'])) {
 		if(isset($_POST['angemeldet_bleiben'])) {
 			$identifier = random_string();
 			$securitytoken = random_string();
-				
+
 			$insert = $pdo->prepare("INSERT INTO securitytokens (user_id, identifier, securitytoken) VALUES (:user_id, :identifier, :securitytoken)");
 			$insert->execute(array('user_id' => $user['id'], 'identifier' => $identifier, 'securitytoken' => sha1($securitytoken)));
 			setcookie("identifier",$identifier,time()+(3600*24*365)); //Valid for 1 year
@@ -30,7 +30,7 @@ if(isset($_POST['email']) && isset($_POST['passwort'])) {
 		echo "sucess";
 		exit;
 	} else {
-		echo "E-Mail oder Passwort war ungültig";
+		echo "E-Mail oder Passwort ungültig";
 	}
 
 }

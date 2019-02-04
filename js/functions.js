@@ -2,7 +2,12 @@
 //Events
 function onload(){
 	last_href = "";
+
+	media_search_order_by = "title";
+	media_search_reverse = false;
+
 	md = new MobileDetect(window.navigator.userAgent);
+	//sorttable.init();
 	configure_particles_js();
 	configureSelect2();
 	check_if_already_logged_in();
@@ -22,6 +27,7 @@ function onlogin(){
 	if(isChristmas()){
 		snowStorm.toggleSnow();
 	}
+	check_permissions();
 }
 function onlogout(){
 	clearTimeout(still_logged_in_interval);
@@ -46,26 +52,26 @@ function configure_particles_js(){
 // ================================================
 //Login Management
 function login(){
-	$("#login_error_message").text("");
-	$.post('action.php',{action : "login" ,email : document.getElementById('login_email').value, 'passwort' : document.getElementById('login_passwort').value}, function(data, status){
-		//alert('Data: ' + data + '\nStatus: ' + status);
+	action({action : "login" ,email : document.getElementById('login_email').value, 'passwort' : document.getElementById('login_passwort').value}, function(data, status){
 		if(data == "sucess"){
 			onlogin();
 			login_animation();
 		}else{
-			$("#login_error_message").text(data);
+			error("login_error_message", data);
 		}
+	},function(){
+		$("#login_error_message").text("Verbindung zum Server fehlgeschlagen");
 	});
 }
 function logout(){
-	$.post('action.php',{action: "logout"}, function(data, status){
+	action({action: "logout"}, function(data, status){
 		if(data == "sucess"){
 			switchToSide(0);
-			//$("#main").animate({height: "0"});
-			//$("#main").animate({width: "0"});
 			logout_animation();
 			onlogout();
 		}
+	},function(){
+		console.error("Verbindung zum Server fehlgeschlagen");
 	});
 }
 function check_if_already_logged_in(){
@@ -77,9 +83,7 @@ function check_if_already_logged_in(){
 			}
 			$( "html" ).removeClass( "loading" );
 		},function(){
-			//$(".loading").css("background","#333 url(/assets/error.gif) no-repeat 50% 50%;");
 			$(".loading").addClass("loading_error");
-			//$(".loading").removeClass("loading");
 			console.log("Verbindung zum Server fehlgeschlagen");
 			setTimeout(function(){check_if_already_logged_in();},1000);
 		}
@@ -96,6 +100,28 @@ function check_if_still_logged_in(){
 		},function(){}
 	);
 }
+function check_permissions(){
+	get_data({requested_data : "permission_list"},
+	function(data , status){
+		$xml = $(data);
+
+                let admin = $xml.find("admin").attr("value");
+		let lend_media_instance = $xml.find("lend_media_instance").attr("value");
+		let return_media_instance = $xml.find("return_media_instance").attr("value");
+
+		if(lend_media_instance == 0){
+			$("#media_lend_button").prop('disabled', true);
+			$("#media_lend_button_holiday").prop('disabled', true);
+		}
+		if(return_media_instance == 0){
+			$("#media_return_button").prop('disabled', true);
+		}
+		if(admin ==  0){
+			$("#nav_li_side5").hide();
+		}
+	},function(){}
+	);
+}
 // ================================================
 //Animations
 function login_animation(fast){
@@ -107,7 +133,6 @@ function login_animation(fast){
 
 	$("#main").animate({height: "100%",width: "100%"},speed,function(){$("#particles-js").hide();});
 	$("#nav_div").show(speed);
-	//switchToSide(1);
 }
 function logout_animation(fast){
 	if(fast){
@@ -139,24 +164,47 @@ function switchToSide(show_side){
 	//2 Katalogisierung
 	//3 Schüler
 	//4 Listen
-	//5 Benutzer
-	//6 Admin
+	//5 Verwaltung
 
 	side = show_side;
-	var side_names = ["Login","Bücher E/A","Katalogisierung","Schüler","Listen","Benutzer","Admin"];
-	var sides = ["login_div","books_div","katalogisierung_div","schüler_div","listen_div"];
+	var side_names = ["Login","Bücher E/A","Katalogisierung","Schüler","Listen","Verwaltung"];
+	var sides = ["login_div","books_div","katalogisierung_div","schüler_div","listen_div","admin_div"];
 
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
-			$("#nav_item_side"+i).addClass("nav_a_selected");
+			$("#nav_a_side"+i).addClass("nav_a_selected");
 			$("#"+sides[i]).show();
 		}else{
-			$("#nav_item_side"+i).removeClass("nav_a_selected");
+			$("#nav_a_side"+i).removeClass("nav_a_selected");
 			$("#"+sides[i]).hide();
 		}
 	}
 	window.history.pushState(null, side_names[show_side], '?side='+show_side);
 	document.title = side_names[show_side];
+}
+function text_to_input(text_element_id){
+	var input = document.createElement('input');
+	$(input).attr("type","text");
+	$(input).attr("id",text_element_id);
+	$(input).attr("onkeypress","if (event.keyCode==13){input_to_text(this.id);}");
+
+	input.classList.add("input_gray");
+	input.classList.add("input_focus_color");
+
+	input.value = $("#"+text_element_id).text();
+
+	$("#"+text_element_id).parent()[0].appendChild(input);
+	$("#"+text_element_id).remove();
+}
+function input_to_text(input_element_id){
+	var text = document.createElement('p');
+	$(text).attr("id",input_element_id);
+	$(text).attr("onclick","text_to_input(this.id);");
+
+	$(text).text($("#"+input_element_id).val());
+
+	$("#"+input_element_id).parent()[0].appendChild(text);
+	$("#"+input_element_id).remove();
 }
 function check_for_href_change(){
 	if(window.location.href != last_href){
@@ -238,6 +286,8 @@ function auto_refresh(everything){
 			refreshStudentSearch();
 			refresh_lists_overdue_tables();
 			refresh_date_inputs();
+			refresh_subjects_list();
+			refresh_school_years_list();
 		}else{
 			switch(side){
 				case 2:
@@ -253,7 +303,7 @@ function auto_refresh(everything){
 		}
 }
 function refresh_students_list(){
-	clear_text("#lend_media_error_message");
+	clear_text("lend_media_error_message");
 	get_data({requested_data : "students_list"},
 	function(data , status){
 		$xml = $(data);
@@ -270,6 +320,34 @@ function refresh_students_list(){
 		$("#lend_media_error_message").text("Fehler beim Abrufen der Schülerliste vom Server. Nächster Versuch in 3 Sekunden.");
 		setTimeout(function(){refresh_students_list();}, 3000);
 	});
+}
+function refresh_subjects_list(){
+	get_data({requested_data : "subjects_list"},
+	function(data , status){
+		$xml = $(data);
+		$subjects = $xml.find("subject");
+
+		$('#catalog_subject_select').empty().trigger("change");
+		$('#catalog_subject_select').append(new Option("alle Fächer",-1,false,false));
+
+		for(i = 0; i < $subjects.length; i++){
+			$('#catalog_subject_select').append(new Option($subjects[i].getAttribute('name'),$subjects[i].getAttribute('id'),false,false));
+		}
+	},function(){});
+}
+function refresh_school_years_list(){
+	get_data({requested_data : "school_years_list"},
+	function(data , status){
+		$xml = $(data);
+		$school_years = $xml.find("school_year");
+
+		$('#catalog_school_year_select').empty().trigger("change");
+		$('#catalog_school_year_select').append(new Option("alle Jahrgangsstufen",-1,false,false));
+
+		for(i = 0; i < $school_years.length; i++){
+			$('#catalog_school_year_select').append(new Option($school_years[i].getAttribute('name'),$school_years[i].getAttribute('name'),false,false));
+		}
+	},function(){});
 }
 function refresh_date_input(holiday,date_select_id,error_message_id,auto_retry){
 	get_data({"requested_data": "dates_list","holiday": holiday},
@@ -298,7 +376,7 @@ function refresh_date_inputs(){
 	refresh_date_input(1,'#date_select_holiday','#lend_media_error_message',true);
 }
 function refreshBooksTable(){
-	clear_text("#lend_media_error_message");
+	clear_text("lend_media_error_message");
 
 	get_data({"requested_data":"books_of_student","student_id": $("#lend_student_select")[0].value},
 	function(data, status) {
@@ -306,19 +384,20 @@ function refreshBooksTable(){
 		$books = $xml.find( "book" );
 
 		$("#ausleihen_tabelle").empty();
-		add_row_to_table("ausleihen_tabelle",["Name","Barcode","überfällig"],true);
+		add_row_to_table("ausleihen_tabelle",["Name","Barcode","überfällig","Ferienausleihe"],true);
 		for(i = 0; i < $books.length; i++){
 			let overdue_text = "";
 			if($books[i].getAttribute("holiday") == "1"){
-				overdue_text = "Ferienausleihe";
+				ferienausleihe = "ja";
 			}else{
-				if(Date.parse($books[i].getAttribute("loaned_until")) > Date.now()){
-					overdue_text = "nein";
-				}else{
-					overdue_text = "ja";
-				}
+				ferienausleihe = "nein";
 			}
-			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text],false);
+			if(Date.parse($books[i].getAttribute("loaned_until")) > Date.now()){
+				overdue_text = "nein";
+			}else{
+				overdue_text = "ja";
+			}
+			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text,ferienausleihe],false);
 		}
 	},
 	function(){
@@ -362,17 +441,34 @@ function refreshStudentSearch(){
 	function(){
 	});
 }
+function media_search_order(order_by){
+	if(media_search_order_by == order_by){
+		media_search_reverse = !media_search_reverse;
+	}else{
+		media_search_order_by = order_by;
+		media_search_reverse = false;
+	}
+}
 function refreshMediaSearch(){
-	get_data({"requested_data" : "search_media", "search" : $("#media_search_input")[0].value},
+	get_data({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year" : $("#catalog_school_year_select")[0].value},
 	function(data, status){
 		$xml = $(data);
 		$medias = $xml.find( "media" );
 
 		$("#media_search_table").empty();
-		add_row_to_table("media_search_table",["id","Titel","Autor","Verlag","Preis","Schuljahr","Typ"],true);
+		add_row_to_table("media_search_table",["id","Titel","Autor","Verlag","Preis","Schuljahr","Typ"],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');","media_search_order('school_year');"]);
 
-		for(let i = 0; i < $medias.length; i++){
+		function addRow(i){
 			add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1);");
+		}
+		if(media_search_reverse == true){
+			for(let i = $medias.length-1; i >= 0; i--){
+				addRow(i);
+			}
+		}else{
+			for(let i = 0; i < $medias.length; i++){
+				addRow(i);
+			}
 		}
 	},
 	function(){
@@ -382,15 +478,19 @@ function refreshMediaSearch(){
 // ================================================
 // Actions
 function lend_media_instance(student_id, barcode, until, holiday, callback){
-	$("#return_media_error_message").text("");
-	var jqxhr = $.post("action.php",{"action" : "lent_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},function (data){callback(data)});
-	jqxhr.fail(function(response){
+	clear_text("return_media_error_message");
+	//var jqxhr = $.post("action.php",{"action" : "lent_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},function (data){
+	action({"action" : "lend_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},
+	function(data, status){
+		callback(data);
+	},function(response){
+		console.log(response);
 		if(response.status == 400){
-			$("#lend_media_error_message").text(response.responseText);
-			setTimeout(function(){$("#lend_media_error_message").text("")},3000);
+			error("lend_media_error_message", response.responseText);
+			//setTimeout(function(){$("#lend_media_error_message").text("")},3000);
 		}else{
-			$("#lend_media_error_message").text("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
-			setTimeout(function(){$("#lend_media_error_message").text("")},3000);
+			error("lend_media_error_message", "Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
+			//setTimeout(function(){$("#lend_media_error_message").text("")},3000);
 		}
 	});
 }
@@ -401,14 +501,18 @@ function return_media_instance(barcode,callback){
 		$media = $xml.find( "media" );
 		infos = $media;
 
-		//$.post("action.php",{"action" : "return_media_instance", "barcode" : barcode},function (data,infos){callback(data,infos)});
 		action({"action" : "return_media_instance", "barcode" : barcode},
 		function(data, status){
 			callback(data,status)
 		},
-		function(){
-			$('#return_media_error_message').text("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
-			setTimeout(function(){return_button_clicked();},3000);
+		function(response){
+			//$('#return_media_error_message').text("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
+			if(response.status == 400){
+				error("return_media_error_message",response.responseText);
+			}else{
+				error("return_media_error_message","Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
+				setTimeout(function(){return_button_clicked();},3000);
+			}
 		});
 	},"text");
 }
@@ -417,12 +521,13 @@ function return_media_instance(barcode,callback){
 // Action Button Handler
 function lend_button_clicked(input_box_id, date_select_id, holiday){
 	lend_media_instance($('#lend_student_select')[0].value,$('#'+input_box_id)[0].value,$('#'+date_select_id)[0].value,holiday, function(data){
-		$('#'+input_box_id)[0].value = '';
+		//$('#'+input_box_id)[0].value = '';
+		clear_text(input_box_id);
 		refreshBooksTable();
 	});
 }
 function return_button_clicked(){
-		clear_text('#return_media_error_message');
+		clear_text('return_media_error_message');
 		return_media_instance($('#media_return_input')[0].value,function (data,media0){
 			add_row_to_table("return_history_table",[infos[0].getAttribute("title"),$('#media_return_input')[0].value,infos[0].getAttribute("loaned_to_name"),getHour()+":"+getMinute(),"rückgängig"],false,[false,false,false,false,"alert('Feature noch nicht verfügbar')"]);
 			$('#media_return_input')[0].value='';
@@ -471,8 +576,8 @@ function add_row_to_table(table_id,column_array,headline,onclick_array){
 function clear_input_box(input){
 	$(input).val("");
 }
-function clear_text(object){
-	$(object).text("");
+function clear_text(object_id){
+	$("#"+object_id).text("");
 }
 function escapeHtml(text) {
 	var map = {
@@ -495,4 +600,19 @@ function findGetParameter(parameterName) {
 			if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
 		});
 	return result;
+}
+function error(error_text_element_id, error_text, reset_time){
+	console.warn(error_text);
+
+	if(reset_time){
+		hide_time = reset_time;
+	}else{
+		hide_time = 3000;
+	}
+
+	$("#"+error_text_element_id).text(error_text);
+
+	if(reset_time != -1){
+		setTimeout(function(){clear_text(error_text_element_id);},hide_time);
+	}
 }

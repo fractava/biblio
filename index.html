@@ -11,6 +11,7 @@
 		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/functions.js" async></script>
+		<!-- <script src="/js/sorttable.js" async></script> -->
 		<script src="/js/snowstorm-min.js" async></script>
 	</head>
 	<body onload="onload();"> 
@@ -57,14 +58,15 @@
 		<div id="main">
 			<div style="display: none;" id="nav_div">
 				<ul class="nav_ul">
-					<li class="nav_li"><a class="nav_a" id="nav_item_side1" onclick="switchToSide(1);">Medien E/A</a></li>
-					<li class="nav_li"><a class="nav_a" id="nav_item_side2" onclick="switchToSide(2);">Katalogisierung</a></li>
-					<li class="nav_li"><a class="nav_a" id="nav_item_side3" onclick="switchToSide(3);">Schüler</a></li>
-					<li class="nav_li"><a class="nav_a" id="nav_item_side4" onclick="switchToSide(4);">Listen</a></li>
+					<li id="nav_li_side1" class="nav_li"><a class="nav_a" id="nav_a_side1" onclick="switchToSide(1);">Medien E/A</a></li>
+					<li id="nav_li_side2" class="nav_li"><a class="nav_a" id="nav_a_side2" onclick="switchToSide(2);">Katalogisierung</a></li>
+					<li id="nav_li_side3" class="nav_li"><a class="nav_a" id="nav_a_side3" onclick="switchToSide(3);">Schüler</a></li>
+					<li id="nav_li_side4" class="nav_li"><a class="nav_a" id="nav_a_side4" onclick="switchToSide(4);">Listen</a></li>
+					<li id="nav_li_side5" class="nav_li"><a class="nav_a" id="nav_a_side5" onclick="switchToSide(5);">Verwaltung</a></li>
 					<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
 				</ul>
 			</div>
-			<div style="display: none;" id="books_div">
+			<div id="books_div" class="side">
 				<div class="book_div_horizontal" id="books_choose_side_mobile">
 					<a onclick="switch_books_side_mobile(0);">zurückgeben</a>
 					<a onclick="switch_books_side_mobile(1);">ausleihen</a>	
@@ -100,7 +102,7 @@
 					<div class="book_div_padding book_div_left">
 						<div class="book_input_div">
 							<input style="width:70%;" id="media_return_input" placeholder="Barcode" autocomplete="off" onkeydown = "if (event.keyCode == 13){return_button_clicked();}" type="text" class="input_gray input_focus_color">
-							<button style="width: 30%;margin: 10px 0 10px 0;" onclick="return_button_clicked();" class="button">zurückgeben</button>
+							<button style="width: 30%;margin: 10px 0 10px 0;" onclick="return_button_clicked();" class="button" id="media_return_button">zurückgeben</button>
 						</div>
 					</div>
 					<div class="book_div_padding book_div_right">
@@ -109,14 +111,14 @@
 							<select class="select" id="date_select">
 								<option value="">Datum auswählen</option>
 							</select>
-							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button">ausleihen</button>
+							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button">ausleihen</button>
 						</div>
 						<div class="book_input_div">
 							<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
 							<select class="select" id="date_select_holiday">
 								<option value="">Datum auswählen</option>
 							</select>
-							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button">Ferienausleihe</button>
+							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">Ferienausleihe</button>
 						</div>
 						<br>
 					</div>
@@ -138,9 +140,10 @@
 						<h2 style="text-align: center;">Medien des Schülers:</h2>
 						<table class="table" style="margin: auto;width: 100%;" id="ausleihen_tabelle">
 							<tr class="tr_headline">
-								<td class="td">Name</td>
-								<td class="td">Barcode</td>
-								<td class="td">überfällig</td>
+								<th class="td">Name</td>
+								<th class="td">Barcode</td>
+								<th class="td">überfällig</td>
+								<th class="td">Ferienausleihe</td>
 							</tr>
 						</table>
 					</div>
@@ -150,7 +153,7 @@
 					<div class="book_div_padding book_div_right"></div>
 				</div>
 			</div>
-			<div style="display: none;width: 100%;" id="katalogisierung_div">
+			<div id="katalogisierung_div" class="side">
 				<h1 style="text-align: center;">Katalogisierung</h1>
 				<div id="media_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
@@ -180,6 +183,9 @@
 					</div>
 				</div>
 				<div id="media_search_side2" style="display: none;">
+					<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px; cursor: pointer;" onclick="switch_media_search_side(0);">
+						<img src="/assets/arrow_back.svg" style="margin: auto;"></img>
+					</div>
 					<table id="media_details_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
 							<th class="td">Titel</th>
@@ -222,7 +228,7 @@
 					</table>
 				</div>
 			</div>
-			<div style="display: none;width:100%" id="schüler_div">
+			<div id="schüler_div" class="side">
 				<h1 style="text-align: center">Schüler</h1>
 				<div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
@@ -241,7 +247,7 @@
 					</div>
 				</div>
 			</div>
-			<div style="display: none;width: 100%;" id="listen_div">
+			<div  id="listen_div" class="side">
 				<h1 style="text-align: center;">Listen</h1>
 				<details style="width: 75%;margin: auto;" open>
 					<summary>Überfällige Medien</summary>
@@ -266,6 +272,14 @@
 						</tr>
 					</table>
 				</details>
+			</div>
+			<div id="admin_div" class="side">
+				<div id="admin_navigation_div">
+					
+				</div>
+				<div id="admin_main">
+					
+				</div>
 			</div>
 		</div>
 	</body>

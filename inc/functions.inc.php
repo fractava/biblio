@@ -1,10 +1,4 @@
 <?php
-/**
- * A complete login script with registration and members area.
- *
- * @author: Nils Reimers / http://www.php-einfach.de/experte/php-codebeispiele/loginscript/
- * @license: GNU GPLv3
- */
 include_once("password.inc.php");
 
 /**
@@ -74,7 +68,7 @@ function random_string() {
 	} else {
 		//Replace your_secret_string with a string of your choice (>12 characters)
 		$str = md5(uniqid('your_secret_string', true));
-	}	
+	}
 	return $str;
 }
 function sonderzeichen($string){
@@ -104,10 +98,23 @@ function error($error_msg) {
 	include("templates/error.inc.php");
 	exit();
 }
+function permission_list(){
+	global $pdo;
+	global $user;
+
+	$statement = $pdo->prepare("SELECT * FROM grades WHERE id = :grade_id LIMIT 1;");
+	$statement->execute(array("grade_id" => $user["grade"]));
+	$permissions = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	return $permissions;
+}
+function permission_granted($permission_name){
+	return permission_list()[$permission_name] == 1;
+}
 function media_instance_exists($barcode){
 	global $pdo;
 
-	$statement = $pdo->prepare("SELECT COUNT(barcode) FROM media_instances WHERE barcode = :barcode");
+	$statement = $pdo->prepare("SELECT COUNT(barcode) FROM media_instances WHERE barcode = :barcode;");
 	$statement->execute(array("barcode" => $barcode));
 	$exists = $statement->fetch();
 
@@ -116,20 +123,41 @@ function media_instance_exists($barcode){
 function student_exists($student_id){
 	global $pdo;
 
-	$statement = $pdo->prepare("SELECT COUNT(id) FROM students WHERE id = :student_id");
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM students WHERE id = :student_id LIMIT 1;");
 	$statement->execute(array("student_id" => $student_id));
 	$exists = $statement->fetch();
 
 	return ($exists[0] == 1);
 }
+function student_name($student_id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT name FROM students WHERE id = :student_id LIMIT 1;");
+	$statement->execute(array("student_id" => $student_id));
+	$name = $statement->fetch();
+
+	return $name[0];
+}
 function media_instance_loaned($barcode){
 	global $pdo;
 
-	$statement = $pdo->prepare("SELECT COUNT(barcode) FROM media_instances WHERE barcode = :barcode AND loaned_to is not null");
+	$statement = $pdo->prepare("SELECT COUNT(barcode) FROM media_instances WHERE barcode = :barcode AND loaned_to is not null;");
 	$statement->execute(array("barcode" => $barcode));
 	$exists = $statement->fetch();
 
 	return ($exists[0] == 1);
+}
+function media_instance_loaned_to($barcode){
+	global $pdo;
+	if(media_instance_loaned($barcode)){
+		$statement = $pdo->prepare("SELECT loaned_to FROM media_instances WHERE barcode = :barcode LIMIT 1;");
+		$statement->execute(array("barcode" => $barcode));
+		$loaned_to = $statement->fetch();
+
+		return $loaned_to[0][0];
+	}else{
+		return false;
+	}
 }
 function lend_media_instance($barcode, $student_id, $until, $holiday){
 	global $pdo;
