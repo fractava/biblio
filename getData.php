@@ -127,6 +127,39 @@ if(isset($_GET["requested_data"])){
                         echo $books->asXML();
 			}
 		break;
+		case "media_instances":
+			if(isset($_GET["media_id"])){
+				$statement = $pdo->prepare("SELECT * FROM media_instances WHERE media_id = :media_id;");
+				$statement->execute(array("media_id" => $_GET["media_id"]));
+
+				$instances = new SimpleXMLElement("<media_instances></media_instances>");
+
+				while($row = $statement->fetch()){
+					$xml_row = $instances->addChild('media_instance');
+
+					$xml_row->addAttribute('barcode',$row['barcode']);
+
+					$xml_row->addAttribute('loaned_to',$row['loaned_to']);
+					$xml_row->addAttribute('loaned_until',$row['loaned_until']);
+					$xml_row->addAttribute('holiday',$row['holiday']);
+
+					$statement2 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
+					$statement2->execute(array("student_id" => $row['loaned_to']));
+					$student_row = $statement2->fetch();
+
+					$xml_row->addAttribute('loaned_to_name',$student_row['name']);
+					$xml_row->addAttribute('class_id',$student_row['class_id']);
+
+					$statement3 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
+					$statement3->execute(array("class_id" => $student_row['class_id']));
+					$class_row = $statement3->fetch();
+
+					$xml_row->addAttribute('class_name',$class_row['name']);
+				}
+				header('Content-Type: text/xml');
+				echo $instances->asXML();
+			}
+		break;
 		case "media_instance_infos":
 			if(isset($_GET["barcode"])){
 				$statement = $pdo->prepare("SELECT media_id , loaned_until , loaned_to , holiday , barcode FROM media_instances WHERE barcode = :barcode;");

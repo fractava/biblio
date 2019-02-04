@@ -240,13 +240,13 @@ window.onpopstate = function(event) {
 		switchToSide(parseInt(findGetParameter("side")));
 	}
 }
-function switch_media_search_side(show_side, media_instance_id){
+function switch_media_search_side(show_side, media_id){
 	//0 Search Input and List
 	//1 Media Details and Media Instances
 
 	var sides = ["media_search_side1","media_search_side2"];
 	if(show_side == 1){
-		refresh_media_editing_details(media_instance_id);
+		refresh_media_editing_details(media_id);
 	}
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
@@ -350,8 +350,20 @@ function auto_refresh(everything){
 			}
 		}
 }
-function refresh_media_editing_details(media_instance_id){
-	
+function refresh_media_editing_details(media_id1){
+	$("#media_details_instances_table").empty();
+	add_row_to_table("media_details_instances_table",["","Barcode","ausgeliehen_an","ausgeliehen_bis","Ferienausleihe"],true);
+
+	get_data({requested_data : "media_instances", media_id : media_id1},
+	function(data , status){
+		$xml = $(data);
+		$instances = $xml.find("media_instance");
+
+		for(i = 0; i < $instances.length; i++){
+			add_row_to_table("media_details_instances_table",["<input type='checkbox'></input>",$instances[i].getAttribute("barcode"),$instances[i].getAttribute("loaned_to_name"),$instances[i].getAttribute("loaned_until"),$instances[i].getAttribute("holiday")],false,false,[true]);
+		}
+	},
+	function(){});
 }
 function refresh_students_list(){
 	clear_text("lend_media_error_message");
@@ -542,7 +554,7 @@ function refresh_media_search(){
 		add_row_to_table("media_search_table",["id","Titel","Autor","Verlag","Preis","Schuljahr","Typ"],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');","media_search_order('school_year');"]);
 
 		function add_row(i){
-			add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1);");
+			add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1,"+$medias[i].getAttribute("id")+");");
 		}
 
 		if(media_search_reverse == true){
@@ -621,7 +633,7 @@ function return_button_clicked(){
 
 // ================================================
 // Table Functions
-function add_row_to_table(table_id,column_array,headline,onclick_array){
+function add_row_to_table(table_id,column_array,headline,onclick_array,html_array){
 	let tr = document.createElement('tr');
 	for(let i=0; i < column_array.length; i++){
 		if(typeof headline === "boolean"){
@@ -650,7 +662,12 @@ function add_row_to_table(table_id,column_array,headline,onclick_array){
 				td.classList.add("mouse_change_onhover");
 			}
 		}
-		td.appendChild(document.createTextNode(column_array[i]));
+
+		if((typeof html_array === "boolean" && html_array == true) || (Array.isArray(html_array) && html_array[i] == true)){
+			td.innerHTML = column_array[i];
+		}else{
+			td.appendChild(document.createTextNode(column_array[i]));
+		}
 		tr.appendChild(td);
 	}
 	$("#"+table_id)[0].appendChild(tr);
