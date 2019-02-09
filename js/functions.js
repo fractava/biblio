@@ -13,6 +13,8 @@ function onload(){
 	media_search_side = 0;
 	current_media_id = -1;
 
+	switch_options_side(0);
+
 	md = new MobileDetect(window.navigator.userAgent);
 	//sorttable.init();
 	configure_particles_js();
@@ -407,18 +409,27 @@ function refresh_media_editing_media_details(media_id){
 		function(){}
 		);
 
-		get_data({"requested_data" : "types_list"},
-		function(data , status){
-			$xml = $(data);
-			$types = $xml.find("type");
+		refresh_types_list("catalog_medium_type_select",$infos.getAttribute("type_id"));
 
-			for(i = 0; i < $types.length; i++){
-				$('#catalog_medium_type_select').append(new Option($types[i].getAttribute("name"),$types[i].getAttribute("id"),false,$types[i].getAttribute("id") == $infos.getAttribute("type_id")));
-			}
-		},
-		function(){}
-		);
+	},
+	function(){}
+	);
+}
+function refresh_types_list(select_id,selected_type_id){
+	get_data({"requested_data" : "types_list"},
+	function(data , status){
+		$xml = $(data);
+		$types = $xml.find("type");
 
+		$('#'+select_id).empty();
+
+		if(!selected_type_id){
+			$('#'+select_id).append(new Option("Typ auswählen",-1,false,false));
+		}
+
+		for(i = 0; i < $types.length; i++){
+			$('#'+select_id).append(new Option($types[i].getAttribute("name"),$types[i].getAttribute("id"),false,$types[i].getAttribute("id") == selected_type_id));
+		 }
 	},
 	function(){}
 	);
@@ -474,31 +485,39 @@ function refresh_classes_list(){
 		}
 	},function(){});
 }
-function refresh_subjects_list(){
+function refresh_subjects_list(select_id){
+	if(!select_id){
+		select_id = "catalog_subject_select";
+	}
+
 	get_data({requested_data : "subjects_list"},
 	function(data , status){
 		$xml = $(data);
 		$subjects = $xml.find("subject");
 
-		$('#catalog_subject_select').empty().trigger("change");
-		$('#catalog_subject_select').append(new Option("alle Fächer",-1,false,false));
+		$('#'+select_id).empty().trigger("change");
+		$('#'+select_id).append(new Option("alle Fächer",-1,false,false));
 
 		for(i = 0; i < $subjects.length; i++){
-			$('#catalog_subject_select').append(new Option($subjects[i].getAttribute('name'),$subjects[i].getAttribute('id'),false,false));
+			$('#'+select_id).append(new Option($subjects[i].getAttribute('name'),$subjects[i].getAttribute('id'),false,false));
 		}
 	},function(){});
 }
-function refresh_school_years_list(){
+function refresh_school_years_list(select_id){
+	if(!select_id){
+		select_id = "catalog_school_year_select";
+	}
+
 	get_data({requested_data : "school_years_list"},
 	function(data , status){
 		$xml = $(data);
 		$school_years = $xml.find("school_year");
 
-		$('#catalog_school_year_select').empty().trigger("change");
-		$('#catalog_school_year_select').append(new Option("alle Jahrgangsstufen",-1,false,false));
+		$('#'+select_id).empty().trigger("change");
+		$('#'+select_id).append(new Option("alle Jahrgangsstufen",-1,false,false));
 
 		for(i = 0; i < $school_years.length; i++){
-			$('#catalog_school_year_select').append(new Option($school_years[i].getAttribute('name'),$school_years[i].getAttribute('name'),false,false));
+			$('#'+select_id).append(new Option($school_years[i].getAttribute('name'),$school_years[i].getAttribute('name'),false,false));
 		}
 	},function(){});
 }
@@ -678,6 +697,25 @@ function remove_all_selected_media_instances(){
 		});
 	}
 }
+function remove_media(media_id){
+	Swal.fire({
+		title: 'Medium wirklich löschen',
+		type: 'warning',
+		confirmButtonText: 'löschen',
+		showCancelButton: true,
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		buttonsStyling: false,
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			action({"action" : "remove_media", "media_id" : media_id},
+			function(data,status){
+				switch_media_search_side(0);
+			},function(){}
+			);
+		}
+	});
+}
 function new_media(){
 	Swal.fire({
 		title: 'Neues Medium',
@@ -695,13 +733,54 @@ function new_media(){
 		"<select id='new_media_subject' class='select new_media_select'><option value='-1'>Fach auswählen</option></select><br>"+
 		"<select id='new_media_type' class='select new_media_select'><option value='-1'>Typ auswählen</option></select><br>",
 		preConfirm: () => {
-			return [];
+			returns = {
+				"action" : "new_media",
+				"title" : $("#new_media_title").val(),
+				"author" : $("#new_media_author").val(),
+				"publisher" : $("#new_media_publisher").val(),
+				"price" : $("#new_media_price").val(),
+				"school_year" : $("#new_media_school_year").val(),
+				"subject_id" : $("#new_media_subject").val(),
+				"type_id" : $("#new_media_type").val(),
+				};
+			let error = false;
+			if(returns["school_year"] == -1){
+				$("#new_media_school_year").addClass("animated pulse");
+				setTimeout(function(){$("#new_media_school_year").removeClass("pulse");},800);
+				error = true;
+			}
+			if(returns["subject_id"] == -1){
+				$("#new_media_subject").addClass("animated pulse");
+				setTimeout(function(){$("#new_media_subject").removeClass("pulse");},800);
+				error = true;
+			}
+			if(returns["type_id"] == -1){
+				$("#new_media_type").addClass("animated pulse");
+				setTimeout(function(){$("#new_media_type").removeClass("pulse");},800);
+				error = true;
+			}
+			if(returns["title"] == ""){
+				$("#new_media_title").addClass("animated pulse");
+				setTimeout(function(){$("#new_media_title").removeClass("pulse");},800);
+				error = true;
+			}
+			if(error == false){
+				return returns;
+			}else{
+				return false;
+			}
 		}
 	}).then((result) => {
 		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
-			
+			action(result["value"],
+			function(){},
+			function(response){error("",response.responseText);}
+			);
 		}
 	});
+	refresh_school_years_list("new_media_school_year");
+	refresh_subjects_list("new_media_subject");
+	refresh_types_list("new_media_type");
 }
 function new_media_instance(){
 	Swal.fire({

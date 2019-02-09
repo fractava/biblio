@@ -111,6 +111,15 @@ function permission_list(){
 function permission_granted($permission_name){
 	return permission_list()[$permission_name] == 1;
 }
+function media_exists($title){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM medias WHERE title = :title;");
+	$statement->execute(array("title" => $title));
+	$exists = $statement->fetch();
+
+	return ($exists[0] == 1);
+}
 function media_instance_exists($barcode){
 	global $pdo;
 
@@ -177,39 +186,24 @@ function new_media_instance($media_id,$barcode){
 	$statement = $pdo->prepare("INSERT INTO media_instances (media_id,barcode) VALUES (:media_id,:barcode);");
 	$statement->execute(array("media_id" => $media_id, "barcode" => $barcode));
 }
+function new_media($title,$author,$publisher,$price,$school_year,$subject_id,$type_id){
+	global $pdo;
+	if($price == ""){
+		$price = NULL;
+	}
+
+	$statement = $pdo->prepare("INSERT INTO medias (title,author,publisher,price,school_year,subject_id,type_id) VALUES (:title,:author,:publisher,:price,:school_year,:subject_id,:type_id);");
+	$statement->execute(array("title" => $title, "author" => $author, "publisher" => $publisher, "price" => $price, "school_year" => $school_year, "subject_id" => $subject_id, "type_id" => $type_id));
+}
 function remove_media_instance($barcode){
 	global $pdo;
 
 	$statement = $pdo->prepare("DELETE FROM media_instances WHERE barcode = :barcode LIMIT 1");
 	$statement->execute(array("barcode" => $barcode));
 }
-/*
-function getBookDetails(isbn) {
-  
-  // Query the book database by ISBN code.
-  //isbn = isbn || "9781451648546"; // Steve Jobs book
+function remove_media($media_id){
+	global $pdo;
 
-  var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
-
-  var response = UrlFetchApp.fetch(url); var results = JSON.parse(response);
-
-  if (results.totalItems) {
-
-    // There'll be only 1 book per ISBN
-    var book = results.items[0];
-
-	var title = (book["volumeInfo"]["title"]);
-	var subtitle = (book["volumeInfo"]["subtitle"]);
-	var authors = (book["volumeInfo"]["authors"]);
-	var printType = (book["volumeInfo"]["printType"]);
-	var pageCount = (book["volumeInfo"]["pageCount"]);
-	var publisher = (book["volumeInfo"]["publisher"]);
-	var publishedDate = (book["volumeInfo"]["publishedDate"]);
-	var webReaderLink = (book["accessInfo"]["webReaderLink"]);
-
-    // For debugging
-    //Logger.log(book);
-	return title;
-  }
+	$statement = $pdo->prepare("DELETE FROM medias WHERE id = :id LIMIT 1");
+	$statement->execute(array("id" => $media_id));
 }
-*/

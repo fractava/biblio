@@ -51,6 +51,22 @@ if(isset($_POST["action"])){
 				echo "Permission Denied";
 			}
 		break;
+		case "new_media":
+			if(permission_granted("create_media")){
+				if(isset($_POST["title"]) && isset($_POST["school_year"]) && isset($_POST["subject_id"]) && isset($_POST["type_id"])){
+					if(!media_exists($_POST["title"])){
+						new_media($_POST["title"],$_POST["author"],$_POST["publisher"],$_POST["price"],$_POST["school_year"],$_POST["subject_id"],$_POST["type_id"]);
+					}else{
+						http_response_code(400);
+						echo "Media already exists";
+					}
+				}else{
+					http_response_code(400);
+					echo "Not enough information provided";
+				}
+
+			}
+		break;
 		case "new_media_instances":
 			if(isset($_POST["media_id"]) && isset($_POST["barcodes"])){
 				$json = json_decode($_POST["barcodes"]);
@@ -64,6 +80,16 @@ if(isset($_POST["action"])){
 				http_response_code(400);
 				echo "Not enough information provided";
 
+			}
+		break;
+		case "remove_media":
+			if(permission_granted("delete_media")){
+				if(isset($_POST["media_id"])){
+					remove_media($_POST["media_id"]);
+				}else{
+					http_response_code(400);
+					echo "Not enough information provided";
+				}
 			}
 		break;
 		case "remove_media_instances":
