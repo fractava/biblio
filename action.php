@@ -51,6 +51,39 @@ if(isset($_POST["action"])){
 				echo "Permission Denied";
 			}
 		break;
+		case "new_media_instances":
+			if(isset($_POST["media_id"]) && isset($_POST["barcodes"])){
+				$json = json_decode($_POST["barcodes"]);
+
+				foreach($json as $row){
+					if(!media_instance_exists($row)){
+						new_media_instance($_POST["media_id"],$row);
+					}
+				}
+			}else{
+				http_response_code(400);
+				echo "Not enough information provided";
+
+			}
+		break;
+		case "remove_media_instances":
+			if(isset($_POST["barcodes"])){
+				$json = json_decode($_POST["barcodes"]);
+
+				foreach($json as $row){
+					if(media_instance_exists($row)){
+						remove_media_instance($row);
+					}else{
+						http_response_code(400);
+						echo "Media instance does not exist";
+					}
+				}
+			}else{
+				http_response_code(400);
+				echo "Not enough information provided";
+			}
+
+		break;
 		case "return_media_instance":
 			if(isset($_POST["barcode"])){
 				if(!media_instance_exists($_POST["barcode"])){

@@ -10,6 +10,9 @@ function onload(){
 	student_search_order_by = "name";
 	student_search_reverse = false;
 
+	media_search_side = 0;
+	current_media_id = -1;
+
 	md = new MobileDetect(window.navigator.userAgent);
 	//sorttable.init();
 	configure_particles_js();
@@ -192,6 +195,23 @@ function switchToSide(show_side){
 	window.history.pushState(null, side_names[show_side], '?side='+show_side);
 	document.title = side_names[show_side];
 }
+function switch_options_side(show_side){
+	//0 Klassen
+	//1 Jahrgangsstufen
+	//2 Einstallungen
+
+	var sides = ["options_classes","options_school_years","options_settings"]
+
+	for(i = 0; i <= sides.length;i++){
+		if(show_side == i){
+			$("#options_navigation_side"+i).addClass("admin_navigation_item_selected");
+			$("#"+sides[i]).show();
+		}else{
+			$("#options_navigation_side"+i).removeClass("admin_navigation_item_selected");
+			$("#"+sides[i]).hide();
+		}
+	}
+}
 function text_to_input(text_element_id){
 	var input = document.createElement('input');
 	$(input).attr("type","text");
@@ -244,10 +264,16 @@ function switch_media_search_side(show_side, media_id){
 	//0 Search Input and List
 	//1 Media Details and Media Instances
 
+	media_search_side = show_side;
+
 	var sides = ["media_search_side1","media_search_side2"];
 	if(show_side == 1){
 		refresh_media_editing_details(media_id);
+		current_media_id = media_id;
+	}else if(show_side == 0){
+		current_media_id = -1;
 	}
+
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
 			$("#"+sides[i]).show();
@@ -350,9 +376,56 @@ function auto_refresh(everything){
 			}
 		}
 }
-function refresh_media_editing_details(media_id1){
+function refresh_media_editing_details(media_id){
+	refresh_media_editing_media_details(media_id);
+	refresh_media_editing_instances(media_id);
+}
+function refresh_media_editing_media_details(media_id){
+	console.log(media_id);
+	get_data({"requested_data" : "media_infos", "media_id" : media_id},
+	function(data , status){
+		$xml = $(data);
+		$infos = $xml.find("media")[0];
+
+		$("#catalog_medium_title").text($infos.getAttribute("title"));
+		$('#catalog_medium_subject_select').empty();
+		$("#catalog_medium_school_year").text($infos.getAttribute("school_year"));
+		$("#catalog_medium_author").text($infos.getAttribute("author"));
+		$("#catalog_medium_publisher").text($infos.getAttribute("publisher"));
+		$("#catalog_medium_price").text($infos.getAttribute("price"));
+		$('#catalog_medium_type_select').empty();
+
+		get_data({"requested_data" : "subjects_list"},
+		function(data , status){
+			$xml = $(data);
+			$subjectss = $xml.find("subject");
+
+			for(i = 0; i < $subjects.length; i++){
+				$('#catalog_medium_subject_select').append(new Option($subjects[i].getAttribute("name"),$subjects[i].getAttribute("id"),false,$subjects[i].getAttribute("id") == $infos.getAttribute("subject_id")));
+			}
+		},
+		function(){}
+		);
+
+		get_data({"requested_data" : "types_list"},
+		function(data , status){
+			$xml = $(data);
+			$types = $xml.find("type");
+
+			for(i = 0; i < $types.length; i++){
+				$('#catalog_medium_type_select').append(new Option($types[i].getAttribute("name"),$types[i].getAttribute("id"),false,$types[i].getAttribute("id") == $infos.getAttribute("type_id")));
+			}
+		},
+		function(){}
+		);
+
+	},
+	function(){}
+	);
+}
+function refresh_media_editing_instances(media_id1){
 	$("#media_details_instances_table").empty();
-	add_row_to_table("media_details_instances_table",["","Barcode","ausgeliehen_an","ausgeliehen_bis","Ferienausleihe"],true);
+	add_row_to_table("media_details_instances_table",["<input type='checkbox' id='media_search_instance_checkbox_all' onchange='select_all_instances_checkbox_clicked(this);'></input>","Barcode","ausgeliehen_an","ausgeliehen_bis","Ferienausleihe"],true,false,[true]);
 
 	get_data({requested_data : "media_instances", media_id : media_id1},
 	function(data , status){
@@ -364,6 +437,9 @@ function refresh_media_editing_details(media_id1){
 		}
 	},
 	function(){});
+}
+function select_all_instances_checkbox_clicked(checkbox) {
+	$(".media_search_instance_checkbox").prop("checked",checkbox.checked);
 }
 function refresh_students_list(){
 	clear_text("lend_media_error_message");
@@ -545,34 +621,127 @@ function media_search_order(order_by){
 	}
 }
 function refresh_media_search(){
-	get_data({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year" : $("#catalog_school_year_select")[0].value},
-	function(data, status){
-		$xml = $(data);
-		$medias = $xml.find( "media" );
+	if(media_search_side == 0){
+		get_data({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year" : $("#catalog_school_year_select")[0].value},
+		function(data, status){
+			$xml = $(data);
+			$medias = $xml.find( "media" );
 
-		$("#media_search_table").empty();
-		add_row_to_table("media_search_table",["id","Titel","Autor","Verlag","Preis","Schuljahr","Typ"],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');","media_search_order('school_year');"]);
+			$("#media_search_table").empty();
+			add_row_to_table("media_search_table",["id","Titel","Autor","Verlag","Preis","Schuljahr","Typ"],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');","media_search_order('school_year');"]);
 
-		function add_row(i){
-			add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1,"+$medias[i].getAttribute("id")+");");
-		}
-
-		if(media_search_reverse == true){
-			for(let i = $medias.length-1; i >= 0; i--){
-				add_row(i);
+			function add_row(i){
+				add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1,"+$medias[i].getAttribute("id")+");");
 			}
-		}else{
-			for(let i = 0; i < $medias.length; i++){
-				add_row(i);
+
+			if(media_search_reverse == true){
+				for(let i = $medias.length-1; i >= 0; i--){
+					add_row(i);
+				}
+			}else{
+				for(let i = 0; i < $medias.length; i++){
+					add_row(i);
+				}
 			}
-		}
-	},
-	function(){
-	});
+		},
+		function(){
+		});
+	}
 }
-
+function isbn_lookup(isbn){
+	get_request('https://openlibrary.org/api/books',{"bibkeys": "ISBN:"+isbn,"format" : "json"},"text",
+	function(data , status){
+		console.log(data);
+	},function(){}
+	);
+}
 // ================================================
 // Actions
+function remove_all_selected_media_instances(){
+	if(get_selected_media_instances().length != 0){
+		Swal.fire({
+			title: 'Wirklich '+get_selected_media_instances().length+' Medien Instanzen löschen',
+			type: 'warning',
+			confirmButtonText: 'löschen',
+			showCancelButton: true,
+			confirmButtonClass: 'button',
+			cancelButtonClass: 'button',
+			buttonsStyling: false,
+		}).then((result) => {
+			if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+				action({action : "remove_media_instances", barcodes : JSON.stringify(get_selected_media_instances())},
+				function(data, status){
+					refresh_media_editing_instances(current_media_id);
+				},function(){}
+				);
+			}
+		});
+	}
+}
+function new_media(){
+	Swal.fire({
+		title: 'Neues Medium',
+		type: 'question',
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		confirmButtonText: 'erstellen',
+		showCancelButton: true,
+		buttonsStyling: false,
+		html: "<input id='new_media_title' type='text' class='input_gray input_focus_color new_media_input' placeholder='Titel'></input><br>"+
+		"<input id='new_media_author' type='text' class='input_gray input_focus_color new_media_input' placeholder='Autor'></input><br>"+
+		"<input id='new_media_publisher' type='text' class='input_gray input_focus_color new_media_input' placeholder='Verlag'></input><br>"+
+		"<input id='new_media_price' type='text' class='input_gray input_focus_color new_media_input' placeholder='Preis'></input><br>"+
+		"<select id='new_media_school_year' class='select new_media_select'><option value='-1'>Schuljahr auswählen</option></select><br>"+
+		"<select id='new_media_subject' class='select new_media_select'><option value='-1'>Fach auswählen</option></select><br>"+
+		"<select id='new_media_type' class='select new_media_select'><option value='-1'>Typ auswählen</option></select><br>",
+		preConfirm: () => {
+			return [];
+		}
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			
+		}
+	});
+}
+function new_media_instance(){
+	Swal.fire({
+		title: 'Neues Exemplar',
+		type: 'question',
+		//animation: false,
+		//customClass: 'animated bounceInDown',
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		confirmButtonText: 'erstellen',
+		showCancelButton: true,
+		buttonsStyling: false,
+		html: "<input id='new_media_instance_barcode' type='text' class='input_gray input_focus_color' placeholder='Barcode Anfang'></input><br><input id='new_media_instance_from' type='text' class='input_gray input_focus_color' placeholder='Von'></input><br><input id='new_media_instance_number' type='text' class='input_gray input_focus_color' placeholder='Anzahl'></input>",
+		preConfirm: () => {
+			return [
+				document.getElementById('new_media_instance_barcode').value,
+				document.getElementById('new_media_instance_from').value,
+				document.getElementById('new_media_instance_number').value,
+			]
+		}
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			create_barcodes = [];
+
+			let barcode = result["value"][0];
+			let from = parseInt(result["value"][1]);
+			let count = parseInt(result["value"][2]);
+
+			for(i = from;i < (from+count);i++){
+				create_barcodes.push(barcode+i);
+			}
+			action({"action" : "new_media_instances", "media_id" : current_media_id, "barcodes" : JSON.stringify(create_barcodes)},
+			function(data){
+				refresh_media_editing_instances(current_media_id);
+			}
+			,function(){}
+			);
+		}
+	});
+}
 function lend_media_instance(student_id, barcode, until, holiday, callback){
 	clear_text("return_media_error_message");
 	//var jqxhr = $.post("action.php",{"action" : "lent_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},function (data){
@@ -621,7 +790,7 @@ function get_selected_media_instances(){
 			barcodes.push($(checkboxes[i]).attr("instance_barcode"));
 		}
 	}
-	console.log(barcodes);
+	return barcodes;
 }
 // ================================================
 // Action Button Handler
@@ -715,7 +884,7 @@ function findGetParameter(parameterName) {
 function error(error_text_element_id, error_text, reset_time){
 	console.warn(error_text);
 
-	if(reset_time){
+	/*if(reset_time){
 		hide_time = reset_time;
 	}else{
 		hide_time = 3000;
@@ -725,5 +894,12 @@ function error(error_text_element_id, error_text, reset_time){
 
 	if(reset_time != -1){
 		setTimeout(function(){clear_text(error_text_element_id);},hide_time);
-	}
+	}*/
+	Swal.fire({
+		confirmButtonClass: 'button',
+		title : 'Error',
+		text : error_text,
+		type : 'error',
+		buttonsStyling: false
+		});
 }

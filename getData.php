@@ -129,7 +129,7 @@ if(isset($_GET["requested_data"])){
 		break;
 		case "media_instances":
 			if(isset($_GET["media_id"])){
-				$statement = $pdo->prepare("SELECT * FROM media_instances WHERE media_id = :media_id;");
+				$statement = $pdo->prepare("SELECT * FROM media_instances WHERE media_id = :media_id ORDER BY barcode;");
 				$statement->execute(array("media_id" => $_GET["media_id"]));
 
 				$instances = new SimpleXMLElement("<media_instances></media_instances>");
@@ -160,6 +160,48 @@ if(isset($_GET["requested_data"])){
 				echo $instances->asXML();
 			}
 		break;
+		case "media_infos":
+			if(isset($_GET["media_id"])){
+				$infos = new SimpleXMLElement("<infos></infos>");
+
+				$statement = $pdo->prepare("SELECT * FROM medias WHERE id = :media_id;");
+				$statement->execute(array("media_id" => $_GET['media_id']));
+				$row = $statement->fetch();
+
+				$xml_row = $infos->addChild('media');
+				$xml_row->addAttribute('title',$row['title']);
+				$xml_row->addAttribute('author',$row['author']);
+				$xml_row->addAttribute('publisher',$row['publisher']);
+				$xml_row->addAttribute('price',$row['price']);
+				$xml_row->addAttribute('school_year',$row['school_year']);
+				$xml_row->addAttribute('subject_id',$row['subject_id']);
+
+				$statement2 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
+				$statement2->execute(array("type_id" => $row['type_id']));
+				$type_row = $statement2->fetch();
+
+				$xml_row->addAttribute('type_id',$type_row['id']);
+				$xml_row->addAttribute('type_name',$type_row['name']);
+
+				header('Content-Type: text/xml');
+				echo $infos->asXML();
+			}
+		break;
+		case "types_list":
+			$types = new SimpleXMLElement("<types></types>");
+
+			$statement = $pdo->prepare("SELECT * FROM types;");
+			$statement->execute();
+
+			while($row = $statement->fetch()){
+				$xml_row = $types->addChild('type');
+
+				$xml_row->addAttribute('id',$row['id']);
+				$xml_row->addAttribute('name',$row['name']);
+			}
+
+			header('Content-Type: text/xml');
+			echo $types->asXML();
 		case "media_instance_infos":
 			if(isset($_GET["barcode"])){
 				$statement = $pdo->prepare("SELECT media_id , loaned_until , loaned_to , holiday , barcode FROM media_instances WHERE barcode = :barcode;");

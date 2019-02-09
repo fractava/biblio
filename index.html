@@ -8,11 +8,13 @@
 		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
 		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 		<link href="/css/select2.min.css" rel="stylesheet" />
+		<link href="/css/animate.css" rel="stylesheet" />
 		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/functions.js" async></script>
 		<!-- <script src="/js/sorttable.js" async></script> -->
 		<script src="/js/snowstorm-min.js" async></script>
+		<script src="/js/sweetalert2.all.min.js" async></script>
 	</head>
 	<body onload="onload();"> 
 		<p style="position: absolute; bottom: 15px;left: 0px; right: 0px;color:red;" id="loading_error"></p>
@@ -125,7 +127,7 @@
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
-						<h2 style="text-align: center;">Zuletzt zurückgegeben:</h2>
+						<h2 class="text_centered">Zuletzt zurückgegeben:</h2>
 						<table class="table" id="return_history_table" style="margin: auto;width: 100%;">
 							<tr class="tr">
 								<th class="td">Buch</th>
@@ -154,12 +156,12 @@
 				</div>
 			</div>
 			<div id="katalogisierung_div" class="side">
-				<h1 style="text-align: center;">Katalogisierung</h1>
+				<h1 class="text_centered">Katalogisierung</h1>
 				<div id="media_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
 						<div style="display: flex;flex-direction: row;align-items: center;">
 							<input type="text" id="media_search_input" class="input_gray input_focus_color search_input">
-							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshMediaSearch();" class="search_button">
+							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refresh_media_search();" class="search_button">
 								<use xlink:href="#search_icon"/>
 							</svg>
 						</div>
@@ -169,6 +171,12 @@
 						<select class="select" id="catalog_school_year_select">
 							<option value="-1">alle Jahrgangsstufen</option>
 						</select>
+					</div>
+					<br>
+					<div style="width: 100%;">
+						<div style="display: flex; margin: auto; width: fit-content;">
+							<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media();">neues Medium</button>
+						</div>
 					</div>
 					<div style="width: 100%;">
 						<table style="width: 90%;margin: auto;" id="media_search_table" class="table">
@@ -193,7 +201,9 @@
 						</tr>
 						<tr>
 							<th class="td">Fach</th>
-							<td id="catalog_medium_subject" class="td" onclick="th_to_input(this.id);"></td>
+							<td id="catalog_medium_subject" class="td">
+								<select id="catalog_medium_subject_select" class="select"></select>
+							</td>
 						</tr>
 						<tr>
 							<th class="td">Jahrgangsstufe</th>
@@ -213,11 +223,21 @@
 						</tr>
 						<tr>
 							<th class="td">Typ</th>
-							<td id="catalog_medium_type" class="td" onclick="th_to_input(this.id);"></td>
+							<td id="catalog_medium_type" class="td">
+								<select id="catalog_medium_type_select" class="select"></select>
+							</td>
 						</tr>
 					</table>
+					<div id="selected_media_operations" style="display: flex; margin: auto; width: fit-content;">
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_media(current_media_id);">Medium löschen</button>
+					</div>
 					<br>
-					<h2 style="text-align: center;">Exemplare</h2>
+					<h2 class="text_centered">Exemplare</h2>
+					<div id="selected_media_instances_operations" style="display: flex; margin: auto; width: fit-content;">
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances();">ausgewähte löschen</button>
+						<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewähte zurückgeben</button>
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media_instance(current_media_id);">neues Exemplar</button>
+					</div>
 					<table id="media_details_instances_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
 							<th class="td">Barcode</td>
@@ -226,11 +246,12 @@
 							<th class="td">Ferienausleihe</th>
 						</tr>
 					</table>
+					<br>
 				</div>
 			</div>
 			<div id="schüler_div" class="side">
-				<h1 style="text-align: center">Schüler</h1>
-				<div style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
+				<h1 class="text_centered">Schüler</h1>
+				<div id="student_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
 						<div style="display: flex;flex-direction: row;align-items: center;">
 							<input type="text" id="student_search_input" class="input_gray input_focus_color search_input">
@@ -251,9 +272,12 @@
 						</table>
 					</div>
 				</div>
+				<div id="student_search_side2" style="display: none;">
+
+				</div>
 			</div>
 			<div  id="listen_div" class="side">
-				<h1 style="text-align: center;">Listen</h1>
+				<h1 class="text_centered">Listen</h1>
 				<details style="width: 75%;margin: auto;" open>
 					<summary>Überfällige Medien</summary>
 					<table class="table" id="overdue_table">
@@ -278,13 +302,25 @@
 					</table>
 				</details>
 			</div>
-			<div id="admin_div" class="side">
-				<h1 style="text-align: center;">Verwaltung</h1>
-				<div id="admin_navigation_div">
-					
-				</div>
-				<div id="admin_main">
-					
+			<div id="admin_div" class="side" style="height: 100%; display: flex; flex-direction: column;">
+				<h1 class="text_centered">Verwaltung</h1>
+				<div style="display: flex;flex-grow: 25;">
+					<div id="admin_navigation_div" style="width: 30%; flex-grow: 25; border-right: #ddd 2px solid;">
+						<div class="admin_navigation_item admin_navigation_item_selected" id="options_navigation_side0" onclick="switch_options_side(0);"><p>Klassen</p></div>
+						<div class="admin_navigation_item" id="options_navigation_side1" onclick="switch_options_side(1);"><p>Jahrgangsstufen</p></div>
+						<div class="admin_navigation_item" id="options_navigation_side2" onclick="switch_options_side(2);"><p>Einstellungen</p></div>
+					</div>
+					<div id="admin_main" style="width: 70%; flex-grow: 25;">
+						<div class="options_side" id="options_classes">
+							<h1 class="text_centered">Klassen</h1>	
+						</div>
+						<div class="options_side" id="options_school_years">
+							<h1 class="text_centered">Jahrgangsstufen</h1>
+						</div>
+						<div class="options_side" id="options_settings">
+							<h1 class="text_centered">Einstellungen</h1>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

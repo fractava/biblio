@@ -171,3 +171,45 @@ function return_media_instance($barcode){
 	$statement = $pdo->prepare("UPDATE media_instances SET loaned_to = null, loaned_until = null, holiday = null WHERE barcode = :barcode LIMIT 1;");
 	$statement->execute(array("barcode" => $barcode));
 }
+function new_media_instance($media_id,$barcode){
+	global $pdo;
+
+	$statement = $pdo->prepare("INSERT INTO media_instances (media_id,barcode) VALUES (:media_id,:barcode);");
+	$statement->execute(array("media_id" => $media_id, "barcode" => $barcode));
+}
+function remove_media_instance($barcode){
+	global $pdo;
+
+	$statement = $pdo->prepare("DELETE FROM media_instances WHERE barcode = :barcode LIMIT 1");
+	$statement->execute(array("barcode" => $barcode));
+}
+/*
+function getBookDetails(isbn) {
+  
+  // Query the book database by ISBN code.
+  //isbn = isbn || "9781451648546"; // Steve Jobs book
+
+  var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
+
+  var response = UrlFetchApp.fetch(url); var results = JSON.parse(response);
+
+  if (results.totalItems) {
+
+    // There'll be only 1 book per ISBN
+    var book = results.items[0];
+
+	var title = (book["volumeInfo"]["title"]);
+	var subtitle = (book["volumeInfo"]["subtitle"]);
+	var authors = (book["volumeInfo"]["authors"]);
+	var printType = (book["volumeInfo"]["printType"]);
+	var pageCount = (book["volumeInfo"]["pageCount"]);
+	var publisher = (book["volumeInfo"]["publisher"]);
+	var publishedDate = (book["volumeInfo"]["publishedDate"]);
+	var webReaderLink = (book["accessInfo"]["webReaderLink"]);
+
+    // For debugging
+    //Logger.log(book);
+	return title;
+  }
+}
+*/
