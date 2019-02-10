@@ -121,6 +121,23 @@ if(isset($_POST["action"])){
 				echo "success";
 			}
 		break;
+		case "return_media_instances":
+			if(isset($_POST["barcodes"])){
+				$json = json_decode($_POST["barcodes"]);
+
+				foreach($json as $row){
+					if(media_instance_exists($row)){
+						return_media_instance($row);
+					}else{
+						http_response_code(400);
+						echo "Media instance does not exist";
+					}
+				}
+			}else{
+				http_response_code(400);
+				echo "Not enough information provided";
+			}
+		break;
 	}
 }
 ?>

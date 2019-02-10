@@ -242,6 +242,8 @@ function th_to_input(th_element_id){
 
 	$("#"+th_element_id).text("");
 	$("#"+th_element_id)[0].appendChild(input);
+
+	$("#"+th_element_id)[0].child()[0].focus();
 }
 function input_to_text(input_element_id){
 	var text = document.createElement('p');
@@ -253,9 +255,13 @@ function input_to_text(input_element_id){
 	$("#"+input_element_id).parent()[0].appendChild(text);
 	$("#"+input_element_id).remove();
 }
-function input_to_th(th_element_id){
+function input_to_th(th_element_id,callback){
 	$("#"+th_element_id).text($("#"+th_element_id).children()[0].value);
 	$("#"+th_element_id).attr("onclick","th_to_input(this.id);");
+
+	if(callback){
+		callback();
+	}
 }
 window.onpopstate = function(event) {
 	if(logged_in){
@@ -697,6 +703,27 @@ function remove_all_selected_media_instances(){
 		});
 	}
 }
+function return_all_selected_media_instances(){
+	if(get_selected_media_instances().length != 0){
+		Swal.fire({
+			title: 'Wirklich '+get_selected_media_instances().length+' Medien Instanzen zurückgeben',
+			type: 'warning',
+			confirmButtonText: 'zurückgeben',
+			showCancelButton: true,
+			confirmButtonClass: 'button',
+			cancelButtonClass: 'button',
+			buttonsStyling: false,
+		}).then((result) => {
+			if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+				action({action : "return_media_instances", barcodes : JSON.stringify(get_selected_media_instances())},
+				function(data, status){
+					refresh_media_editing_instances(current_media_id);
+				},function(){}
+				);
+			}
+		});
+	}
+}
 function remove_media(media_id){
 	Swal.fire({
 		title: 'Medium wirklich löschen',
@@ -725,13 +752,14 @@ function new_media(){
 		confirmButtonText: 'erstellen',
 		showCancelButton: true,
 		buttonsStyling: false,
-		html: "<input id='new_media_title' type='text' class='input_gray input_focus_color new_media_input' placeholder='Titel'></input><br>"+
+		allowEnterKey: true,
+		html: "<div onkeypress='if (event.keyCode==13){Swal.clickConfirm();}'><input id='new_media_title' type='text' class='input_gray input_focus_color new_media_input' placeholder='Titel'></input><br>"+
 		"<input id='new_media_author' type='text' class='input_gray input_focus_color new_media_input' placeholder='Autor'></input><br>"+
 		"<input id='new_media_publisher' type='text' class='input_gray input_focus_color new_media_input' placeholder='Verlag'></input><br>"+
 		"<input id='new_media_price' type='text' class='input_gray input_focus_color new_media_input' placeholder='Preis'></input><br>"+
 		"<select id='new_media_school_year' class='select new_media_select'><option value='-1'>Schuljahr auswählen</option></select><br>"+
 		"<select id='new_media_subject' class='select new_media_select'><option value='-1'>Fach auswählen</option></select><br>"+
-		"<select id='new_media_type' class='select new_media_select'><option value='-1'>Typ auswählen</option></select><br>",
+		"<select id='new_media_type' class='select new_media_select'><option value='-1'>Typ auswählen</option></select><br></div>",
 		preConfirm: () => {
 			returns = {
 				"action" : "new_media",
@@ -778,6 +806,7 @@ function new_media(){
 			);
 		}
 	});
+	$("#new_media_title").focus();
 	refresh_school_years_list("new_media_school_year");
 	refresh_subjects_list("new_media_subject");
 	refresh_types_list("new_media_type");
@@ -820,6 +849,7 @@ function new_media_instance(){
 			);
 		}
 	});
+	$("#new_media_instance_barcode").focus();
 }
 function lend_media_instance(student_id, barcode, until, holiday, callback){
 	clear_text("return_media_error_message");
