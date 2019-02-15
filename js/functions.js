@@ -1,6 +1,11 @@
 // ================================================
 //Events
 function onload(){
+	if(get_cookie("theme")){
+		switch_color_theme(get_cookie("theme"));
+	}
+	$("#nav_div").hide();
+
 	logged_in = false;
 	pause_on_idle();
 	//setInterval(function(){console.log(idle_time_minutes)},5000);
@@ -148,6 +153,7 @@ function login_animation(fast){
 
 	$("#main").animate({height: "100%",width: "100%"},speed,function(){$("#particles-js").hide();});
 	$("#nav_div").show(speed);
+	$("#nav_div_mobile").show(speed);
 }
 function logout_animation(fast){
 	if(fast){
@@ -158,20 +164,30 @@ function logout_animation(fast){
 	$("#particles-js").show();
 	$("#main").animate({height: "0",width: "0"},speed);
 }
-function switch_color_scheme(color_scheme){
-	switch(color_scheme){
+function switch_color_theme(color_theme){
+	color_theme = parseInt(color_theme);
+
+	create_cookie("theme",color_theme);
+
+	switch(color_theme){
 		case 0:
 			background_color = "white";
 			text_color = "black";
+			icon_color = "black";
 		break;
 		case 1:
 			background_color = "rgb(35,35,35)";
 			text_color = "white";
+			icon_color = "white";
 		break;
 
 	}
-	$("div , h1 , h2 , h3 , select , .select2-selection__rendered").css("color",text_color);
-	$("div , select , .select2-selection").css("background-color",background_color);
+	$("div , h1 , h2 , h3 , select , .select2-selection__rendered , p , a:not(.nav_a)").css("color",text_color);
+	$("div:not(#navbar_settings_icon) , select , .select2-selection , html").css("background-color",background_color);
+
+	$("#catalog_back_button").prop("src","/assets/arrow_back_"+icon_color+".svg");
+	//$("#navbar_mobile_menu_img").prop("src","/assets/menu_"+icon_color+".svg");
+	//$("#navbar_settings_img").prop("src","/assets/settings_"+icon_color+".svg");
 }
 function switchToSide(show_side){
 	//0 Login
@@ -188,12 +204,15 @@ function switchToSide(show_side){
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
 			$("#nav_a_side"+i).addClass("nav_a_selected");
+			$("#mobile_sidenav_a_side"+i).addClass("selected");
 			$("#"+sides[i]).show();
 		}else{
 			$("#nav_a_side"+i).removeClass("nav_a_selected");
+			$("#mobile_sidenav_a_side"+i).removeClass("selected");
 			$("#"+sides[i]).hide();
 		}
 	}
+	close_mobile_sidenav();
 	window.history.pushState(null, side_names[show_side], '?side='+show_side);
 	document.title = side_names[show_side];
 }
@@ -202,7 +221,7 @@ function switch_options_side(show_side){
 	//1 Jahrgangsstufen
 	//2 Einstallungen
 
-	var sides = ["options_classes","options_school_years","options_settings"]
+	var sides = ["options_classes","options_school_years","options_types","options_design","options_settings","options_metrics"]
 
 	for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
@@ -213,6 +232,12 @@ function switch_options_side(show_side){
 			$("#"+sides[i]).hide();
 		}
 	}
+}
+function open_mobile_sidenav(){
+	document.getElementById("mobile_sidenav").style.width = "100%";
+}
+function close_mobile_sidenav(){
+	document.getElementById("mobile_sidenav").style.width = "0";
 }
 function text_to_input(text_element_id){
 	var input = document.createElement('input');
@@ -989,6 +1014,24 @@ function findGetParameter(parameterName) {
 			if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
 		});
 	return result;
+}
+function get_cookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i <ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return false;
+}
+function create_cookie(cname,cvalue){
+	document.cookie = cname+"="+cvalue;
 }
 function error(error_text_element_id, error_text, reset_time){
 	console.warn(error_text);

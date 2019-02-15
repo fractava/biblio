@@ -58,15 +58,32 @@
 			</form>
 		</div>
 		<div id="main">
-			<div style="display: none;" id="nav_div">
-				<ul class="nav_ul">
+			<div style="display: flex;" id="nav_div">
+				<ul class="nav_ul" style="flex-grow: 15;">
 					<li id="nav_li_side1" class="nav_li"><a class="nav_a" id="nav_a_side1" onclick="switchToSide(1);">Medien E/A</a></li>
 					<li id="nav_li_side2" class="nav_li"><a class="nav_a" id="nav_a_side2" onclick="switchToSide(2);">Katalogisierung</a></li>
 					<li id="nav_li_side3" class="nav_li"><a class="nav_a" id="nav_a_side3" onclick="switchToSide(3);">Schüler</a></li>
 					<li id="nav_li_side4" class="nav_li"><a class="nav_a" id="nav_a_side4" onclick="switchToSide(4);">Listen</a></li>
 					<li id="nav_li_side5" class="nav_li"><a class="nav_a" id="nav_a_side5" onclick="switchToSide(5);">Verwaltung</a></li>
+				</ul>
+				<div id="navbar_settings_icon" style="float: right; width: fit-content; background-color: rgb(51, 51, 51);"><img id="navbar_settings_img" src="/assets/settings_white.svg" style="height: 100%;"></div>
+				<ul class="nav_ul">
 					<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
 				</ul>
+			</div>
+			<div style="display: none;" id="nav_div_mobile">
+				<ul class="nav_ul_mobile" style="flex-grow: 15;height: 100%;">
+					<li style="height: 100%;"><a onclick="open_mobile_sidenav();" style="height: 100%;"><img id="navbar_mobile_menu_img" src="/assets/menu_white.svg" style="height: 100%;"></a></li>
+				</ul>
+			</div>
+			<div id="mobile_sidenav" class="sidenav">
+				<a href="javascript:void(0)" class="closebtn" onclick="close_mobile_sidenav();">&times;</a>
+				<a id="mobile_sidenav_a_side1" onclick="switchToSide(1);">Medien E/A</a>
+				<a id="mobile_sidenav_a_side2" onclick="switchToSide(2);">Katalogisierung</a>
+				<a id="mobile_sidenav_a_side3" onclick="switchToSide(3);">Schüler</a>
+				<a id="mobile_sidenav_a_side4" onclick="switchToSide(4);">Listen</a>
+				<a id="mobile_sidenav_a_side5" onclick="switchToSide(5);">Verwaltung</a>
+				<a onclick="logout();">Logout</a>
 			</div>
 			<div id="books_div" class="side">
 				<div class="book_div_horizontal" id="books_choose_side_mobile">
@@ -192,7 +209,7 @@
 				</div>
 				<div id="media_search_side2" style="display: none;">
 					<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px; cursor: pointer;" onclick="switch_media_search_side(0);">
-						<img src="/assets/arrow_back.svg" style="margin: auto;"></img>
+						<img id="catalog_back_button" style="margin: auto;"></img>
 					</div>
 					<table id="media_details_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
@@ -302,23 +319,53 @@
 					</table>
 				</details>
 			</div>
-			<div id="admin_div" class="side" style="height: 100%; display: flex; flex-direction: column;">
+			<div id="admin_div" class="side" style="display: flex; flex-direction: column;">
 				<h1 class="text_centered">Verwaltung</h1>
 				<div style="display: flex;flex-grow: 25;">
 					<div id="admin_navigation_div" style="width: 30%; flex-grow: 25; border-right: #ddd 2px solid;">
 						<div class="admin_navigation_item admin_navigation_item_selected" id="options_navigation_side0" onclick="switch_options_side(0);"><p>Klassen</p></div>
 						<div class="admin_navigation_item" id="options_navigation_side1" onclick="switch_options_side(1);"><p>Jahrgangsstufen</p></div>
-						<div class="admin_navigation_item" id="options_navigation_side2" onclick="switch_options_side(2);"><p>Einstellungen</p></div>
+						<div class="admin_navigation_item" id="options_navigation_side2" onclick="switch_options_side(2);"><p>Typen</p></div>
+						<br>
+						<div class="admin_navigation_item" id="options_navigation_side3" onclick="switch_options_side(3);"><p>Design</p></div>
+						<div class="admin_navigation_item" id="options_navigation_side4" onclick="switch_options_side(4);"><p>Einstellungen</p></div>
+						<div class="admin_navigation_item" id="options_navigation_side5" onclick="switch_options_side(5);"><p>Statistiken</p></div>
 					</div>
 					<div id="admin_main" style="width: 70%; flex-grow: 25;">
 						<div class="options_side" id="options_classes">
-							<h2 class="text_centered">Klassen</h1>	
+							<h2 class="text_centered">Klassen</h1>
+							<br>
+							<div style="margin: auto; width: fit-content; display: flex;">
+								<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewählte zusammenlegen</button>
+								<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewählte löschen</button>
+								<button class="button" style="margin-left: 5px; margin-right: 5px;">neues Schuljahr</button>
+							</div>
+							<table class="table" id="admin_classes_table" style="margin: auto;">
+								<tr>
+									<th class="td">
+										<input type="checkbox" id="admin_classes_select_all"></input>
+									</th>
+									<th class="td">id</th>
+									<th class="td">Name Teil 1</th>
+									<th class="td">Name Teil 2</th>
+									<th class="td">Schülerzahl</th>
+								</tr>
+							</table>
 						</div>
 						<div class="options_side" id="options_school_years">
 							<h2 class="text_centered">Jahrgangsstufen</h1>
 						</div>
+						<div class="options_side" id="options_types">
+							<h2 class="text_centered">Medium Typen</h1>
+						</div>
+						<div class="options_side" id="options_design">
+							<h2 class="text_centered">Design</h2>
+						</div>
 						<div class="options_side" id="options_settings">
-							<h2 class="text_centered">Einstellungen</h1>
+							<h2 class="text_centered">Einstellungen</h2>
+						</div>
+						<div class="options_side" id="options_metrics">
+							<h2 class="text_centered">Statistiken</h2>
 						</div>
 					</div>
 				</div>

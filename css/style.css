@@ -43,21 +43,32 @@ input:disabled{cursor: not-allowed; background-color: gray;color: white;}
 .select{height: 33.33px; flex-shrink: 0; margin: auto; margin-right: 12px; margin-top: 10px; margin-bottom: 10px; outline: none; background-color: white; border-radius: 4px; /* border-color: gray; */ background: linear-gradient(90deg, grey 0px, grey) 0px 0px / 100% 2px no-repeat, linear-gradient(90deg, grey 0px, grey) 0px 100% / 100% 2px no-repeat, linear-gradient(0deg, grey 0px, grey) 0px 100% / 2px 100% no-repeat, linear-gradient(0deg, grey 0px, grey) 100% 100% / 2px 100% no-repeat; border-width: 0px;}
 
 /*Login*/
-#login_h{color: black !important;}
-#login_div{top: 50%; left: 50%; transform: translate(-50%, -50%); width: 35%;position: absolute;background-color: white !important;border-radius: 4px;display: flex;flex-direction: column;align-items: center;}
+html.no-phone #login_h{color: black !important;}
+#login_div{top: 50%; left: 50%; transform: translate(-50%, -50%); width: 35%;position: absolute; background-color: white; border-radius: 4px;display: flex;flex-direction: column;align-items: center;}
+html.no-phone #login_div{background-color: white !important;}
 #login_form{display: flex; flex-direction: column; align-items: center;  width: 100%;  height: 100%;}
-html.phone #login_div{width: 100%;height: 100%}
+html.phone #login_div{width: 100%;height: 100%; border-radius: 0;}
 
 /*Navbar*/
 .nav_ul { list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;}
+.nav_ul_mobile { list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;}
 .nav_li { float: left;}
 .nav_li .nav_a { display: block; color: white; text-align: center; padding: 14px 16px; /* border-bottom-color: transparent; */ border-bottom-width: 0; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-style: solid;border-image: linear-gradient(90deg,#e22828 0,#ff8c2f) 10 stretch;}
 .nav_a_selected {padding-bottom: 9px !important;border-bottom-width: 5px !important;}
-html.phone .nav_a , html.phone .nav_a_selected {padding-left: 8px; padding-right: 8px; text-overflow: ellipsis;}
+/*html.phone .nav_a , html.phone .nav_a_selected {padding-left: 8px; padding-right: 8px; text-overflow: ellipsis;}*/
 html.no-mobile .nav_li:hover {cursor: pointer;background:linear-gradient(90deg,#e22828 0,#ff8c2f);}
 html.no-mobile .nav_a_selected:hover{border-bottom-width: 0 !important;padding: 14px 16px !important;}
 #nav_div{width: 100%;/*height: 5%;*/}
-html.phone #nav_div{height: auto;}
+#nav_div_mobile{width:100%; height: 10%;}
+/*html.phone #nav_div{height: auto;}*/
+html.phone #nav_div{display: none !important;}
+html.no-phone #nav_div_mobile{display: none !important;}
+
+/*Mobile Sidenav*/
+.sidenav {height: -webkit-fill-available; width: 0; position: fixed; z-index: 1; top: 0; left: 0; background-color: #111; overflow-x: hidden; padding-top: 60px; transition: 0.5s;}
+.sidenav a {padding: 8px 8px 8px 10px; text-decoration: none; font-size: 25px; color: #818181; display: block; transition: 0.3s; border-left-width: 10px; border-left-style: solid; background-color: transparent !important; border-color: transparent;}
+.sidenav .selected {border-image: linear-gradient(rgb(226, 40, 40) 0px, rgb(255, 140, 47)) 10 / 1 / 0 stretch;}
+.sidenav .closebtn {position: absolute; top: 0; right: 25px; font-size: 36px; margin-left: 50px;}
 
 /*Tables*/
 .table, .td {border: 2px solid #ddd; border-collapse: collapse;}
@@ -73,7 +84,7 @@ th{text-align: left;}
 h1 , h2 ,h3 , p{color: #333;}
 
 /*Book E/A*/
-#books_div{height: 100%;width: 100%;display: flex;flex-direction: row;flex-wrap: wrap;flex-flow: column;}
+#books_div{/*height: 100%;*/width: 100%;display: flex;flex-direction: row;flex-wrap: wrap;flex-flow: column;}
 .book_div_padding{background-color: white;border-right: 1px solid #eee;padding-right: 1%;padding-left: 1%;width: 48%;}
 html.phone .book_div_padding{width:98%;}
 .book_div_horizontal{width: 100%;display: flex;flex-shrink: 0;}
@@ -89,6 +100,6 @@ html.mobile #books_choose_side_mobile{display : initial;text-align: center}
 .new_media_input , .new_media_select{width: 50%; margin: 7px 0px 7px 0px;}
 
 /*Admin*/
-.admin_navigation_item{width: 100%; height: 35px; padding-left : 5px; border-left-width: 4px; border-left-style: solid; border-color: transparent;}
+.admin_navigation_item{width: 100%; height: 35px; padding-left : 5px; border-left-width: 4px; border-left-style: solid; border-color: transparent; background-color: transparent !important;}
 .admin_navigation_item p{margin : 2px; padding-top: 10px; padding-bottom: 10px;}
 .admin_navigation_item_selected{border-image: linear-gradient(180deg,#e22828 0,#ff8c2f) 10 stretch;}
