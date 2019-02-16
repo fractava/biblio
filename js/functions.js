@@ -3,6 +3,13 @@
 function onload(){
 	if(get_cookie("theme")){
 		switch_color_theme(get_cookie("theme"));
+	}else{
+		switch_color_theme(0);
+	}
+	if(get_cookie("lang")){
+		switch_language(get_cookie("lang"));
+	}else{
+		switch_language(1);
 	}
 	$("#nav_div").hide();
 
@@ -138,9 +145,24 @@ function check_permissions(){
 		}
 		if(admin ==  0){
 			$("#nav_li_side5").hide();
+			$("#mobile_sidenav_a_side5").hide();
 		}
 	},function(){}
 	);
+}
+function switch_language(id){
+	get_data({"requested_data" : "language", "language_id" : id},
+	function(data , status){
+		create_cookie("lang",id);
+
+		$xml = $(data);
+		current_lang = $xml;
+	},
+	function(){}
+	);
+}
+function lang(name){
+	return current_lang.find(name).attr("value");
 }
 // ================================================
 //Animations
@@ -635,7 +657,7 @@ function refresh_student_search(){
 		$students = $xml.find( "student" );
 
 		$("#student_search_table").empty();
-		add_row_to_table("student_search_table",["id","Name"/*,"Geburtstag"*/,"Klasse"],true,["student_search_order('id');","student_search_order('name');"]);
+		add_row_to_table("student_search_table",[lang("identifikator"),lang("name")/*,"Geburtstag"*/,lang("class")],true,["student_search_order('id');","student_search_order('name');"]);
 
 		function add_row(i){
 			add_row_to_table("student_search_table",[$students[i].getAttribute("id"),$students[i].getAttribute("name")/*,$students[i].getAttribute("birthday")*/,$students[i].getAttribute("class_name")],false);

@@ -21,6 +21,32 @@ if(isset($_GET["requested_data"])){
 			header('Content-Type: text/xml');
 			echo $permissions->asXML();
 		break;
+		case "language":
+			if(isset($_GET["language_id"])){
+				$language = new SimpleXMLElement("<language></language>");
+
+				foreach(language($_GET["language_id"]) as $name => $value){
+					$xml_row = $language->addChild($name);
+					$xml_row->addAttribute("value",$value);
+				}
+			header('Content-Type: text/xml');
+			echo $language->asXML();
+			}
+		break;
+		case "languages_list":
+			$languages = new SimpleXMLElement("<languages></languages>");
+
+			$statement = $pdo->prepare("SELECT id , lang_name FROM languages;");
+			$statement->execute();
+
+			while($row = $statement->fetch()){
+				$xml_row = $languages->addChild('language');
+				$xml_row->addAttribute('id',$row['id']);
+				$xml_row->addAttribute('name',$row['lang_name']);
+			 }
+			header('Content-Type: text/xml');
+			echo $languages->asXML();
+		break;
 		case "classes_list":
 			$classes = new SimpleXMLElement("<classeslist></classeslist>");
 

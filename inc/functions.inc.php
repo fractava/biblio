@@ -108,6 +108,15 @@ function permission_list(){
 
 	return $permissions[0];
 }
+function language($id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT * FROM languages WHERE id = :id LIMIT 1;");
+	$statement->execute(array("id" => $id));
+	$language = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	return $language[0];
+}
 function permission_granted($permission_name){
 	return permission_list()[$permission_name] == 1;
 }

@@ -31,13 +31,13 @@ input:disabled{cursor: not-allowed; background-color: gray;color: white;}
 .search_input{border-radius: 4px 0px 0px 4px !important; margin: 10px 1px 10px 0;}
 
 /*Search Button*/
-.search_button{margin: 10px 12px 10px 0; padding: 9px 18px; text-decoration: none; white-space: nowrap; cursor: pointer; outline: none; border-radius: 0px 4px 4px 0px; border: 0; color: var(--gradient_color2); background: linear-gradient(90deg,var(--gradient_color1) 0, var(--gradient_color2)) 0 0 no-repeat,linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2)) 0 100% no-repeat,linear-gradient(0deg,#e22828 0,#e22828) 0 100% no-repeat,linear-gradient(0deg,#ff8c2f 0,#ff8c2f) 100% 100% no-repeat; background-size: 100% 2px,100% 2px,2px 100%,2px 100%;width: 24px; height: 24px;padding-top: 5px; padding-bottom: 5px; padding-left: 5px;margin: 0px; padding-right: 5px;}
-.search_button:hover{color:#f2f2f2;background:-webkit-gradient(linear,left top,right top,from(#e22828),to(#ff8c2f));background:linear-gradient(90deg,#e22828 0,#ff8c2f)}
+.search_button{margin: 10px 12px 10px 0; padding: 9px 18px; text-decoration: none; white-space: nowrap; cursor: pointer; outline: none; border-radius: 0px 4px 4px 0px; border: 0; color: var(--gradient_color2); background: linear-gradient(90deg,var(--gradient_color1) 0, var(--gradient_color2)) 0 0 no-repeat,linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2)) 0 100% no-repeat,linear-gradient(0deg,var(--gradient_color1) 0,var(--gradient_color1)) 0 100% no-repeat,linear-gradient(0deg,var(--gradient_color2) 0,var(--gradient_color2)) 100% 100% no-repeat; background-size: 100% 2px,100% 2px,2px 100%,2px 100%;width: 24px; height: 24px;padding-top: 5px; padding-bottom: 5px; padding-left: 5px;margin: 0px; padding-right: 5px;}
+.search_button:hover{color:#f2f2f2;background:-webkit-gradient(linear,left top,right top,from(var(--gradient_color1)),to(var(--gradient_color2)));background:linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2))}
 
 /* Buttons*/
-.button:hover{color:#f2f2f2;background:-webkit-gradient(linear,left top,right top,from(#e22828),to(#ff8c2f));background:linear-gradient(90deg,#e22828 0,#ff8c2f)}
+.button:hover{color:#f2f2f2;background:-webkit-gradient(linear,left top,right top,from(var(--gradient_color1)),to(var(--gradient_color2)));background:linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2))}
 .button:disabled{cursor: not-allowed; color: gray; background: linear-gradient(90deg,gray 0,gray) 0 0 no-repeat,linear-gradient(90deg,gray 0,gray) 0 100% no-repeat,linear-gradient(0deg,gray 0,gray) 0 100% no-repeat,linear-gradient(0deg,gray 0,gray) 100% 100% no-repeat; background-size: 100% 2px,100% 2px,2px 100%,2px 100%;}
-.button{margin: 10px 12px 10px 12px; padding: 9px 18px; text-decoration: none; white-space: nowrap; cursor: pointer; outline: none; border-radius: 4px; border: 0; color: #ff8c2f; background: linear-gradient(90deg,#e22828 0,#ff8c2f) 0 0 no-repeat,linear-gradient(90deg,#e22828 0,#ff8c2f) 0 100% no-repeat,linear-gradient(0deg,#e22828 0,#e22828) 0 100% no-repeat,linear-gradient(0deg,#ff8c2f 0,#ff8c2f) 100% 100% no-repeat; background-size: 100% 2px,100% 2px,2px 100%,2px 100%;}
+.button{margin: 10px 12px 10px 12px; padding: 9px 18px; text-decoration: none; white-space: nowrap; cursor: pointer; outline: none; border-radius: 4px; border: 0; color: #ff8c2f; background: linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2)) 0 0 no-repeat,linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2)) 0 100% no-repeat,linear-gradient(0deg,var(--gradient_color1) 0,var(--gradient_color1)) 0 100% no-repeat,linear-gradient(0deg,var(--gradient_color2) 0,var(--gradient_color2)) 100% 100% no-repeat; background-size: 100% 2px,100% 2px,2px 100%,2px 100%;}
 
 /*Select Boxes*/
 .select{height: 33.33px; flex-shrink: 0; margin: auto; margin-right: 12px; margin-top: 10px; margin-bottom: 10px; outline: none; background-color: white; border-radius: 4px; /* border-color: gray; */ background: linear-gradient(90deg, grey 0px, grey) 0px 0px / 100% 2px no-repeat, linear-gradient(90deg, grey 0px, grey) 0px 100% / 100% 2px no-repeat, linear-gradient(0deg, grey 0px, grey) 0px 100% / 2px 100% no-repeat, linear-gradient(0deg, grey 0px, grey) 100% 100% / 2px 100% no-repeat; border-width: 0px;}
@@ -53,10 +53,10 @@ html.phone #login_div{width: 100%;height: 100%; border-radius: 0;}
 .nav_ul { list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;}
 .nav_ul_mobile { list-style-type: none; margin: 0; padding: 0; overflow: hidden; background-color: #333;}
 .nav_li { float: left;}
-.nav_li .nav_a { display: block; color: white; text-align: center; padding: 14px 16px; /* border-bottom-color: transparent; */ border-bottom-width: 0; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-style: solid;border-image: linear-gradient(90deg,#e22828 0,#ff8c2f) 10 stretch;}
+.nav_li .nav_a { display: block; color: white; text-align: center; padding: 14px 16px; /* border-bottom-color: transparent; */ border-bottom-width: 0; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-style: solid;border-image: linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2)) 10 stretch;}
 .nav_a_selected {padding-bottom: 9px !important;border-bottom-width: 5px !important;}
 /*html.phone .nav_a , html.phone .nav_a_selected {padding-left: 8px; padding-right: 8px; text-overflow: ellipsis;}*/
-html.no-mobile .nav_li:hover {cursor: pointer;background:linear-gradient(90deg,#e22828 0,#ff8c2f);}
+html.no-mobile .nav_li:hover {cursor: pointer;background:linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2));}
 html.no-mobile .nav_a_selected:hover{border-bottom-width: 0 !important;padding: 14px 16px !important;}
 #nav_div{width: 100%;/*height: 5%;*/}
 #nav_div_mobile{width:100%; height: 10%;}
@@ -102,4 +102,4 @@ html.mobile #books_choose_side_mobile{display : initial;text-align: center}
 /*Admin*/
 .admin_navigation_item{width: 100%; height: 35px; padding-left : 5px; border-left-width: 4px; border-left-style: solid; border-color: transparent; background-color: transparent !important;}
 .admin_navigation_item p{margin : 2px; padding-top: 10px; padding-bottom: 10px;}
-.admin_navigation_item_selected{border-image: linear-gradient(180deg,#e22828 0,#ff8c2f) 10 stretch;}
+.admin_navigation_item_selected{border-image: linear-gradient(180deg,var(--gradient_color1) 0,var(--gradient_color2)) 10 stretch;}
