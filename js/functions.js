@@ -28,7 +28,6 @@ function onload(){
 	switch_options_side(0);
 
 	md = new MobileDetect(window.navigator.userAgent);
-	//sorttable.init();
 	configure_particles_js();
 	configureSelect2();
 	check_if_already_logged_in();
@@ -191,25 +190,55 @@ function switch_color_theme(color_theme){
 
 	create_cookie("theme",color_theme);
 
-	switch(color_theme){
+	/*switch(color_theme){
 		case 0:
+			gradient_color1 = "#e22828";
+			gradient_color2 = "#ff8c2f";
 			background_color = "white";
 			text_color = "black";
 			icon_color = "black";
+			navbar_icon_color = "white";
 		break;
 		case 1:
+			gradient_color1 = "red";
+			gradient_color2 = "yellow";
 			background_color = "rgb(35,35,35)";
 			text_color = "white";
 			icon_color = "white";
+			navbar_icon_color = "white";
 		break;
 
-	}
-	$("div , h1 , h2 , h3 , select , .select2-selection__rendered , p , a:not(.nav_a)").css("color",text_color);
-	$("div:not(#navbar_settings_icon) , select , .select2-selection , html").css("background-color",background_color);
+	}*/
+	get_data({"requested_data": "design","design_id" : color_theme},
+	function(data,status){
+		$xml = $(data);
 
-	$("#catalog_back_button").prop("src","/assets/arrow_back_"+icon_color+".svg");
-	//$("#navbar_mobile_menu_img").prop("src","/assets/menu_"+icon_color+".svg");
-	//$("#navbar_settings_img").prop("src","/assets/settings_"+icon_color+".svg");
+		text_color = $xml.find("text_color")[0].getAttribute("value");
+		navbar_text_color = $xml.find("navbar_text_color")[0].getAttribute("value");
+		background_color = $xml.find("background_color")[0].getAttribute("value");
+		icon_color = $xml.find("icon_color")[0].getAttribute("value");
+		navbar_icon_color = $xml.find("navbar_icon_color")[0].getAttribute("value");
+		navbar_color = $xml.find("navbar_color")[0].getAttribute("value");
+		gradient_color1 = $xml.find("gradient_color1")[0].getAttribute("value");
+		gradient_color2 = $xml.find("gradient_color2")[0].getAttribute("value");
+
+		$("div , h1 , h2 , h3 , select , .select2-selection__rendered , p , a:not(.nav_a)").css("color",text_color);
+		$("div:not(#navbar_settings_icon) , select , .select2-selection , html").css("background-color",background_color);
+
+		$("#catalog_back_button").prop("src","/assets/arrow_back_"+icon_color+".svg");
+		$("#navbar_mobile_menu_img").prop("src","/assets/menu_"+navbar_icon_color+".svg");
+		$("#navbar_settings_img").prop("src","/assets/settings_"+navbar_icon_color+".svg");
+
+		$(":root").css("--gradient_color1",gradient_color1);
+		$(":root").css("--gradient_color2",gradient_color2);
+		$(":root").css("--navbar_color",navbar_color);
+
+		$(".nav_ul , #navbar_settings_icon").css("background-color",navbar_color);
+
+		$(".nav_a").css("color",navbar_text_color);
+	},
+	function(){}
+	);
 }
 function switchToSide(show_side){
 	//0 Login
@@ -254,6 +283,22 @@ function switch_options_side(show_side){
 			$("#"+sides[i]).hide();
 		}
 	}
+}
+function open_settings_menu(){
+	Swal.fire({
+		position: 'top-end',
+		imageUrl: "",
+		imageWidth: 0,
+		imageHeight: 0,
+		title: lang("settings"),
+		html: "<p>baum</p>",
+		customClass: "settings_menu",
+		customContainerClass: "settings_menu_container",
+		buttonsStyling: false,
+		confirmButtonClass: 'button',
+		background: "var(--navbar_color)",
+	});
+	$(".settings_menu").css("margin-top",$("#navbar_settings_img").height());
 }
 function open_mobile_sidenav(){
 	document.getElementById("mobile_sidenav").style.width = "100%";

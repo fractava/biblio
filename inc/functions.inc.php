@@ -117,6 +117,15 @@ function language($id){
 
 	return $language[0];
 }
+function design($id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT * FROM designs WHERE id = :id LIMIT 1;");
+	$statement->execute(array("id" => $id));
+	$design = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+	return $design[0];
+}
 function permission_granted($permission_name){
 	return permission_list()[$permission_name] == 1;
 }
@@ -134,6 +143,15 @@ function media_instance_exists($barcode){
 
 	$statement = $pdo->prepare("SELECT COUNT(barcode) FROM media_instances WHERE barcode = :barcode;");
 	$statement->execute(array("barcode" => $barcode));
+	$exists = $statement->fetch();
+
+	return ($exists[0] == 1);
+}
+function design_exists($id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM designs WHERE id = :id;");
+	$statement->execute(array("id" => $id));
 	$exists = $statement->fetch();
 
 	return ($exists[0] == 1);

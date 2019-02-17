@@ -2,13 +2,14 @@
 require_once("/web/inc/config.inc.php");
 require_once("/web/inc/functions.inc.php");
 session_start();
-$user = check_user();
 if(isset($_GET["requested_data"])){
 	switch($_GET["requested_data"]){
 		case "logged_in":
+			$user = check_user();
 			echo "true";
 		break;
 		case "permission_list":
+			$user = check_user();
 			$permissions = new SimpleXMLElement("<permission_list></permission_list>");
 
 			foreach(permission_list() as $name => $permission){
@@ -29,8 +30,8 @@ if(isset($_GET["requested_data"])){
 					$xml_row = $language->addChild($name);
 					$xml_row->addAttribute("value",$value);
 				}
-			header('Content-Type: text/xml');
-			echo $language->asXML();
+				header('Content-Type: text/xml');
+				echo $language->asXML();
 			}
 		break;
 		case "languages_list":
@@ -47,7 +48,28 @@ if(isset($_GET["requested_data"])){
 			header('Content-Type: text/xml');
 			echo $languages->asXML();
 		break;
+		case "design":
+			if(isset($_GET["design_id"])){
+				if(design_exists($_GET["design_id"])){
+					$design = new SimpleXMLElement("<design></design>");
+
+					foreach(design($_GET["design_id"]) as $name => $value){
+						$xml_row = $design->addChild($name);
+						$xml_row->addAttribute("value",$value);
+					}
+					header('Content-Type: text/xml');
+					echo $design->asXML();
+				}else{
+					http_response_code(400);
+					echo "Design not found";
+				}
+			}else{
+				http_response_code(400);
+				echo "not enough information provided";
+			}
+		break;
 		case "classes_list":
+			$user = check_user();
 			$classes = new SimpleXMLElement("<classeslist></classeslist>");
 
 			$statement = $pdo->prepare("SELECT * FROM classes;");
@@ -64,6 +86,7 @@ if(isset($_GET["requested_data"])){
 			echo $classes->asXML();
 		break;
 		case "students_list":
+			$user = check_user();
 			$students = new SimpleXMLElement("<studentslist></studentslist>");
 
 			$statement = $pdo->prepare("SELECT id , name , class_id FROM students;");
@@ -83,6 +106,7 @@ if(isset($_GET["requested_data"])){
 			echo $students->asXML();
 		break;
 		case "subjects_list":
+			$user = check_user();
 			$subjects = new SimpleXMLElement("<subjectslist></subjectslist>");
 			$statement = $pdo->prepare("SELECT id , name FROM subjects;");
 			$statement->execute();
@@ -96,6 +120,7 @@ if(isset($_GET["requested_data"])){
 			echo $subjects->asXML();
 		break;
 		case "school_years_list":
+			$user = check_user();
 			$school_years = new SimpleXMLElement("<schoolyearslist></schoolyearslist>");
 			$statement = $pdo->prepare("SELECT id , name FROM school_years;");
 			$statement->execute();
@@ -109,6 +134,7 @@ if(isset($_GET["requested_data"])){
 			echo $school_years->asXML();
 		break;
 		case "dates_list":
+			$user = check_user();
 			if(isset($_GET["holiday"])){
 				if($_GET["holiday"] == 1 || $_GET["holiday"] == 0){
 					$dates = new SimpleXMLElement("<dateslist></dateslist>");
@@ -127,6 +153,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "books_of_student":
+			$user = check_user();
 			if(isset($_GET["student_id"])){
 				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :student_id;"); 
                         	$statement->execute(array("student_id" => $_GET["student_id"]));
@@ -154,6 +181,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "media_instances":
+			$user = check_user();
 			if(isset($_GET["media_id"])){
 				$statement = $pdo->prepare("SELECT * FROM media_instances WHERE media_id = :media_id ORDER BY barcode;");
 				$statement->execute(array("media_id" => $_GET["media_id"]));
@@ -187,6 +215,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "media_infos":
+			$user = check_user();
 			if(isset($_GET["media_id"])){
 				$infos = new SimpleXMLElement("<infos></infos>");
 
@@ -214,6 +243,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "types_list":
+			$user = check_user();
 			$types = new SimpleXMLElement("<types></types>");
 
 			$statement = $pdo->prepare("SELECT * FROM types;");
@@ -229,6 +259,7 @@ if(isset($_GET["requested_data"])){
 			header('Content-Type: text/xml');
 			echo $types->asXML();
 		case "media_instance_infos":
+			$user = check_user();
 			if(isset($_GET["barcode"])){
 				$statement = $pdo->prepare("SELECT media_id , loaned_until , loaned_to , holiday , barcode FROM media_instances WHERE barcode = :barcode;");
 				$statement->execute(array("barcode" => $_GET["barcode"]));
@@ -263,6 +294,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "overdue_medias":
+			$user = check_user();
 			if(isset($_GET["holiday"]) && ($_GET["holiday"] == 0 || $_GET["holiday"] == 1)){
 				$statement = $pdo->prepare("SELECT * FROM media_instances WHERE DATEDIFF(loaned_until,NOW()) < 0 AND holiday = :holiday;");
 				$statement->execute(array("holiday" => $_GET["holiday"]));
@@ -302,6 +334,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "search_student":
+			$user = check_user();
 			if(isset($_GET["search"]) && isset($_GET["class_id"])){
 				if(isset($_GET["order_by"])){
 					switch($_GET["order_by"]){
@@ -343,6 +376,7 @@ if(isset($_GET["requested_data"])){
 			}
 		break;
 		case "search_media":
+			$user = check_user();
 			if(isset($_GET["search"]) && isset($_GET["subject_id"]) && isset($_GET["school_year"])){
 				if(isset($_GET["order_by"])){
 					switch($_GET["order_by"]){
