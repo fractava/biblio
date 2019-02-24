@@ -3,6 +3,8 @@ session_start();
 require_once("inc/config.inc.php");
 require_once("inc/functions.inc.php");
 if(isset($_POST["action"])){
+	$request = new SimpleXMLElement("<request></request>");
+	$success = true;
 	switch($_POST["action"]){
 		 case "login":
 			require_once("./actions/login.php");
@@ -12,45 +14,46 @@ if(isset($_POST["action"])){
 		break;
 		case "lend_media_instance":
 			if(permission_granted("lend_media_instance")){
-				if(isset($_POST["student_id"]) && isset($_POST["barcode"])){
-					$error = false;
-					if(isset($_POST["until"]) && validateDate($_POST["until"],'Y-m-d')){
-						$until = $_POST["until"];
-					}else{
-						http_response_code(400);
-						echo "Until not correctly set; ";
-						$error = true;
-					}
-					if(!media_instance_exists($_POST["barcode"])){
-						http_response_code(400);
-						echo "Media doesnt exist; ";
-						$error = true;
-					}
-					if(!student_exists($_POST["student_id"])){
-						http_response_code(400);
-						echo "Student doesnt exist; ";
-						$error = true;
-					}
-					if(media_instance_loaned($_POST["barcode"])){
-						http_response_code(400);
-						echo "Media already loaned to " . student_name(media_instance_loaned_to($_POST["barcode"])) .  "; ";
-						$error = true;
-					}
-					if(!(($_POST["holiday"] == "1") || ($_POST["holiday"] == "0"))){
-						http_response_code(400);
-						echo "Holiday not correctly set; ";
-						$error = true;
-					}
-					if($error == false){
-						lend_media_instance($_POST["barcode"] , $_POST["student_id"], $until , $_POST["holiday"]);
-						echo "success";
-					}
+				if(!(isset($_POST["student_id"]) && isset($_POST["barcode"]) && isset($_POST["until"]))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+				if(!validateDate($_POST["until"],'Y-m-d')){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","5");
+				}
+				if(!media_instance_exists($_POST["barcode"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","2");
+				}
+				if(!student_exists($_POST["student_id"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","6");
+				}
+				if(media_instance_loaned($_POST["barcode"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","7");
+					$error->addAttribute("extra_detail",student_name(media_instance_loaned_to($_POST["barcode"])));
+				}
+				if(!(($_POST["holiday"] == "1") || ($_POST["holiday"] == "0"))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","8");
+				}
+				if($success){
+					lend_media_instance($_POST["barcode"] , $_POST["student_id"], $until , $_POST["holiday"]);
 				}
 			}else{
-				http_response_code(400);
-				echo "Permission Denied";
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
 			}
-		break;
+			break;
 		case "new_media":
 			if(permission_granted("create_media")){
 				if(isset($_POST["title"]) && isset($_POST["school_year"]) && isset($_POST["subject_id"]) && isset($_POST["type_id"])){
@@ -111,33 +114,59 @@ if(isset($_POST["action"])){
 
 		break;
 		case "return_media_instance":
-			if(isset($_POST["barcode"])){
-				if(!media_instance_exists($_POST["barcode"])){
-					http_response_code(400);
-					echo "Media doesnt exist";
-					exit();
-				}
+			if(!isset($_POST["barcode"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+			}
+			if(!media_instance_exists($_POST["barcode"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","2");
+			}
+			if($success){
 				return_media_instance($_POST["barcode"]);
-				echo "success";
 			}
 		break;
 		case "return_media_instances":
-			if(isset($_POST["barcodes"])){
-				$json = json_decode($_POST["barcodes"]);
+			if(!isset($_POST["barcodes"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+			}
 
+			$json = json_decode($_POST["barcodes"]);
+			if($json == NULL){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","3");
+			}
+			if($success){
 				foreach($json as $row){
 					if(media_instance_exists($row)){
 						return_media_instance($row);
 					}else{
-						http_response_code(400);
-						echo "Media instance does not exist";
+						$success = false;
+						$error = $request->addChild("error");
+						$error->addAttribute("id","2");
+						$error->addAttribute("extra_detail",$row);
 					}
 				}
-			}else{
-				http_response_code(400);
-				echo "Not enough information provided";
 			}
+			break;
+		default:
+			$success = false;
+			$error = $request->addChild("error");
+			$error->addAttribute("id","0");
 		break;
 	}
+	if(!$success){
+		http_response_code(400);
+		$request->addAttribute("success","false");
+	}else{
+		$request->addAttribute("success","true");
+	}
+	header('Content-Type: text/xml');
+	echo $request->asXML();
 }
 ?>

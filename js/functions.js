@@ -1,16 +1,6 @@
 // ================================================
 //Events
 function onload(){
-	if(get_cookie("theme")){
-		switch_color_theme(get_cookie("theme"));
-	}else{
-		switch_color_theme(0);
-	}
-	if(get_cookie("lang")){
-		switch_language(get_cookie("lang"));
-	}else{
-		switch_language(1);
-	}
 	$("#nav_div").hide();
 
 	logged_in = false;
@@ -30,6 +20,7 @@ function onload(){
 	md = new MobileDetect(window.navigator.userAgent);
 	configure_particles_js();
 	configureSelect2();
+	configure_button_handler();
 	check_if_already_logged_in();
 }
 function onlogin(){
@@ -62,6 +53,28 @@ function onlogout(){
 
 // ================================================
 //Configure Functions
+function configure_design(){
+	if(get_cookie("theme")){
+		switch_color_theme(get_cookie("theme"));
+	}else{
+		get_data({"requested_data": "default_design"},function(data , status , xml){
+				switch_color_theme(parseInt(xml.find("default_design")[0].getAttribute("id")));
+		},function(){
+			switch_color_theme(1);
+		});
+	}
+}
+function configure_lang(){
+	if(get_cookie("lang")){
+		switch_language(get_cookie("lang"));
+	}else{
+		switch_language(1);
+	}
+}
+function configure_button_handler(){
+	$("#media_return_button")[0].addEventListener("click", return_button_clicked);
+	$("#media_return_input")[0].addEventListener("keydown", function(event){if (event.keyCode == 13){return_button_clicked();}});
+}
 function configureSelect2(){
 	$('#lend_student_select').select2({width: '100%'});
 }
@@ -81,7 +94,7 @@ function login(){
 			onlogin();
 			login_animation();
 		}else{
-			error("login_error_message", data);
+			error(data);
 		}
 	},function(){
 		$("#login_error_message").text("Verbindung zum Server fehlgeschlagen");
@@ -95,12 +108,14 @@ function logout(){
 			onlogout();
 		}
 	},function(){
-		console.error("Verbindung zum Server fehlgeschlagen");
+		error("Verbindung zum Server fehlgeschlagen");
 	});
 }
 function check_if_already_logged_in(){
 	get_data({requested_data : "logged_in"},
 		function(data , status){
+			configure_design(); // here because it should not be executed on server error
+			configure_lang();
 			if(data=="true"){
 				onlogin();
 				login_animation(true);
@@ -190,25 +205,6 @@ function switch_color_theme(color_theme){
 
 	create_cookie("theme",color_theme);
 
-	/*switch(color_theme){
-		case 0:
-			gradient_color1 = "#e22828";
-			gradient_color2 = "#ff8c2f";
-			background_color = "white";
-			text_color = "black";
-			icon_color = "black";
-			navbar_icon_color = "white";
-		break;
-		case 1:
-			gradient_color1 = "red";
-			gradient_color2 = "yellow";
-			background_color = "rgb(35,35,35)";
-			text_color = "white";
-			icon_color = "white";
-			navbar_icon_color = "white";
-		break;
-
-	}*/
 	get_data({"requested_data": "design","design_id" : color_theme},
 	function(data,status){
 		$xml = $(data);
@@ -427,12 +423,178 @@ function action(parameters,callback_sucess,callback_fail){
 	post_request("/action.php",parameters,"text",callback_sucess,callback_fail);
 }
 function get_request(url,parameters,type,callback_sucess,callback_fail){
-	let jqxhr = $.get(url, parameters, function(data,textStatus,jqXHR){callback_sucess(data,textStatus,jqXHR);});
+	let jqxhr = $.get(url, parameters, function(data,textStatus,jqXHR){
+		$xml = $(data);
+		callback_sucess(data,textStatus,$xml);
+	});
 	jqxhr.fail(function(jqXHR, exception){callback_fail(jqXHR, exception);});
 }
 function post_request(url,parameters,type,callback_sucess,callback_fail){
 	let jqxhr = $.post(url, parameters, function(data,textStatus,jqXHR){callback_sucess(data,textStatus,jqXHR);});
 	jqxhr.fail(function(jqXHR, exception){callback_fail(jqXHR, exception);});
+}
+
+/*class get_data_request{
+	constructor(parameters,callback_sucess,callback_fail,retry,max_retries){
+		this.parameters = parameters;
+		this.callback_sucess = callback_sucess;
+		this.callback_fail = callback_fail;
+		this.retry = retry;
+		if(max_retries){
+			this.max_retries = max_retries;
+		}else{
+			this.max_retries = 5;
+		}
+		this.retries = 0;
+		this.retry_wait = 3000;
+		this.execute();
+	}
+	request(parameters,callback_object){
+		let jqxhr = $.get("/getData.php", parameters, function(data,textStatus,jqXHR){
+			$xml = $(data);
+			callback_object.sucess(data,textStatus,$xml);
+		});
+		jqxhr.fail(function(jqXHR,exception){
+			callback_object.fail(jqXHR, exception);
+		});
+	}
+	execute(){
+		this.request(this.parameters,this);
+	}
+	sucess(data,textStatus,$xml){
+		this.callback_sucess(data,textStatus,$xml);
+	}
+	fail(jqXHR, exception){
+		if(this.retry && this.retries < this.max_retries){
+				this.retries++;
+				setTimeout(function(callback_object){callback_object.execute()},this.retry_wait,this);
+		}else{
+			if(this.callback_fail){
+				this.callback_fail(jqXHR, exception);
+			}
+		}
+	}
+}*/
+function get_data_request(parameters,retry,show_error,max_retries){
+	return new Promise(function(resolve, reject) {
+
+		if(!max_retries){
+			max_retries = 5;
+		}
+		retries = 0;
+		retry_wait = 3000;
+		execute();
+
+		function request(parameters){
+			let jqxhr = $.get("/getData.php", parameters, function(data,textStatus,jqXHR){
+				if($xml = $(data)){
+					resolve($xml);
+				}else{
+					resolve(data);
+				}
+				//sucess(data,textStatus,$xml);
+			});
+			jqxhr.fail(function(jqXHR,exception){
+				fail(jqXHR, exception);
+			});
+		}
+		function execute(){
+			request(parameters);
+		}
+		function sucess(data,status,$xml){
+			resolve();
+		}
+		function fail(jqXHR, exception){
+			if(jqXHR.status == 400){
+				$xml = $(jqXHR.responseText);
+				$errors = $xml.find("error");
+				error_text = "";
+				if(show_error){
+					for(let i = 0; i< $errors.length; i++){
+						new_error = (lang("error_"+$errors[i].getAttribute("id"))+"\n");
+						console.log($errors[i].getAttribute("extra_detail"));
+						if($errors[i].getAttribute("extra_detail")){
+							new_error = new_error.replace("[extra_info]",$errors[i].getAttribute("extra_detail"));
+						}
+						error_text += new_error;
+					}
+					error(error_text);
+				}
+				reject($errors);
+			}else{
+				if(retry && retries < max_retries){
+					retries++;
+					setTimeout(function(){execute()},retry_wait);
+				}else{
+					if(show_error){
+						error(lang("http_error_"+jqXHR.status));
+					}
+					reject(jqXHR.status);
+				}
+			}
+		}
+	});
+}
+
+function action_request(parameters,retry,show_error,max_retries){
+	return new Promise(function(resolve, reject) {
+
+		if(!max_retries){
+			max_retries = 5;
+		}
+		retries = 0;
+		retry_wait = 3000;
+		execute();
+
+		function request(parameters){
+			let jqxhr = $.post("/action.php", parameters, function(data,textStatus,jqXHR){
+				if($xml = $(data)){
+					resolve($xml);
+				}else{
+					resolve(data);
+				}
+				//sucess(data,textStatus,$xml);
+			});
+			jqxhr.fail(function(jqXHR,exception){
+				fail(jqXHR, exception);
+			});
+		}
+		function execute(){
+			request(parameters);
+		}
+		function sucess(data,status,$xml){
+			resolve();
+		}
+		function fail(jqXHR, exception){
+			if(jqXHR.status == 400){
+				$xml = $(jqXHR.responseText);
+				$errors = $xml.find("error");
+				error_text = "";
+				if(show_error){
+					for(let i = 0; i< $errors.length; i++){
+						new_error = (lang("error_"+$errors[i].getAttribute("id"))+"\n");
+						console.log($errors[i].getAttribute("extra_detail"));
+						if($errors[i].getAttribute("extra_detail")){
+							new_error = new_error.replace("[extra_info]",$errors[i].getAttribute("extra_detail"));
+						}
+						error_text += new_error;
+					}
+					error(error_text);
+				}
+				reject($errors);
+			}else{
+				if(retry && retries < max_retries){
+					retries++;
+					setTimeout(function(){execute()},retry_wait);
+				}else{
+					if(show_error){
+						error(lang("http_error_"+jqXHR.status));
+					}
+					reject(jqXHR.status);
+				}
+			}
+		}
+	});
 }
 // ================================================
 // Refresh Functions
@@ -894,7 +1056,7 @@ function new_media(){
 		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
 			action(result["value"],
 			function(){},
-			function(response){error("",response.responseText);}
+			function(response){error(response.responseText);}
 			);
 		}
 	});
@@ -944,24 +1106,16 @@ function new_media_instance(){
 	$("#new_media_instance_barcode").focus();
 }
 function lend_media_instance(student_id, barcode, until, holiday, callback){
-	clear_text("return_media_error_message");
 	//var jqxhr = $.post("action.php",{"action" : "lent_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},function (data){
-	action({"action" : "lend_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},
-	function(data, status){
-		callback(data);
-	},function(response){
-		console.log(response);
-		if(response.status == 400){
-			error("lend_media_error_message", response.responseText);
-			//setTimeout(function(){$("#lend_media_error_message").text("")},3000);
-		}else{
-			error("lend_media_error_message", "Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
-			//setTimeout(function(){$("#lend_media_error_message").text("")},3000);
-		}
+	action_request({"action" : "lend_media_instance", "student_id" : student_id, "barcode" : barcode,"until" : until, "holiday": holiday},false,true)
+	.then(function(response){
+		callback(response);
+	})
+	.catch(function(response){
 	});
 }
 function return_media_instance(barcode,callback){
-	$.get("getData.php",{"requested_data" : "media_instance_infos", "barcode" : $("#media_return_input")[0].value},function(data1){
+	/*$.get("getData.php",{"requested_data" : "media_instance_infos", "barcode" : $("#media_return_input")[0].value},function(data1){
 		xmlDoc = $.parseXML( data1 );
 		$xml = $( xmlDoc );
 		$media = $xml.find( "media" );
@@ -969,18 +1123,28 @@ function return_media_instance(barcode,callback){
 
 		action({"action" : "return_media_instance", "barcode" : barcode},
 		function(data, status){
-			callback(data,status)
+
 		},
 		function(response){
 			//$('#return_media_error_message').text("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
 			if(response.status == 400){
-				error("return_media_error_message",response.responseText);
+				error(response.responseText);
 			}else{
-				error("return_media_error_message","Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
+				error("Fehler beim Senden der Daten zum Server. Nächster Versuch in 3 Sekunden");
 				setTimeout(function(){return_button_clicked();},3000);
 			}
 		});
-	},"text");
+	},"text");*/
+	get_data_request({"requested_data" : "media_instance_infos", "barcode" : $("#media_return_input")[0].value},false,true)
+	.then(function(response){
+		infos = response.find("media");
+		return action_request({"action" : "return_media_instance", "barcode" : barcode},false,true);
+	})
+	.then(function(response){
+		callback();
+	})
+	.catch(function(exception){
+	});
 }
 function get_selected_media_instances(){
 	checkboxes = $(".media_search_instance_checkbox");
@@ -1100,7 +1264,7 @@ function get_cookie(cname) {
 function create_cookie(cname,cvalue){
 	document.cookie = cname+"="+cvalue;
 }
-function error(error_text_element_id, error_text, reset_time){
+function error(error_text, reset_time){
 	console.warn(error_text);
 
 	/*if(reset_time){
@@ -1119,6 +1283,7 @@ function error(error_text_element_id, error_text, reset_time){
 		title : 'Error',
 		text : error_text,
 		type : 'error',
-		buttonsStyling: false
+		buttonsStyling: false,
+		timer: reset_time
 		});
 }

@@ -48,6 +48,13 @@ if(isset($_GET["requested_data"])){
 			header('Content-Type: text/xml');
 			echo $languages->asXML();
 		break;
+		case "default_design":
+			$design = new SimpleXMLElement("<design></design>");
+			$xml_row = $design->addChild("default_design");
+			$xml_row->addAttribute("id",config("default_design"));
+
+			echo $design->asXML();
+		break;
 		case "design":
 			if(isset($_GET["design_id"])){
 				if(design_exists($_GET["design_id"])){
@@ -155,7 +162,7 @@ if(isset($_GET["requested_data"])){
 		case "books_of_student":
 			$user = check_user();
 			if(isset($_GET["student_id"])){
-				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :student_id;"); 
+				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :student_id;");
                         	$statement->execute(array("student_id" => $_GET["student_id"]));
 				$books = new SimpleXMLElement("<books></books>");
 				while($row = $statement->fetch()){

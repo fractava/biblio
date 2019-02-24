@@ -9,6 +9,8 @@
 		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 		<link href="/css/select2.min.css" rel="stylesheet" />
 		<link href="/css/animate.css" rel="stylesheet" />
+		<link href="/css/loading.css" rel="stylesheet" />
+		<link href="/css/loading-btn.css" rel="stylesheet" />
 		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/functions.js" async></script>
@@ -16,7 +18,7 @@
 		<script src="/js/snowstorm-min.js" async></script>
 		<script src="/js/sweetalert2.all.min.js" async></script>
 	</head>
-	<body onload="onload();"> 
+	<body onload="onload();">
 		<p style="position: absolute; bottom: 15px;left: 0px; right: 0px;color:red;" id="loading_error"></p>
 		<div id="particles-js"></div>
 		<div style="display: none;" class="count-particles"> <span class="js-count-particles">--</span> particles </div>
@@ -88,7 +90,7 @@
 			<div id="books_div" class="side">
 				<div class="book_div_horizontal" id="books_choose_side_mobile">
 					<a onclick="switch_books_side_mobile(0);">zurückgeben</a>
-					<a onclick="switch_books_side_mobile(1);">ausleihen</a>	
+					<a onclick="switch_books_side_mobile(1);">ausleihen</a>
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
@@ -108,7 +110,7 @@
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
-						
+
 					</div>
 					<div class="book_div_padding book_div_right">
 						<form style="margin: auto;" onsubmit="return false">
@@ -120,21 +122,24 @@
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
 						<div class="book_input_div">
-							<input style="width:70%;" id="media_return_input" placeholder="Barcode" autocomplete="off" onkeydown = "if (event.keyCode == 13){return_button_clicked();}" type="text" class="input_gray input_focus_color">
-							<button style="width: 30%;margin: 10px 0 10px 0;" onclick="return_button_clicked();" class="button" id="media_return_button">zurückgeben</button>
+							<input style="width:70%;" id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
+							<button style="width: 30%;margin: 10px 0 10px 0;" class="button ld-ext-right" id="media_return_button">
+								<span>zurückgeben</span>
+								<div style="font-size:16px" class="ld ld-ring ld-cycle"></div>
+							</button>
 						</div>
 					</div>
 					<div class="book_div_padding book_div_right">
 						<div class="book_input_div">
 							<input style="width: 40%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box','date_select',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
-							<select class="select" id="date_select">
+							<select style="width: 30%;" class="select" id="date_select">
 								<option value="">Datum auswählen</option>
 							</select>
 							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button">ausleihen</button>
 						</div>
 						<div class="book_input_div">
 							<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
-							<select class="select" id="date_select_holiday">
+							<select style="width: 30%;" class="select" id="date_select_holiday">
 								<option value="">Datum auswählen</option>
 							</select>
 							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">Ferienausleihe</button>
