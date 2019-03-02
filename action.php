@@ -56,33 +56,39 @@ if(isset($_POST["action"])){
 			break;
 		case "new_media":
 			if(permission_granted("create_media")){
-				if(isset($_POST["title"]) && isset($_POST["school_year"]) && isset($_POST["subject_id"]) && isset($_POST["type_id"])){
-					if(!media_exists($_POST["title"])){
-						new_media($_POST["title"],$_POST["author"],$_POST["publisher"],$_POST["price"],$_POST["school_year"],$_POST["subject_id"],$_POST["type_id"]);
-					}else{
-						http_response_code(400);
-						echo "Media already exists";
+				if(!(isset($_POST["title"]) && isset($_POST["school_year"]) && isset($_POST["subject_id"]) && isset($_POST["type_id"]))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+				if(media_exists($_POST["title"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","9");
+				}
+				if($success == true){
+					new_media($_POST["title"],$_POST["author"],$_POST["publisher"],$_POST["price"],$_POST["school_year"],$_POST["subject_id"],$_POST["type_id"]);
+				}
+			}else{
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
+			}
+		break;
+		case "new_media_instances":
+			if(permission_granted("create_media_instance"){
+				if(isset($_POST["media_id"]) && isset($_POST["barcodes"])){
+					$json = json_decode($_POST["barcodes"]);
+
+					foreach($json as $row){
+						if(!media_instance_exists($row)){
+							new_media_instance($_POST["media_id"],$row);
+						}
 					}
 				}else{
 					http_response_code(400);
 					echo "Not enough information provided";
 				}
-
-			}
-		break;
-		case "new_media_instances":
-			if(isset($_POST["media_id"]) && isset($_POST["barcodes"])){
-				$json = json_decode($_POST["barcodes"]);
-
-				foreach($json as $row){
-					if(!media_instance_exists($row)){
-						new_media_instance($_POST["media_id"],$row);
-					}
-				}
-			}else{
-				http_response_code(400);
-				echo "Not enough information provided";
-
 			}
 		break;
 		case "remove_media":
@@ -96,22 +102,29 @@ if(isset($_POST["action"])){
 			}
 		break;
 		case "remove_media_instances":
-			if(isset($_POST["barcodes"])){
-				$json = json_decode($_POST["barcodes"]);
-
-				foreach($json as $row){
-					if(media_instance_exists($row)){
-						remove_media_instance($row);
-					}else{
-						http_response_code(400);
-						echo "Media instance does not exist";
-					}
-				}
-			}else{
-				http_response_code(400);
-				echo "Not enough information provided";
+			if(!isset($_POST["barcodes"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
 			}
 
+			$json = json_decode($_POST["barcodes"]);
+			if($json == NULL){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","3");
+			}
+
+			foreach($json as $row){
+				if(media_instance_exists($row)){
+					remove_media_instance($row);
+				}else{
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","2");
+					$error->addAttribute("extra_detail",$row);
+				}
+			}
 		break;
 		case "return_media_instance":
 			if(!isset($_POST["barcode"])){

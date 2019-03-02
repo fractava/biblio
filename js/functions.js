@@ -57,9 +57,11 @@ function configure_design(){
 	if(get_cookie("theme")){
 		switch_color_theme(get_cookie("theme"));
 	}else{
-		get_data({"requested_data": "default_design"},function(data , status , xml){
-				switch_color_theme(parseInt(xml.find("default_design")[0].getAttribute("id")));
-		},function(){
+		get_data_request({"requested_data": "default_design"},false,false)
+		.then(function(data){
+				switch_color_theme(parseInt($(data).find("default_design")[0].getAttribute("id")));
+		})
+		.catch(function(){
 			switch_color_theme(1);
 		});
 	}
@@ -424,8 +426,11 @@ function action(parameters,callback_sucess,callback_fail){
 }
 function get_request(url,parameters,type,callback_sucess,callback_fail){
 	let jqxhr = $.get(url, parameters, function(data,textStatus,jqXHR){
-		$xml = $(data);
-		callback_sucess(data,textStatus,$xml);
+		//if($xml = $(data)){
+			//callback_sucess(data,textStatus,$xml);
+		//}else{
+			callback_sucess(data,textStatus);
+		//}
 	});
 	jqxhr.fail(function(jqXHR, exception){callback_fail(jqXHR, exception);});
 }
