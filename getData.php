@@ -86,7 +86,13 @@ if(isset($_GET["requested_data"])){
 				$xml_row = $classes->addChild('class');
 				$xml_row->addAttribute('id',$row['id']);
 				$xml_row->addAttribute('name',$row['name']);
-				$xml_row->addAttribute('school_year',$row['school_year']);
+				$xml_row->addAttribute('school_year_id',$row['school_year_id']);
+
+				$statement2 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+				$result = $statement2->execute(array("school_year_id" => $row['school_year_id']));
+				$school_year_row = $statement2->fetch();
+
+				$xml_row->addAttribute('school_year',$school_year_row['name']);
 			}
 
 			header('Content-Type: text/xml');
@@ -159,14 +165,14 @@ if(isset($_GET["requested_data"])){
 				}
 			}
 		break;
-		case "books_of_student":
+		case "medias_of_student":
 			$user = check_user();
 			if(isset($_GET["student_id"])){
 				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :student_id;");
                         	$statement->execute(array("student_id" => $_GET["student_id"]));
-				$books = new SimpleXMLElement("<books></books>");
+				$medias = new SimpleXMLElement("<medias></medias>");
 				while($row = $statement->fetch()){
-					$xml_row = $books->addChild('book');
+					$xml_row = $medias->addChild('media');
 					$xml_row->addAttribute('media_id',$row['media_id']);
 
 					$statement2 = $pdo->prepare("SELECT * FROM medias WHERE id = :media_id;");
@@ -177,14 +183,20 @@ if(isset($_GET["requested_data"])){
 					$xml_row->addAttribute('author',$media_row['author']);
 					$xml_row->addAttribute('publisher',$media_row['publisher']);
 					$xml_row->addAttribute('price',$media_row['price']);
-					$xml_row->addAttribute('school_year',$media_row['school_year']);
+					$xml_row->addAttribute('school_year_id',$media_row['school_year_id']);
+
+					$statement3 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+					$result = $statement3->execute(array("school_year_id" => $media_row['school_year_id']));
+					$school_year_row = $statement3->fetch();
+
+					$xml_row->addAttribute('school_year',$school_year_row['name']);
 
 					$xml_row->addAttribute('loaned_until',$row['loaned_until']);
 					$xml_row->addAttribute('holiday',$row['holiday']);
 					$xml_row->addAttribute('barcode',$row['barcode']);
 				}
 			header('Content-Type: text/xml');
-                        echo $books->asXML();
+      echo $medias->asXML();
 			}
 		break;
 		case "media_instances":
@@ -221,32 +233,61 @@ if(isset($_GET["requested_data"])){
 				echo $instances->asXML();
 			}
 		break;
-		case "media_infos":
+		case "media_details":
 			$user = check_user();
 			if(isset($_GET["media_id"])){
-				$infos = new SimpleXMLElement("<infos></infos>");
+				$details = new SimpleXMLElement("<details></details>");
 
 				$statement = $pdo->prepare("SELECT * FROM medias WHERE id = :media_id;");
 				$statement->execute(array("media_id" => $_GET['media_id']));
 				$row = $statement->fetch();
 
-				$xml_row = $infos->addChild('media');
+				$xml_row = $details->addChild('media');
 				$xml_row->addAttribute('title',$row['title']);
 				$xml_row->addAttribute('author',$row['author']);
 				$xml_row->addAttribute('publisher',$row['publisher']);
 				$xml_row->addAttribute('price',$row['price']);
-				$xml_row->addAttribute('school_year',$row['school_year']);
+				$xml_row->addAttribute('school_year_id',$row['school_year_id']);
 				$xml_row->addAttribute('subject_id',$row['subject_id']);
 
-				$statement2 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
-				$statement2->execute(array("type_id" => $row['type_id']));
-				$type_row = $statement2->fetch();
+				$statement2 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+				$result = $statement2->execute(array("school_year_id" => $row['school_year_id']));
+				$school_year_row = $statement2->fetch();
+
+				$xml_row->addAttribute('school_year',$school_year_row['name']);
+
+				$statement3 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
+				$statement3->execute(array("type_id" => $row['type_id']));
+				$type_row = $statement3->fetch();
 
 				$xml_row->addAttribute('type_id',$type_row['id']);
 				$xml_row->addAttribute('type_name',$type_row['name']);
 
 				header('Content-Type: text/xml');
-				echo $infos->asXML();
+				echo $details->asXML();
+			}
+		break;
+		case "student_details":
+			$user = check_user();
+			if(isset($_GET["student_id"])){
+				$details = new SimpleXMLElement("<details></details>");
+
+				$statement = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
+				$statement->execute(array("student_id" => $_GET['student_id']));
+				$row = $statement->fetch();
+
+				$xml_row = $details->addChild('student');
+				$xml_row->addAttribute('name',$row['name']);
+				$xml_row->addAttribute('class_id',$row['class_id']);
+
+				$statement2 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
+				$statement2->execute(array("class_id" => $row['class_id']));
+				$class_row = $statement2->fetch();
+
+				$xml_row->addAttribute('class',$class_row['name']);
+
+				header('Content-Type: text/xml');
+				echo $details->asXML();
 			}
 		break;
 		case "types_list":
@@ -287,11 +328,17 @@ if(isset($_GET["requested_data"])){
 				$xml_row->addAttribute('author',$media_row['author']);
 				$xml_row->addAttribute('publisher',$media_row['publisher']);
 				$xml_row->addAttribute('price',$media_row['price']);
-				$xml_row->addAttribute('school_year',$media_row['school_year']);
+				$xml_row->addAttribute('school_year_id',$media_row['school_year_id']);
 
-				$statement3 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
-				$statement3->execute(array("student_id" => $row['loaned_to']));
-				$student_row = $statement3->fetch();
+				$statement3 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+				$result = $statement3->execute(array("school_year_id" => $media_row['school_year_id']));
+				$school_year_row = $statement3->fetch();
+
+				$xml_row->addAttribute('school_year',$school_year_row['name']);
+
+				$statement4 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
+				$statement4->execute(array("student_id" => $row['loaned_to']));
+				$student_row = $statement4->fetch();
 
 				$xml_row->addAttribute('loaned_to_name',$student_row['name']);
 				$xml_row->addAttribute('class_id',$student_row['class_id']);
@@ -321,18 +368,24 @@ if(isset($_GET["requested_data"])){
 					$xml_row->addAttribute('author',$media_row['author']);
 					$xml_row->addAttribute('publisher',$media_row['publisher']);
 					$xml_row->addAttribute('price',$media_row['price']);
-					$xml_row->addAttribute('school_year',$media_row['school_year']);
+					$xml_row->addAttribute('school_year_id',$media_row['school_year_id']);
 
-					$statement3 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
-					$statement3->execute(array("student_id" => $row['loaned_to']));
-					$student_row = $statement3->fetch();
+					$statement3 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+					$result = $statement3->execute(array("school_year_id" => $media_row['school_year_id']));
+					$school_year_row = $statement3->fetch();
+
+					$xml_row->addAttribute('school_year',$school_year_row['name']);
+
+					$statement4 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
+					$statement4->execute(array("student_id" => $row['loaned_to']));
+					$student_row = $statement4->fetch();
 
 					$xml_row->addAttribute('loaned_to_name',$student_row['name']);
 					$xml_row->addAttribute('class_id',$student_row['class_id']);
 
-					$statement4 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
-					$statement4->execute(array("class_id" => $student_row['class_id']));
-					$class_row = $statement4->fetch();
+					$statement5 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
+					$statement5->execute(array("class_id" => $student_row['class_id']));
+					$class_row = $statement5->fetch();
 
 					$xml_row->addAttribute('class_name',$class_row['name']);
 				}
@@ -375,7 +428,13 @@ if(isset($_GET["requested_data"])){
 						$class_row = $statement2->fetch();
 
 						$xml_row->addAttribute('class_name',$class_row['name']);
-						$xml_row->addAttribute('school_year',$class_row['school_year']);
+						$xml_row->addAttribute('school_year_id',$class_row['school_year_id']);
+
+						$statement3 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+						$result = $statement3->execute(array("school_year_id" => $class_row['school_year_id']));
+						$school_year_row = $statement3->fetch();
+
+						$xml_row->addAttribute('school_year',$school_year_row['name']);
 					}
 				}
 				header('Content-Type: text/xml');
@@ -384,7 +443,7 @@ if(isset($_GET["requested_data"])){
 		break;
 		case "search_media":
 			$user = check_user();
-			if(isset($_GET["search"]) && isset($_GET["subject_id"]) && isset($_GET["school_year"])){
+			if(isset($_GET["search"]) && isset($_GET["subject_id"]) && isset($_GET["school_year_id"])){
 				if(isset($_GET["order_by"])){
 					switch($_GET["order_by"]){
 						case "id":
@@ -402,9 +461,6 @@ if(isset($_GET["requested_data"])){
 						case "price":
 							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY price;");
 						break;
-						case "school_year":
-							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search ORDER BY school_year;");
-						break;
 						default:
 							$statement = $pdo->prepare("SELECT * FROM medias WHERE title LIKE :search;");
 						break;
@@ -418,22 +474,28 @@ if(isset($_GET["requested_data"])){
 
 				while($row = $statement->fetch()){
 					if(($row['subject_id'] == $_GET["subject_id"]) || $_GET["subject_id"] == -1){
-						if(($row['school_year'] == $_GET["school_year"]) || $_GET["school_year"] == -1){
+						if(($row['school_year_id'] == $_GET["school_year_id"]) || $_GET["school_year_id"] == -1){
 							$xml_row = $medias->addChild('media');
 							$xml_row->addAttribute('id',$row['id']);
 							$xml_row->addAttribute('title',$row['title']);
 							$xml_row->addAttribute('author',$row['author']);
 							$xml_row->addAttribute('publisher',$row['publisher']);
 							$xml_row->addAttribute('price',$row['price']);
-							$xml_row->addAttribute('school_year',$row['school_year']);
 							$xml_row->addAttribute('subject_id',$row['subject_id']);
 							$xml_row->addAttribute('type_id',$row['type_id']);
+							$xml_row->addAttribute('school_year_id',$row['school_year_id']);
 
 							$statement2 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
 							$statement2->execute(array("type_id" => $row['type_id']));
 							$types_row = $statement2->fetch();
 
 							$xml_row->addAttribute('type',$types_row['name']);
+
+							$statement3 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
+							$result = $statement3->execute(array("school_year_id" => $row['school_year_id']));
+							$school_year_row = $statement3->fetch();
+
+							$xml_row->addAttribute('school_year',$school_year_row['name']);
 						}
 					}
 				}

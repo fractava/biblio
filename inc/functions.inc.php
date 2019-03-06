@@ -222,14 +222,20 @@ function new_media_instance($media_id,$barcode){
 	$statement = $pdo->prepare("INSERT INTO media_instances (media_id,barcode) VALUES (:media_id,:barcode);");
 	$statement->execute(array("media_id" => $media_id, "barcode" => $barcode));
 }
-function new_media($title,$author,$publisher,$price,$school_year,$subject_id,$type_id){
+function new_media($title,$author,$publisher,$price,$school_year_id,$subject_id,$type_id){
 	global $pdo;
 	if($price == ""){
 		$price = NULL;
 	}
 
-	$statement = $pdo->prepare("INSERT INTO medias (title,author,publisher,price,school_year,subject_id,type_id) VALUES (:title,:author,:publisher,:price,:school_year,:subject_id,:type_id);");
-	$statement->execute(array("title" => $title, "author" => $author, "publisher" => $publisher, "price" => $price, "school_year" => $school_year, "subject_id" => $subject_id, "type_id" => $type_id));
+	$statement = $pdo->prepare("INSERT INTO medias (title,author,publisher,price,school_year_id,subject_id,type_id) VALUES (:title,:author,:publisher,:price,:school_year_id,:subject_id,:type_id);");
+	$statement->execute(array("title" => $title, "author" => $author, "publisher" => $publisher, "price" => $price, "school_year_id" => $school_year_id, "subject_id" => $subject_id, "type_id" => $type_id));
+}
+function new_student($name,$class_id){
+	global $pdo;
+
+	$statement = $pdo->prepare("INSERT INTO students (name,class_id) VALUES (:name,:class_id);");
+	$statement->execute(array("name" => $name, "class_id" => $class_id));
 }
 function remove_media_instance($barcode){
 	global $pdo;
@@ -245,4 +251,13 @@ function remove_media($media_id){
 
 	$statement2 = $pdo->prepare("DELETE FROM media_instances WHERE media_id = :media_id;");
 	$statement2->execute(array("media_id" => $media_id));
+}
+function remove_student($student_id){
+	global $pdo;
+
+	$statement = $pdo->prepare("DELETE FROM students WHERE id = :id LIMIT 1");
+	$statement->execute(array("id" => $student_id));
+
+	$statement2 = $pdo->prepare("UPDATE media_instances SET loaned_to = null, loaned_until = null, holiday = null WHERE loaned_to = :student_id;");
+	$statement2->execute(array("student_id" => $student_id));
 }

@@ -90,7 +90,7 @@ if(isset($_POST["action"])){
 					$error->addAttribute("id","8");
 				}
 				if($success){
-					lend_media_instance($_POST["barcode"] , $_POST["student_id"], $until , $_POST["holiday"]);
+					lend_media_instance($_POST["barcode"] , $_POST["student_id"], $_POST["until"] , $_POST["holiday"]);
 				}
 			}else{
 				$success = false;
@@ -100,7 +100,7 @@ if(isset($_POST["action"])){
 			break;
 		case "new_media":
 			if(permission_granted("create_media")){
-				if(!(isset($_POST["title"]) && isset($_POST["school_year"]) && isset($_POST["subject_id"]) && isset($_POST["type_id"]))){
+				if(!(isset($_POST["title"]) && isset($_POST["school_year_id"]) && isset($_POST["subject_id"]) && isset($_POST["type_id"]))){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","0");
@@ -111,7 +111,7 @@ if(isset($_POST["action"])){
 					$error->addAttribute("id","9");
 				}
 				if($success == true){
-					new_media($_POST["title"],$_POST["author"],$_POST["publisher"],$_POST["price"],$_POST["school_year"],$_POST["subject_id"],$_POST["type_id"]);
+					new_media($_POST["title"],$_POST["author"],$_POST["publisher"],$_POST["price"],$_POST["school_year_id"],$_POST["subject_id"],$_POST["type_id"]);
 				}
 			}else{
 				$success = false;
@@ -119,6 +119,60 @@ if(isset($_POST["action"])){
 				$error->addAttribute("id","4");
 			}
 		break;
+		case "new_student":
+			if(permission_granted("create_member")){
+				if(!(isset($_POST["name"]) && isset($_POST["class_id"]))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+				if($success){
+					new_student($_POST["name"],$_POST["class_id"]);
+				}
+			}else{
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
+			}
+		break;
+		case "modify_student":
+			if(permission_granted("edit_student")){
+				if(!(isset($_POST["student_id"]) && (isset($_POST["new_name"]) || isset($_POST["new_class_id"])))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+				if(!student_exists($_POST["student_id"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","6");
+				}
+				if($success && isset($_POST["new_name"])){
+					$statement = $pdo->prepare("UPDATE students SET name = :name WHERE id = :student_id LIMIT 1");
+					$statement->execute(array("student_id" => $_POST["student_id"], "name" => $_POST["new_name"]));
+				}
+				if($success && isset($_POST["new_class_id"])){
+					$statement = $pdo->prepare("UPDATE students SET class_id = :class_id WHERE id = :student_id LIMIT 1");
+					$statement->execute(array("student_id" => $_POST["student_id"], "class_id" => $_POST["new_class_id"]));
+				}
+			}else{
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
+			}
+		break;
+		case "modify_media":
+			if(permission_granted("edit_media")){
+				if(!(isset($_POST["media_id"]) && (isset($_POST["new_title"]) || isset($_POST["new_subject"]) || isset($_POST["new_school_year_id"])))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+			}else{
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
+			}
 		case "new_media_instances":
 			if(permission_granted("create_media_instance")){
 				if(isset($_POST["media_id"]) && isset($_POST["barcodes"])){
@@ -137,12 +191,34 @@ if(isset($_POST["action"])){
 		break;
 		case "remove_media":
 			if(permission_granted("delete_media")){
-				if(isset($_POST["media_id"])){
-					remove_media($_POST["media_id"]);
-				}else{
-					http_response_code(400);
-					echo "Not enough information provided";
+				if(!isset($_POST["media_id"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
 				}
+				if($success){
+					remove_media($_POST["media_id"]);
+				}
+			}else{
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
+			}
+		break;
+		case "remove_student":
+			if(permission_granted("delete_member")){
+				if(!isset($_POST["student_id"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+				if($success){
+					remove_student($_POST[student_id]);
+				}
+			}else{
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","4");
 			}
 		break;
 		case "remove_media_instances":

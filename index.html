@@ -14,9 +14,18 @@
 		<link href="/css/loading-btn.css" rel="stylesheet" />
 		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
+		<script src="/js/api.js" async></script>
 		<script src="/js/functions.js" async></script>
 		<script src="/js/snowstorm-min.js" async></script>
 		<script src="/js/sweetalert2.all.min.js" async></script>
+		<!-- <script>
+			import("/js/js_bundle.js");
+			import("/js/api.js");
+			import("/js/functions.js");
+			import("/js/sweetalert2.all.min.js");
+			import("/js/snowstorm-min.js");
+			onload();
+		</script> -->
 	</head>
 	<body onload="onload();">
 		<p style="position: absolute; bottom: 15px;left: 0px; right: 0px;color:red;" id="loading_error"></p>
@@ -114,7 +123,7 @@
 					</div>
 					<div class="book_div_padding book_div_right">
 						<form style="margin: auto;" onsubmit="return false">
-							<select onchange="refreshBooksTable();" id="lend_student_select" name="state"></select>
+							<select onchange="refresh_medias_table();" id="lend_student_select" name="state"></select>
 						</form>
 						<br>
 					</div>
@@ -229,7 +238,10 @@
 						</tr>
 						<tr>
 							<th class="td">Jahrgangsstufe</th>
-							<td id="catalog_medium_school_year" class="td" onclick="th_to_input(this.id);"></td>
+							<!-- <td id="catalog_medium_school_year" class="td" onclick="th_to_input(this.id);"></td> -->
+							<td class="td" id="catalog_medium_school_year">
+								<select id="catalog_medium_school_year_select" class="select"></select>
+							</th>
 						</tr>
 						<tr>
 							<th class="td">Autor</th>
@@ -250,14 +262,14 @@
 							</td>
 						</tr>
 					</table>
-					<div id="selected_media_operations" style="display: flex; margin: auto; width: fit-content;">
+					<div id="selected_media_operations">
 						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_media(current_media_id);">Medium löschen</button>
 					</div>
 					<br>
 					<h2 class="text_centered">Exemplare</h2>
 					<div id="selected_media_instances_operations" style="display: flex; margin: auto; width: fit-content;">
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances();">ausgewähte löschen</button>
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="return_all_selected_media_instances();">ausgewähte zurückgeben</button>
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances(0);">ausgewähte löschen</button>
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="return_all_selected_media_instances(0);">ausgewähte zurückgeben</button>
 						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media_instance(current_media_id);">neues Exemplar</button>
 					</div>
 					<table id="media_details_instances_table" style="margin-left: auto; margin-right: auto;" class="table">
@@ -285,6 +297,12 @@
 							<option value="-1">alle Klassen</option>
 						</select>
 					</div>
+					<br>
+					<div style="width: 100%;">
+						<div style="display: flex; margin: auto; width: fit-content;">
+							<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_student();">neuer Schüler</button>
+						</div>
+					</div>
 					<div style="width: 100%;">
 						<table style="width: 90%;margin: auto;" id="student_search_table" class="table">
 							<th class="td">id</th>
@@ -301,11 +319,31 @@
 					<table id="media_details_table" class="table">
 						<tr>
 							<th class="td">Name</th>
-							<td id="student_name" class="td" onclick="th_to_input(this.id);"></td>
+							<td id="student_editing_name" class="td" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
 							<th class="th">Klasse</th>
-							<td class="td"><select id="catalog_medium_subject_select" class="select"></select></td>
+							<td class="td"><select id="student_editing_class" class="select" onchange="editing_input_changed(this.id)"></select></td>
+						</tr>
+					</table>
+					<div id="selected_student_operations">
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_student(current_student_id);">Schüler löschen</button>
+					</div>
+					<br>
+					<h2 class="text_centered">ausgeliehene Exemplare:</h2>
+					<br>
+					<div id="selected_media_instances_operations" style="display: flex; margin: auto; width: fit-content;">
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances(1);">ausgewähte löschen</button>
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="return_all_selected_media_instances(1);">ausgewähte zurückgeben</button>
+					</div>
+					<table style="margin: auto;" id="student_search_medias" class="table">
+						<tr>
+							<th class="td"><input type="checkbox"></input></th>
+							<th class="td">Titel</th>
+							<th class="td">Barcode</th>
+							<th class="td">verliehen bis</th>
+							<th class="td">überfällig</th>
+							<th class="td">Ferienausleihe</th>
 						</tr>
 					</table>
 				</div>

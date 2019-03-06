@@ -97,9 +97,13 @@ html.mobile #books_choose_side_mobile{display : initial;text-align: center}
 
 .error_message{color:red;margin: 3px;text-align: center;}
 
-.new_media_input , .new_media_select{width: 50%; margin: 7px 0px 7px 0px;}
+.new_media_input{width: 50%;}
+.new_media_input , .new_student_select, .new_media_select{margin: 7px 0px 7px 0px;}
+.new_student_select , .new_media_select{width: calc(50% + 36px);}
 #media_details_table , #student_details_table{margin-left: auto; margin-right: auto;}
 #media_details_back , #student_details_back{display: flex; justify-content: center; align-items: center; margin-bottom: 5px; cursor: pointer;}
+#selected_media_operations , #selected_student_operations{display: flex; margin: auto; width: fit-content;}
+
 /*Admin*/
 .admin_navigation_item{width: 100%; height: 35px; padding-left : 5px; border-left-width: 4px; border-left-style: solid; border-color: transparent; background-color: transparent !important;}
 .admin_navigation_item p{margin : 2px; padding-top: 10px; padding-bottom: 10px;}

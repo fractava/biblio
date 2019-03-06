@@ -5,7 +5,6 @@ function onload(){
 
 	logged_in = false;
 	pause_on_idle();
-	//setInterval(function(){console.log(idle_time_minutes)},5000);
 
 	media_search_order_by = "title";
 	media_search_reverse = false;
@@ -13,7 +12,9 @@ function onload(){
 	student_search_reverse = false;
 
 	media_search_side = 0;
+	student_search_side = 0;
 	current_media_id = -1;
+	current_student_id = -1;
 
 	switch_options_side(0);
 
@@ -98,12 +99,9 @@ function login(){
 	})
 	.catch(function(reason){
 		let error_text = "";
-		console.log(reason);
 		for(let i = 0; i < reason.length; i++){
-			console.log(reason[i]["error_lang_name"]);
 			error_text += lang(reason[i]["error_lang_name"]);
 		}
-		console.log(error_text);
 		$("#login_error_message").text(error_text);
 	})
 }
@@ -297,14 +295,14 @@ function switch_student_search_side(show_side, student_id){
 	//0 Search Input and List
 	//1 Student Details
 
-	media_search_side = show_side;
+	student_search_side = show_side;
 
 	var sides = ["student_search_side1","student_search_side2"];
 	if(show_side == 1){
 		refresh_student_editing_details(student_id);
 		current_student_id = student_id;
 	}else if(show_side == 0){
-		current_media_id = -1;
+		current_student_id = -1;
 	}
 
 	for(i = 0; i <= sides.length;i++){
@@ -407,13 +405,11 @@ function input_to_text(input_element_id){
 	$("#"+input_element_id).parent()[0].appendChild(text);
 	$("#"+input_element_id).remove();
 }
-function input_to_th(th_element_id,callback){
+function input_to_th(th_element_id){
 	$("#"+th_element_id).text($("#"+th_element_id).children()[0].value);
 	$("#"+th_element_id).attr("onclick","th_to_input(this.id);");
 
-	if(callback){
-		callback();
-	}
+	editing_input_changed(th_element_id);
 }
 window.onpopstate = function(event) {
 	if(logged_in){
@@ -445,164 +441,6 @@ function isChristmas(){
 	return (getMonth() == 12);
 }
 // ================================================
-//Networking
-/*function get_data(parameters,callback_sucess,callback_fail){
-	get_request("/getData.php",parameters,"xml",callback_sucess,callback_fail);
-}
-function action(parameters,callback_sucess,callback_fail){
-	post_request("/action.php",parameters,"text",callback_sucess,callback_fail);
-}*/
-function get_request(url,parameters,type,callback_sucess,callback_fail){
-	let jqxhr = $.get(url, parameters, function(data,textStatus,jqXHR){
-		//if($xml = $(data)){
-			//callback_sucess(data,textStatus,$xml);
-		//}else{
-			callback_sucess(data,textStatus);
-		//}
-	});
-	jqxhr.fail(function(jqXHR, exception){callback_fail(jqXHR, exception);});
-}
-function post_request(url,parameters,type,callback_sucess,callback_fail){
-	let jqxhr = $.post(url, parameters, function(data,textStatus,jqXHR){callback_sucess(data,textStatus,jqXHR);});
-	jqxhr.fail(function(jqXHR, exception){callback_fail(jqXHR, exception);});
-}
-function get_data_request(parameters,retry,show_error,max_retries){
-	return new Promise(function(resolve, reject) {
-
-		if(!max_retries){
-			max_retries = 5;
-		}
-		retries = 0;
-		retry_wait = 3000;
-		execute();
-
-		function request(parameters){
-			let jqxhr = $.get("/getData.php", parameters, function(data,textStatus,jqXHR){
-				let request_return;
-			try{
-				$xml = $(data);
-				if($xml.length > 0){
-					request_return = $xml;
-				}else{
-					request_return = data;
-				}
-			}catch(e){
-				request_return = data;
-			}
-			resolve(request_return);
-				//sucess(data,textStatus,$xml);
-			});
-			jqxhr.fail(function(jqXHR,exception){
-				fail(jqXHR, exception);
-			});
-		}
-		function execute(){
-			request(parameters);
-		}
-		function sucess(data,status,$xml){
-			resolve();
-		}
-		function fail(jqXHR, exception){
-			if(jqXHR.status == 400){
-				$xml = $(jqXHR.responseText);
-				$errors = $xml.find("error");
-				error_text = "";
-				if(show_error){
-					for(let i = 0; i< $errors.length; i++){
-						new_error = (lang("error_"+$errors[i].getAttribute("id"))+"\n");
-						console.log($errors[i].getAttribute("extra_detail"));
-						if($errors[i].getAttribute("extra_detail")){
-							new_error = new_error.replace("[extra_info]",$errors[i].getAttribute("extra_detail"));
-						}
-						error_text += new_error;
-					}
-					error(error_text);
-				}
-				let reject_array = [];
-				for(let i = 0; i< $errors.length; i++){
-					reject_array.push({"error_lang_name": "error_"+$errors[i].getAttribute("id"),"extra_detail": $errors[i].getAttribute("extra_detail"),"type" : "internal", "error": $errors[i].getAttribute("id")});
-				}
-				reject(reject_array);
-			}else{
-				if(retry && retries < max_retries){
-					retries++;
-					setTimeout(function(){execute()},retry_wait);
-				}else{
-					if(show_error){
-						error(lang("http_error_"+jqXHR.status));
-					}
-					reject([{"error_lang_name": "http_error_"+jqXHR.status, "type": "http", "error": jqXHR.status}]);
-				}
-			}
-		}
-	});
-}
-
-function action_request(parameters,retry,show_error,max_retries){
-	return new Promise(function(resolve, reject) {
-
-		if(!max_retries){
-			max_retries = 5;
-		}
-		retries = 0;
-		retry_wait = 3000;
-		execute();
-
-		function request(parameters){
-			let jqxhr = $.post("/action.php", parameters, function(data,textStatus,jqXHR){
-				if($xml = $(data)){
-					resolve($xml);
-				}else{
-					resolve(data);
-				}
-				//sucess(data,textStatus,$xml);
-			});
-			jqxhr.fail(function(jqXHR,exception){
-				fail(jqXHR, exception);
-			});
-		}
-		function execute(){
-			request(parameters);
-		}
-		function sucess(data,status,$xml){
-			resolve();
-		}
-		function fail(jqXHR, exception){
-			if(jqXHR.status == 400){
-				$xml = $(jqXHR.responseText);
-				$errors = $xml.find("error");
-				error_text = "";
-				if(show_error){
-					for(let i = 0; i< $errors.length; i++){
-						new_error = (lang("error_"+$errors[i].getAttribute("id"))+"\n");
-						console.log($errors[i].getAttribute("extra_detail"));
-						if($errors[i].getAttribute("extra_detail")){
-							new_error = new_error.replace("[extra_info]",$errors[i].getAttribute("extra_detail"));
-						}
-						error_text += new_error;
-					}
-					error(error_text);
-				}
-				let reject_array = [];
-				for(let i = 0; i< $errors.length; i++){
-					reject_array.push({"error_lang_name": "error_"+$errors[i].getAttribute("id"),"extra_detail": $errors[i].getAttribute("extra_detail"),"type" : "internal", "error": $errors[i].getAttribute("id")});
-				}
-				reject(reject_array);
-			}else{
-				if(retry && retries < max_retries){
-					retries++;
-					setTimeout(function(){execute()},retry_wait);
-				}else{
-					if(show_error){
-						error(lang("http_error_"+jqXHR.status));
-					}
-					reject([{"error_lang_name": "http_error_"+jqXHR.status, "type": "http", "error": jqXHR.status}]);
-				}
-			}
-		}
-	});
-}
-// ================================================
 // Refresh Functions
 function pause_on_idle(){
 	idle_time_minutes = 0;
@@ -627,15 +465,19 @@ function auto_refresh(everything){
 			refresh_date_inputs();
 			refresh_subjects_list();
 			refresh_school_years_list();
-			refresh_classes_list();
+			refresh_classes_list("students_class_select");
 		}else{
 			if(document.hidden == false && idle_time_minutes < 2){
 				switch(side){
 					case 2:
-						refresh_media_search();
+						if(media_search_side == 0){
+							refresh_media_search();
+						}
 						break;
 					case 3:
-						refresh_student_search();
+						if(student_search_side == 0){
+							refresh_student_search();
+						}
 						break;
 					case 4:
 						refresh_lists_overdue_tables();
@@ -645,21 +487,23 @@ function auto_refresh(everything){
 		}
 }
 function refresh_student_editing_details(student_id){
-
+	refresh_student_editing_student_details(student_id);
+	refresh_student_editing_instances_table(student_id);
 }
 function refresh_media_editing_details(media_id){
 	refresh_media_editing_media_details(media_id);
 	refresh_media_editing_instances(media_id);
 }
 function refresh_media_editing_media_details(media_id){
-	get_data_request({"requested_data" : "media_infos", "media_id" : media_id},true,true,3)
+	get_data_request({"requested_data" : "media_details", "media_id" : media_id},true,true,3)
 	.then(function(data){
 		$xml = $(data);
 		$infos = $xml.find("media")[0];
 
 		$("#catalog_medium_title").text($infos.getAttribute("title"));
 		$('#catalog_medium_subject_select').empty();
-		$("#catalog_medium_school_year").text($infos.getAttribute("school_year"));
+		//$("#catalog_medium_school_year").text($infos.getAttribute("school_year"));
+		refresh_school_years_list("catalog_medium_school_year_select",$infos.getAttribute("school_year_id"));
 		$("#catalog_medium_author").text($infos.getAttribute("author"));
 		$("#catalog_medium_publisher").text($infos.getAttribute("publisher"));
 		$("#catalog_medium_price").text($infos.getAttribute("price"));
@@ -711,36 +555,47 @@ function refresh_media_editing_instances(media_id1){
 	})
 	.catch(function(){});
 }
+function refresh_student_editing_student_details(student_id){
+	get_data_request({"requested_data" : "student_details", "student_id" : student_id},false,true)
+	.then(function(data){
+		student = data.find("student")[0];
+		$("#student_editing_name").text(student.getAttribute("name"));
+		refresh_classes_list("student_editing_class",student.getAttribute("class_id"));
+	})
+	.catch(function(){});
+}
 function select_all_instances_checkbox_clicked(checkbox) {
 	$(".media_search_instance_checkbox").prop("checked",checkbox.checked);
 }
+function select_all_student_instances_checkbox_clicked(checkbox) {
+	$(".student_search_instance_checkbox").prop("checked",checkbox.checked);
+}
 function refresh_students_list(){
-	clear_text("lend_media_error_message");
 	get_data_request({requested_data : "students_list"},true,true,5)
-	.then(function(data , status){
-		$xml = $(data);
-		$students = $xml.find("student");
-
+	.then(function(data){
+		$students = data.find("student");
 		$('#lend_student_select').empty().trigger("change");
 		$('#lend_student_select').append(new Option(lang("select_student"),-1,false,false));
 
-		for(i = 0; i < $students.length; i++){
+		for(let i = 0; i < $students.length; i++){
 			$('#lend_student_select').append(new Option($students[i].getAttribute('name')+" "+$students[i].getAttribute('class'),$students[i].getAttribute('id'),false,false));
 		}
   })
 	.catch(function(){});
 }
-function refresh_classes_list(){
+function refresh_classes_list(select_id,selected_class_id){
 	get_data_request({requested_data : "classes_list"},true,false,5)
 	.then(function(data , status){
 		$xml = $(data);
 		$classes = $xml.find("class");
 
-		$('#students_class_select').empty().trigger("change");
-		$('#students_class_select').append(new Option(lang("all_classes"),-1,false,false));
+		$('#'+select_id).empty().trigger("change");
+		if(!selected_class_id){
+			$('#'+select_id).append(new Option(lang("all_classes"),-1,false,false));
+		}
 
 		for(i = 0; i < $classes.length; i++){
-			$('#students_class_select').append(new Option($classes[i].getAttribute('name'),$classes[i].getAttribute('id'),false,false));
+			$('#'+select_id).append(new Option($classes[i].getAttribute('name'),$classes[i].getAttribute('id'),false,$classes[i].getAttribute('id') == selected_class_id));
 		}
 	})
 	.catch(function(){});
@@ -764,7 +619,7 @@ function refresh_subjects_list(select_id){
 	})
 	.catch(function(){});
 }
-function refresh_school_years_list(select_id){
+function refresh_school_years_list(select_id,selected_school_year_id){
 	if(!select_id){
 		select_id = "catalog_school_year_select";
 	}
@@ -775,10 +630,12 @@ function refresh_school_years_list(select_id){
 		$school_years = $xml.find("school_year");
 
 		$('#'+select_id).empty().trigger("change");
-		$('#'+select_id).append(new Option(lang("all_school_years"),-1,false,false));
+		if(!selected_school_year_id){
+			$('#'+select_id).append(new Option(lang("all_school_years"),-1,false,false));
+		}
 
 		for(i = 0; i < $school_years.length; i++){
-			$('#'+select_id).append(new Option($school_years[i].getAttribute('name'),$school_years[i].getAttribute('name'),false,false));
+			$('#'+select_id).append(new Option($school_years[i].getAttribute('name'),$school_years[i].getAttribute('id'),false,selected_school_year_id == $school_years[i].getAttribute('id')));
 		}
 	})
 	.catch(function(){});
@@ -802,13 +659,11 @@ function refresh_date_inputs(){
 	refresh_date_input(0,'#date_select','#lend_media_error_message',true);
 	refresh_date_input(1,'#date_select_holiday','#lend_media_error_message',true);
 }
-function refreshBooksTable(){
-	clear_text("lend_media_error_message");
-
-	get_data_request({"requested_data":"books_of_student","student_id": $("#lend_student_select")[0].value},true,true,4)
+function refresh_medias_table(){
+	get_data_request({"requested_data":"medias_of_student","student_id": $("#lend_student_select")[0].value},true,true,4)
 	.then(function(data, status) {
 		$xml = $(data);
-		$books = $xml.find( "book" );
+		$books = $xml.find("media");
 
 		$("#ausleihen_tabelle").empty();
 		add_row_to_table("ausleihen_tabelle",["Name","Barcode","überfällig","Ferienausleihe"],true);
@@ -827,10 +682,33 @@ function refreshBooksTable(){
 			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text,ferienausleihe],false);
 		}
 	})
-	.catch(function(){
-		$("#lend_media_error_message").text("Fehler beim Abrufen der Daten vom Server. Nächster Versuch in 3 Sekunden.");
-		setTimeout(function(){refreshBooksTable();}, 3000);
-	});
+	.catch(function(){});
+}
+function refresh_student_editing_instances_table(student_id){
+	get_data_request({"requested_data":"medias_of_student","student_id": student_id},true,true,4)
+	.then(function(data, status) {
+		$xml = $(data);
+		$books = $xml.find("media");
+
+		$("#student_search_medias").empty();
+		add_row_to_table("student_search_medias",["<input type='checkbox' onchange='select_all_student_instances_checkbox_clicked(this);'></input>","Name","Barcode","ausgeliehen bis","überfällig","Ferienausleihe"],true,false,[true]);
+		for(i = 0; i < $books.length; i++){
+			let overdue_text = "";
+			let ferienausleihe = "";
+			if($books[i].getAttribute("holiday") == "1"){
+				ferienausleihe = "ja";
+			}else{
+				ferienausleihe = "nein";
+			}
+			if(Date.parse($books[i].getAttribute("loaned_until")) > Date.now()){
+				overdue_text = "nein";
+			}else{
+				overdue_text = "ja";
+			}
+			add_row_to_table("student_search_medias",["<input type='checkbox' class='student_search_instance_checkbox' barcode='"+$books[i].getAttribute("barcode")+"'></input>",$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),$books[i].getAttribute("loaned_until"),overdue_text,ferienausleihe],false,false,[true]);
+		}
+	})
+	.catch(function(){});
 }
 function refresh_overdue_table(holiday,table_id){
 	get_data_request({"requested_data" : "overdue_medias","holiday" : holiday},false,false)
@@ -894,13 +772,13 @@ function media_search_order(order_by){
 }
 function refresh_media_search(){
 	if(media_search_side == 0){
-		get_data_request({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year" : $("#catalog_school_year_select")[0].value},false,true)
+		get_data_request({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year_id" : $("#catalog_school_year_select")[0].value},false,true)
 		.then(function(data, status){
 			$xml = $(data);
 			$medias = $xml.find( "media" );
 
 			$("#media_search_table").empty();
-			add_row_to_table("media_search_table",[lang("identifier"),lang("title"),lang("author"),lang("publisher"),lang("price"),lang("school_year"),lang("type")],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');","media_search_order('school_year');"]);
+			add_row_to_table("media_search_table",[lang("identifier"),lang("title"),lang("author"),lang("publisher"),lang("price"),lang("school_year"),lang("type")],true,["media_search_order('id');","media_search_order('title');","media_search_order('author');","media_search_order('publisher');","media_search_order('price');"]);
 
 			function add_row(i){
 				add_row_to_table("media_search_table",[$medias[i].getAttribute("id"), $medias[i].getAttribute("title"), $medias[i].getAttribute("author"),$medias[i].getAttribute("publisher"),$medias[i].getAttribute("price") + " €",$medias[i].getAttribute("school_year"),$medias[i].getAttribute("type")],false,"switch_media_search_side(1,"+$medias[i].getAttribute("id")+");");
@@ -928,10 +806,31 @@ function isbn_lookup(isbn){
 }
 // ================================================
 // Actions
-function remove_all_selected_media_instances(){
-	if(get_selected_media_instances().length != 0){
+function editing_input_changed(input_id){
+	switch(input_id){
+		case "student_editing_name":
+			action_request({"action": "modify_student", "student_id": current_student_id, "new_name": $("#"+input_id).text()},false,true)
+			.then(function(){
+				refresh_students_list();
+			});
+		break;
+		case "student_editing_class":
+			action_request({"action": "modify_student", "student_id": current_student_id, "new_class_id": $("#"+input_id).val()},false,true)
+			.then(function(){
+				refresh_students_list();
+			});
+		break;
+	}
+}
+function remove_all_selected_media_instances(side){ //side 0 -> Media Search , 1 -> Student Search
+	if(side == 0){
+		remove_instances = get_selected_media_instances();
+	}else{
+		remove_instances = get_selected_student_media_instances();
+	}
+	if(remove_instances.length != 0){
 		Swal.fire({
-			title: 'Wirklich '+get_selected_media_instances().length+' Medien Instanzen löschen',
+			title: 'Wirklich '+remove_instances.length+' Medien Instanzen löschen',
 			type: 'warning',
 			confirmButtonText: 'löschen',
 			showCancelButton: true,
@@ -940,19 +839,25 @@ function remove_all_selected_media_instances(){
 			buttonsStyling: false,
 		}).then((result) => {
 			if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
-				action_request({action : "remove_media_instances", barcodes : JSON.stringify(get_selected_media_instances())},false,true)
+				action_request({action : "remove_media_instances", barcodes : JSON.stringify(remove_instances)},false,true)
 				.then(function(data, status){
 					refresh_media_editing_instances(current_media_id);
+					refresh_student_editing_instances_table(current_student_id);
 				})
 				.catch(function(){});
 			}
 		});
 	}
 }
-function return_all_selected_media_instances(){
-	if(get_selected_media_instances().length != 0){
+function return_all_selected_media_instances(side){ //side 0 -> Media Search , 1 -> Student Search
+	if(side == 0){
+		return_instances = get_selected_media_instances();
+	}else{
+		return_instances = get_selected_student_media_instances();
+	}
+	if(return_instances.length != 0){
 		Swal.fire({
-			title: 'Wirklich '+get_selected_media_instances().length+' Medien Instanzen zurückgeben',
+			title: 'Wirklich '+return_instances.length+' Medien Instanzen zurückgeben',
 			type: 'warning',
 			confirmButtonText: 'zurückgeben',
 			showCancelButton: true,
@@ -961,9 +866,10 @@ function return_all_selected_media_instances(){
 			buttonsStyling: false,
 		}).then((result) => {
 			if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
-				action_request({action : "return_media_instances", barcodes : JSON.stringify(get_selected_media_instances())},false,true)
+				action_request({action : "return_media_instances", barcodes : JSON.stringify(return_instances)},false,true)
 				.then(function(data, status){
 					refresh_media_editing_instances(current_media_id);
+					refresh_student_editing_instances_table(current_student_id);
 				})
 				.catch(function(){});
 			}
@@ -989,6 +895,70 @@ function remove_media(media_id){
 		}
 	});
 }
+function remove_student(student_id){
+	Swal.fire({
+		title: 'Schüler wirklich löschen',
+		type: 'warning',
+		confirmButtonText: 'löschen',
+		showCancelButton: true,
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		buttonsStyling: false,
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			action_request({"action": "remove_student", "student_id": student_id},false,true)
+			.then(function(){
+				switch_student_search_side(0);
+			})
+			.catch(function(){});
+		}
+	});
+}
+function new_student(){
+	Swal.fire({
+		title: 'Neuer Schüler',
+		type: 'question',
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		confirmButtonText: 'erstellen',
+		showCancelButton: true,
+		buttonsStyling: false,
+		allowEnterKey: true,
+		html: "<div onkeypress='if (event.keyCode==13){Swal.clickConfirm();}'><input id='new_student_name' type='text' class='input_gray input_focus_color new_media_input' placeholder='Name'></input><br>"+
+		"<select id='new_student_class' class='select new_student_select'><option value='-1'>Klasse auswählen</option></select><br></div>",
+		preConfirm: () => {
+			returns = {
+				"action" : "new_student",
+				"name" : $("#new_student_name").val(),
+				"class_id" : $("#new_student_class").val(),
+				};
+			let error = false;
+			if(returns["class_id"] == -1){
+				$("#new_student_class").addClass("animated pulse");
+				setTimeout(function(){$("#new_student_class").removeClass("pulse");},800);
+				error = true;
+			}
+			if(returns["name"] == ""){
+				$("#new_student_name").addClass("animated pulse");
+				setTimeout(function(){$("#new_student_name").removeClass("pulse");},800);
+				error = true;
+			}
+			if(error == false){
+				return returns;
+			}else{
+				return false;
+			}
+		}
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			action_request(result["value"],false,true)
+			.then(function(){})
+			.catch(function(){});
+		}
+	});
+	$("#new_student_name").focus();
+	refresh_classes_list("new_student_class");
+}
 function new_media(){
 	Swal.fire({
 		title: 'Neues Medium',
@@ -1003,7 +973,7 @@ function new_media(){
 		"<input id='new_media_author' type='text' class='input_gray input_focus_color new_media_input' placeholder='Autor'></input><br>"+
 		"<input id='new_media_publisher' type='text' class='input_gray input_focus_color new_media_input' placeholder='Verlag'></input><br>"+
 		"<input id='new_media_price' type='text' class='input_gray input_focus_color new_media_input' placeholder='Preis'></input><br>"+
-		"<select id='new_media_school_year' class='select new_media_select'><option value='-1'>Schuljahr auswählen</option></select><br>"+
+		"<select id='new_media_school_year_id' class='select new_media_select'><option value='-1'>Schuljahr auswählen</option></select><br>"+
 		"<select id='new_media_subject' class='select new_media_select'><option value='-1'>Fach auswählen</option></select><br>"+
 		"<select id='new_media_type' class='select new_media_select'><option value='-1'>Typ auswählen</option></select><br></div>",
 		preConfirm: () => {
@@ -1013,14 +983,14 @@ function new_media(){
 				"author" : $("#new_media_author").val(),
 				"publisher" : $("#new_media_publisher").val(),
 				"price" : $("#new_media_price").val(),
-				"school_year" : $("#new_media_school_year").val(),
+				"school_year_id" : $("#new_media_school_year_id").val(),
 				"subject_id" : $("#new_media_subject").val(),
 				"type_id" : $("#new_media_type").val(),
 				};
 			let error = false;
-			if(returns["school_year"] == -1){
-				$("#new_media_school_year").addClass("animated pulse");
-				setTimeout(function(){$("#new_media_school_year").removeClass("pulse");},800);
+			if(returns["school_year_id"] == -1){
+				$("#new_media_school_year_id").addClass("animated pulse");
+				setTimeout(function(){$("#new_media_school_year_id").removeClass("pulse");},800);
 				error = true;
 			}
 			if(returns["subject_id"] == -1){
@@ -1052,7 +1022,7 @@ function new_media(){
 		}
 	});
 	$("#new_media_title").focus();
-	refresh_school_years_list("new_media_school_year");
+	refresh_school_years_list("new_media_school_year_id");
 	refresh_subjects_list("new_media_subject");
 	refresh_types_list("new_media_type");
 }
@@ -1127,13 +1097,24 @@ function get_selected_media_instances(){
 	}
 	return barcodes;
 }
+function get_selected_student_media_instances(){
+	checkboxes = $(".student_search_instance_checkbox");
+	barcodes = [];
+
+	for(i = 0; i < checkboxes.length; i++){
+		if(checkboxes[i].checked){
+			barcodes.push($(checkboxes[i]).attr("barcode"));
+		}
+	}
+	return barcodes;
+}
 // ================================================
 // Action Button Handler
 function lend_button_clicked(input_box_id, date_select_id, holiday){
 	lend_media_instance($('#lend_student_select')[0].value,$('#'+input_box_id)[0].value,$('#'+date_select_id)[0].value,holiday, function(data){
 		//$('#'+input_box_id)[0].value = '';
 		clear_input_box("#"+input_box_id);
-		refreshBooksTable();
+		refresh_medias_table();
 	});
 }
 function return_button_clicked(){
@@ -1141,7 +1122,7 @@ function return_button_clicked(){
 		return_media_instance($('#media_return_input')[0].value,function (data,media0){
 			add_row_to_table("return_history_table",[infos[0].getAttribute("title"),$('#media_return_input')[0].value,infos[0].getAttribute("loaned_to_name"),getHour()+":"+getMinute(),"rückgängig"],false,[false,false,false,false,"alert('Feature noch nicht verfügbar')"]);
 			$('#media_return_input')[0].value='';
-			refreshBooksTable();
+			refresh_medias_table();
 		});
 }
 
