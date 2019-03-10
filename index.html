@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta id="theme_color_meta" name="theme-color" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 		<title>Biblio</title>
 		<link rel='stylesheet' type='text/css' href='/css/style.css'>
 		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
@@ -12,11 +13,13 @@
 		<link href="/css/animate.css" rel="stylesheet" />
 		<link href="/css/loading.css" rel="stylesheet" />
 		<link href="/css/loading-btn.css" rel="stylesheet" />
+		<link href="/css/pikaday.css" rel="stylesheet" />
 		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/api.js" async></script>
 		<script src="/js/functions.js" async></script>
 		<script src="/js/snowstorm-min.js" async></script>
+		<script src="/js/pikaday.js" async></script>
 		<script src="/js/sweetalert2.all.min.js" async></script>
 		<!-- <script>
 			import("/js/js_bundle.js");
@@ -98,8 +101,8 @@
 			</div>
 			<div id="books_div" class="side">
 				<div class="book_div_horizontal" id="books_choose_side_mobile">
-					<a onclick="switch_books_side_mobile(0);">zurückgeben</a>
-					<a onclick="switch_books_side_mobile(1);">ausleihen</a>
+					<a id="switch_books_side_mobile_button0" style="font-weight: bold;" onclick="switch_books_side_mobile(0);">zurückgeben</a>
+					<a id="switch_books_side_mobile_button1" onclick="switch_books_side_mobile(1);">ausleihen</a>
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
@@ -122,19 +125,17 @@
 
 					</div>
 					<div class="book_div_padding book_div_right">
-						<form style="margin: auto;" onsubmit="return false">
-							<select onchange="refresh_medias_table();" id="lend_student_select" name="state"></select>
-						</form>
+						<div><select onchange="refresh_medias_table();" id="lend_student_select" name="state"></select></div>
 						<br>
 					</div>
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
-						<div class="book_input_div">
-							<input style="width:70%;" id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
-							<button style="width: 30%;margin: 10px 0 10px 0;" class="button ld-ext-right" id="media_return_button">
+						<div class="book_input_div mobile_seperate_lines">
+							<input id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
+							<button class="button ld-ext-right" id="media_return_button">
 								<span>zurückgeben</span>
-								<div style="font-size:16px" class="ld ld-ring ld-cycle"></div>
+								<div style="font-size:16px" class="ld ld-ring ld-cycle not_affected_by_color_theme"></div>
 							</button>
 						</div>
 					</div>
@@ -154,6 +155,9 @@
 							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">Ferienausleihe</button>
 						</div>
 						<br>
+						<div style="width: 100%; display: flex;">
+							<button class="button" id="edit_student_button" style="margin-left: auto; margin-right: auto;">Schüler bearbeiten</button>
+						</div>
 					</div>
 				</div>
 				<div class="book_div_horizontal">
@@ -188,18 +192,18 @@
 			</div>
 			<div id="katalogisierung_div" class="side">
 				<h1 class="text_centered">Katalogisierung</h1>
-				<div id="media_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
-					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
-						<div style="display: flex;flex-direction: row;align-items: center;">
-							<input type="text" id="media_search_input" class="input_gray input_focus_color search_input">
+				<div id="media_search_side1">
+					<div id="media_search_search_bar" class="mobile_seperate_lines">
+						<div style="display: flex;flex-direction: row;align-items: center;" class="small_spacer">
+							<input type="text" id="media_search_input" class="input_gray input_focus_color search_input" autocomplete="off">
 							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refresh_media_search();" class="search_button">
 								<use xlink:href="#search_icon"/>
 							</svg>
 						</div>
-						<select style="margin-left: 12px;" class="select" id="catalog_subject_select">
+						<select class="select small_spacer" id="catalog_subject_select">
 							<option value="-1">alle Fächer</option>
 						</select>
-						<select class="select" id="catalog_school_year_select">
+						<select class="select small_spacer" id="catalog_school_year_select">
 							<option value="-1">alle Jahrgangsstufen</option>
 						</select>
 					</div>
@@ -233,14 +237,14 @@
 						<tr>
 							<th class="td">Fach</th>
 							<td id="catalog_medium_subject" class="td">
-								<select id="catalog_medium_subject_select" class="select"></select>
+								<select id="catalog_medium_subject_select" onclick="editing_input_changed(this.id);" class="select"></select>
 							</td>
 						</tr>
 						<tr>
 							<th class="td">Jahrgangsstufe</th>
 							<!-- <td id="catalog_medium_school_year" class="td" onclick="th_to_input(this.id);"></td> -->
 							<td class="td" id="catalog_medium_school_year">
-								<select id="catalog_medium_school_year_select" class="select"></select>
+								<select id="catalog_medium_school_year_select" onclick="editing_input_changed(this.id);" class="select"></select>
 							</th>
 						</tr>
 						<tr>
@@ -258,7 +262,7 @@
 						<tr>
 							<th class="td">Typ</th>
 							<td id="catalog_medium_type" class="td">
-								<select id="catalog_medium_type_select" class="select"></select>
+								<select id="catalog_medium_type_select" onclick="editing_input_changed(this.id);" class="select"></select>
 							</td>
 						</tr>
 					</table>
@@ -267,10 +271,10 @@
 					</div>
 					<br>
 					<h2 class="text_centered">Exemplare</h2>
-					<div id="selected_media_instances_operations" style="display: flex; margin: auto; width: fit-content;">
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances(0);">ausgewähte löschen</button>
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="return_all_selected_media_instances(0);">ausgewähte zurückgeben</button>
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media_instance(current_media_id);">neues Exemplar</button>
+					<div id="selected_media_instances_operations" class="mobile_seperate_lines">
+						<button class="button small_spacer" onclick="remove_all_selected_media_instances(0);">ausgewähte löschen</button>
+						<button class="button small_spacer" onclick="return_all_selected_media_instances(0);">ausgewähte zurückgeben</button>
+						<button class="button small_spacer" onclick="new_media_instance(current_media_id);">neues Exemplar</button>
 					</div>
 					<table id="media_details_instances_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
@@ -286,9 +290,9 @@
 			<div id="schüler_div" class="side">
 				<h1 class="text_centered">Schüler</h1>
 				<div id="student_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
-					<div style="margin: auto;display: flex;flex-direction: row;align-items: center;">
+					<div id="student_search_search_bar" class="mobile_seperate_lines">
 						<div style="display: flex;flex-direction: row;align-items: center;">
-							<input type="text" id="student_search_input" class="input_gray input_focus_color search_input">
+							<input type="text" id="student_search_input" class="input_gray input_focus_color search_input" autocomplete="off">
 							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshStudentSearch();" class="search_button">
 								<use xlink:href="#search_icon"/>
 							</svg>
@@ -390,7 +394,7 @@
 						<div class="options_side" id="options_classes">
 							<h2 class="text_centered">Klassen</h1>
 							<br>
-							<div style="margin: auto; width: fit-content; display: flex;">
+							<div class="mobile_seperate_lines" style="margin: auto; width: fit-content; display: flex;">
 								<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewählte zusammenlegen</button>
 								<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewählte löschen</button>
 								<button class="button" style="margin-left: 5px; margin-right: 5px;">neues Schuljahr</button>

@@ -147,6 +147,15 @@ function media_exists($title){
 
 	return ($exists[0] == 1);
 }
+function media_id_exists($id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM medias WHERE id = :id;");
+	$statement->execute(array("id" => $id));
+	$exists = $statement->fetch();
+
+	return ($exists[0] == 1);
+}
 function media_instance_exists($barcode){
 	global $pdo;
 

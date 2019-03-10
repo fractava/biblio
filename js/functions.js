@@ -75,7 +75,7 @@ function configure_lang(){
 	}
 }
 function configure_button_handler(){
-	$("#media_return_button")[0].addEventListener("click", return_button_clicked);
+	$("#media_return_button")[0].addEventListener("click",return_button_clicked);
 	$("#media_return_input")[0].addEventListener("keydown", function(event){if (event.keyCode == 13){return_button_clicked();}});
 }
 function configureSelect2(){
@@ -224,8 +224,8 @@ function switch_color_theme(color_theme){
 
 		$("#theme_color_meta").prop("content",browser_theme_color);
 
-		$("div , h1 , h2 , h3 , select , .select2-selection__rendered , p , a:not(.nav_a)").css("color",text_color);
-		$("div:not(#navbar_settings_icon) , select , .select2-selection , html").css("background-color",background_color);
+		$("div:not(.not_affected_by_color_theme) , h1 , h2 , h3 , select , .select2-selection__rendered , p , a:not(.nav_a)").css("color",text_color);
+		$("div:not(#navbar_settings_icon):not(.not_affected_by_color_theme) , select , .select2-selection , html").css("background-color",background_color);
 
 		$("#catalog_back_button").prop("src","/assets/arrow_back_"+icon_color+".svg");
 		$("#student_back_button").prop("src","/assets/arrow_back_"+icon_color+".svg");
@@ -241,6 +241,12 @@ function switch_color_theme(color_theme){
 		$(".nav_a").css("color",navbar_text_color);
 	})
 	.catch(function(){});
+}
+function enable_button_loading(button_id){
+	$("#"+button_id).addClass("running");
+}
+function disable_button_loading(button_id){
+	$("#"+button_id).removeClass("running");
 }
 function switchToSide(show_side){
 	//0 Login
@@ -318,10 +324,14 @@ function switch_books_side_mobile(show_side){
 		case 0:
 			$(".book_div_right").hide();
 			$(".book_div_left").show();
+			$("#switch_books_side_mobile_button0").css("font-weight","bold");
+			$("#switch_books_side_mobile_button1").css("font-weight","normal");
 		break;
 		case 1:
 			$(".book_div_left").hide();
 			$(".book_div_right").show();
+			$("#switch_books_side_mobile_button1").css("font-weight","bold");
+			$("#switch_books_side_mobile_button0").css("font-weight","normal");
 		break;
 	}
 }
@@ -550,7 +560,26 @@ function refresh_media_editing_instances(media_id1){
 		$instances = $xml.find("media_instance");
 
 		for(i = 0; i < $instances.length; i++){
-			add_row_to_table("media_details_instances_table",["<input type='checkbox' class='media_search_instance_checkbox' instance_barcode='"+$instances[i].getAttribute("barcode")+"'></input>",$instances[i].getAttribute("barcode"),$instances[i].getAttribute("loaned_to_name"),$instances[i].getAttribute("loaned_until"),$instances[i].getAttribute("holiday")],false,false,[true]);
+			let loaned_to = $instances[i].getAttribute("loaned_to");
+			let loaned_to_name = $instances[i].getAttribute("loaned_to_name");
+			let barcode = $instances[i].getAttribute("barcode");
+			let loaned_until = $instances[i].getAttribute("loaned_until");
+			let holiday = $instances[i].getAttribute("holiday");
+			if(holiday == "1"){
+				holiday = lang("yes");
+			}else if(holiday == "0"){
+				holiday = lang("no");
+			}
+			let switch_to_student;
+			let change_date;
+			if(loaned_to != ""){
+				switch_to_student = "switch_student_search_side(1,"+loaned_to+"); switchToSide(3);";
+				change_date = "change_media_instance_loaned_until('"+barcode+"','"+loaned_until+"');";
+			}else{
+				switch_to_student = false;
+				change_date = false;
+			}
+			add_row_to_table("media_details_instances_table",["<input type='checkbox' class='media_search_instance_checkbox' instance_barcode='"+barcode+"'></input>",barcode,loaned_to_name,loaned_until,holiday],false,[false,false,switch_to_student,change_date],[true]);
 		}
 	})
 	.catch(function(){});
@@ -662,6 +691,7 @@ function refresh_date_inputs(){
 function refresh_medias_table(){
 	get_data_request({"requested_data":"medias_of_student","student_id": $("#lend_student_select")[0].value},true,true,4)
 	.then(function(data, status) {
+		let student_id = $("#lend_student_select")[0].value;
 		$xml = $(data);
 		$books = $xml.find("media");
 
@@ -679,7 +709,13 @@ function refresh_medias_table(){
 			}else{
 				overdue_text = "ja";
 			}
-			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text,ferienausleihe],false);
+			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text,ferienausleihe],false,["switch_media_search_side(1,"+$books[i].getAttribute('media_id')+"); switchToSide(2);"]);
+		}
+		if(student_id != "-1"){
+			$("#edit_student_button")[0].addEventListener("click",function(){
+				switchToSide(3);
+				switch_student_search_side(1,student_id);
+			});
 		}
 	})
 	.catch(function(){});
@@ -820,7 +856,53 @@ function editing_input_changed(input_id){
 				refresh_students_list();
 			});
 		break;
+		case "catalog_medium_title":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_title": $("#"+input_id).text()},false,true);
+		break;
+		case "catalog_medium_subject_select":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_subject_id": $("#"+input_id).val()},false,true);
+		break;
+		case "catalog_medium_school_year_select":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_school_year_id": $("#"+input_id).val()},false,true);
+		break;
+		case "catalog_medium_author":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_author": $("#"+input_id).text()},false,true);
+		break;
+		case "catalog_medium_publisher":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_publisher": $("#"+input_id).text()},false,true);
+		break;
+		case "catalog_medium_price":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_price": $("#"+input_id).text()},false,true);
+		break;
+		case "catalog_medium_type_select":
+			action_request({"action": "modify_media", "media_id": current_media_id, "new_type_id": $("#"+input_id).val()},false,true);
+		break;
 	}
+}
+function change_media_instance_loaned_until(barcode,current_date){
+	Swal.fire({
+		title: "",
+		type: 'question',
+		customClass: "swal_mobile_fullscreen",
+		confirmButtonText: lang("change"),
+		showCancelButton: true,
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		buttonsStyling: false,
+		html: "<input id='change_media_instance_loaned_until_input' class='input_gray input_focus_color' type='text' autocomplete='off'></input>",
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			d = new Date(change_media_instance_loaned_until_picker.toString());
+			new_date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate());
+			action_request({"action": "modify_media_instance", "barcode": barcode, "new_loaned_until": new_date},false,true)
+			.then(function(){
+				refresh_media_editing_instances(current_media_id);
+			});
+		}
+	})
+	.catch(function(){});
+	var change_media_instance_loaned_until_picker = new Pikaday({ field: document.getElementById('change_media_instance_loaned_until_input')});
+	change_media_instance_loaned_until_picker.setDate(current_date);
 }
 function remove_all_selected_media_instances(side){ //side 0 -> Media Search , 1 -> Student Search
 	if(side == 0){
@@ -829,9 +911,17 @@ function remove_all_selected_media_instances(side){ //side 0 -> Media Search , 1
 		remove_instances = get_selected_student_media_instances();
 	}
 	if(remove_instances.length != 0){
+		let title;
+		if(remove_instances.length == 1){
+			title = lang("really_remove_media_instance");
+		}else{
+			title = lang("really_remove_media_instances").replace("[count]",remove_instances.length);
+		}
 		Swal.fire({
-			title: 'Wirklich '+remove_instances.length+' Medien Instanzen löschen',
+			//title: 'Wirklich '+remove_instances.length+' Medien Instanz(en) löschen',
+			title: title,
 			type: 'warning',
+			customClass: "swal_mobile_fullscreen",
 			confirmButtonText: 'löschen',
 			showCancelButton: true,
 			confirmButtonClass: 'button',
@@ -859,6 +949,7 @@ function return_all_selected_media_instances(side){ //side 0 -> Media Search , 1
 		Swal.fire({
 			title: 'Wirklich '+return_instances.length+' Medien Instanzen zurückgeben',
 			type: 'warning',
+			customClass: "swal_mobile_fullscreen",
 			confirmButtonText: 'zurückgeben',
 			showCancelButton: true,
 			confirmButtonClass: 'button',
@@ -880,6 +971,7 @@ function remove_media(media_id){
 	Swal.fire({
 		title: 'Medium wirklich löschen',
 		type: 'warning',
+		customClass: "swal_mobile_fullscreen",
 		confirmButtonText: 'löschen',
 		showCancelButton: true,
 		confirmButtonClass: 'button',
@@ -918,6 +1010,7 @@ function new_student(){
 	Swal.fire({
 		title: 'Neuer Schüler',
 		type: 'question',
+		customClass: "swal_mobile_fullscreen",
 		confirmButtonClass: 'button',
 		cancelButtonClass: 'button',
 		confirmButtonText: 'erstellen',
@@ -963,6 +1056,7 @@ function new_media(){
 	Swal.fire({
 		title: 'Neues Medium',
 		type: 'question',
+		customClass: "swal_mobile_fullscreen",
 		confirmButtonClass: 'button',
 		cancelButtonClass: 'button',
 		confirmButtonText: 'erstellen',
@@ -1030,8 +1124,7 @@ function new_media_instance(){
 	Swal.fire({
 		title: 'Neues Exemplar',
 		type: 'question',
-		//animation: false,
-		//customClass: 'animated bounceInDown',
+		customClass: "swal_mobile_fullscreen",
 		confirmButtonClass: 'button',
 		cancelButtonClass: 'button',
 		confirmButtonText: 'erstellen',
@@ -1118,17 +1211,28 @@ function lend_button_clicked(input_box_id, date_select_id, holiday){
 	});
 }
 function return_button_clicked(){
-		clear_text('return_media_error_message');
-		return_media_instance($('#media_return_input')[0].value,function (data,media0){
-			add_row_to_table("return_history_table",[infos[0].getAttribute("title"),$('#media_return_input')[0].value,infos[0].getAttribute("loaned_to_name"),getHour()+":"+getMinute(),"rückgängig"],false,[false,false,false,false,"alert('Feature noch nicht verfügbar')"]);
-			$('#media_return_input')[0].value='';
+		enable_button_loading("media_return_button");
+		let infos;
+		get_data_request({"requested_data" : "media_instance_infos", "barcode" : $("#media_return_input")[0].value},false,true)
+		.then(function(data){
+			infos = $(data).find("media");
+			return action_request({"action": "return_media_instance", "barcode": $('#media_return_input')[0].value},false,true);
+		})
+		.then(function(data){
+			let undo = "action_request({'action': 'lend_media_instance', 'barcode': '"+$('#media_return_input')[0].value+"', 'student_id': '"+infos[0].getAttribute("loaned_to")+"', 'holiday': '"+infos[0].getAttribute("holiday")+"', 'until': '"+infos[0].getAttribute("loaned_until")+"'},false,true); refresh_medias_table(); $(this).parent().remove();"
+			add_row_to_table("return_history_table",[infos[0].getAttribute("title"),$('#media_return_input')[0].value,infos[0].getAttribute("loaned_to_name"),getHour()+":"+getMinute(),"rückgängig"],false,[false,false,false,false,undo],false,true);
+			clear_input_box("#media_return_input");
 			refresh_medias_table();
-		});
+			disable_button_loading("media_return_button");
+		})
+		.catch(function(){
+			disable_button_loading("media_return_button");
+		})
 }
 
 // ================================================
 // Table Functions
-function add_row_to_table(table_id,column_array,headline,onclick_array,html_array){
+function add_row_to_table(table_id,column_array,headline,onclick_array,html_array,after_headline){
 	let tr = document.createElement('tr');
 	for(let i=0; i < column_array.length; i++){
 		if(typeof headline === "boolean"){
@@ -1165,7 +1269,12 @@ function add_row_to_table(table_id,column_array,headline,onclick_array,html_arra
 		}
 		tr.appendChild(td);
 	}
-	$("#"+table_id)[0].appendChild(tr);
+	if(after_headline){
+		let table = $("#"+table_id)[0];
+		table.insertBefore(tr,table.childNodes[2]);
+	}else{
+		$("#"+table_id)[0].appendChild(tr);
+	}
 }
 // ================================================
 // Miscellaneous

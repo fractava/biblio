@@ -163,7 +163,53 @@ if(isset($_POST["action"])){
 		break;
 		case "modify_media":
 			if(permission_granted("edit_media")){
-				if(!(isset($_POST["media_id"]) && (isset($_POST["new_title"]) || isset($_POST["new_subject"]) || isset($_POST["new_school_year_id"])))){
+				if(!(isset($_POST["media_id"]))){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
+				}
+				if(!media_id_exists($_POST["media_id"])){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","1");
+				}
+				$did_something = false;
+				if(isset($_POST["new_title"])){
+					$statement = $pdo->prepare("UPDATE medias SET title = :title WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "title" => $_POST["new_title"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_subject_id"])){
+					$statement = $pdo->prepare("UPDATE medias SET subject_id = :subject WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "subject" => $_POST["new_subject_id"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_school_year_id"])){
+					$statement = $pdo->prepare("UPDATE medias SET school_year_id = :school_year WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "school_year" => $_POST["new_school_year_id"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_author"])){
+					$statement = $pdo->prepare("UPDATE medias SET author = :author WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "author" => $_POST["new_author"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_publisher"])){
+					$statement = $pdo->prepare("UPDATE medias SET publisher = :publisher WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "publisher" => $_POST["new_publisher"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_price"])){
+					$statement = $pdo->prepare("UPDATE medias SET price = :price WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "price" => $_POST["new_price"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_type_id"])){
+					$statement = $pdo->prepare("UPDATE medias SET type_id = :type WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "type" => $_POST["new_type_id"]));
+					$did_something = true;
+				}
+				if($did_something == false){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","0");
@@ -173,6 +219,30 @@ if(isset($_POST["action"])){
 				$error = $request->addChild("error");
 				$error->addAttribute("id","4");
 			}
+		break;
+		case "modify_media_instance":
+			if(!isset($_POST["barcode"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+			}
+			if(!media_instance_exists($_POST["barcode"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","2");
+			}
+			$did_something = false;
+			if(isset($_POST["new_loaned_until"])){
+				$statement = $pdo->prepare("UPDATE media_instances SET loaned_until = :loaned_until WHERE barcode = :barcode LIMIT 1");
+				$statement->execute(array("barcode" => $_POST["barcode"], "loaned_until" => $_POST["new_loaned_until"]));
+				$did_something = true;
+			}
+			if($did_something == false){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+			}
+		break;
 		case "new_media_instances":
 			if(permission_granted("create_media_instance")){
 				if(isset($_POST["media_id"]) && isset($_POST["barcodes"])){
@@ -257,6 +327,11 @@ if(isset($_POST["action"])){
 				$error = $request->addChild("error");
 				$error->addAttribute("id","2");
 			}
+			if(!media_instance_loaned($_POST["barcode"])) {
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","11");
+			}
 			if($success){
 				return_media_instance($_POST["barcode"]);
 			}
@@ -276,13 +351,13 @@ if(isset($_POST["action"])){
 			}
 			if($success){
 				foreach($json as $row){
-					if(media_instance_exists($row)){
-						return_media_instance($row);
-					}else{
+					if(!media_instance_exists($row)){
 						$success = false;
 						$error = $request->addChild("error");
 						$error->addAttribute("id","2");
 						$error->addAttribute("extra_detail",$row);
+					}else{
+						return_media_instance($row);
 					}
 				}
 			}
