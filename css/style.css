@@ -8,6 +8,7 @@ html.loading body {opacity: 0; -webkit-transition: opacity 0; transition: opacit
 body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif;}
 .options_side , .side{display: none;width: 100%;}
 .text_centered{text-align: center;}
+.ld{z-index: initial !important;}
 
 /*Colors*/
 /*:root {
@@ -102,7 +103,7 @@ html.phone #media_return_button{width: 100%;}
 
 /* Media Search*/
 .media_search_side1{display: flex;flex-direction: row;flex-wrap: wrap;align-items: center;}
-#media_search_search_bar{margin: auto;display: flex;align-items: center; width: fit-content;flex-direction: row;}
+#media_search_search_bar{margin: auto;display: flex;align-items: center; width: fit-content;flex-direction: row; width: -moz-fit-content;}
 
 html.phone .mobile_seperate_lines{flex-direction: column !important;}
 
@@ -115,8 +116,8 @@ html.phone .mobile_seperate_lines{flex-direction: column !important;}
 .new_student_select , .new_media_select{width: calc(50% + 36px);}
 #media_details_table , #student_details_table{margin-left: auto; margin-right: auto;}
 #media_details_back , #student_details_back{display: flex; justify-content: center; align-items: center; margin-bottom: 5px; cursor: pointer;}
-#selected_media_operations , #selected_student_operations{display: flex; margin: auto; width: fit-content;}
-#selected_media_instances_operations{display: flex; margin: auto; width: fit-content;}
+#selected_media_operations , #selected_student_operations{display: flex; margin: auto; width: fit-content; width: -moz-fit-content;}
+#selected_media_instances_operations{display: flex; margin: auto; width: fit-content; width: -moz-fit-content;}
 
 /*Student Search*/
 #student_search_search_bar{margin: auto;display: flex;flex-direction: row;align-items: center;}

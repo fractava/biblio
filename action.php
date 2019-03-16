@@ -7,7 +7,6 @@ if(isset($_POST["action"])){
 	$success = true;
 	switch($_POST["action"]){
 		 case "login":
-			//require_once("./actions/login.php");
 			$error_msg = "";
 			if(!(isset($_POST['email']) && isset($_POST['passwort']))){
 				$success = false;
@@ -31,20 +30,15 @@ if(isset($_POST["action"])){
 			if($success){
 				$_SESSION['userid'] = $user['id'];
 
-					//Möchte der Nutzer angemeldet beleiben?
-					if(isset($_POST['angemeldet_bleiben'])) {
-						$identifier = random_string();
-						$securitytoken = random_string();
-
-						$insert = $pdo->prepare("INSERT INTO securitytokens (user_id, identifier, securitytoken) VALUES (:user_id, :identifier, :securitytoken)");
-						$insert->execute(array('user_id' => $user['id'], 'identifier' => $identifier, 'securitytoken' => sha1($securitytoken)));
-						setcookie("identifier",$identifier,time()+(3600*24*365)); //Valid for 1 year
-						setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //Valid for 1 year
-					}
-				}
-				break;
+				$identifier = random_string();
+				$securitytoken = random_string();
+				$insert = $pdo->prepare("INSERT INTO securitytokens (user_id, identifier, securitytoken) VALUES (:user_id, :identifier, :securitytoken)");
+				$insert->execute(array('user_id' => $user['id'], 'identifier' => $identifier, 'securitytoken' => sha1($securitytoken)));
+				setcookie("identifier",$identifier,time()+(3600*24*365)); //Valid for 1 year
+				setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //Valid for 1 year
+			}
+			break;
 		case "logout":
-			//require_once("./actions/logout.php");
 			session_start();
 			session_destroy();
 			unset($_SESSION['userid']);
@@ -236,6 +230,13 @@ if(isset($_POST["action"])){
 				$statement = $pdo->prepare("UPDATE media_instances SET loaned_until = :loaned_until WHERE barcode = :barcode LIMIT 1");
 				$statement->execute(array("barcode" => $_POST["barcode"], "loaned_until" => $_POST["new_loaned_until"]));
 				$did_something = true;
+			}
+			if(isset($_POST["new_holiday"])){
+				if($_POST["new_holiday"] == "0" || $_POST["new_holiday"] == "1"){
+					$statement = $pdo->prepare("UPDATE media_instances SET holiday = :holiday WHERE barcode = :barcode LIMIT 1");
+					$statement->execute(array("barcode" => $_POST["barcode"], "holiday" => $_POST["new_holiday"]));
+					$did_something = true;
+				}
 			}
 			if($did_something == false){
 				$success = false;

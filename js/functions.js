@@ -33,8 +33,6 @@ function onlogin(){
 		switchToSide(1);
 	}
 
-	auto_refresh(true);
-
 	auto_refresh_interval = setInterval(function(){auto_refresh();}, 750);
 	still_logged_in_interval = setInterval(function(){check_if_still_logged_in();}, 10000);
 
@@ -95,6 +93,7 @@ function login(){
 	action_request({action : "login" ,email : document.getElementById('login_email').value, 'passwort' : document.getElementById('login_passwort').value},false,false,false)
 	.then(function(){
 		onlogin();
+		auto_refresh(true);
 		login_animation();
 	})
 	.catch(function(reason){
@@ -125,7 +124,7 @@ function check_if_already_logged_in(){
 			}else{
 				switchToSide(0);
 			}
-			$( "html" ).removeClass( "loading" );
+			$( "html" ).removeClass("loading");
 		})
 		.catch(function(){
 			$(".loading").addClass("loading_error");
@@ -172,7 +171,9 @@ function switch_language(id){
 
 		$xml = $(data);
 		current_lang = $xml;
-		auto_refresh(true);
+		if(logged_in){
+			auto_refresh(true);
+		}
 	})
 	.catch(function(){});
 }
@@ -476,6 +477,12 @@ function auto_refresh(everything){
 			refresh_subjects_list();
 			refresh_school_years_list();
 			refresh_classes_list("students_class_select");
+			if(current_student_id != -1){
+				refresh_student_editing_details(current_student_id);
+			}
+			if(current_media_id != -1){
+				refresh_media_editing_details(current_media_id);
+			}
 		}else{
 			if(document.hidden == false && idle_time_minutes < 2){
 				switch(side){
@@ -498,7 +505,7 @@ function auto_refresh(everything){
 }
 function refresh_student_editing_details(student_id){
 	refresh_student_editing_student_details(student_id);
-	refresh_student_editing_instances_table(student_id);
+	refresh_student_editing_instances(student_id);
 }
 function refresh_media_editing_details(media_id){
 	refresh_media_editing_media_details(media_id);
@@ -552,7 +559,7 @@ function refresh_types_list(select_id,selected_type_id){
 }
 function refresh_media_editing_instances(media_id1){
 	$("#media_details_instances_table").empty();
-	add_row_to_table("media_details_instances_table",["<input type='checkbox' id='media_search_instance_checkbox_all' onchange='select_all_instances_checkbox_clicked(this);'></input>","Barcode","ausgeliehen_an","ausgeliehen_bis","Ferienausleihe"],true,false,[true]);
+	add_row_to_table("media_details_instances_table",["<input type='checkbox' id='media_search_instance_checkbox_all' onchange='select_all_instances_checkbox_clicked(this);'></input>",lang("barcode"),lang("loaned_to"),lang("loaned_until"),lang("holiday_lend")],true,false,[true]);
 
 	get_data_request({requested_data : "media_instances", media_id : media_id1},false,true)
 	.then(function(data){
@@ -565,21 +572,23 @@ function refresh_media_editing_instances(media_id1){
 			let barcode = $instances[i].getAttribute("barcode");
 			let loaned_until = $instances[i].getAttribute("loaned_until");
 			let holiday = $instances[i].getAttribute("holiday");
-			if(holiday == "1"){
-				holiday = lang("yes");
-			}else if(holiday == "0"){
-				holiday = lang("no");
-			}
-			let switch_to_student;
-			let change_date;
+
+			let switch_to_student = false;
+			let change_date = false;
+			let change_holiday = false;
 			if(loaned_to != ""){
-				switch_to_student = "switch_student_search_side(1,"+loaned_to+"); switchToSide(3);";
-				change_date = "change_media_instance_loaned_until('"+barcode+"','"+loaned_until+"');";
-			}else{
-				switch_to_student = false;
-				change_date = false;
+				switch_to_student = function(){switch_student_search_side(1,loaned_to); switchToSide(3);};
+				change_date = function(){change_media_instance_loaned_until(barcode,loaned_until);};
+				change_holiday = function(){change_media_instance_holiday(barcode,holiday);};
 			}
-			add_row_to_table("media_details_instances_table",["<input type='checkbox' class='media_search_instance_checkbox' instance_barcode='"+barcode+"'></input>",barcode,loaned_to_name,loaned_until,holiday],false,[false,false,switch_to_student,change_date],[true]);
+
+			let holiday_lang = "";
+			if(holiday == "1"){
+				holiday_lang = lang("yes");
+			}else if(holiday == "0"){
+				holiday_lang = lang("no");
+			}
+			add_row_to_table("media_details_instances_table",["<input type='checkbox' class='media_search_instance_checkbox' instance_barcode='"+barcode+"'></input>",barcode,loaned_to_name,loaned_until,holiday_lang],false,[false,false,switch_to_student,change_date,change_holiday],[true]);
 		}
 	})
 	.catch(function(){});
@@ -618,7 +627,7 @@ function refresh_classes_list(select_id,selected_class_id){
 		$xml = $(data);
 		$classes = $xml.find("class");
 
-		$('#'+select_id).empty().trigger("change");
+		$('#'+select_id).empty();
 		if(!selected_class_id){
 			$('#'+select_id).append(new Option(lang("all_classes"),-1,false,false));
 		}
@@ -711,8 +720,9 @@ function refresh_medias_table(){
 			}
 			add_row_to_table("ausleihen_tabelle",[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),overdue_text,ferienausleihe],false,["switch_media_search_side(1,"+$books[i].getAttribute('media_id')+"); switchToSide(2);"]);
 		}
-		if(student_id != "-1"){
-			$("#edit_student_button")[0].addEventListener("click",function(){
+		$("#edit_student_button").unbind();
+		if(student_id != "-1" && student_id != -1){
+			$("#edit_student_button").bind("click",function(){
 				switchToSide(3);
 				switch_student_search_side(1,student_id);
 			});
@@ -720,28 +730,39 @@ function refresh_medias_table(){
 	})
 	.catch(function(){});
 }
-function refresh_student_editing_instances_table(student_id){
+function refresh_student_editing_instances(student_id){
 	get_data_request({"requested_data":"medias_of_student","student_id": student_id},true,true,4)
 	.then(function(data, status) {
 		$xml = $(data);
 		$books = $xml.find("media");
 
 		$("#student_search_medias").empty();
-		add_row_to_table("student_search_medias",["<input type='checkbox' onchange='select_all_student_instances_checkbox_clicked(this);'></input>","Name","Barcode","ausgeliehen bis","überfällig","Ferienausleihe"],true,false,[true]);
+		add_row_to_table("student_search_medias",["<input type='checkbox' onchange='select_all_student_instances_checkbox_clicked(this);'></input>",lang("name"),lang("barcode"),lang("loaned_until"),lang("overdue"),lang("holiday_lend")],true,false,[true]);
 		for(i = 0; i < $books.length; i++){
+			let id = $books[i].getAttribute("media_id");
+			let barcode = $books[i].getAttribute("barcode");
+			let title = $books[i].getAttribute("title");
+			let loaned_until = $books[i].getAttribute("loaned_until");
+			let holiday = $books[i].getAttribute("holiday");
+
 			let overdue_text = "";
 			let ferienausleihe = "";
 			if($books[i].getAttribute("holiday") == "1"){
-				ferienausleihe = "ja";
+				holiday_text = lang("yes");
 			}else{
-				ferienausleihe = "nein";
+				holiday_text = lang("no");
 			}
 			if(Date.parse($books[i].getAttribute("loaned_until")) > Date.now()){
-				overdue_text = "nein";
+				overdue_text = lang("no");
 			}else{
-				overdue_text = "ja";
+				overdue_text = lang("yes");
 			}
-			add_row_to_table("student_search_medias",["<input type='checkbox' class='student_search_instance_checkbox' barcode='"+$books[i].getAttribute("barcode")+"'></input>",$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),$books[i].getAttribute("loaned_until"),overdue_text,ferienausleihe],false,false,[true]);
+
+			let switch_to_media = function(){switch_media_search_side(1,id); switchToSide(2);}
+			let change_date = function(){change_media_instance_loaned_until(barcode,loaned_until);};
+			let change_holiday = function(){change_media_instance_holiday(barcode,holiday);};
+
+			add_row_to_table("student_search_medias",["<input type='checkbox' class='student_search_instance_checkbox' barcode='"+barcode+"'></input>",title,barcode,loaned_until,overdue_text,holiday_text],false,[false,switch_to_media,false,change_date,false,change_holiday],[true]);
 		}
 	})
 	.catch(function(){});
@@ -897,12 +918,49 @@ function change_media_instance_loaned_until(barcode,current_date){
 			action_request({"action": "modify_media_instance", "barcode": barcode, "new_loaned_until": new_date},false,true)
 			.then(function(){
 				refresh_media_editing_instances(current_media_id);
+				refresh_student_editing_instances(current_student_id);
 			});
 		}
 	})
 	.catch(function(){});
 	var change_media_instance_loaned_until_picker = new Pikaday({ field: document.getElementById('change_media_instance_loaned_until_input')});
 	change_media_instance_loaned_until_picker.setDate(current_date);
+}
+function change_media_instance_holiday(barcode,current_holiday){
+	Swal.fire({
+		title: "",
+		type: 'question',
+		customClass: "swal_mobile_fullscreen",
+		confirmButtonText: lang("change"),
+		showCancelButton: true,
+		confirmButtonClass: 'button',
+		cancelButtonClass: 'button',
+		buttonsStyling: false,
+		html: "<label for='new_holiday_checkbox'>"+lang("holiday_lend")+"</label>"+
+					"<input id='change_media_instance_holiday_checkbox' name='new_holiday_checkbox' type='checkbox' autocomplete='off'></input>",
+	}).then((result) => {
+		if(result.dismiss != "cancel" && result.dismiss != "backdrop"){
+			let new_holiday;
+			if($('#change_media_instance_holiday_checkbox').is(":checked")){
+				new_holiday = "1";
+			}else{
+				new_holiday = "0";
+			}
+			console.log(new_holiday);
+			action_request({"action": "modify_media_instance", "barcode": barcode, "new_holiday": new_holiday},false,true)
+			.then(function(){
+				refresh_media_editing_instances(current_media_id);
+				refresh_student_editing_instances(current_student_id);
+			});
+		}
+	})
+	.catch(function(){});
+	console.log(current_holiday);
+	if(current_holiday == 1){
+		$("#change_media_instance_holiday_checkbox").prop("checked",true);
+	}else{
+		$("#change_media_instance_holiday_checkbox").prop("checked",false);
+	}
 }
 function remove_all_selected_media_instances(side){ //side 0 -> Media Search , 1 -> Student Search
 	if(side == 0){
@@ -932,7 +990,7 @@ function remove_all_selected_media_instances(side){ //side 0 -> Media Search , 1
 				action_request({action : "remove_media_instances", barcodes : JSON.stringify(remove_instances)},false,true)
 				.then(function(data, status){
 					refresh_media_editing_instances(current_media_id);
-					refresh_student_editing_instances_table(current_student_id);
+					refresh_student_editing_instances(current_student_id);
 				})
 				.catch(function(){});
 			}
@@ -960,7 +1018,7 @@ function return_all_selected_media_instances(side){ //side 0 -> Media Search , 1
 				action_request({action : "return_media_instances", barcodes : JSON.stringify(return_instances)},false,true)
 				.then(function(data, status){
 					refresh_media_editing_instances(current_media_id);
-					refresh_student_editing_instances_table(current_student_id);
+					refresh_student_editing_instances(current_student_id);
 				})
 				.catch(function(){});
 			}
@@ -1252,7 +1310,11 @@ function add_row_to_table(table_id,column_array,headline,onclick_array,html_arra
 		if(onclick_array){
 			if(Array.isArray(onclick_array)){
 				if(onclick_array[i]){
-					$(td).attr("onclick",onclick_array[i]);
+					if(typeof onclick_array[i] === "string"){
+						$(td).attr("onclick",onclick_array[i]);
+					}else if(typeof onclick_array[i] === "function"){
+						$(td).bind("click",onclick_array[i]);
+					}
 					td.classList.add("mouse_change_onhover");
 				}
 			}
