@@ -174,6 +174,23 @@ function switch_language(id){
 		if(logged_in){
 			auto_refresh(true);
 		}
+		$("#media_return_button").text(lang("return"));
+		$("#media_lend_button").text(lang("lend"));
+		$("#media_lend_button_holiday").text(lang("holiday_lend"));
+		$("#new_media_button").text(lang("new_media"));
+		$("#new_customer_button").text(lang("new_customer"));
+		$("#edit_customer_button").text(lang("edit_customer"));
+		$("#overdue_medias_summary").text(lang("overdue_medias"));
+		$("#overdue_holiday_medias_summary").text(lang("overdue_holiday_medias"));
+		$("#media_lend_title").text(lang("media_lend_title"));
+		$("#media_return_title").text(lang("media_return_title"));
+		$("#nav_a_side1 , #mobile_sidenav_a_side1").text(lang("book_return_and_lend_side_title"));
+		$("#nav_a_side2 , #mobile_sidenav_a_side2").text(lang("catalog_side_title"));
+		$("#nav_a_side3 , #mobile_sidenav_a_side3").text(lang("customers_side_title"));
+		$("#nav_a_side4 , #mobile_sidenav_a_side4").text(lang("lists_side_title"));
+		$("#nav_a_side5 , #mobile_sidenav_a_side5").text(lang("admin_side_title"));
+		$("#last_returned_media_instances").text(lang("last_returned_media_instances")+":");
+		$("#media_instances_of_customer").text(lang("media_instances_of_customer")+":");
 	})
 	.catch(function(){});
 }
@@ -548,7 +565,7 @@ function refresh_types_list(select_id,selected_type_id){
 		$('#'+select_id).empty();
 
 		if(!selected_type_id){
-			$('#'+select_id).append(new Option("Typ auswählen",-1,false,false));
+			$('#'+select_id).append(new Option(lang("select_type"),-1,false,false));
 		}
 
 		for(i = 0; i < $types.length; i++){
@@ -629,7 +646,7 @@ function refresh_classes_list(select_id,selected_class_id){
 
 		$('#'+select_id).empty();
 		if(!selected_class_id){
-			$('#'+select_id).append(new Option(lang("all_classes"),-1,false,false));
+			$('#'+select_id).append(new Option(lang("select_class"),-1,false,false));
 		}
 
 		for(i = 0; i < $classes.length; i++){
@@ -649,7 +666,7 @@ function refresh_subjects_list(select_id){
 		$subjects = $xml.find("subject");
 
 		$('#'+select_id).empty().trigger("change");
-		$('#'+select_id).append(new Option(lang("all_subjects"),-1,false,false));
+		$('#'+select_id).append(new Option(lang("select_subject"),-1,false,false));
 
 		for(i = 0; i < $subjects.length; i++){
 			$('#'+select_id).append(new Option($subjects[i].getAttribute('name'),$subjects[i].getAttribute('id'),false,false));
@@ -669,7 +686,7 @@ function refresh_school_years_list(select_id,selected_school_year_id){
 
 		$('#'+select_id).empty().trigger("change");
 		if(!selected_school_year_id){
-			$('#'+select_id).append(new Option(lang("all_school_years"),-1,false,false));
+			$('#'+select_id).append(new Option(lang("select_school_year"),-1,false,false));
 		}
 
 		for(i = 0; i < $school_years.length; i++){
@@ -774,7 +791,7 @@ function refresh_overdue_table(holiday,table_id){
 		$books = $xml.find("book");
 
 		$('#'+table_id).empty();
-		add_row_to_table(table_id,["Medium Name","Barcode","Schüler Name","Klasse"],true);
+		add_row_to_table(table_id,[lang("title"),lang("barcode"),lang("customer_name"),lang("class")],true);
 
 		for(let i = 0; i < $books.length; i++){
 			add_row_to_table(table_id,[$books[i].getAttribute("title"),$books[i].getAttribute("barcode"),$books[i].getAttribute("loaned_to_name"),$books[i].getAttribute("class_name")],false);
@@ -1075,7 +1092,7 @@ function new_customer(){
 		showCancelButton: true,
 		buttonsStyling: false,
 		allowEnterKey: true,
-		html: "<div onkeypress='if (event.keyCode==13){Swal.clickConfirm();}'><input id='new_customer_name' type='text' class='input_gray input_focus_color new_media_input' placeholder='Name'></input><br>"+
+		html: "<div onkeypress='if (event.keyCode==13){Swal.clickConfirm();}'><input id='new_customer_name' type='text' class='input_gray input_focus_color new_media_input' placeholder='"+lang("name")+"'></input><br>"+
 		"<select id='new_customer_class' class='select new_customer_select'><option value='-1'>Klasse auswählen</option></select><br></div>",
 		preConfirm: () => {
 			returns = {
@@ -1121,13 +1138,13 @@ function new_media(){
 		showCancelButton: true,
 		buttonsStyling: false,
 		allowEnterKey: true,
-		html: "<div onkeypress='if (event.keyCode==13){Swal.clickConfirm();}'><input id='new_media_title' type='text' class='input_gray input_focus_color new_media_input' placeholder='Titel'></input><br>"+
-		"<input id='new_media_author' type='text' class='input_gray input_focus_color new_media_input' placeholder='Autor'></input><br>"+
-		"<input id='new_media_publisher' type='text' class='input_gray input_focus_color new_media_input' placeholder='Verlag'></input><br>"+
-		"<input id='new_media_price' type='text' class='input_gray input_focus_color new_media_input' placeholder='Preis'></input><br>"+
-		"<select id='new_media_school_year_id' class='select new_media_select'><option value='-1'>Schuljahr auswählen</option></select><br>"+
-		"<select id='new_media_subject' class='select new_media_select'><option value='-1'>Fach auswählen</option></select><br>"+
-		"<select id='new_media_type' class='select new_media_select'><option value='-1'>Typ auswählen</option></select><br></div>",
+		html: "<div onkeypress='if (event.keyCode==13){Swal.clickConfirm();}'><input id='new_media_title' type='text' class='input_gray input_focus_color new_media_input' placeholder='"+lang("title")+"'></input><br>"+
+		"<input id='new_media_author' type='text' class='input_gray input_focus_color new_media_input' placeholder='"+lang("author")+"'></input><br>"+
+		"<input id='new_media_publisher' type='text' class='input_gray input_focus_color new_media_input' placeholder='"+lang("publisher")+"'></input><br>"+
+		"<input id='new_media_price' type='text' class='input_gray input_focus_color new_media_input' placeholder='"+lang("price")+"'></input><br>"+
+		"<select id='new_media_school_year_id' class='select new_media_select'></select><br>"+
+		"<select id='new_media_subject' class='select new_media_select'></select><br>"+
+		"<select id='new_media_type' class='select new_media_select'></select><br></div>",
 		preConfirm: () => {
 			returns = {
 				"action" : "new_media",

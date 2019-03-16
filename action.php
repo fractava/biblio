@@ -16,7 +16,7 @@ if(isset($_POST["action"])){
 				$email = $_POST['email'];
 				$passwort = $_POST['passwort'];
 
-				$statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+				$statement = $pdo->prepare("SELECT * FROM members WHERE email = :email");
 				$result = $statement->execute(array('email' => $email));
 				$user = $statement->fetch();
 

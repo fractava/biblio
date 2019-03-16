@@ -106,10 +106,10 @@
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
-						<h1 style="text-align: center">Medium zurückgeben</h1>
+						<h1 id="media_return_title" style="text-align: center"></h1>
 					</div>
 					<div class="book_div_padding book_div_right">
-						<h1 style="text-align: center">Medium ausleihen</h1>
+						<h1 id="media_lend_title" style="text-align: center"></h1>
 					</div>
 				</div>
 				<div class="book_div_horizontal">
@@ -162,7 +162,7 @@
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
-						<h2 class="text_centered">Zuletzt zurückgegeben:</h2>
+						<h2 id="last_returned_media_instances" class="text_centered"></h2>
 						<table class="table" id="return_history_table" style="margin: auto;width: 100%;">
 							<tr class="tr">
 								<th class="td">Buch</th>
@@ -174,7 +174,7 @@
 						</table>
 					</div>
 					<div class="book_div_padding book_div_right">
-						<h2 style="text-align: center;">Medien des Schülers:</h2>
+						<h2 id="media_instances_of_customer" class="text_centered"></h2>
 						<table class="table" style="margin: auto;width: 100%;" id="ausleihen_tabelle">
 							<tr class="tr_headline">
 								<th class="td">Name</td>
@@ -210,7 +210,7 @@
 					<br>
 					<div style="width: 100%;">
 						<div style="display: flex; margin: auto; width: fit-content; width: -moz-fit-content;">
-							<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media();">neues Medium</button>
+							<button id="new_media_button" class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media();">neues Medium</button>
 						</div>
 					</div>
 					<div style="width: 100%;">
@@ -304,7 +304,7 @@
 					<br>
 					<div style="width: 100%;">
 						<div style="display: flex; margin: auto; width: fit-content;  width: -moz-fit-content;">
-							<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_customer();">neuer Schüler</button>
+							<button id="new_customer_button" class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_customer();">neuer Schüler</button>
 						</div>
 					</div>
 					<div style="width: 100%;">
@@ -355,7 +355,7 @@
 			<div  id="listen_div" class="side">
 				<h1 class="text_centered">Listen</h1>
 				<details style="width: 75%;margin: auto;" open>
-					<summary>Überfällige Medien</summary>
+					<summary id="overdue_medias_summary"></summary>
 					<table class="table" id="overdue_table">
 						<tr class="tr">
 							<th class="td">Medium Name</th>
@@ -367,7 +367,7 @@
 				</details>
 				<br>
 				<details style="width: 75%;margin: auto;" open>
-					<summary>Ferienausleihe</summary>
+					<summary id="overdue_holiday_medias_summary"></summary>
 					<table class="table" id="overdue_holiday_table">
 						<tr>
 							<th class="td">Medium Name</th>
