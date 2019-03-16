@@ -52,7 +52,7 @@ if(isset($_POST["action"])){
 		break;
 		case "lend_media_instance":
 			if(permission_granted("lend_media_instance")){
-				if(!(isset($_POST["student_id"]) && isset($_POST["barcode"]) && isset($_POST["until"]))){
+				if(!(isset($_POST["customer_id"]) && isset($_POST["barcode"]) && isset($_POST["until"]))){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","0");
@@ -67,7 +67,7 @@ if(isset($_POST["action"])){
 					$error = $request->addChild("error");
 					$error->addAttribute("id","2");
 				}
-				if(!student_exists($_POST["student_id"])){
+				if(!customer_exists($_POST["customer_id"])){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","6");
@@ -76,7 +76,7 @@ if(isset($_POST["action"])){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","7");
-					$error->addAttribute("extra_detail",student_name(media_instance_loaned_to($_POST["barcode"])));
+					$error->addAttribute("extra_detail",customer_name(media_instance_loaned_to($_POST["barcode"])));
 				}
 				if(!(($_POST["holiday"] == "1") || ($_POST["holiday"] == "0"))){
 					$success = false;
@@ -84,7 +84,7 @@ if(isset($_POST["action"])){
 					$error->addAttribute("id","8");
 				}
 				if($success){
-					lend_media_instance($_POST["barcode"] , $_POST["student_id"], $_POST["until"] , $_POST["holiday"]);
+					lend_media_instance($_POST["barcode"] , $_POST["customer_id"], $_POST["until"] , $_POST["holiday"]);
 				}
 			}else{
 				$success = false;
@@ -113,7 +113,7 @@ if(isset($_POST["action"])){
 				$error->addAttribute("id","4");
 			}
 		break;
-		case "new_student":
+		case "new_customer":
 			if(permission_granted("create_member")){
 				if(!(isset($_POST["name"]) && isset($_POST["class_id"]))){
 					$success = false;
@@ -121,7 +121,7 @@ if(isset($_POST["action"])){
 					$error->addAttribute("id","0");
 				}
 				if($success){
-					new_student($_POST["name"],$_POST["class_id"]);
+					new_customer($_POST["name"],$_POST["class_id"]);
 				}
 			}else{
 				$success = false;
@@ -129,25 +129,25 @@ if(isset($_POST["action"])){
 				$error->addAttribute("id","4");
 			}
 		break;
-		case "modify_student":
-			if(permission_granted("edit_student")){
-				if(!(isset($_POST["student_id"]) && (isset($_POST["new_name"]) || isset($_POST["new_class_id"])))){
+		case "modify_customer":
+			if(permission_granted("edit_customer")){
+				if(!(isset($_POST["customer_id"]) && (isset($_POST["new_name"]) || isset($_POST["new_class_id"])))){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","0");
 				}
-				if(!student_exists($_POST["student_id"])){
+				if(!customer_exists($_POST["customer_id"])){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","6");
 				}
 				if($success && isset($_POST["new_name"])){
-					$statement = $pdo->prepare("UPDATE students SET name = :name WHERE id = :student_id LIMIT 1");
-					$statement->execute(array("student_id" => $_POST["student_id"], "name" => $_POST["new_name"]));
+					$statement = $pdo->prepare("UPDATE customers SET name = :name WHERE id = :customer_id LIMIT 1");
+					$statement->execute(array("customer_id" => $_POST["customer_id"], "name" => $_POST["new_name"]));
 				}
 				if($success && isset($_POST["new_class_id"])){
-					$statement = $pdo->prepare("UPDATE students SET class_id = :class_id WHERE id = :student_id LIMIT 1");
-					$statement->execute(array("student_id" => $_POST["student_id"], "class_id" => $_POST["new_class_id"]));
+					$statement = $pdo->prepare("UPDATE customers SET class_id = :class_id WHERE id = :customer_id LIMIT 1");
+					$statement->execute(array("customer_id" => $_POST["customer_id"], "class_id" => $_POST["new_class_id"]));
 				}
 			}else{
 				$success = false;
@@ -276,15 +276,15 @@ if(isset($_POST["action"])){
 				$error->addAttribute("id","4");
 			}
 		break;
-		case "remove_student":
-			if(permission_granted("delete_member")){
-				if(!isset($_POST["student_id"])){
+		case "remove_customer":
+			if(permission_granted("delete_customer")){
+				if(!isset($_POST["customer_id"])){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","0");
 				}
 				if($success){
-					remove_student($_POST[student_id]);
+					remove_customer($_POST[customer_id]);
 				}
 			}else{
 				$success = false;

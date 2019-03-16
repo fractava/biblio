@@ -174,20 +174,20 @@ function design_exists($id){
 
 	return ($exists[0] == 1);
 }
-function student_exists($student_id){
+function customer_exists($customer_id){
 	global $pdo;
 
-	$statement = $pdo->prepare("SELECT COUNT(id) FROM students WHERE id = :student_id LIMIT 1;");
-	$statement->execute(array("student_id" => $student_id));
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM customers WHERE id = :customer_id LIMIT 1;");
+	$statement->execute(array("customer_id" => $customer_id));
 	$exists = $statement->fetch();
 
 	return ($exists[0] == 1);
 }
-function student_name($student_id){
+function customer_name($customer_id){
 	global $pdo;
 
-	$statement = $pdo->prepare("SELECT name FROM students WHERE id = :student_id LIMIT 1;");
-	$statement->execute(array("student_id" => $student_id));
+	$statement = $pdo->prepare("SELECT name FROM customers WHERE id = :customer_id LIMIT 1;");
+	$statement->execute(array("customer_id" => $customer_id));
 	$name = $statement->fetch();
 
 	return $name[0];
@@ -213,11 +213,11 @@ function media_instance_loaned_to($barcode){
 		return false;
 	}
 }
-function lend_media_instance($barcode, $student_id, $until, $holiday){
+function lend_media_instance($barcode, $customer_id, $until, $holiday){
 	global $pdo;
 
-	$statement = $pdo->prepare("UPDATE media_instances SET loaned_to = :student_id, loaned_until = :loaned_until, holiday = :holiday WHERE barcode = :barcode LIMIT 1;");
-	$statement->execute(array("student_id" => $student_id, "loaned_until" => $until,"barcode" => $barcode,"holiday" => $holiday));
+	$statement = $pdo->prepare("UPDATE media_instances SET loaned_to = :customer_id, loaned_until = :loaned_until, holiday = :holiday WHERE barcode = :barcode LIMIT 1;");
+	$statement->execute(array("customer_id" => $customer_id, "loaned_until" => $until,"barcode" => $barcode,"holiday" => $holiday));
 }
 function return_media_instance($barcode){
 	global $pdo;
@@ -240,10 +240,10 @@ function new_media($title,$author,$publisher,$price,$school_year_id,$subject_id,
 	$statement = $pdo->prepare("INSERT INTO medias (title,author,publisher,price,school_year_id,subject_id,type_id) VALUES (:title,:author,:publisher,:price,:school_year_id,:subject_id,:type_id);");
 	$statement->execute(array("title" => $title, "author" => $author, "publisher" => $publisher, "price" => $price, "school_year_id" => $school_year_id, "subject_id" => $subject_id, "type_id" => $type_id));
 }
-function new_student($name,$class_id){
+function new_customer($name,$class_id){
 	global $pdo;
 
-	$statement = $pdo->prepare("INSERT INTO students (name,class_id) VALUES (:name,:class_id);");
+	$statement = $pdo->prepare("INSERT INTO customers (name,class_id) VALUES (:name,:class_id);");
 	$statement->execute(array("name" => $name, "class_id" => $class_id));
 }
 function remove_media_instance($barcode){
@@ -261,12 +261,12 @@ function remove_media($media_id){
 	$statement2 = $pdo->prepare("DELETE FROM media_instances WHERE media_id = :media_id;");
 	$statement2->execute(array("media_id" => $media_id));
 }
-function remove_student($student_id){
+function remove_customer($customer_id){
 	global $pdo;
 
-	$statement = $pdo->prepare("DELETE FROM students WHERE id = :id LIMIT 1");
-	$statement->execute(array("id" => $student_id));
+	$statement = $pdo->prepare("DELETE FROM customers WHERE id = :id LIMIT 1");
+	$statement->execute(array("id" => $customer_id));
 
-	$statement2 = $pdo->prepare("UPDATE media_instances SET loaned_to = null, loaned_until = null, holiday = null WHERE loaned_to = :student_id;");
-	$statement2->execute(array("student_id" => $student_id));
+	$statement2 = $pdo->prepare("UPDATE media_instances SET loaned_to = null, loaned_until = null, holiday = null WHERE loaned_to = :customer_id;");
+	$statement2->execute(array("customer_id" => $customer_id));
 }

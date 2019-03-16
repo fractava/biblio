@@ -125,7 +125,7 @@
 
 					</div>
 					<div class="book_div_padding book_div_right">
-						<div><select onchange="refresh_medias_table();" id="lend_student_select" name="state"></select></div>
+						<div><select onchange="refresh_medias_table();" id="lend_customer_select" name="state"></select></div>
 						<br>
 					</div>
 				</div>
@@ -156,7 +156,7 @@
 						</div>
 						<br>
 						<div style="width: 100%; display: flex;">
-							<button class="button" id="edit_student_button" style="margin-left: auto; margin-right: auto;">Schüler bearbeiten</button>
+							<button class="button" id="edit_customer_button" style="margin-left: auto; margin-right: auto;">Schüler bearbeiten</button>
 						</div>
 					</div>
 				</div>
@@ -289,26 +289,26 @@
 			</div>
 			<div id="schüler_div" class="side">
 				<h1 class="text_centered">Schüler</h1>
-				<div id="student_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
-					<div id="student_search_search_bar" class="mobile_seperate_lines">
+				<div id="customer_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
+					<div id="customer_search_search_bar" class="mobile_seperate_lines">
 						<div style="display: flex;flex-direction: row;align-items: center;">
-							<input type="text" id="student_search_input" class="input_gray input_focus_color search_input" autocomplete="off">
-							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshStudentSearch();" class="search_button">
+							<input type="text" id="customer_search_input" class="input_gray input_focus_color search_input" autocomplete="off">
+							<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshcustomerSearch();" class="search_button">
 								<use xlink:href="#search_icon"/>
 							</svg>
 						</div>
-						<select style="margin-left: 12px;" class="select" id="students_class_select">
+						<select style="margin-left: 12px;" class="select" id="customers_class_select">
 							<option value="-1">alle Klassen</option>
 						</select>
 					</div>
 					<br>
 					<div style="width: 100%;">
 						<div style="display: flex; margin: auto; width: fit-content;  width: -moz-fit-content;">
-							<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_student();">neuer Schüler</button>
+							<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_customer();">neuer Schüler</button>
 						</div>
 					</div>
 					<div style="width: 100%;">
-						<table style="width: 90%;margin: auto;" id="student_search_table" class="table">
+						<table style="width: 90%;margin: auto;" id="customer_search_table" class="table">
 							<th class="td">id</th>
 							<th class="td">Name</th>
 							<th class="td">Geburtstag</th>
@@ -316,22 +316,22 @@
 						</table>
 					</div>
 				</div>
-				<div id="student_search_side2" style="display: none;">
-					<div id="student_details_back" onclick="switch_student_search_side(0);">
-						<img id="student_back_button" style="margin: auto;"></img>
+				<div id="customer_search_side2" style="display: none;">
+					<div id="customer_details_back" onclick="switch_customer_search_side(0);">
+						<img id="customer_back_button" style="margin: auto;"></img>
 					</div>
 					<table id="media_details_table" class="table">
 						<tr>
 							<th class="td">Name</th>
-							<td id="student_editing_name" class="td" onclick="th_to_input(this.id);"></td>
+							<td id="customer_editing_name" class="td" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
 							<th class="th">Klasse</th>
-							<td class="td"><select id="student_editing_class" class="select" onchange="editing_input_changed(this.id)"></select></td>
+							<td class="td"><select id="customer_editing_class" class="select" onchange="editing_input_changed(this.id)"></select></td>
 						</tr>
 					</table>
-					<div id="selected_student_operations">
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_student(current_student_id);">Schüler löschen</button>
+					<div id="selected_customer_operations">
+						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_customer(current_customer_id);">Schüler löschen</button>
 					</div>
 					<br>
 					<h2 class="text_centered">ausgeliehene Exemplare:</h2>
@@ -340,7 +340,7 @@
 						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances(1);">ausgewähte löschen</button>
 						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="return_all_selected_media_instances(1);">ausgewähte zurückgeben</button>
 					</div>
-					<table style="margin: auto;" id="student_search_medias" class="table">
+					<table style="margin: auto;" id="customer_search_medias" class="table">
 						<tr>
 							<th class="td"><input type="checkbox"></input></th>
 							<th class="td">Titel</th>

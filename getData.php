@@ -98,15 +98,15 @@ if(isset($_GET["requested_data"])){
 			header('Content-Type: text/xml');
 			echo $classes->asXML();
 		break;
-		case "students_list":
+		case "customers_list":
 			$user = check_user();
-			$students = new SimpleXMLElement("<studentslist></studentslist>");
+			$customers = new SimpleXMLElement("<customerslist></customerslist>");
 
-			$statement = $pdo->prepare("SELECT id , name , class_id FROM students;");
+			$statement = $pdo->prepare("SELECT id , name , class_id FROM customers;");
 			$statement->execute();
 
 			while($row = $statement->fetch()){
-				$xml_row = $students->addChild('student');
+				$xml_row = $customers->addChild('customer');
 				$xml_row->addAttribute('id',$row['id']);
 				$xml_row->addAttribute('name',$row['name']);
 
@@ -116,7 +116,7 @@ if(isset($_GET["requested_data"])){
 				$xml_row->addAttribute('class', $statement2->fetch()["name"]);
 			}
 			header('Content-Type: text/xml');
-			echo $students->asXML();
+			echo $customers->asXML();
 		break;
 		case "subjects_list":
 			$user = check_user();
@@ -165,11 +165,11 @@ if(isset($_GET["requested_data"])){
 				}
 			}
 		break;
-		case "medias_of_student":
+		case "medias_of_customer":
 			$user = check_user();
-			if(isset($_GET["student_id"])){
-				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :student_id;");
-                        	$statement->execute(array("student_id" => $_GET["student_id"]));
+			if(isset($_GET["customer_id"])){
+				$statement = $pdo->prepare("SELECT media_id , loaned_until , holiday , barcode FROM media_instances WHERE loaned_to = :customer_id;");
+                        	$statement->execute(array("customer_id" => $_GET["customer_id"]));
 				$medias = new SimpleXMLElement("<medias></medias>");
 				while($row = $statement->fetch()){
 					$xml_row = $medias->addChild('media');
@@ -216,15 +216,15 @@ if(isset($_GET["requested_data"])){
 					$xml_row->addAttribute('loaned_until',$row['loaned_until']);
 					$xml_row->addAttribute('holiday',$row['holiday']);
 
-					$statement2 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
-					$statement2->execute(array("student_id" => $row['loaned_to']));
-					$student_row = $statement2->fetch();
+					$statement2 = $pdo->prepare("SELECT * FROM customers WHERE id = :customer_id;");
+					$statement2->execute(array("customer_id" => $row['loaned_to']));
+					$customer_row = $statement2->fetch();
 
-					$xml_row->addAttribute('loaned_to_name',$student_row['name']);
-					$xml_row->addAttribute('class_id',$student_row['class_id']);
+					$xml_row->addAttribute('loaned_to_name',$customer_row['name']);
+					$xml_row->addAttribute('class_id',$customer_row['class_id']);
 
 					$statement3 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
-					$statement3->execute(array("class_id" => $student_row['class_id']));
+					$statement3->execute(array("class_id" => $customer_row['class_id']));
 					$class_row = $statement3->fetch();
 
 					$xml_row->addAttribute('class_name',$class_row['name']);
@@ -267,16 +267,16 @@ if(isset($_GET["requested_data"])){
 				echo $details->asXML();
 			}
 		break;
-		case "student_details":
+		case "customer_details":
 			$user = check_user();
-			if(isset($_GET["student_id"])){
+			if(isset($_GET["customer_id"])){
 				$details = new SimpleXMLElement("<details></details>");
 
-				$statement = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
-				$statement->execute(array("student_id" => $_GET['student_id']));
+				$statement = $pdo->prepare("SELECT * FROM customers WHERE id = :customer_id;");
+				$statement->execute(array("customer_id" => $_GET['customer_id']));
 				$row = $statement->fetch();
 
-				$xml_row = $details->addChild('student');
+				$xml_row = $details->addChild('customer');
 				$xml_row->addAttribute('name',$row['name']);
 				$xml_row->addAttribute('class_id',$row['class_id']);
 
@@ -336,12 +336,12 @@ if(isset($_GET["requested_data"])){
 
 				$xml_row->addAttribute('school_year',$school_year_row['name']);
 
-				$statement4 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
-				$statement4->execute(array("student_id" => $row['loaned_to']));
-				$student_row = $statement4->fetch();
+				$statement4 = $pdo->prepare("SELECT * FROM customers WHERE id = :customer_id;");
+				$statement4->execute(array("customer_id" => $row['loaned_to']));
+				$customer_row = $statement4->fetch();
 
-				$xml_row->addAttribute('loaned_to_name',$student_row['name']);
-				$xml_row->addAttribute('class_id',$student_row['class_id']);
+				$xml_row->addAttribute('loaned_to_name',$customer_row['name']);
+				$xml_row->addAttribute('class_id',$customer_row['class_id']);
 
 				header('Content-Type: text/xml');
 				echo $infos->asXML();
@@ -376,15 +376,15 @@ if(isset($_GET["requested_data"])){
 
 					$xml_row->addAttribute('school_year',$school_year_row['name']);
 
-					$statement4 = $pdo->prepare("SELECT * FROM students WHERE id = :student_id;");
-					$statement4->execute(array("student_id" => $row['loaned_to']));
-					$student_row = $statement4->fetch();
+					$statement4 = $pdo->prepare("SELECT * FROM customers WHERE id = :customer_id;");
+					$statement4->execute(array("customer_id" => $row['loaned_to']));
+					$customer_row = $statement4->fetch();
 
-					$xml_row->addAttribute('loaned_to_name',$student_row['name']);
-					$xml_row->addAttribute('class_id',$student_row['class_id']);
+					$xml_row->addAttribute('loaned_to_name',$customer_row['name']);
+					$xml_row->addAttribute('class_id',$customer_row['class_id']);
 
 					$statement5 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
-					$statement5->execute(array("class_id" => $student_row['class_id']));
+					$statement5->execute(array("class_id" => $customer_row['class_id']));
 					$class_row = $statement5->fetch();
 
 					$xml_row->addAttribute('class_name',$class_row['name']);
@@ -393,31 +393,31 @@ if(isset($_GET["requested_data"])){
 				echo $books->asXML();
 			}
 		break;
-		case "search_student":
+		case "search_customer":
 			$user = check_user();
 			if(isset($_GET["search"]) && isset($_GET["class_id"])){
 				if(isset($_GET["order_by"])){
 					switch($_GET["order_by"]){
 						case "id":
-							$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search ORDER BY id;");
+							$statement = $pdo->prepare("SELECT * FROM customers WHERE name LIKE :search ORDER BY id;");
 						break;
 						case "name":
-							$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search ORDER BY name;");
+							$statement = $pdo->prepare("SELECT * FROM customers WHERE name LIKE :search ORDER BY name;");
 						break;
 						default:
-							$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search;");
+							$statement = $pdo->prepare("SELECT * FROM customers WHERE name LIKE :search;");
 						break;
 					}
 				}else{
-					$statement = $pdo->prepare("SELECT * FROM students WHERE name LIKE :search;");
+					$statement = $pdo->prepare("SELECT * FROM customers WHERE name LIKE :search;");
 				}
 
 				$statement->execute(array("search" => "%" . $_GET["search"] . "%"));
-				$students = new SimpleXMLElement("<students></students>");
+				$customers = new SimpleXMLElement("<customers></customers>");
 
 				while($row = $statement->fetch()){
 					if(($row['class_id'] == $_GET["class_id"]) || $_GET["class_id"] == -1){
-						$xml_row = $students->addChild('student');
+						$xml_row = $customers->addChild('customer');
 						$xml_row->addAttribute('id',$row['id']);
 						$xml_row->addAttribute('name',$row['name']);
 						$xml_row->addAttribute('class_id',$row['class_id']);
@@ -438,7 +438,7 @@ if(isset($_GET["requested_data"])){
 					}
 				}
 				header('Content-Type: text/xml');
-				echo $students->asXML();
+				echo $customers->asXML();
 			}
 		break;
 		case "search_media":
