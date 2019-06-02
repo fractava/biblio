@@ -11,7 +11,7 @@ body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif;}
 div:not(.not_affected_by_color_theme) , h1 , h2 , h3 , select , .select2-selection__rendered , p:not(.not_affected_by_color_theme) , a:not(.nav_a){
     color: var(--text_color);
 }
-div:not(#navbar_settings_icon):not(.not_affected_by_color_theme) , select , select option , .select2-selection{
+div:not(#navbar_settings_icon):not([class*='pika']):not(.not_affected_by_color_theme) , select , select option , .select2-selection{
     background-color: var(--background_color);
 }
 #nav_ul , #navbar_settings_icon {
