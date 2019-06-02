@@ -104,6 +104,11 @@ if(isset($_POST["action"])){
 					$error = $request->addChild("error");
 					$error->addAttribute("id","9");
 				}
+				if(!type_exists($_POST["type_id"])){
+				    $success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","13");
+				}
 				if($success == true){
 					new_media($_POST["title"],$_POST["author"],$_POST["publisher"],$_POST["price"],$_POST["school_year_id"],$_POST["subject_id"],$_POST["type_id"]);
 				}
@@ -131,7 +136,7 @@ if(isset($_POST["action"])){
 		break;
 		case "modify_customer":
 			if(permission_granted("edit_customer")){
-				if(!(isset($_POST["customer_id"]) && (isset($_POST["new_name"]) || isset($_POST["new_class_id"])))){
+				if(!isset($_POST["customer_id"])){
 					$success = false;
 					$error = $request->addChild("error");
 					$error->addAttribute("id","0");
@@ -141,13 +146,26 @@ if(isset($_POST["action"])){
 					$error = $request->addChild("error");
 					$error->addAttribute("id","6");
 				}
+				$did_something = false;
 				if($success && isset($_POST["new_name"])){
 					$statement = $pdo->prepare("UPDATE customers SET name = :name WHERE id = :customer_id LIMIT 1");
 					$statement->execute(array("customer_id" => $_POST["customer_id"], "name" => $_POST["new_name"]));
+					$did_something = true;
 				}
 				if($success && isset($_POST["new_class_id"])){
 					$statement = $pdo->prepare("UPDATE customers SET class_id = :class_id WHERE id = :customer_id LIMIT 1");
 					$statement->execute(array("customer_id" => $_POST["customer_id"], "class_id" => $_POST["new_class_id"]));
+					$did_something = true;
+				}
+				if($success && isset($_POST["new_miscellaneous"])){
+					$statement = $pdo->prepare("UPDATE customers SET miscellaneous = :miscellaneous WHERE id = :customer_id LIMIT 1");
+					$statement->execute(array("customer_id" => $_POST["customer_id"], "miscellaneous" => $_POST["new_miscellaneous"]));
+					$did_something = true;
+				}
+				if($did_something == false){
+					$success = false;
+					$error = $request->addChild("error");
+					$error->addAttribute("id","0");
 				}
 			}else{
 				$success = false;
@@ -195,12 +213,17 @@ if(isset($_POST["action"])){
 				}
 				if(isset($_POST["new_price"])){
 					$statement = $pdo->prepare("UPDATE medias SET price = :price WHERE id = :media_id LIMIT 1");
-					$statement->execute(array("media_id" => $_POST["media_id"], "price" => $_POST["new_price"]));
+					$statement->execute(array("media_id" => $_POST["media_id"], "price" => (float) $_POST["new_price"]));
 					$did_something = true;
 				}
 				if(isset($_POST["new_type_id"])){
 					$statement = $pdo->prepare("UPDATE medias SET type_id = :type WHERE id = :media_id LIMIT 1");
 					$statement->execute(array("media_id" => $_POST["media_id"], "type" => $_POST["new_type_id"]));
+					$did_something = true;
+				}
+				if(isset($_POST["new_miscellaneous"])){
+					$statement = $pdo->prepare("UPDATE medias SET miscellaneous = :miscellaneous WHERE id = :media_id LIMIT 1");
+					$statement->execute(array("media_id" => $_POST["media_id"], "miscellaneous" => $_POST["new_miscellaneous"]));
 					$did_something = true;
 				}
 				if($did_something == false){
@@ -237,6 +260,57 @@ if(isset($_POST["action"])){
 					$statement->execute(array("barcode" => $_POST["barcode"], "holiday" => $_POST["new_holiday"]));
 					$did_something = true;
 				}
+			}
+			if($did_something == false){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+			}
+		break;
+		case "modify_class":
+		    if(!isset($_POST["class_id"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+		    }
+		    if(!customer_class_exists($_POST["class_id"])){
+		        $success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","12");
+		    }
+		    $did_something = false;
+			if(isset($_POST["new_name"])){
+				$statement = $pdo->prepare("UPDATE classes SET name = :name WHERE id = :class_id LIMIT 1");
+				$statement->execute(array("class_id" => $_POST["class_id"], "name" => $_POST["new_name"]));
+				$did_something = true;
+			}
+			if(isset($_POST["new_school_year_id"])){
+				$statement = $pdo->prepare("UPDATE classes SET school_year_id = :school_year_id WHERE id = :class_id LIMIT 1");
+				$statement->execute(array("class_id" => $_POST["class_id"], "school_year_id" => $_POST["new_school_year_id"]));
+				$did_something = true;
+			}
+			if($did_something == false){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+			}
+		break;
+		case "modify_school_year":
+		    if(!isset($_POST["school_year_id"])){
+				$success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","0");
+		    }
+		    if(!school_year_exists($_POST["school_year_id"])){
+		        $success = false;
+				$error = $request->addChild("error");
+				$error->addAttribute("id","12");
+		    }
+		    $did_something = false;
+		    if(isset($_POST["new_name"])){
+				$statement = $pdo->prepare("UPDATE school_years SET name = :name WHERE id = :school_year_id LIMIT 1");
+				$statement->execute(array("school_year_id" => $_POST["new_school_year_id"], "name" => $_POST["new_name"]));
+				$did_something = true;
 			}
 			if($did_something == false){
 				$success = false;
@@ -363,6 +437,13 @@ if(isset($_POST["action"])){
 				}
 			}
 			break;
+		case "set_active_design":
+		    if(isset($_POST["id"])){
+		        if(design_exists($_POST["id"])){
+		            set_config("active_design",$_POST["id"]);
+		        }
+		    }
+		break;
 		default:
 			$success = false;
 			$error = $request->addChild("error");

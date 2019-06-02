@@ -2,6 +2,7 @@
 require_once("/web/inc/config.inc.php");
 require_once("/web/inc/functions.inc.php");
 session_start();
+//record_log(0,"acces to getData.php");
 if(isset($_GET["requested_data"])){
 	switch($_GET["requested_data"]){
 		case "logged_in":
@@ -48,38 +49,52 @@ if(isset($_GET["requested_data"])){
 			header('Content-Type: text/xml');
 			echo $languages->asXML();
 		break;
-		case "default_design":
-			$design = new SimpleXMLElement("<design></design>");
-			$xml_row = $design->addChild("default_design");
-			$xml_row->addAttribute("id",config("default_design"));
-
+		case "active_design_id":
+		    $design = new SimpleXMLElement("<design></design>");
+		    $design->addChild("id")->addAttribute("value",config("active_design"));
+		    header('Content-Type: text/xml');
 			echo $design->asXML();
 		break;
-		case "design":
-			if(isset($_GET["design_id"])){
-				if(design_exists($_GET["design_id"])){
-					$design = new SimpleXMLElement("<design></design>");
-
-					foreach(design($_GET["design_id"]) as $name => $value){
-						$xml_row = $design->addChild($name);
-						$xml_row->addAttribute("value",$value);
-					}
-					header('Content-Type: text/xml');
-					echo $design->asXML();
-				}else{
-					http_response_code(400);
-					echo "Design not found";
+		case "active_design":
+		    $design_id = config("active_design");
+			if(design_exists($design_id)){
+				$design = new SimpleXMLElement("<design></design>");
+				
+				foreach(design($design_id) as $name => $value){
+					$xml_row = $design->addChild($name);
+					$xml_row->addAttribute("value",$value);
 				}
+				header('Content-Type: text/xml');
+				echo $design->asXML();
 			}else{
 				http_response_code(400);
-				echo "not enough information provided";
+				echo "Design not found";
 			}
+		break;
+	    case "design":
+		    $user = check_user();
+		    
+		    if(isset($_GET["id"])){
+    			if(design_exists($_GET["id"])){
+    				$design = new SimpleXMLElement("<design></design>");
+    				
+    				foreach(design($_GET["id"]) as $name => $value){
+    					$xml_row = $design->addChild($name);
+    					$xml_row->addAttribute("value",$value);
+    				}
+    				header('Content-Type: text/xml');
+    				echo $design->asXML();
+    			}else{
+    				http_response_code(400);
+    				echo "Design not found";
+    			}
+		    }
 		break;
 		case "classes_list":
 			$user = check_user();
 			$classes = new SimpleXMLElement("<classeslist></classeslist>");
 
-			$statement = $pdo->prepare("SELECT * FROM classes;");
+			$statement = $pdo->prepare("SELECT * FROM classes ORDER BY school_year_id;");
 			$statement->execute();
 
 			while($row = $statement->fetch()){
@@ -242,26 +257,38 @@ if(isset($_GET["requested_data"])){
 				$statement->execute(array("media_id" => $_GET['media_id']));
 				$row = $statement->fetch();
 
-				$xml_row = $details->addChild('media');
+				/*$xml_row = $details->addChild('media');
 				$xml_row->addAttribute('title',$row['title']);
 				$xml_row->addAttribute('author',$row['author']);
 				$xml_row->addAttribute('publisher',$row['publisher']);
 				$xml_row->addAttribute('price',$row['price']);
 				$xml_row->addAttribute('school_year_id',$row['school_year_id']);
 				$xml_row->addAttribute('subject_id',$row['subject_id']);
+				$xml_row->addAttribute('miscellaneous',$row['miscellaneous']);*/
+
+				$details->addChild('title')->addAttribute('value',$row['title']);
+				$details->addChild('author')->addAttribute('value',$row['author']);
+				$details->addChild('publisher')->addAttribute('value',$row['publisher']);
+				$details->addChild('price')->addAttribute('value',$row['price']);
+				$details->addChild('school_year_id')->addAttribute('value',$row['school_year_id']);
+				$details->addChild('subject_id')->addAttribute('value',$row['subject_id']);
+				$details->addChild('miscellaneous')->addAttribute('value',$row['miscellaneous']);
 
 				$statement2 = $pdo->prepare("SELECT name FROM school_years WHERE id = :school_year_id");
 				$result = $statement2->execute(array("school_year_id" => $row['school_year_id']));
 				$school_year_row = $statement2->fetch();
 
-				$xml_row->addAttribute('school_year',$school_year_row['name']);
+				//$xml_row->addAttribute('school_year',$school_year_row['name']);
+				$details->addChild('school_year')->addAttribute('value',$school_year_row['name']);
 
 				$statement3 = $pdo->prepare("SELECT * FROM types WHERE id = :type_id;");
 				$statement3->execute(array("type_id" => $row['type_id']));
 				$type_row = $statement3->fetch();
 
-				$xml_row->addAttribute('type_id',$type_row['id']);
-				$xml_row->addAttribute('type_name',$type_row['name']);
+				/*$xml_row->addAttribute('type_id',$type_row['id']);
+				$xml_row->addAttribute('type_name',$type_row['name']);*/
+				$details->addChild('type_id')->addAttribute('value',$type_row['id']);
+				$details->addChild('type_name')->addAttribute('value',$type_row['name']);
 
 				header('Content-Type: text/xml');
 				echo $details->asXML();
@@ -276,15 +303,20 @@ if(isset($_GET["requested_data"])){
 				$statement->execute(array("customer_id" => $_GET['customer_id']));
 				$row = $statement->fetch();
 
-				$xml_row = $details->addChild('customer');
+				/*$xml_row = $details->addChild('customer');
 				$xml_row->addAttribute('name',$row['name']);
 				$xml_row->addAttribute('class_id',$row['class_id']);
+				$xml_row->addAttribute('miscellaneous',$row['miscellaneous']);*/
+				$details->addChild('name')->addAttribute('value',$row['name']);
+				$details->addChild('class_id')->addAttribute('value',$row['class_id']);
+				$details->addChild('miscellaneous')->addAttribute('value',$row['miscellaneous']);
 
 				$statement2 = $pdo->prepare("SELECT * FROM classes WHERE id = :class_id;");
 				$statement2->execute(array("class_id" => $row['class_id']));
 				$class_row = $statement2->fetch();
 
-				$xml_row->addAttribute('class',$class_row['name']);
+				//$xml_row->addAttribute('class',$class_row['name']);
+				$details->addChild('class')->addAttribute('value',$class_row['name']);
 
 				header('Content-Type: text/xml');
 				echo $details->asXML();
@@ -306,6 +338,25 @@ if(isset($_GET["requested_data"])){
 
 			header('Content-Type: text/xml');
 			echo $types->asXML();
+		break;
+		case "designs_list":
+			$user = check_user();
+			$designs = new SimpleXMLElement("<designs></designs>");
+
+			$statement = $pdo->prepare("SELECT * FROM designs;");
+			$statement->execute();
+
+			while($row = $statement->fetch(PDO::FETCH_ASSOC)){
+				$xml_row = $designs->addChild('design');
+				
+				foreach($row as $name => $value){
+				   $xml_row->addAttribute($name,$value); 
+				}
+			}
+
+			header('Content-Type: text/xml');
+			echo $designs->asXML();
+		break;
 		case "media_instance_infos":
 			$user = check_user();
 			if(isset($_GET["barcode"])){

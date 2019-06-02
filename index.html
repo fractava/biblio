@@ -30,8 +30,7 @@
 			onload();
 		</script> -->
 	</head>
-	<body onload="onload();">
-		<p style="position: absolute; bottom: 15px;left: 0px; right: 0px;color:red;" id="loading_error"></p>
+	<body onload="onload();" style="opacity: 0;">
 		<div id="particles-js"></div>
 		<div style="display: none;" class="count-particles"> <span class="js-count-particles">--</span> particles </div>
 		<svg style="width: 0px;height: 0px;">
@@ -61,9 +60,9 @@
 				</g>
 			</defs>
 		</svg>
-		<div id="login_div">
-			<h1 id="login_h">Login</h1>
-			<p id="login_error_message" class="error_message"></p>
+		<div id="login_side">
+			<h1 id="login_headline">Login</h1>
+			<p id="login_error_message" class="error_message not_affected_by_color_theme"></p>
 			<form name="login_form" id="login_form" onsubmit="return false">
 				<input type="text" class="login_input input_gray input_focus_color" id="login_email" placeholder="Email" autocomplete="username" autofocus>
 				<input autocomplete="current-password" type="password" class="login_input input_gray input_focus_color" id="login_passwort" placeholder="Passwort">
@@ -72,52 +71,39 @@
 			</form>
 		</div>
 		<div id="main">
-			<div style="display: flex; flex-shrink: 0;" id="nav_div">
-				<ul class="nav_ul" style="flex-grow: 15;">
-					<li id="nav_li_side1" class="nav_li"><a class="nav_a" id="nav_a_side1" onclick="switchToSide(1);">Medien E/A</a></li>
-					<li id="nav_li_side2" class="nav_li"><a class="nav_a" id="nav_a_side2" onclick="switchToSide(2);">Katalogisierung</a></li>
-					<li id="nav_li_side3" class="nav_li"><a class="nav_a" id="nav_a_side3" onclick="switchToSide(3);">Schüler</a></li>
-					<li id="nav_li_side4" class="nav_li"><a class="nav_a" id="nav_a_side4" onclick="switchToSide(4);">Listen</a></li>
-					<li id="nav_li_side5" class="nav_li"><a class="nav_a" id="nav_a_side5" onclick="switchToSide(5);">Verwaltung</a></li>
-				</ul>
-				<div id="navbar_settings_icon" style="float: right; width: fit-content; background-color: rgb(51, 51, 51);" onclick="open_settings_menu();"><img id="navbar_settings_img" src="/assets/settings_white.svg" style="height: 100%;"></div>
-				<ul class="nav_ul">
-					<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
-				</ul>
-			</div>
+			<ul id="nav_ul" style="display: none;">
+				<li id="nav_li_side1" class="nav_li"><a class="nav_a" id="nav_a_side1" onclick="switch_side_to(1);"></a></li>
+				<li id="nav_li_side2" class="nav_li"><a class="nav_a" id="nav_a_side2" onclick="switch_side_to(2);"></a></li>
+				<li id="nav_li_side3" class="nav_li"><a class="nav_a" id="nav_a_side3" onclick="switch_side_to(3);"></a></li>
+				<li id="nav_li_side4" class="nav_li"><a class="nav_a" id="nav_a_side4" onclick="switch_side_to(4);"></a></li>
+				<li id="nav_li_side5" class="nav_li"><a class="nav_a" id="nav_a_side5" onclick="switch_side_to(5);"></a></li>
+				<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
+			</ul>
 			<div style="display: none;" id="nav_div_mobile">
 				<ul class="nav_ul_mobile" style="flex-grow: 15;height: 100%;">
-					<li style="height: 100%;"><a onclick="open_mobile_sidenav();" style="height: 100%;"><img id="navbar_mobile_menu_img" src="/assets/menu_white.svg" style="height: 100%;"></a></li>
+					<li style="height: 100%;"><a onclick="open_mobile_sidenav();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="var(--navbar_icon_color)" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></a></li>
 				</ul>
 			</div>
 			<div id="mobile_sidenav" class="sidenav">
 				<a href="javascript:void(0)" class="closebtn" onclick="close_mobile_sidenav();">&times;</a>
-				<a id="mobile_sidenav_a_side1" onclick="switchToSide(1);">Medien E/A</a>
-				<a id="mobile_sidenav_a_side2" onclick="switchToSide(2);">Katalogisierung</a>
-				<a id="mobile_sidenav_a_side3" onclick="switchToSide(3);">Schüler</a>
-				<a id="mobile_sidenav_a_side4" onclick="switchToSide(4);">Listen</a>
-				<a id="mobile_sidenav_a_side5" onclick="switchToSide(5);">Verwaltung</a>
+				<a id="mobile_sidenav_a_side1" onclick="switch_side_to(1);"></a>
+				<a id="mobile_sidenav_a_side2" onclick="switch_side_to(2);"></a>
+				<a id="mobile_sidenav_a_side3" onclick="switch_side_to(3);"></a>
+				<a id="mobile_sidenav_a_side4" onclick="switch_side_to(4);"></a>
+				<a id="mobile_sidenav_a_side5" onclick="switch_side_to(5);"></a>
 				<a onclick="logout();">Logout</a>
 			</div>
-			<div id="books_div" class="side">
+			<div id="media_side" class="side">
 				<div class="book_div_horizontal" id="books_choose_side_mobile">
 					<a id="switch_books_side_mobile_button0" style="font-weight: bold;" onclick="switch_books_side_mobile(0);">zurückgeben</a>
 					<a id="switch_books_side_mobile_button1" onclick="switch_books_side_mobile(1);">ausleihen</a>
 				</div>
 				<div class="book_div_horizontal">
 					<div class="book_div_padding book_div_left">
-						<h1 id="media_return_title" style="text-align: center"></h1>
+						<h1 id="media_return_title" class="text_centered"></h1>
 					</div>
 					<div class="book_div_padding book_div_right">
-						<h1 id="media_lend_title" style="text-align: center"></h1>
-					</div>
-				</div>
-				<div class="book_div_horizontal">
-					<div class="book_div_padding book_div_left">
-						<p id="return_media_error_message" class="error_message"></p>
-					</div>
-					<div class="book_div_padding book_div_right">
-						<p id="lend_media_error_message" class="error_message"></p>
+						<h1 id="media_lend_title" class="text_centered"></h1>
 					</div>
 				</div>
 				<div class="book_div_horizontal">
@@ -133,30 +119,23 @@
 					<div class="book_div_padding book_div_left">
 						<div class="book_input_div mobile_seperate_lines">
 							<input id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
-							<button class="button ld-ext-right" id="media_return_button">
-								<span>zurückgeben</span>
-								<div style="font-size:16px" class="ld ld-ring ld-cycle not_affected_by_color_theme"></div>
-							</button>
+							<button class="button" id="media_return_button">zurückgeben</button>
 						</div>
 					</div>
 					<div class="book_div_padding book_div_right">
 						<div class="book_input_div">
 							<input style="width: 40%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box','date_select',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
-							<select style="width: 30%;" class="select" id="date_select">
-								<option value="">Datum auswählen</option>
-							</select>
-							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button">ausleihen</button>
+							<select style="width: 30%;" class="select" id="date_select"></select>
+							<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button"><!-- lend --></button>
 						</div>
 						<div class="book_input_div">
 							<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
-							<select style="width: 30%;" class="select" id="date_select_holiday">
-								<option value="">Datum auswählen</option>
-							</select>
-							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">Ferienausleihe</button>
+							<select style="width: 30%;" class="select" id="date_select_holiday"></select>
+							<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday"><!-- holiday lend --></button>
 						</div>
 						<br>
 						<div style="width: 100%; display: flex;">
-							<button class="button" id="edit_customer_button" style="margin-left: auto; margin-right: auto;">Schüler bearbeiten</button>
+							<button class="button" id="edit_customer_button" style="margin-left: auto; margin-right: auto;"><!-- edit student --></button>
 						</div>
 					</div>
 				</div>
@@ -165,23 +144,18 @@
 						<h2 id="last_returned_media_instances" class="text_centered"></h2>
 						<table class="table" id="return_history_table" style="margin: auto;width: 100%;">
 							<tr class="tr">
-								<th class="td">Buch</th>
-								<th class="td">Barcode</th>
-								<th class="td">Schüler</th>
-								<th class="td">Zeit</th>
-								<th class="td">rückgängig</th>
+								<th>Buch</th>
+								<th>Barcode</th>
+								<th>Schüler</th>
+								<th>Zeit</th>
+								<th>rückgängig</th>
 							</tr>
 						</table>
 					</div>
 					<div class="book_div_padding book_div_right">
 						<h2 id="media_instances_of_customer" class="text_centered"></h2>
-						<table class="table" style="margin: auto;width: 100%;" id="ausleihen_tabelle">
-							<tr class="tr_headline">
-								<th class="td">Name</td>
-								<th class="td">Barcode</td>
-								<th class="td">überfällig</td>
-								<th class="td">Ferienausleihe</td>
-							</tr>
+						<table class="table" style="margin: auto;width: 100%;" id="side1_media_instances_table">
+							<tr class="tr_headline"></tr>
 						</table>
 					</div>
 				</div>
@@ -190,8 +164,8 @@
 					<div class="book_div_padding book_div_right"></div>
 				</div>
 			</div>
-			<div id="katalogisierung_div" class="side">
-				<h1 class="text_centered">Katalogisierung</h1>
+			<div id="catalog_side" class="side">
+				<h1 id="catalog_side_headline" class="text_centered"></h1>
 				<div id="media_search_side1">
 					<div id="media_search_search_bar" class="mobile_seperate_lines">
 						<div style="display: flex;flex-direction: row;align-items: center;" class="small_spacer">
@@ -200,77 +174,62 @@
 								<use xlink:href="#search_icon"/>
 							</svg>
 						</div>
-						<select class="select small_spacer" id="catalog_subject_select">
-							<option value="-1">alle Fächer</option>
-						</select>
-						<select class="select small_spacer" id="catalog_school_year_select">
-							<option value="-1">alle Jahrgangsstufen</option>
-						</select>
+						<select class="select small_spacer" id="catalog_subject_select"></select>
+						<select class="select small_spacer" id="catalog_school_year_select"></select>
 					</div>
 					<br>
 					<div style="width: 100%;">
 						<div style="display: flex; margin: auto; width: fit-content; width: -moz-fit-content;">
-							<button id="new_media_button" class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_media();">neues Medium</button>
+							<button id="new_media_button" class="button small_spacer" onclick="new_media();">neues Medium</button>
 						</div>
 					</div>
 					<div style="width: 100%;">
-						<table style="width: 90%;margin: auto;" id="media_search_table" class="table">
-							<th class="td">id</th>
-							<th class="td">Titel</th>
-							<th class="td">Autor</th>
-							<th class="td">Verlag</th>
-							<th class="td">Preis</th>
-							<th class="td">Schuljahr</th>
-							<th class="td">Typ</th>
-						</table>
+						<table style="width: 90%;margin: auto;" id="media_search_table" class="table"></table>
 					</div>
 				</div>
 				<div id="media_search_side2" style="display: none;">
 					<div id="media_details_back" onclick="switch_media_search_side(0);">
-						<img id="catalog_back_button" style="margin: auto;"></img>
+						<svg id="catalog_back_button"  width="24" height="24" viewBox="0 0 24 24"><path fill="var(--icon_color)" d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
 					</div>
 					<table id="media_details_table" class="table">
 						<tr>
-							<th class="td">Titel</th>
-							<td id="catalog_medium_title" class="td" onclick="th_to_input(this.id);"></td>
+							<th id="catalog_medium_title_title" ></th>
+							<td id="catalog_medium_title" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
-							<th class="td">Fach</th>
-							<td id="catalog_medium_subject" class="td">
-								<select id="catalog_medium_subject_select" onclick="editing_input_changed(this.id);" class="select"></select>
-							</td>
+							<th id="catalog_medium_subject_title"></th>
+							<td id="catalog_medium_subject"><select id="catalog_medium_subject_select" onclick="editing_input_changed(this.id);" class="select"></select></td>
 						</tr>
 						<tr>
-							<th class="td">Jahrgangsstufe</th>
-							<!-- <td id="catalog_medium_school_year" class="td" onclick="th_to_input(this.id);"></td> -->
-							<td class="td" id="catalog_medium_school_year">
-								<select id="catalog_medium_school_year_select" onclick="editing_input_changed(this.id);" class="select"></select>
-							</th>
+							<th id="catalog_medium_school_year_title"></th>
+							<td id="catalog_medium_school_year"><select id="catalog_medium_school_year_select" onclick="editing_input_changed(this.id);" class="select"></select></th>
 						</tr>
 						<tr>
-							<th class="td">Autor</th>
-							<td id="catalog_medium_author" class="td" onclick="th_to_input(this.id);"></td>
+							<th id="catalog_medium_author_title"></th>
+							<td id="catalog_medium_author" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
-							<th class="td">Verlag</th>
-							<td id="catalog_medium_publisher" class="td" onclick="th_to_input(this.id);"></td>
+							<th id="catalog_medium_publisher_title"></th>
+							<td id="catalog_medium_publisher" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
-							<th class="td">Preis</th>
-							<td id="catalog_medium_price" class="td" onclick="th_to_input(this.id);"></td>
+							<th id="catalog_medium_price_title"></th>
+							<td id="catalog_medium_price" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
-							<th class="td">Typ</th>
-							<td id="catalog_medium_type" class="td">
-								<select id="catalog_medium_type_select" onclick="editing_input_changed(this.id);" class="select"></select>
-							</td>
+							<th id="catalog_medium_type_title"></th>
+							<td id="catalog_medium_type"><select id="catalog_medium_type_select" onclick="editing_input_changed(this.id);" class="select"></select></td>
+						</tr>
+						<tr>
+							<th id="catalog_medium_miscellaneous_title"></th>
+							<td id="catalog_medium_miscellaneous" onclick="th_to_input(this.id);"></td>
 						</tr>
 					</table>
-					<div id="selected_media_operations">
+					<div id="selected_media_operations" class="centered_button_bar">
 						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_media(current_media_id);">Medium löschen</button>
 					</div>
 					<br>
-					<h2 class="text_centered">Exemplare</h2>
+					<h2 id="media_editing_instances_headline" class="text_centered"></h2>
 					<div id="selected_media_instances_operations" class="mobile_seperate_lines">
 						<button class="button small_spacer" onclick="remove_all_selected_media_instances(0);">ausgewähte löschen</button>
 						<button class="button small_spacer" onclick="return_all_selected_media_instances(0);">ausgewähte zurückgeben</button>
@@ -278,17 +237,17 @@
 					</div>
 					<table id="media_details_instances_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
-							<th class="td">Barcode</td>
-							<th class="td">ausgeliehen an</th>
-							<th class="td">ausgeliehen bis</th>
-							<th class="td">Ferienausleihe</th>
+							<th>Barcode</td>
+							<th>ausgeliehen an</th>
+							<th>ausgeliehen bis</th>
+							<th>Ferienausleihe</th>
 						</tr>
 					</table>
 					<br>
 				</div>
 			</div>
-			<div id="schüler_div" class="side">
-				<h1 class="text_centered">Schüler</h1>
+			<div id="customers_side" class="side">
+				<h1 id="customer_side_headline" class="text_centered"></h1>
 				<div id="customer_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
 					<div id="customer_search_search_bar" class="mobile_seperate_lines">
 						<div style="display: flex;flex-direction: row;align-items: center;">
@@ -297,9 +256,7 @@
 								<use xlink:href="#search_icon"/>
 							</svg>
 						</div>
-						<select style="margin-left: 12px;" class="select" id="customers_class_select">
-							<option value="-1">alle Klassen</option>
-						</select>
+						<select style="margin-left: 12px;" class="select" id="customers_class_select"></select>
 					</div>
 					<br>
 					<div style="width: 100%;">
@@ -308,60 +265,59 @@
 						</div>
 					</div>
 					<div style="width: 100%;">
-						<table style="width: 90%;margin: auto;" id="customer_search_table" class="table">
-							<th class="td">id</th>
-							<th class="td">Name</th>
-							<th class="td">Geburtstag</th>
-							<th class="td">Klasse</th>
-						</table>
+						<table style="width: 90%;margin: auto;" id="customer_search_table" class="table"></table>
 					</div>
 				</div>
 				<div id="customer_search_side2" style="display: none;">
 					<div id="customer_details_back" onclick="switch_customer_search_side(0);">
-						<img id="customer_back_button" style="margin: auto;"></img>
+						<svg id="customer_back_button"  width="24" height="24" viewBox="0 0 24 24"><path fill="var(--icon_color)" d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
 					</div>
 					<table id="media_details_table" class="table">
 						<tr>
-							<th class="td">Name</th>
-							<td id="customer_editing_name" class="td" onclick="th_to_input(this.id);"></td>
+							<th id="customer_editing_name_title"></th>
+							<td id="customer_editing_name" onclick="th_to_input(this.id);"></td>
 						</tr>
 						<tr>
-							<th class="th">Klasse</th>
-							<td class="td"><select id="customer_editing_class" class="select" onchange="editing_input_changed(this.id)"></select></td>
+							<th id="customer_editing_class_title" class="th"></th>
+							<td id="customer_editing_class"><select id="customer_editing_class_select" class="select" onchange="editing_input_changed(this.id)"></select></td>
+						</tr>
+						<tr>
+							<th id="customer_editing_miscellaneous_title"></th>
+							<td id="customer_editing_miscellaneous" onclick="th_to_input(this.id);"></td>
 						</tr>
 					</table>
-					<div id="selected_customer_operations">
+					<div id="selected_customer_operations" class="centered_button_bar">
 						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_customer(current_customer_id);">Schüler löschen</button>
 					</div>
 					<br>
 					<h2 class="text_centered">ausgeliehene Exemplare:</h2>
 					<br>
-					<div id="selected_media_instances_operations" style="display: flex; margin: auto; width: fit-content;">
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_all_selected_media_instances(1);">ausgewähte löschen</button>
-						<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="return_all_selected_media_instances(1);">ausgewähte zurückgeben</button>
+					<div id="selected_media_instances_operations" class="centered_button_bar">
+						<button class="button" onclick="remove_all_selected_media_instances(1);">ausgewähte löschen</button>
+						<button class="button" onclick="return_all_selected_media_instances(1);">ausgewähte zurückgeben</button>
 					</div>
 					<table style="margin: auto;" id="customer_search_medias" class="table">
 						<tr>
-							<th class="td"><input type="checkbox"></input></th>
-							<th class="td">Titel</th>
-							<th class="td">Barcode</th>
-							<th class="td">verliehen bis</th>
-							<th class="td">überfällig</th>
-							<th class="td">Ferienausleihe</th>
+							<th><input type="checkbox"></input></th>
+							<th>Titel</th>
+							<th>Barcode</th>
+							<th>verliehen bis</th>
+							<th>überfällig</th>
+							<th>Ferienausleihe</th>
 						</tr>
 					</table>
 				</div>
 			</div>
-			<div  id="listen_div" class="side">
-				<h1 class="text_centered">Listen</h1>
+			<div  id="lists_side" class="side">
+				<h1 id="lists_side_headline" class="text_centered"></h1>
 				<details style="width: 75%;margin: auto;" open>
 					<summary id="overdue_medias_summary"></summary>
 					<table class="table" id="overdue_table">
 						<tr class="tr">
-							<th class="td">Medium Name</th>
-							<th class="td">Barcode</th>
-							<th class="td">Schüler Name</th>
-							<th class="td">Klasse</th>
+							<th>Medium Name</th>
+							<th>Barcode</th>
+							<th>Schüler Name</th>
+							<th>Klasse</th>
 						</tr>
 					</table>
 				</details>
@@ -370,16 +326,16 @@
 					<summary id="overdue_holiday_medias_summary"></summary>
 					<table class="table" id="overdue_holiday_table">
 						<tr>
-							<th class="td">Medium Name</th>
-							<th class="td">Barcode</th>
-							<th class="td">Schüler Name</th>
-							<th class="td">Klasse</th>
+							<th>Medium Name</th>
+							<th>Barcode</th>
+							<th>Schüler Name</th>
+							<th>Klasse</th>
 						</tr>
 					</table>
 				</details>
 			</div>
-			<div id="admin_div" class="side" style="display: flex; flex-direction: column;">
-				<h1 class="text_centered">Verwaltung</h1>
+			<div id="admin_side" class="side" style="display: flex; flex-direction: column;">
+				<h1 id="admin_side_headline" class="text_centered"></h1>
 				<div style="display: flex;flex-grow: 25;">
 					<div id="admin_navigation_div" style="width: 30%; flex-grow: 25; border-right: #ddd 2px solid;">
 						<div class="admin_navigation_item admin_navigation_item_selected" id="options_navigation_side0" onclick="switch_options_side(0);"><p>Klassen</p></div>
@@ -395,19 +351,19 @@
 							<h2 class="text_centered">Klassen</h1>
 							<br>
 							<div class="mobile_seperate_lines" style="margin: auto; width: fit-content; display: flex;">
-								<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewählte zusammenlegen</button>
-								<button class="button" style="margin-left: 5px; margin-right: 5px;">ausgewählte löschen</button>
-								<button class="button" style="margin-left: 5px; margin-right: 5px;">neues Schuljahr</button>
+								<button class="button small_spacer">ausgewählte zusammenlegen</button>
+								<button class="button small_spacer">ausgewählte löschen</button>
+								<button class="button small_spacer">neues Schuljahr</button>
 							</div>
 							<table class="table" id="admin_classes_table" style="margin: auto;">
 								<tr>
-									<th class="td">
+									<th>
 										<input type="checkbox" id="admin_classes_select_all"></input>
 									</th>
-									<th class="td">id</th>
-									<th class="td">Name Teil 1</th>
-									<th class="td">Name Teil 2</th>
-									<th class="td">Schülerzahl</th>
+									<th>id</th>
+									<th>Name Teil 1</th>
+									<th>Name Teil 2</th>
+									<th>Schülerzahl</th>
 								</tr>
 							</table>
 						</div>
@@ -419,6 +375,62 @@
 						</div>
 						<div class="options_side" id="options_design">
 							<h2 class="text_centered">Design</h2>
+							<br>
+							<div class="mobile_seperate_lines centered_button_bar">
+							    <select id="admin_design_select" onchange="set_design_pickers_to_selected_preset();"></select>
+								<button class="button small_spacer">Design löschen</button>
+								<button class="button small_spacer">neues Design</button>
+							</div>
+							<table class="table" id="admin_design_edit_table" style="margin: auto;">
+							    <tr>
+							        <th>Gradient Farbe 1</th>
+							        <th><input id="gradient_color1_picker" class="design_picker jscolor" data-jscolor="{backgroundColor: 'white', insetColor:'#FFF'}" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Gradient Farbe 2</th>
+							        <th><input id="gradient_color2_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Text Color</th>
+							        <th><input id="text_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Button Text Color</th>
+							        <th><input id="button_text_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Button Text Color on Hover</th>
+							        <th><input id="button_text_color_hover_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Background Color</th>
+							        <th><input id="background_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Navbar Color</th>
+							        <th><input id="navbar_color_picker" class="design_picker jscolor " value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Navbar Icon Color</th>
+							        <th><input id="navbar_icon_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Navbar Text Color</th>
+							        <th><input id="navbar_text_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Icon Color</th>
+							        <th><input id="icon_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							    <tr>
+							        <th>Browser Theme Color</th>
+							        <th><input id="browser_theme_color_picker" class="design_picker jscolor" value=""></div></th>
+							    </tr>
+							</table>
+                            <div class="mobile_seperate_lines centered_button_bar">
+                                <button class="button small_spacer" onclick="set_design_pickers_to_selected_preset();">Reset</button>
+                                <button class="button small_spacer">Speichern</button>
+                            </div>
 						</div>
 						<div class="options_side" id="options_settings">
 							<h2 class="text_centered">Einstellungen</h2>

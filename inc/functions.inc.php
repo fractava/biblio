@@ -17,11 +17,10 @@ function check_user() {
 		$securitytoken_row = $statement->fetch();
 
 		if(sha1($securitytoken) !== $securitytoken_row['securitytoken']) {
-			//Vermutlich wurde der Security Token gestohlen
-			//Hier ggf. eine Warnung o.ä. anzeigen
+			//security Token was stolen - Security alert
 
-		} else { //Token war korrekt
-			//Setze neuen Token
+		} else {
+			//set new token
 			$neuer_securitytoken = random_string();
 			$insert = $pdo->prepare("UPDATE securitytokens SET securitytoken = :securitytoken WHERE identifier = :identifier");
 			$insert->execute(array('securitytoken' => sha1($neuer_securitytoken), 'identifier' => $identifier));
@@ -45,9 +44,6 @@ function check_user() {
 	return $user;
 }
 
-/**
- * Returns true when the user is checked in, else false
- */
 function is_checked_in() {
 	return isset($_SESSION['userid']);
 }
@@ -55,9 +51,6 @@ function validateDate($date, $format = 'Y-m-d H:i:s'){
 	$d = DateTime::createFromFormat($format, $date);
 	return $d && $d->format($format) == $date;
 }
-/**
- * Returns a random string
- */
 function random_string() {
 	if(function_exists('openssl_random_pseudo_bytes')) {
 		$bytes = openssl_random_pseudo_bytes(16);
@@ -83,17 +76,27 @@ function sonderzeichen($string){
 	return $string;
 }
 
-/**
- * Returns the URL to the site without the script name
- */
 function getSiteURL() {
 	$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 	return $protocol.$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']).'/';
 }
 
-/**
- * Outputs an error message and stops the further exectution of the script.
- */
+function record_log($type,$log){
+	global $pdo;
+	global $user;
+
+	$statement = $pdo->prepare("INSERT INTO logs (type,member_id,log,post_array,get_array,remote_addr,proxy_forwared_for_addr) VALUES (:type,:member_id,:log,:post,:get,:remote_addr,:proxy_forwared_for_addr);");
+
+	$get_array = "";
+	$post_array = "";
+	if(config("log_get_and_post_values") == 1){
+		$get_array = json_encode($_GET);
+		$post_array = json_encode($_POST);
+	}
+
+	$statement->execute(array("type" => $type, "member_id" => $user["id"], "log" => $log,"get" => $get_array, "post" => $post_array, "remote_addr" => $_SERVER['REMOTE_ADDR'], "proxy_forwared_for_addr" => $_SERVER['HTTP_X_FORWARDED_FOR']));
+}
+
 function error($error_msg) {
 	include("templates/error.inc.php");
 	exit();
@@ -107,9 +110,14 @@ function config($config_name){
 
 	return $config["value"];
 }
+function set_config($name,$value){
+    global $pdo;
+    
+    $statement = $pdo->prepare("UPDATE config SET value= :value WHERE name = :name LIMIT 1;");
+    $statement->execute(array("name" => $name, "value" => $value));
+}
 function permission_list(){
 	global $pdo;
-	//global $user;
 
 	$statement = $pdo->prepare("SELECT * FROM grades WHERE id = :grade_id LIMIT 1;");
 	$statement->execute(array("grade_id" => check_user()["grade"]));
@@ -179,6 +187,34 @@ function customer_exists($customer_id){
 
 	$statement = $pdo->prepare("SELECT COUNT(id) FROM customers WHERE id = :customer_id LIMIT 1;");
 	$statement->execute(array("customer_id" => $customer_id));
+	$exists = $statement->fetch();
+
+	return ($exists[0] == 1);
+}
+function customer_class_exists($class_id){
+    //customer_exists() is sadly a php function :(
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM classes WHERE id = :class_id LIMIT 1;");
+	$statement->execute(array("class_id" => $class_id));
+	$exists = $statement->fetch();
+
+	return ($exists[0] == 1);
+}
+function school_year_exists($school_year_id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM school_years WHERE id = :school_year_id LIMIT 1;");
+	$statement->execute(array("school_year_id" => $school_year_id));
+	$exists = $statement->fetch();
+
+	return ($exists[0] == 1);
+}
+function type_exists($type_id){
+	global $pdo;
+
+	$statement = $pdo->prepare("SELECT COUNT(id) FROM types WHERE id = :type_id LIMIT 1;");
+	$statement->execute(array("type_id" => $type_id));
 	$exists = $statement->fetch();
 
 	return ($exists[0] == 1);
