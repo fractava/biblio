@@ -3,36 +3,19 @@
 	<head>
 		<meta charset="utf-8">
 		<meta id="theme_color_meta" name="theme-color" content="">
-		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 		<title>Biblio</title>
 		<link rel='stylesheet' type='text/css' href='/css/style.css'>
 		<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
-		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-		<link href="/css/select2.min.css" rel="stylesheet" />
-		<link href="/css/animate.css" rel="stylesheet" />
-		<link href="/css/loading.css" rel="stylesheet" />
-		<link href="/css/loading-btn.css" rel="stylesheet" />
-		<link href="/css/pikaday.css" rel="stylesheet" />
-		<!-- <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"> -->
+		<link href="/css/css_bundle.css" rel="stylesheet" />
 		<script src="/js/js_bundle.js" async></script>
 		<script src="/js/api.js" async></script>
 		<script src="/js/functions.js" async></script>
-		<script src="/js/snowstorm-min.js" async></script>
 		<script src="/js/pikaday.js" async></script>
 		<script src="/js/sweetalert2.all.min.js" async></script>
-		<!-- <script>
-			import("/js/js_bundle.js");
-			import("/js/api.js");
-			import("/js/functions.js");
-			import("/js/sweetalert2.all.min.js");
-			import("/js/snowstorm-min.js");
-			onload();
-		</script> -->
 	</head>
 	<body onload="onload();" style="opacity: 0;">
 		<div id="particles-js"></div>
-		<div style="display: none;" class="count-particles"> <span class="js-count-particles">--</span> particles </div>
 		<svg style="width: 0px;height: 0px;">
 			<defs>
 				<linearGradient id="color_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -71,7 +54,7 @@
 			</form>
 		</div>
 		<div id="main">
-			<ul id="nav_ul" style="display: none;">
+			<ul id="nav_ul">
 				<li id="nav_li_side1" class="nav_li"><a class="nav_a" id="nav_a_side1" onclick="switch_side_to(1);"></a></li>
 				<li id="nav_li_side2" class="nav_li"><a class="nav_a" id="nav_a_side2" onclick="switch_side_to(2);"></a></li>
 				<li id="nav_li_side3" class="nav_li"><a class="nav_a" id="nav_a_side3" onclick="switch_side_to(3);"></a></li>
@@ -79,9 +62,13 @@
 				<li id="nav_li_side5" class="nav_li"><a class="nav_a" id="nav_a_side5" onclick="switch_side_to(5);"></a></li>
 				<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
 			</ul>
-			<div style="display: none;" id="nav_div_mobile">
-				<ul class="nav_ul_mobile" style="flex-grow: 15;height: 100%;">
-					<li style="height: 100%;"><a onclick="open_mobile_sidenav();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="var(--navbar_icon_color)" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></a></li>
+			<div id="nav_div_mobile">
+				<ul id="nav_ul_mobile">
+					<li style="height: 100%;">
+					    <a onclick="open_mobile_sidenav();" style="height: 100%;">
+					        <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="var(--navbar_icon_color)" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+					    </a>
+					</li>
 				</ul>
 			</div>
 			<div id="mobile_sidenav" class="sidenav">

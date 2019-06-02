@@ -1,8 +1,8 @@
 /* HTML and Loading Screen*/
-html, body {min-height: 100%; }
+html{background-color: var(--background_color);}
+html, body {min-height: 100%;}
 html.loading {background: #333 url('/assets/loading.gif') no-repeat 50% 50%;}
 html.loading_error{background: #333 url(/assets/error.gif) no-repeat 50% 50%;}
-body {background-color: white; }
 body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif;}
 .options_side , .side{display: none;width: 100%;}
 .text_centered{text-align: center;}
@@ -11,7 +11,7 @@ body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif;}
 div:not(.not_affected_by_color_theme) , h1 , h2 , h3 , select , .select2-selection__rendered , p:not(.not_affected_by_color_theme) , a:not(.nav_a){
     color: var(--text_color);
 }
-div:not(#navbar_settings_icon):not(.not_affected_by_color_theme) , select , .select2-selection{
+div:not(#navbar_settings_icon):not(.not_affected_by_color_theme) , select , select option , .select2-selection{
     background-color: var(--background_color);
 }
 #nav_ul , #navbar_settings_icon {
@@ -46,26 +46,29 @@ input:disabled{cursor: not-allowed; background-color: gray;color: white;}
 .select{height: 33.33px; flex-shrink: 0; margin: auto; margin-right: 12px; margin-top: 10px; margin-bottom: 10px; outline: none; background-color: white; border-radius: 4px; /* border-color: gray; */ background: linear-gradient(90deg, grey 0px, grey) 0px 0px / 100% 2px no-repeat, linear-gradient(90deg, grey 0px, grey) 0px 100% / 100% 2px no-repeat, linear-gradient(0deg, grey 0px, grey) 0px 100% / 2px 100% no-repeat, linear-gradient(0deg, grey 0px, grey) 100% 100% / 2px 100% no-repeat; border-width: 0px;}
 
 /*Login*/
-.input_focus_color
 html.no-phone #login_headline{color: black !important;}
 #login_side{top: 50%; left: 50%; transform: translate(-50%, -50%); width: 35%;position: absolute; background-color: white; border-radius: 4px;display: flex;flex-direction: column;align-items: center;}
 html.no-phone #login_side{background-color: white !important;}
 #login_form{display: flex; flex-direction: column; align-items: center;  width: 100%;  height: 100%;}
 html.phone #login_side{width: 100%;height: 100%; border-radius: 0;}
 
-/*Navbar*/
+/*Navbar Desktop*/
+html:not(.logged_in) #nav_ul{display: none;}
+html.phone #nav_ul{display: none;}
+
 #nav_ul { list-style-type: none; margin: 0; padding: 0; width: 100%;}
-#nav_ul_mobile { list-style-type: none; margin: 0; padding: 0; overflow: hidden;}
 .nav_li { float: left;}
 .nav_li .nav_a { display: block; color: var(--navbar_text_color); text-align: center; padding: 14px 16px; border-bottom-width: 0; border-top-width: 0; border-left-width: 0; border-right-width: 0; border-style: solid;border-image: linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2)) 10 stretch;}
 .nav_a_selected {padding-bottom: 9px !important;border-bottom-width: 5px !important;}
-html.no-mobile .nav_li:hover {cursor: pointer;background: linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2));}
-html.no-mobile .nav_a_selected:hover{border-bottom-width: 0 !important;padding: 14px 16px !important;}
-#nav_div_mobile{width:100%; height: 10%;}
-html.phone #nav_ul{display: none !important;}
-html.no-phone #nav_div_mobile{display: none !important;}
+.nav_li:hover {cursor: pointer;background:linear-gradient(90deg,var(--gradient_color1) 0,var(--gradient_color2));}
+.nav_a_selected:hover{border-bottom-width: 0 !important;padding: 14px 16px !important;}
 
 /*Mobile Sidenav*/
+html:not(.logged_in) #nav_div_mobile{display: none;}
+html.no-phone #nav_div_mobile{display: none;}
+
+#nav_div_mobile{width:100%; height: 10%;}
+#nav_ul_mobile { list-style-type: none; margin: 0; padding: 0; overflow: hidden; flex-grow: 15;height: 100%;}
 .sidenav {height: -webkit-fill-available; width: 0; position: fixed; z-index: 1; top: 0; left: 0; background-color: #111; overflow-x: hidden; padding-top: 60px; transition: 0.5s;}
 .sidenav a {padding: 8px 8px 8px 10px; text-decoration: none; font-size: 25px; color: #818181; display: block; transition: 0.3s; border-left-width: 10px; border-left-style: solid; background-color: transparent !important; border-color: transparent;}
 .sidenav .selected {border-image: linear-gradient(rgb(226, 40, 40) 0px, rgb(255, 140, 47)) 10 / 1 / 0 stretch;}
