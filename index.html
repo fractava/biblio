@@ -10,11 +10,11 @@
 		<link href='/css/style.css' rel='stylesheet' type='text/css'>
 		<link href="/css/css_bundle.css" rel="stylesheet" type='text/css'>
 		
-		<script src="/js/js_bundle.js" async></script>
-		<script src="/js/api.js" async></script>
-		<script src="/js/functions.js" async></script>
+		<script src="/js/js_bundle.js"></script>
+		<script src="/js/api.js"></script>
+		<script src="/js/functions.js"></script>
 	</head>
-	<body onload="onload();" style="opacity: 0;">
+	<body onload="onload();" id="app" style="opacity: 0;">
 		<div id="particles-js"></div>
 		<svg style="width: 0px;height: 0px;">
 			<defs>
@@ -78,7 +78,7 @@
 				<a id="mobile_sidenav_a_side3" onclick="switch_side_to(3);"></a>
 				<a id="mobile_sidenav_a_side4" onclick="switch_side_to(4);"></a>
 				<a id="mobile_sidenav_a_side5" onclick="switch_side_to(5);"></a>
-				<a onclick="logout();">Logout</a>
+				<a onclick="logout();">{{ lang("logout") }}</a>
 			</div>
 			<div id="media_side" class="side">
 				<div class="book_div_horizontal" id="books_choose_side_mobile">
@@ -106,7 +106,7 @@
 					<div class="book_div_padding book_div_left">
 						<div class="book_input_div mobile_seperate_lines">
 							<input id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
-							<button class="button" id="media_return_button">zurückgeben</button>
+							<button class="button" id="media_return_button">{{ lang("return") }}</button>
 						</div>
 					</div>
 					<div class="book_div_padding book_div_right">
@@ -131,13 +131,14 @@
 						<h2 id="last_returned_media_instances" class="text_centered"></h2>
 						<table class="table" id="return_history_table" style="margin: auto;width: 100%;">
 							<tr class="tr">
-								<th>Buch</th>
-								<th>Barcode</th>
-								<th>Schüler</th>
-								<th>Zeit</th>
-								<th>rückgängig</th>
+								<th>{{ lang["media"]; }}</th>
+								<th>{{ lang("barcode") }}</th>
+								<th>{{ lang("customer") }}</th>
+								<th>{{ lang("time") }}</th>
+								<th>{{ lang("logout") }}</th>
 							</tr>
 						</table>
+						<p>{{ foo }}</p>
 					</div>
 					<div class="book_div_padding book_div_right">
 						<h2 id="media_instances_of_customer" class="text_centered"></h2>
@@ -167,7 +168,7 @@
 					<br>
 					<div style="width: 100%;">
 						<div style="display: flex; margin: auto; width: fit-content; width: -moz-fit-content;">
-							<button id="new_media_button" class="button small_spacer" onclick="new_media();">neues Medium</button>
+							<button id="new_media_button" class="button small_spacer" onclick="new_media();">{{ lang("new_media") }}</button>
 						</div>
 					</div>
 					<div style="width: 100%;">
@@ -218,16 +219,16 @@
 					<br>
 					<h2 id="media_editing_instances_headline" class="text_centered"></h2>
 					<div id="selected_media_instances_operations" class="mobile_seperate_lines">
-						<button class="button small_spacer" onclick="remove_all_selected_media_instances(0);">ausgewähte löschen</button>
-						<button class="button small_spacer" onclick="return_all_selected_media_instances(0);">ausgewähte zurückgeben</button>
-						<button class="button small_spacer" onclick="new_media_instance(current_media_id);">neues Exemplar</button>
+						<button class="button small_spacer" onclick="remove_all_selected_media_instances(0);">{{ lang("remove_selected") }}</button>
+						<button class="button small_spacer" onclick="return_all_selected_media_instances(0);">{{ lang("return_selected") }}</button>
+						<button class="button small_spacer" onclick="new_media_instance(current_media_id);">{{ lang("new_media_instance") }}</button>
 					</div>
 					<table id="media_details_instances_table" style="margin-left: auto; margin-right: auto;" class="table">
 						<tr>
-							<th>Barcode</td>
-							<th>ausgeliehen an</th>
-							<th>ausgeliehen bis</th>
-							<th>Ferienausleihe</th>
+							<th>{{ lang("barcode") }}</td>
+							<th>{{ lang("loaned_to") }}</th>
+							<th>{{ lang("loaned_until") }}</th>
+							<th>{{ lang("holiday_lend") }}</th>
 						</tr>
 					</table>
 					<br>
@@ -280,13 +281,13 @@
 					<h2 class="text_centered">ausgeliehene Exemplare:</h2>
 					<br>
 					<div id="selected_media_instances_operations" class="centered_button_bar">
-						<button class="button" onclick="remove_all_selected_media_instances(1);">ausgewähte löschen</button>
-						<button class="button" onclick="return_all_selected_media_instances(1);">ausgewähte zurückgeben</button>
+						<button class="button" onclick="remove_all_selected_media_instances(1);">{{ lang("remove_selected") }}</button>
+						<button class="button" onclick="return_all_selected_media_instances(1);">{{ lang("return_selected") }}</button>
 					</div>
 					<table style="margin: auto;" id="customer_search_medias" class="table">
 						<tr>
 							<th><input type="checkbox"></input></th>
-							<th>Titel</th>
+							<th>{{ lang("title") }}</th>
 							<th>Barcode</th>
 							<th>verliehen bis</th>
 							<th>überfällig</th>
@@ -429,5 +430,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+		<script src="/js/app.js"></script>
 	</body>
 </html>

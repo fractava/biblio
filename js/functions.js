@@ -2,19 +2,6 @@
 //Events
 function onload(){
 	$("#nav_div").hide();
-    
-    logged_in = false;
-	pause_on_idle();
-
-	media_search_order_by = "title";
-	media_search_reverse = false;
-	customer_search_order_by = "name";
-	customer_search_reverse = false;
-
-	media_search_side = 0;
-	customer_search_side = 0;
-	current_media_id = -1;
-	current_customer_id = -1;
 
 	switch_options_side(0);
 	
@@ -26,7 +13,7 @@ function onload(){
 	.then(apply_default_design)
 	.then(configure_design_pickers)
 	.then(configure_lang)
-	//.then(refresh_customers_list)
+	.then(configure_pause_on_idle)
 	.then(configure_particles_js)
 	.then(configureSelect2)
 	.then(configure_button_handler)
@@ -166,10 +153,10 @@ function configure_lang(){
         if(get_cookie("lang")){
 		    lang_id = get_cookie("lang");
     	}
-	    switch_language(lang_id)
+	    vm.switch_language(lang_id)
 	    .then(function(){
 	        resolve();
-	    })
+	    });
     });
 }
 function configure_button_handler(){
@@ -327,60 +314,7 @@ function check_permissions(){
 	})
 	.catch(function(){});
 }
-function switch_language(id){
-    return new Promise(function(resolve, reject) {
-    	get_data_request({"requested_data" : "language", "language_id" : id},true,false,-1)
-    	.then(function(data , status){
-    		create_cookie("lang",id);
-    
-    		$xml = $(data);
-    		current_lang = $xml;
-    
-    		$("#media_return_button").text(lang("return"));
-    		$("#media_lend_button").text(lang("lend"));
-    		$("#media_lend_button_holiday").text(lang("holiday_lend"));
-    		$("#new_media_button").text(lang("new_media"));
-    		$("#new_customer_button").text(lang("new_customer"));
-    		$("#edit_customer_button").text(lang("edit_customer"));
-    		$("#overdue_medias_summary").text(lang("overdue_medias"));
-    		$("#overdue_holiday_medias_summary").text(lang("overdue_holiday_medias"));
-    		$("#media_lend_title").text(lang("media_lend_title"));
-    		$("#media_return_title").text(lang("media_return_title"));
-    		$("#nav_a_side1 , #mobile_sidenav_a_side1").text(lang("book_return_and_lend_side_title"));
-    		$("#nav_a_side2 , #mobile_sidenav_a_side2").text(lang("catalog_side_title"));
-    		$("#nav_a_side3 , #mobile_sidenav_a_side3").text(lang("customers_side_title"));
-    		$("#nav_a_side4 , #mobile_sidenav_a_side4").text(lang("lists_side_title"));
-    		$("#nav_a_side5 , #mobile_sidenav_a_side5").text(lang("admin_side_title"));
-    		$("#last_returned_media_instances").text(lang("last_returned_media_instances")+":");
-    		$("#media_instances_of_customer").text(lang("media_instances_of_customer")+":");
-    
-    		$("#catalog_medium_title_title").text(lang("title"));
-    		$("#catalog_medium_subject_title").text(lang("subject"));
-    		$("#catalog_medium_school_year_title").text(lang("school_year"));
-    		$("#catalog_medium_author_title").text(lang("author"));
-    		$("#catalog_medium_publisher_title").text(lang("publisher"));
-    		$("#catalog_medium_price_title").text(lang("price"));
-    		$("#catalog_medium_type_title").text(lang("type"));
-    		$("#catalog_medium_miscellaneous_title").text(lang("miscellaneous"));
-    
-    		$("#customer_editing_name_title").text(lang("name"));
-    		$("#customer_editing_class_title").text(lang("class"));
-    		$("#customer_editing_miscellaneous_title").text(lang("miscellaneous"));
-    
-    		$("#media_editing_instances_headline").text(lang("media_instances"));
-    		$("#catalog_side_headline").text(lang("catalog_side_title"));
-    		$("#customer_side_headline").text(lang("customers_side_title"));
-    		$("#lists_side_headline").text(lang("lists_side_title"));
-    		$("#admin_side_headline").text(lang("admin_side_title"));
-            
-            resolve();
-    	})
-    	.catch(function(){reject();});
-    });
-}
-function lang(name){
-	return current_lang.find(name).attr("value");
-}
+
 // ================================================
 //Animations
 function login_animation(fast){
@@ -434,7 +368,7 @@ function switch_media_search_side(show_side, media_id){
 	//0 Search Input and List
 	//1 Media Details and Media Instances
 
-	media_search_side = show_side;
+	vm.media_search_side = show_side;
 
 	var sides = ["media_search_side1","media_search_side2"];
 	if(show_side == 1){
@@ -456,7 +390,7 @@ function switch_customer_search_side(show_side, customer_id){
 	//0 Search Input and List
 	//1 customer Details
 
-	customer_search_side = show_side;
+	vm.customer_search_side = show_side;
 
 	var sides = ["customer_search_side1","customer_search_side2"];
 	if(show_side == 1){
@@ -607,19 +541,23 @@ function isChristmas(){
 }
 // ================================================
 // Refresh Functions
-function pause_on_idle(){
-	idle_time_minutes = 0;
-	setInterval(function(){idle_time_minutes++}, 60000);
-
-	function reset_idle_time(){
-		idle_time_minutes = 0;
-	}
-
-	window.onmousemove = reset_idle_time;
-	window.onmousedown = reset_idle_time;
-	window.ontouchstart = reset_idle_time;
-	window.onclick = reset_idle_time;
-	window.onkeypress = reset_idle_time;
+function configure_pause_on_idle(){
+    return new Promise(function(resolve,reject){
+        idle_time_minutes = 0;
+    	setInterval(function(){idle_time_minutes++}, 60000);
+    
+    	function reset_idle_time(){
+    		idle_time_minutes = 0;
+    	}
+    
+    	window.onmousemove = reset_idle_time;
+    	window.onmousedown = reset_idle_time;
+    	window.ontouchstart = reset_idle_time;
+    	window.onclick = reset_idle_time;
+    	window.onkeypress = reset_idle_time;
+    	
+    	resolve();
+    });
 }
 function auto_refresh(everything){
 		if(everything){
@@ -642,12 +580,12 @@ function auto_refresh(everything){
 			if(document.hidden == false && idle_time_minutes < 2){
 				switch(side){
 					case 2:
-						if(media_search_side == 0){
+						if(vm.media_search_side == 0){
 							refresh_media_search();
 						}
 						break;
 					case 3:
-						if(customer_search_side == 0){
+						if(vm.customer_search_side == 0){
 							refresh_customer_search();
 						}
 						break;
@@ -768,7 +706,6 @@ function select_all_customer_instances_checkbox_clicked(checkbox) {
 }
 function refresh_customers_list(){
     return new Promise(function(resolve,reject){
-        console.log("before request");
     	get_data_request({requested_data : "customers_list"},true,true,5)
     	.then(function(data){
     		customers = data.find("customer");
@@ -984,7 +921,7 @@ function media_search_order(order_by){
 	}
 }
 function refresh_media_search(){
-	if(media_search_side == 0){
+	if(vm.media_search_side == 0){
 		get_data_request({"requested_data" : "search_media", "order_by": media_search_order_by, "search" : $("#media_search_input")[0].value,"subject_id" : $("#catalog_subject_select")[0].value,"school_year_id" : $("#catalog_school_year_select")[0].value},false,true)
 		.then(function(data, status){
 			$xml = $(data);
