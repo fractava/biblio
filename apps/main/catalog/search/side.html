@@ -1,0 +1,22 @@
+<div id="media_search_side1">
+    <div id="media_search_search_bar" class="mobile_seperate_lines">
+	    <div style="display: flex;flex-direction: row;align-items: center;" class="small_spacer">
+			<input type="text" id="media_search_input" class="input_gray input_focus_color search_input" autocomplete="off">
+			<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refresh_media_search();" class="search_button">
+				<path fill="url(#color_gradient)" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+				<path d="M0 0h24v24H0z" fill="none"></path>
+			</svg>
+		</div>
+		<select class="select small_spacer" id="catalog_subject_select"></select>
+		<select class="select small_spacer" id="catalog_school_year_select"></select>
+	</div>
+	<br>
+	<div style="width: 100%;">
+	    <div style="display: flex; margin: auto; width: fit-content; width: -moz-fit-content;">
+			<button id="new_media_button" class="button small_spacer" onclick="new_media();">{{ lang["new_media"] }}</button>
+		</div>
+	</div>
+	<div style="width: 100%;">
+		<table style="width: 90%;margin: auto;" id="media_search_table" class="table"></table>
+	</div>
+</div>

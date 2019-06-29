@@ -1,0 +1,40 @@
+{
+    "sides": [
+        {
+            "url": "/test/",
+            "side_json_url": "/test/side.json"
+        },
+        {
+            "url": "/books-io/",
+            "side_json_url": "/books-io/side.json"
+        },
+        {
+            "url": "/catalog/search/",
+            "side_json_url": "/catalog/search/side.json"
+        },
+        {
+            "url": "/catalog/details/",
+            "var": "id",
+            "side_json_url": "/catalog/details/side.json"
+        },
+        {
+            "url": "/customers/search/",
+            "side_json_url": "/customers/search/side.json"
+        },
+        {
+            "url": "/customers/details/",
+            "var": "id",
+            "side_json_url": "/customers/details/side.json"
+        },
+        {
+            "url": "/admin/",
+            "side_json_url": "/admin/side.json"
+        }
+    ],
+    "get_datas": [
+        
+    ],
+    "actions":[
+        
+    ]
+}

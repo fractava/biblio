@@ -1,0 +1,72 @@
+<div id="media_side" class="side">
+	<div class="book_div_horizontal" id="books_choose_side_mobile">
+		<a id="switch_books_side_mobile_button0" style="font-weight: bold;" onclick="switch_books_side_mobile(0);">zurückgeben</a>
+		<a id="switch_books_side_mobile_button1" onclick="switch_books_side_mobile(1);">ausleihen</a>
+	</div>
+	<div class="book_div_horizontal">
+		<div class="book_div_padding book_div_left">
+			<h1 id="media_return_title" class="text_centered"></h1>
+		</div>
+		<div class="book_div_padding book_div_right">
+			<h1 id="media_lend_title" class="text_centered"></h1>
+		</div>
+	</div>
+	<div class="book_div_horizontal">
+		<div class="book_div_padding book_div_left"></div>
+		<div class="book_div_padding book_div_right">
+		    <div>
+                <select onchange="refresh_medias_table();" id="lend_customer_select" name="state"></select>
+            </div>
+		    <br>
+		</div>
+    </div>
+	<div class="book_div_horizontal">
+		<div class="book_div_padding book_div_left">
+			<div class="book_input_div mobile_seperate_lines">
+				<input id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
+				<button class="button" id="media_return_button">{{ lang["return"] }}</button>
+			</div>
+		</div>
+		<div class="book_div_padding book_div_right">
+			<div class="book_input_div">
+				<input style="width: 40%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box','date_select',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
+				<select style="width: 30%;" class="select" id="date_select"></select>
+				<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button">{{ lang["lend"] }}</button>
+			</div>
+			<div class="book_input_div">
+				<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
+				<select style="width: 30%;" class="select" id="date_select_holiday"></select>
+				<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">{{ lang["holiday_lend"] }}</button>
+			</div>
+			<br>
+			<div style="width: 100%; display: flex;">
+				<button class="button" id="edit_customer_button" style="margin-left: auto; margin-right: auto;"><!-- edit student --></button>
+			</div>
+		</div>
+	</div>
+	<div class="book_div_horizontal">
+	    <div class="book_div_padding book_div_left">
+	        <h2 id="last_returned_media_instances" class="text_centered"></h2>
+	        <table class="table" id="return_history_table" style="margin: auto;width: 100%;">
+	            <tr class="tr">
+			        <th>{{ lang["media"] }}</th>
+			        <th>{{ lang["barcode"] }}</th>
+			        <th>{{ lang["customer"] }}</th>
+			        <th>{{ lang["time"] }}</th>
+			        <th>{{ lang["undo"] }}</th>
+		        </tr>
+	        </table>
+	        <p>{{ foo }}</p>
+		</div>
+		<div class="book_div_padding book_div_right">
+			<h2 id="media_instances_of_customer" class="text_centered"></h2>
+			    <table class="table" style="margin: auto;width: 100%;" id="side1_media_instances_table">
+					<tr class="tr_headline"></tr>
+				</table>
+		</div>
+	</div>
+	<div style="flex-grow: 15;" class="book_div_horizontal">
+	    <div class="book_div_padding book_div_left"></div>
+	    <div class="book_div_padding book_div_right"></div>
+	</div>
+</div>

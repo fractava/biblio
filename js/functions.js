@@ -1,6 +1,6 @@
 // ================================================
 //Events
-function onload(){
+function init(){
 	$("#nav_div").hide();
 
 	switch_options_side(0);
@@ -345,11 +345,11 @@ function switch_side_to(show_side){
 	//4 Lists
 	//5 Admin
 
-	side = show_side;
-	var side_names = [lang("login"),lang("book_return_and_lend_side_title"),lang("catalog_side_title"),lang("customers_side_title"),lang("lists_side_title"),lang("admin_side_title")];
-	var sides = ["login_side","media_side","catalog_side","customers_side","lists_side","admin_side"];
+	vm.side = ""+show_side;
+	var side_names = [vm.lang["login"],vm.lang["book_return_and_lend_side_title"],vm.lang["catalog_side_title"],vm.lang["customers_side_title"],vm.lang["lists_side_title"],vm.lang["admin_side_title"]];
+	//var sides = ["login_side","media_side","catalog_side","customers_side","lists_side","admin_side"];
 
-	for(i = 0; i <= sides.length;i++){
+	/*for(i = 0; i <= sides.length;i++){
 		if(show_side == i){
 			$("#nav_a_side"+i).addClass("nav_a_selected");
 			$("#mobile_sidenav_a_side"+i).addClass("selected");
@@ -359,9 +359,9 @@ function switch_side_to(show_side){
 			$("#mobile_sidenav_a_side"+i).removeClass("selected");
 			$("#"+sides[i]).hide();
 		}
-	}
+	}*/
 	close_mobile_sidenav();
-	window.history.pushState(null, side_names[show_side], '?side='+show_side);
+	//window.history.pushState(null, side_names[show_side], '?side='+show_side);*/
 	document.title = side_names[show_side];
 }
 function switch_media_search_side(show_side, media_id){
@@ -510,11 +510,11 @@ function input_to_th(th_element_id){
 
 	editing_input_changed(th_element_id);
 }
-window.onpopstate = function(event) {
+/*window.onpopstate = function(event) {
 	if(logged_in){
 		switch_side_to(parseInt(findGetParameter("side")));
 	}
-}
+}*/
 function search_button_color_change(state,object){
 	if(state == 1){
 		$(object).children().first().attr('xlink:href','#search_icon_white');

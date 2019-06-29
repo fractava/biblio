@@ -1,0 +1,20 @@
+<div id="customer_search_side1" style="display: flex;flex-direction: row;flex-wrap: wrap;align-items: center; width:100%;">
+	<div id="customer_search_search_bar" class="mobile_seperate_lines">
+		<div style="display: flex;flex-direction: row;align-items: center;">
+			<input type="text" id="customer_search_input" class="input_gray input_focus_color search_input" autocomplete="off">
+			<svg onmouseenter="search_button_color_change(1,this);" onmouseleave="search_button_color_change(0,this);" onclick="refreshcustomerSearch();" class="search_button">
+				<use xlink:href="#search_icon"/>
+			</svg>
+		</div>
+		<select style="margin-left: 12px;" class="select" id="customers_class_select"></select>
+	</div>
+	<br>
+	<div style="width: 100%;">
+		<div style="display: flex; margin: auto; width: fit-content;  width: -moz-fit-content;">
+			<button id="new_customer_button" class="button" style="margin-left: 5px; margin-right: 5px;" onclick="new_customer();">neuer Schüler</button>
+		</div>
+	</div>
+	<div style="width: 100%;">
+		<table style="width: 90%;margin: auto;" id="customer_search_table" class="table"></table>
+	</div>
+</div>

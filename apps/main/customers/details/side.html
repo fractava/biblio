@@ -1,0 +1,39 @@
+<div id="customer_search_side2">
+	    <div id="customer_details_back" onclick="switch_customer_search_side(0);">
+			<svg id="customer_back_button"  width="24" height="24" viewBox="0 0 24 24"><path fill="var(--icon_color)" d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
+		</div>
+	<table id="media_details_table" class="table">
+	    <tr>
+			<th id="customer_editing_name_title"></th>
+			<td id="customer_editing_name" onclick="th_to_input(this.id);"></td>
+		</tr>
+	    <tr>
+			<th id="customer_editing_class_title" class="th"></th>
+			<td id="customer_editing_class"><select id="customer_editing_class_select" class="select" onchange="editing_input_changed(this.id)"></select></td>
+		</tr>
+		<tr>
+			<th id="customer_editing_miscellaneous_title"></th>
+			<td id="customer_editing_miscellaneous" onclick="th_to_input(this.id);"></td>
+		</tr>
+	</table>
+	<div id="selected_customer_operations" class="centered_button_bar">
+		<button class="button" style="margin-left: 5px; margin-right: 5px;" onclick="remove_customer(current_customer_id);">Schüler löschen</button>
+	</div>
+	<br>
+	<h2 class="text_centered">ausgeliehene Exemplare:</h2>
+	<br>
+	<div id="selected_media_instances_operations" class="centered_button_bar">
+		<button class="button" onclick="remove_all_selected_media_instances(1);">{{ lang["remove_selected"] }}</button>
+	    <button class="button" onclick="return_all_selected_media_instances(1);">{{ lang["return_selected"] }}</button>
+	</div>
+	<table style="margin: auto;" id="customer_search_medias" class="table">
+		<tr>
+			<th><input type="checkbox"></input></th>
+			<th>{{ lang["title"] }}</th>
+			<th>{{ lang["barcode"] }}</th>
+			<th>{{ lang["lend_until"] }}</th>
+			<th>überfällig</th>
+			<th>Ferienausleihe</th>
+		</tr>
+    </table>
+</div>
