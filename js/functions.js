@@ -86,7 +86,7 @@ function set_design_pickers_to_selected_preset(){
     	});
     }
 }
-function enable_design_from_xml(xml){
+/*function enable_design_from_xml(xml){
     for(name in design_parameters){
         let dict = {};
         dict[design_parameters[name]] = $xml.find(design_parameters[name])[0].getAttribute("value");
@@ -118,7 +118,7 @@ function set_design(values){
             break;
         }
     }
-}
+}*/
 function refresh_admin_designs_list(){
     let active_design_id;
     get_data_request({"requested_data": "active_design_id"})

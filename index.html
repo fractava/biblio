@@ -7,12 +7,13 @@
 <link href='/css/style.css' rel='stylesheet' type='text/css'>
 <link href="/css/css_bundle.css" rel="stylesheet" type='text/css'>
 <script src="/js/js_bundle.js"></script>
+<script src="/js/api.js"></script>
 <script src="/js/functions.js"></script>
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="/js/app.js"></script>
 
-<div id="app" onload="onload();">
+<div id="app">
   <h1>Hello App!</h1>
   <p>
     <!-- use router-link component for navigation. -->
@@ -23,7 +24,7 @@
   </p>
   <!-- route outlet -->
   <!-- component matched by the route will render here -->
-  <router-view></router-view>
+  <transition name="fade">
+    <router-view></router-view>
+  </transition>
 </div>
-
-<script src="/js/app.js"></script>

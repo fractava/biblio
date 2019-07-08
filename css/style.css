@@ -8,6 +8,13 @@ body{ margin:0; font:normal 75% Arial, Helvetica, sans-serif;}
 .text_centered{text-align: center;}
 .ld{z-index: initial !important;}
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
 div:not(.not_affected_by_color_theme) , h1 , h2 , h3 , select , .select2-selection__rendered , p:not(.not_affected_by_color_theme) , a:not(.nav_a){
     color: var(--text_color);
 }

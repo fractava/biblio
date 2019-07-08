@@ -24,19 +24,19 @@
 		<div class="book_div_padding book_div_left">
 			<div class="book_input_div mobile_seperate_lines">
 				<input id="media_return_input" placeholder="Barcode" autocomplete="off" type="text" class="input_gray input_focus_color">
-				<button class="button" id="media_return_button">{{ lang["return"] }}</button>
+				<button class="button" id="media_return_button">{{ lang.return }}</button>
 			</div>
 		</div>
 		<div class="book_div_padding book_div_right">
 			<div class="book_input_div">
 				<input style="width: 40%;" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box','date_select',0);}" id="lend_input_box" type="text" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
 				<select style="width: 30%;" class="select" id="date_select"></select>
-				<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button">{{ lang["lend"] }}</button>
+				<button style="margin: 10px 0 10px 0;width: 30%" onclick="lend_button_clicked('lend_input_box','date_select',0);" class="button" id="media_lend_button">{{ lang.lend }}</button>
 			</div>
 			<div class="book_input_div">
 				<input style="width: 40%;" type="text" onkeypress="if (event.keyCode==13){ lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);}" id="lend_input_box_holiday" placeholder="Barcode" autocomplete="off" class="input_gray input_focus_color">
 				<select style="width: 30%;" class="select" id="date_select_holiday"></select>
-				<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">{{ lang["holiday_lend"] }}</button>
+				<button style="margin: 10px 0 10px 0;width: 30%;" onclick="lend_button_clicked('lend_input_box_holiday','date_select_holiday',1);" class="button" id="media_lend_button_holiday">{{ lang.holiday_lend }}</button>
 			</div>
 			<br>
 			<div style="width: 100%; display: flex;">
@@ -49,14 +49,13 @@
 	        <h2 id="last_returned_media_instances" class="text_centered"></h2>
 	        <table class="table" id="return_history_table" style="margin: auto;width: 100%;">
 	            <tr class="tr">
-			        <th>{{ lang["media"] }}</th>
-			        <th>{{ lang["barcode"] }}</th>
-			        <th>{{ lang["customer"] }}</th>
-			        <th>{{ lang["time"] }}</th>
-			        <th>{{ lang["undo"] }}</th>
+			        <th>{{ lang.media }}</th>
+			        <th>{{ lang.barcode }}</th>
+			        <th>{{ lang.customer }}</th>
+			        <th>{{ lang.time }}</th>
+			        <th>{{ lang.undo }}</th>
 		        </tr>
 	        </table>
-	        <p>{{ foo }}</p>
 		</div>
 		<div class="book_div_padding book_div_right">
 			<h2 id="media_instances_of_customer" class="text_centered"></h2>
