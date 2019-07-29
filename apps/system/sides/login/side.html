@@ -1,0 +1,13 @@
+<div id="login_side">
+    <div id="particles-js"></div>
+    <div id="login_div">
+    	<h1 id="login_headline">{{ lang.login }}</h1>
+    	<p id="login_error_message" class="error_message not_affected_by_color_theme"></p>
+    	<form name="login_form" id="login_form" onsubmit="return false">
+    		<input type="text" class="login_input input_gray input_focus_color" id="login_email" v-bind:placeholder="lang.email" autocomplete="username" autofocus>
+    		<input autocomplete="current-password" type="password" class="login_input input_gray input_focus_color" id="login_passwort" v-bind:placeholder="lang.password">
+    		<br>
+    		<button style="width: 30%;" id="login_button" v-on:click="login();" class="button">{{ lang.login }}</button>
+    	</form>
+	</div>
+</div>

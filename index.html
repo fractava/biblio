@@ -1,30 +1,55 @@
-<meta charset="utf-8">
-<meta id="theme_color_meta" name="theme-color" content="">
-<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-<title>Biblio</title>
-
-<link href='/css/style.css' rel='stylesheet' type='text/css'>
-<link href="/css/css_bundle.css" rel="stylesheet" type='text/css'>
-<script src="/js/js_bundle.js"></script>
-<script src="/js/api.js"></script>
-<script src="/js/functions.js"></script>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-<script src="/js/app.js"></script>
-
-<div id="app">
-  <h1>Hello App!</h1>
-  <p>
-    <!-- use router-link component for navigation. -->
-    <!-- specify the link by passing the `to` prop. -->
-    <!-- <router-link> will be rendered as an `<a>` tag by default -->
-    <router-link to="/main/test">Go to Test</router-link>
-    <router-link to="/main/books-io">Go to Books IO</router-link>
-  </p>
-  <!-- route outlet -->
-  <!-- component matched by the route will render here -->
-  <transition name="fade">
-    <router-view></router-view>
-  </transition>
-</div>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta id="theme_color_meta" name="theme-color" content="">
+        <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.webp">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        <title>Biblio</title>
+        
+        <link href='/css/style.css' rel='stylesheet' type='text/css'>
+        <link href="/css/css_bundle.css" rel="stylesheet" type='text/css'>
+        
+        <script src="/libaries/vue.js"></script>
+        <script src="/libaries/vue-router.js"></script>
+        <script src="/libaries/jquery.js"></script>
+        <script src="/libaries/mobile-detect.js"></script>
+        
+        <script src="/js/api.js"></script>
+        <script src="/js/functions.js"></script>
+        <script src="/js/app.js"></script>
+    </head>
+    <body>
+        <div id="app">
+        	<ul id="nav_ul" >
+        		<li class="nav_li" v-for="item in navbar_items">
+        		    <!--<a class="nav_a" id="nav_a_side1" onclick="switch_side_to(1);"></a>-->
+        		    <router-link :to="item.path" class="nav_a">{{ item.title }}</router-link>
+        		</li>
+        		
+        		<li class="nav_li" style="float: right;" onclick="logout();"><a class="nav_a">Logout</a></li>
+        	</ul>
+        	<div id="nav_div_mobile">
+        		<ul id="nav_ul_mobile">
+        			<li style="height: 100%;">
+        			    <a onclick="open_mobile_sidenav();" style="height: 100%;">
+        			        <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path fill="var(--navbar_icon_color)" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+        			    </a>
+        		    </li>
+        	    </ul>
+        	</div>
+        	<div id="mobile_sidenav" class="sidenav">
+        		<a href="javascript:void(0)" class="closebtn" onclick="close_mobile_sidenav();">&times;</a>
+        		<a id="mobile_sidenav_a_side1" onclick="switch_side_to(1);"></a>
+        		<a id="mobile_sidenav_a_side2" onclick="switch_side_to(2);"></a>
+        		<a id="mobile_sidenav_a_side3" onclick="switch_side_to(3);"></a>
+        		<a id="mobile_sidenav_a_side4" onclick="switch_side_to(4);"></a>
+        		<a id="mobile_sidenav_a_side5" onclick="switch_side_to(5);"></a>
+                <a onclick="logout();">Logout</a>
+            </div>
+        
+            <transition name="fade">
+                <router-view></router-view>
+            </transition>
+        </div>
+    </body>
+</html>

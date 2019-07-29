@@ -6,8 +6,6 @@ function init(){
 	switch_options_side(0);
 	
 	design_parameters = ["text_color","button_text_color","button_text_color_hover","navbar_text_color","navbar_color","background_color","icon_color","navbar_icon_color","gradient_color1","gradient_color2","browser_theme_color"];
-
-	md = new MobileDetect(window.navigator.userAgent);
     
     detect_mobile()
 	.then(apply_default_design)
@@ -52,14 +50,7 @@ function onlogout(){
 
 	clearTimeout(still_logged_in_interval);
 }
-function detect_mobile(){
-    return new Promise(function(resolve,reject){
-        $("html").addClass((md.mobile() ? "mobile":"no-mobile"));
-        $("html").addClass((md.phone() ? "phone":"no-phone"));
-        $("html").addClass((md.tablet() ? "tablet":"no-tablet"));
-        resolve();
-    });
-}
+
 
 // ================================================
 //Design Functions
@@ -86,39 +77,7 @@ function set_design_pickers_to_selected_preset(){
     	});
     }
 }
-/*function enable_design_from_xml(xml){
-    for(name in design_parameters){
-        let dict = {};
-        dict[design_parameters[name]] = $xml.find(design_parameters[name])[0].getAttribute("value");
-        
-        set_design(dict);
-    }
-}
-function apply_default_design(){
-    //only before login
-    return new Promise(function(resolve,reject){
-    	get_data_request({"requested_data": "active_design"},true,true,5)
-    	.then(function(data,status){
-            enable_design_from_xml($(data));
-            
-    	    resolve();
-    	})
-    	.catch(function(){reject();});
-    });
-}
-function set_design(values){
-    for(var key in values){
-        let value = values[key];
 
-        $(":root").css("--"+key,value);
-        switch(key){
-            case "browser_theme_color":
-                browser_theme_color = value;
-                $("#theme_color_meta").prop("content",browser_theme_color);
-            break;
-        }
-    }
-}*/
 function refresh_admin_designs_list(){
     let active_design_id;
     get_data_request({"requested_data": "active_design_id"})
@@ -240,20 +199,6 @@ function configure_particles_js(){
 
 // ================================================
 //Login Management
-function login(){
-	action_request({action : "login" ,email : document.getElementById('login_email').value, 'passwort' : document.getElementById('login_passwort').value},false,false,false)
-	.then(function(){
-		onlogin();
-		login_animation();
-	})
-	.catch(function(reason){
-		let error_text = "";
-		for(let i = 0; i < reason.length; i++){
-			error_text += lang(reason[i]["error_lang_name"]);
-		}
-		$("#login_error_message").text(error_text);
-	})
-}
 function logout(){
 	action_request({action: "logout"},false,true)
 	.then(function(data){
@@ -263,23 +208,7 @@ function logout(){
 	})
 	.catch(function(){});
 }
-function check_if_already_logged_in(){
-    return new Promise(function(resolve,reject){
-        get_data_request({"requested_data" : "logged_in"},true,true,10)
-    	.then(function(data){
-    		if(data=="true"){
-    			onlogin();
-    			login_animation(true);
-    		}else{
-    			switch_side_to(0);
-    		}
-    		resolve();
-    	})
-    	.catch(function(status){
-            reject();
-    	});
-    });
-}
+
 function check_if_still_logged_in(){
 	get_data_request({"requested_data" : "logged_in"},false,false)
 	.then(function(data , status){
