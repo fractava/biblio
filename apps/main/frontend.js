@@ -9,6 +9,9 @@ var app = {
     },
     "watch": {
         
+    },
+    "events": {
+        
     }
 }
 export {app};

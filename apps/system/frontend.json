@@ -1,0 +1,28 @@
+{
+    "name": "system",
+    "app_file_path": "/app.js",
+    "routes": [
+        {
+            "url": "/login",
+            "in_navbar": true,
+            "navbar_title": "Login",
+            "side_template_path": "/sides/login/side.html"
+        },
+        {
+            "url": "/admin",
+            "in_navbar": true, 
+            "navbar_title": "Admin",
+            "side_template_path": "/sides/admin/side.html"
+        }
+    ],
+    "props": {},
+    "langs": {
+        "de": {"login": "Login","password": "Passwort","email": "E-Mail Adresse","settings":"Einstellungen","font_color":"Schriftfarbe","gradient_color_1":"Farbverlauf Farbe 1","gradient_color_2":"Farbverlauf Farbe 2","font":"Schriftart","background_color":"Hintergrundfarbe","navbar_color":"Navigationsleiste Farbe"},
+        "en": {"login": "Login","password": "Password","email": "Email adress","settings":"Settings","font_color":"Font color","gradient_color_1":"Gradient color 1","gradient_color_2":"Gradient color 2","font":"Font","background_color":"Background color","navbar_color":"Navbar color"}
+    },
+    "requirements": [
+        "jquery",
+        "jscolor",
+        "particle-js"
+    ]
+}

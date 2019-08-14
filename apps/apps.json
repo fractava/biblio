@@ -1,7 +1,7 @@
 [
     {
         "name": "main",
-        "app_file_path": "/app.js",
+        "app_file_path": "/frontend.js",
         "routes": [
             {
                 "url": "/test",
@@ -69,7 +69,7 @@
     },
     {
         "name": "system",
-        "app_file_path": "/app.js",
+        "app_file_path": "/frontend.js",
         "routes": [
             {
                 "url": "/login",

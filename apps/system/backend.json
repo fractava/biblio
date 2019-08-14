@@ -1,0 +1,10 @@
+{
+    "get_datas": [],
+    "actions": [
+        {
+            "name": "login",
+            "path": "actions/login.inc.php"
+        }
+    ],
+    "events": []
+}

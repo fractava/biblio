@@ -1,0 +1,68 @@
+{
+    "name": "main",
+    "app_file_path": "/fronted.js",
+    "routes": [
+        {
+            "url": "/test",
+            "in_navbar": true,
+            "navbar_title": "Test",
+            "side_template_path": "/sides/test/side.html"
+        },
+        {
+            "url": "/books-io",
+            "in_navbar": true,
+            "navbar_title": "Books IO",
+            "side_template_path": "/sides/books-io/side.html"
+        },
+        {
+            "url": "/catalog",
+            "in_navbar": true,
+            "navbar_title": "Catalog",
+            "redirect": "/catalog/search"
+                
+        },
+        {
+            "url": "/catalog/search",
+            "in_navbar": false,
+            "side_template_path": "/sides/catalog/search/side.html"
+        },
+        {
+            "url": "/catalog/details",
+            "var": "id",
+            "in_navbar": false,
+            "side_template_path": "/sides/catalog/details/side.html"
+        },
+        {
+            "url": "/customers",
+            "in_navbar": true,
+            "navbar_title": "Students",
+            "redirect": "/customers/search"
+        },
+        {
+            "url": "/customers/search",
+            "in_navbar": false,
+            "side_template_path": "/sides/customers/search/side.html"
+        },
+        {
+            "url": "/customers/details",
+            "var": "id",
+            "in_navbar": false,
+            "side_template_path": "/sides/customers/details/side.html"
+        }
+    ],
+    "props": {
+        "medias": [],
+        "test": "test",
+        "customers": []
+    },
+    "langs": {
+        "de": {"id":"1","lang_name":"Deutsch","book_return_and_lend_side_title":"Medien E/A","media_lend_title":"Medium ausleihen","media_return_title":"Medium zurückgeben","catalog_side_title":"Katalogisierung","customers_side_title":"Schüler","lists_side_title":"Listen","admin_side_title":"Verwaltung","media_instances":"Exemplare","media":"Buch","customer":"Schüler","yes":"Ja","no":"Nein","loaned_until":"Ausgeliehen bis","loaned_to":"Ausgeliehen an","change":"Ändern","class":"Klasse","classes":"Klassen","school_year":"Schuljahr","school_years":"Schuljahre","subject":"Fach","subjects":"Fächer","price":"Preis","type":"Typ","types":"Typen","design":"Design","performance_metrics":"Performance Statistiken","part_1":"Teil 1","part_2":"Teil 2","name":"Name","customer_name":"Schüler Name","title":"Titel","combine":"zusammenfassen","combine_selected":"ausgewählte zusammenfassen","remove":"löschen","start_new_school_year":"neues Schuljahr","count":"Anzahl","identifier":"id","really_remove_classes":"Wirklich [count] Klassen löschen ?","really_remove_media":"Wollen sie das Medium wirklich löschen ?","really_remove_media_instance":"Wollen sie das Exemplar wirklich löschen ?","really_remove_media_instances":"Wollen Sie wirklich [count] Exemplare löschen ?","really_start_new_school_year":"Wirklich neues Schuljahr starten","really_combine_classes":"Wirklich [count] Klassen zusammenfassen","ok":"Okay","cancel":"Abbrechen","edit_customer":"Schüler bearbeiten","new_name":"neuer Name","new_media":"neues Medium","new_customer":"neuer Schüler","author":"Autor","publisher":"Verlag","select_class":"Klasse auswählen","select_subject":"Fach auswählen","select_type":"Typ auswählen","select_school_year":"Jahrgangsstufe auswählen","all_subjects":"alle Fächer","all_school_years":"alle Jahrgangsstufen","all_classes":"alle Klassen","logout":"ausloggen","return":"zurückgeben","lend":"ausleihen","holiday_lend":"Ferienleihe","customers_count":"Schülerzahl","select_customer":"Schüler auswählen","barcode":"Barcode","overdue":"überfällig","undo":"rückgängig","time":"Zeit","remove_selected":"ausgewählte löschen","return_selected":"ausgewählte zurückgeben","new_instance":"neues Exemplar","remove_media":"Medium löschen","overdue_medias":"Überfällige Medien","overdue_holiday_medias":"Überfällige Ferienausleihe Medien","last_returned_media_instances":"Zuletzt zurückgegeben","media_instances_of_customer":"Ausgeliehene Exemplare des Schülers","miscellaneous":"sonstiges","http_error_0":"Fehler beim Abrufen der Daten vom Server","http_error_404":"Fehler beim Abrufen der Daten vom Server","http_error_500":"Interner Server Fehler","error_0":"Nicht genug Informationen gesendet","error_1":"Medium nicht gefunden","error_2":"Exemplar nicht gefunden","error_3":"Fehler beim JSON parsen","error_4":"Zugriff verweigert","error_5":"Fehler beim Datum parsen","error_6":"Schüler nicht gefunden","error_7":"Exemplar bereits verliehen an [extra_info]","error_8":"Ferienausleihe nicht korrekt gesendet","error_9":"Medium existiert bereits","error_10":"Username oder Passwort falsch","error_11":"Exemplar nicht verliehen","error_12":"Klasse nicht  gefunden","error_13":"Mediums Typ nicht gefunden"},
+        "en": {"id":"2","lang_name":"English","book_return_and_lend_side_title":"Medias I/O","media_lend_title":"lend media","media_return_title":"return media","catalog_side_title":"Catalog","customers_side_title":"Students","lists_side_title":"Lists","admin_side_title":"Admin","media_instances":"Media Instances","media":"book","customer":"student","yes":"yes","no":"no","loaned_until":"loaned until","loaned_to":"loaned to","change":"change","class":"class","classes":"classes","school_year":"school year","school_years":"school years","subject":"subject","subjects":"subjects","price":"price","type":"type","types":"types","design":"Design","performance_metrics":"Performance metrics","part_1":"Part 1","part_2":"Part 2","name":"name","customer_name":"student name","title":"title","combine":"combine","combine_selected":"combine selected","remove":"delete","start_new_school_year":"start new school year","count":"count","identifier":"id","really_remove_classes":"Really remove [count] classes ?","really_remove_media":"Really remove this Media ?","really_remove_media_instance":"Really remove the instance ?","really_remove_media_instances":"Really remove [count] instances ?","really_start_new_school_year":"Really start new school year ?","really_combine_classes":"Reaaly combine [count] classes","ok":"Ok","cancel":"Cancel","edit_customer":"edit student","new_name":"new Name","new_media":"new media","new_customer":"new student","author":"author","publisher":"publisher","select_class":"select class","select_subject":"select subject","select_type":"select type","select_school_year":"select school year","all_subjects":"all subjects","all_school_years":"all school years","all_classes":"all classes","logout":"Logout","return":"return","lend":"lend","holiday_lend":"lend over holiday","customers_count":"Students count","select_customer":"select student","barcode":"barcode","overdue":"overdue","undo":"undo","time":"time","remove_selected":"delete selected","return_selected":"return selected","new_instance":"new Instance","remove_media":"delete Media","overdue_medias":"Overdue Medias","overdue_holiday_medias":"Overdue Holiday Medias","last_returned_media_instances":"last returned","media_instances_of_customer":"media instances of student","miscellaneous":"miscellaneous","http_error_0":"Error retrieving data from the server","http_error_404":"Error retrieving data from the server","http_error_500":"Internal Server Error","error_0":"Not enough information provided","error_1":"Media not found","error_2":"Media Instance not found","error_3":"Error parsing JSON","error_4":"Permission denied","error_5":"Error parsing Date","error_6":"Student not found","error_7":"Media Instance already loaned to  [extra_info]","error_8":"Holiday not correctly set","error_9":"Media already exists","error_10":"Username oder Password wrong","error_11":"Media Instance not loaned","error_12":"Class not found","error_13":"Media type not found"}
+    },
+    "requirements": [
+        "jquery",
+        "pikaday",
+        "select-2",
+        "sweet-alert-2"
+    ]
+},
