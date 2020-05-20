@@ -1,0 +1,30 @@
+server {
+	listen 80 default_server;
+
+	root /config/www/;
+	index index.html;
+
+	client_max_body_size 0;
+
+	location / {
+	    try_files $uri $uri/ /index.html /index.php?$args =404;
+	}
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		# With php7-cgi alone:
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		include /etc/nginx/fastcgi_params;
+	}
+
+	location ~*  \.(jpg|jpeg|png|gif|ico)$ {
+		expires max;
+	}
+	location ~*  \.(woff|woff2)$ {
+		expires max;
+	}
+	location ~*  \.(css|js|vue)$ {
+    	expires max;
+	}
+}
