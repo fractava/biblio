@@ -1,0 +1,170 @@
+stages:
+  - build
+  - deploy
+  - metrics
+  - test
+
+webpack-build:
+  image: node:lts-alpine
+  stage: build
+  artifacts:
+    untracked: true
+    paths:
+      - www/dist/
+  before_script:
+    - cd www
+    - npm install
+  script:
+    - npm run build
+
+docker-build-prod:
+  image: docker:19.03.1
+  stage: deploy
+  services:
+    - docker:19.03.1-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  dependencies: 
+    - webpack-build
+  before_script:
+    - export DOCKER_BUILDKIT=1
+    - docker login docker.io -u $CI_REGISTRY_USER -p "$CI_REGISTRY_PASSWORD"
+  script:
+    - docker build --build-arg branch=master -t $CI_REGISTRY_IMAGE -f Dockerfile.prod .
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE
+  only:
+    - master
+
+docker-build-dev:
+  image: docker:19.03.1
+  stage: deploy
+  services:
+    - docker:19.03.1-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  dependencies: 
+    - webpack-build
+  before_script:
+    - export DOCKER_BUILDKIT=1
+    - docker login docker.io -u $CI_REGISTRY_USER -p "$CI_REGISTRY_PASSWORD"
+  script:
+    - docker build --build-arg branch=$CI_COMMIT_BRANCH -t $CI_REGISTRY_IMAGE -f Dockerfile.dev .
+    - docker tag $CI_REGISTRY_IMAGE $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+    - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE
+  except:
+    - master
+
+lines-of-code:
+  allow_failure: true
+  image: node:lts-alpine
+  stage: metrics
+  artifacts:
+    untracked: true
+    paths:
+      - lines-of-code.txt
+  before_script:
+    - npm install -g sloc
+  script:
+    - sh ci-tests/lines-of-code/test.sh > lines-of-code.txt
+  only:
+    - master
+
+size:
+  allow_failure: true
+  image: node:lts-alpine
+  stage: metrics
+  artifacts:
+    untracked: true
+    paths:
+      - size.txt
+  script:
+    - sh ci-tests/size/test.sh > size.txt
+  only:
+    - master
+
+docker-run:
+  image: docker:19.03.1
+  stage: test
+  services:
+    - docker:19.03.1-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - docker volume create config
+  script:
+    - docker pull $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+    - docker run -d --rm --name='WebserverTest' --net='bridge' -e TZ="Europe/Berlin" -p '800:80/tcp' -v config:'/config' $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+
+code-quality:
+  stage: test
+  image: docker:19.03.8
+  allow_failure: true
+  services:
+    - docker:19.03.8-dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    CODE_QUALITY_IMAGE: "registry.gitlab.com/gitlab-org/ci-cd/codequality:0.85.9"
+  script:
+    - |
+      if ! docker info &>/dev/null; then
+        if [ -z "$DOCKER_HOST" -a "$KUBERNETES_PORT" ]; then
+          export DOCKER_HOST='tcp://localhost:2375'
+        fi
+      fi
+    - docker pull --quiet "$CODE_QUALITY_IMAGE"
+    - docker run
+        --env SOURCE_CODE="$PWD/www/"
+        --volume "$PWD/www":/code
+        --volume /var/run/docker.sock:/var/run/docker.sock
+        "$CODE_QUALITY_IMAGE" /code
+    - ls -la $PWD/www/
+  artifacts:
+    reports:
+      codequality: www/gl-code-quality-report.json
+    expire_in: 1 week
+  dependencies: []
+  only:
+    refs:
+      - branches
+      - tags
+
+performance:
+  stage: test
+  image: docker:19.03.1
+  variables:
+    URL: http://localhost:80
+    OCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    SITESPEED_VERSION: 11.2.0
+    SITESPEED_OPTIONS: ''
+  services:
+    - docker:stable-dind
+  before_script:
+    - docker volume create config
+    - docker pull $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+    - docker run -d --name='WebserverTest' --network="host" -e TZ="Europe/Berlin" -v config:'/config' $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_BRANCH
+  script:
+    - sleep 10
+    - docker ps -a
+    - netstat -tulpn
+    - mkdir gitlab-exporter
+    - wget -O ./gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/master/index.js
+    - mkdir sitespeed-results
+    - docker run --shm-size=1g --rm --network="host" -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:$SITESPEED_VERSION --plugins.add ./gitlab-exporter --outputFolder sitespeed-results $URL $SITESPEED_OPTIONS
+    - mv sitespeed-results/data/performance.json performance.json
+    - ls -la ./
+  artifacts:
+    paths:
+      - performance.json
+      - sitespeed-results/
+    reports:
+      performance: performance.json
