@@ -1,6 +1,6 @@
 {
   "name": "www",
-  "version": "0.925",
+  "version": "0.9.3",
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
