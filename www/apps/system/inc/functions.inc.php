@@ -43,16 +43,6 @@ function error($error_msg) {
 	include("templates/error.inc.php");
 	exit();
 }
-
-function permission_list(){
-	global $pdo;
-
-	$statement = $pdo->prepare("SELECT * FROM grades WHERE id = :grade_id LIMIT 1;");
-	$statement->execute(array("grade_id" => check_user()["grade"]));
-	$permissions = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-	return $permissions[0];
-}
 function language($id){
 	global $pdo;
 
@@ -61,18 +51,6 @@ function language($id){
 	$language = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 	return $language[0];
-}
-function design($id){
-	global $pdo;
-
-	$statement = $pdo->prepare("SELECT * FROM designs WHERE id = :id LIMIT 1;");
-	$statement->execute(array("id" => $id));
-	$design = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-	return $design[0];
-}
-function permission_granted($permission_name){
-	return permission_list()[$permission_name] == 1;
 }
 function media_exists($title){
 	global $pdo;
