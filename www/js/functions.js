@@ -21,7 +21,6 @@ function onload(){
     .then(detect_mobile)
     .then(init_routes)
     .then(print_routes)
-    .then(init_design)
     .then(init_vue_router)
     .then(init_navigation_guard)
     .then(init_vue)
@@ -117,16 +116,6 @@ function print_routes(){
     return new Promise(function(resolve, reject) {
         console.log(vue_routes);
         resolve();
-    });
-}
-
-function init_design(){
-    return new Promise(function(resolve,reject){
-    	get_data_request({"requested_data": "system:active_design"},true,true,5)
-    	.then(function(data,status){
-            enable_design_from_xml($(data));
-    	    resolve();
-    	});
     });
 }
 
@@ -258,35 +247,4 @@ function get_component(template_url,app_file_url,app_name){
             resolve(component);
         });
     });
-}
-function enable_design_from_xml(xml){
-    console.log(xml);
-    let ignore_attributes = ["id","name"]
-    
-    let properties = xml[0].children[0].children;
-
-    for(let i = 0; i < properties.length; i++){
-        let name= properties[i].nodeName;
-        let value = properties[i].attributes[0].nodeValue;
-        
-        if(!ignore_attributes.includes(name)){
-            let dict = {};
-            dict[name] = value;
-            
-            set_design(dict);
-        }
-    }
-}
-function set_design(values){
-    for(var key in values){
-        let value = values[key];
-
-        $(":root").css("--"+key,value);
-        switch(key){
-            case "browser_theme_color":
-                browser_theme_color = value;
-                $("#theme_color_meta").prop("content",browser_theme_color);
-            break;
-        }
-    }
 }
