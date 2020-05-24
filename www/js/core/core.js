@@ -1,1 +1,1 @@
-import * as network from 'network.js';
+import * as network from './network.js';
