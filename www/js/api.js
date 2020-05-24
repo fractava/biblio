@@ -1,10 +1,6 @@
 function get_request(url,parameters,type,callback_sucess,callback_fail){
 	let jqxhr = $.get(url, parameters, function(data,textStatus,jqXHR){
-		//if($xml = $(data)){
-			//callback_sucess(data,textStatus,$xml);
-		//}else{
 			callback_sucess(data,textStatus);
-		//}
 	});
 	jqxhr.fail(function(jqXHR, exception){callback_fail(jqXHR, exception);});
 }
@@ -35,8 +31,7 @@ function get_data_request(parameters,retry,show_error,max_retries){
 			}catch(e){
 				request_return = data;
 			}
-			resolve(request_return);
-				//sucess(data,textStatus,$xml);
+			    resolve(request_return);
 			});
 			jqxhr.fail(function(jqXHR,exception){
 				fail(jqXHR, exception);
@@ -101,7 +96,6 @@ function action_request(parameters,retry,show_error,max_retries){
 				}else{
 					resolve(data);
 				}
-				//sucess(data,textStatus,$xml);
 			});
 			jqxhr.fail(function(jqXHR,exception){
 				fail(jqXHR, exception);
