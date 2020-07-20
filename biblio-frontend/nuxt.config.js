@@ -15,6 +15,7 @@ export default {
 	css: [
 	],
 	plugins: [
+		"@/plugins/vue-material.js",
 	],
 	components: true,
 	buildModules: [
