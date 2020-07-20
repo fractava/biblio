@@ -1,5 +1,5 @@
 export const state = () => ({
-  medias: [
+	medias: [
 		{
 			id: 0,
 			name: "Mathe 11",
