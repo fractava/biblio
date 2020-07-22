@@ -24,6 +24,15 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "sass-loader": "^8.0.2"
+    "jquery": "^3.5.1",
+    "jscolor": "^0.3.0",
+    "mobile-detect": "^1.4.4",
+    "particles.js": "^2.0.0",
+    "pikaday": "^1.8.0",
+    "sass-loader": "^8.0.2",
+    "select2": "^4.0.13",
+    "sweetalert2": "^9.13.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0"
   }
 }

@@ -1,27 +1,59 @@
 <?php
-session_start();
-require_once("inc/config.inc.php");
-require_once("inc/functions.inc.php");
-if(isset($_POST["action"])){
-	$request = new SimpleXMLElement("<request></request>");
-	$success = true;
-	switch($_POST["action"]){
-		case "set_active_design":
+require($_SERVER['DOCUMENT_ROOT'] . "/core/autoload.inc.php");
 
-		break;
-		default:
-			$success = false;
-			$error = $request->addChild("error");
-			$error->addAttribute("id","0");
-		break;
+use xml\xml;
+
+$actionName = $_POST["action"];
+$actionApp = $_POST["app"];
+
+if(isset($actionName) && isset($actionApp)){
+	if(ctype_alnum($actionApp)) {
+
+		$className = "apps\\" . actionApp . "\\actions\\" . str_replace(":", "\\", $actionName);
+		
+		if(class_exists($className)) {
+			$action = new $className;
+			
+			if($action->clearOutput) {
+				ob_start();
+			}
+			
+			$errors = $action->init();
+			if(empty($errors)) {
+				$results = $action->run();
+			}else {
+				http_response_code(400);
+			}
+			
+			if($action->clearOutput) {
+				ob_get_clean();
+			}
+			
+			if($action->returnType == "xml") {
+				$xml = new \SimpleXMLElement('<?xml version="1.0"?><request></request>');
+				$xml_errors = $xml->addChild("errors");
+				$xml_results = $xml->addChild("results");
+				
+				if(is_array($errors)) {
+					foreach($errors as $error) {
+						$xml_error = $xml_errors->addChild("error");
+						$xml_error->addAttribute("id", $error);
+					}
+				}
+				
+				if(is_array($results)) {
+					foreach($results as $key => $value) {
+						$xml_results->addChild($key, $value);
+					}
+				}
+				
+				header('Content-Type: application/xml; charset=utf-8');
+				echo $xml->asXML();
+			}
+		}else {
+			http_response_code(404);
+		}
 	}
-	if(!$success){
-		http_response_code(400);
-		$request->addAttribute("success","false");
-	}else{
-		$request->addAttribute("success","true");
-	}
-	header('Content-Type: text/xml');
-	echo $request->asXML();
+}else {
+    http_response_code(404);
 }
-?>

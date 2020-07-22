@@ -1,69 +1,11 @@
 <?php
 include_once("password.inc.php");
 
-/**
- * Checks that the user is logged in.
- * @return Returns the row of the logged in user
- */
-function check_user() {
-	global $pdo;
-
-	if(!isset($_SESSION['userid']) && isset($_COOKIE['identifier']) && isset($_COOKIE['securitytoken'])) {
-		$identifier = $_COOKIE['identifier'];
-		$securitytoken = $_COOKIE['securitytoken'];
-
-		$statement = $pdo->prepare("SELECT * FROM securitytokens WHERE identifier = ?");
-		$result = $statement->execute(array($identifier));
-		$securitytoken_row = $statement->fetch();
-
-		if(sha1($securitytoken) !== $securitytoken_row['securitytoken']) {
-			//security Token was stolen - Security alert
-
-		} else {
-			//set new token
-			$neuer_securitytoken = random_string();
-			$insert = $pdo->prepare("UPDATE securitytokens SET securitytoken = :securitytoken WHERE identifier = :identifier");
-			$insert->execute(array('securitytoken' => sha1($neuer_securitytoken), 'identifier' => $identifier));
-			setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
-			setcookie("securitytoken",$neuer_securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit
-
-			//Logge den Benutzer ein
-			$_SESSION['userid'] = $securitytoken_row['user_id'];
-		}
-	}
-
-
-	if(!isset($_SESSION['userid'])) {
-		die('Bitte zuerst <a href="login.php">einloggen</a>');
-	}
-
-
-	$statement = $pdo->prepare("SELECT * FROM members WHERE id = :id");
-	$result = $statement->execute(array('id' => $_SESSION['userid']));
-	$user = $statement->fetch();
-	return $user;
-}
-
-function is_checked_in() {
-	return isset($_SESSION['userid']);
-}
 function validateDate($date, $format = 'Y-m-d H:i:s'){
 	$d = DateTime::createFromFormat($format, $date);
 	return $d && $d->format($format) == $date;
 }
-function random_string() {
-	if(function_exists('openssl_random_pseudo_bytes')) {
-		$bytes = openssl_random_pseudo_bytes(16);
-		$str = bin2hex($bytes);
-	} else if(function_exists('mcrypt_create_iv')) {
-		$bytes = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
-		$str = bin2hex($bytes);
-	} else {
-		//Replace your_secret_string with a string of your choice (>12 characters)
-		$str = md5(uniqid('your_secret_string', true));
-	}
-	return $str;
-}
+
 function sonderzeichen($string){
 	$string = str_replace("ä", "ae", $string);
 	$string = str_replace("ü", "ue", $string);
@@ -101,30 +43,6 @@ function error($error_msg) {
 	include("templates/error.inc.php");
 	exit();
 }
-function config($config_name){
-	global $pdo;
-
-	$statement = $pdo->prepare("SELECT * FROM config WHERE name = :name LIMIT 1;");
-	$statement->execute(array("name" => $config_name));
-	$config = $statement->fetch();
-
-	return $config["value"];
-}
-function set_config($name,$value){
-    global $pdo;
-    
-    $statement = $pdo->prepare("UPDATE config SET value= :value WHERE name = :name LIMIT 1;");
-    $statement->execute(array("name" => $name, "value" => $value));
-}
-function permission_list(){
-	global $pdo;
-
-	$statement = $pdo->prepare("SELECT * FROM grades WHERE id = :grade_id LIMIT 1;");
-	$statement->execute(array("grade_id" => check_user()["grade"]));
-	$permissions = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-	return $permissions[0];
-}
 function language($id){
 	global $pdo;
 
@@ -133,18 +51,6 @@ function language($id){
 	$language = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 	return $language[0];
-}
-function design($id){
-	global $pdo;
-
-	$statement = $pdo->prepare("SELECT * FROM designs WHERE id = :id LIMIT 1;");
-	$statement->execute(array("id" => $id));
-	$design = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-	return $design[0];
-}
-function permission_granted($permission_name){
-	return permission_list()[$permission_name] == 1;
 }
 function media_exists($title){
 	global $pdo;

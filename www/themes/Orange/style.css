@@ -1,0 +1,15 @@
+:root {
+    --gradient_color1:#e22828;
+    --gradient_color2: #ff8c2f;
+    --background_color: #ffffff;
+    --text_color: #000000;
+    --button_text_color: #ff8c2f;
+    --button_text_color_hover: #ffffff;
+    --navbar_text_color: #ffffff;
+    --icon_color: #000000;
+    --navbar_icon_color: #ffffff;
+    --navbar_color: rgb(51, 51, 51);
+    --browser_theme_color: #ff8c2f;
+    --autofill_background: #ff8c2f;
+    --autofill_text_color: #ffffff;
+}
