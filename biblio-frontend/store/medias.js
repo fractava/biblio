@@ -12,9 +12,23 @@ export const state = () => ({
 });
 
 export const mutations = {
-
+	createMedia(options) {
+		state.medias.push(options);
+	},
 };
 
 export const actions = {
-
+	createMedia(options) {
+		// send to server
+		state.medias.push(options);
+	},
+	createInstance(options) {
+		console.log(options);
+	},
+	modifyMedia(options) {
+		console.log(options);
+	},
+	modifyInstance(options) {
+		console.log(options);
+	},
 };
