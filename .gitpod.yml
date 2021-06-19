@@ -1,7 +1,11 @@
 tasks:
   - name: Dev Server
-    init: docker-compose up --no-start
-    command: docker-compose up
-  
+    init: |
+      cd gitpod
+      docker-compose up --no-start
+    command: |
+      cd gitpod
+      docker-compose up
+
 ports:
   - port: 8080
