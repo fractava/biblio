@@ -1,7 +1,7 @@
 FROM nextcloud
 RUN cat /entrypoint.sh
 #RUN echo "chown www-data:root /var/www/html/custom_apps/" >> /entrypoint.sh
-RUN sed '/^exec "$@".*/i chown www-data:root /var/www/html/custom_apps/' /entrypoint.sh
+RUN sed -i '/^exec "$@".*/i chown www-data:root /var/www/html/custom_apps/' /entrypoint.sh
 RUN cat /entrypoint.sh
 #COPY custom-entrypoint.sh /custom-entrypoint.sh
 #RUN chmod +x /custom-entrypoint.sh
