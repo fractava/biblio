@@ -28,7 +28,8 @@ services:
       - db
     volumes:
       - nextcloud:/var/www/html
-      - /workspace/biblio/:/var/www/html/apps/biblio/
+      - config:/var/www/html/config
+      - /workspace/biblio/:/var/www/html/custom_apps/biblio/
     environment:
       - MYSQL_PASSWORD=5)7t}5H$c@_Rs(?3aA{s40y6&
       - MYSQL_DATABASE=nextcloud
