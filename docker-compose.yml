@@ -5,6 +5,7 @@ version: '2'
 volumes:
   nextcloud:
   db:
+  config:
 
 services:
   db:

@@ -1,6 +1,6 @@
 tasks:
   - name: Dev Server
-    #init: docker-compose up --no-start
+    init: docker-compose up --no-start
     command: docker-compose up
   
 ports:
