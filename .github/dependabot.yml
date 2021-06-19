@@ -3,10 +3,8 @@ updates:
 - package-ecosystem: composer
   directory: "/"
   schedule:
-    interval: weekly
-    day: saturday
-    time: "03:00"
-    timezone: Europe/Paris
+    interval: daily
+    time: "04:00"
   open-pull-requests-limit: 10
   labels:
   - 3. to review
@@ -14,10 +12,8 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: weekly
-    day: saturday
-    time: "03:00"
-    timezone: Europe/Paris
+    interval: daily
+    time: "04:00"
   open-pull-requests-limit: 10
   labels:
   - 3. to review
