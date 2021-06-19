@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>biblio</id>
+    <name>Biblio</name>
+    <summary>A library management system</summary>
+    <description><![CDATA[This can be used to manage a book library, Sheet music archive, Textbook library]]></description>
+    <version>1.0.0</version>
+    <licence>agpl</licence>
+    <author mail="mail@jonathan-treffler.de">Jonathan Treffler</author>
+    <namespace>Biblio</namespace>
+    <category>office</category>
+    <bugs>https://github.com/fractava/biblio/issues</bugs>
+    <dependencies>
+        <nextcloud min-version="19" max-version="22"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Biblio</name>
+            <route>biblio.page.index</route>
+        </navigation>
+    </navigations>
+</info>
