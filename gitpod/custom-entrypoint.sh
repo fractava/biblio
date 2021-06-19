@@ -1,4 +1,4 @@
 #!/bin/sh
-echo $@
-bash /entrypoint.sh $@
-chown www-data:root /var/www/html/custom_apps/
+chmod -R 777 /var/www/html/custom_apps/
+bash /entrypoint.sh $1
+#chown www-data:root /var/www/html/custom_apps/
