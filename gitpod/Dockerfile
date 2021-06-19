@@ -9,5 +9,5 @@ FROM nextcloud
 #ENTRYPOINT ["/custom-entrypoint.sh"]
 #RUN ls -la  /var/www/html/
 #RUN chown www-data:root /var/www/html/custom_apps/
-RUN mkdir /var/www/html/custom_apps/
-RUN chmod -R 777 /var/www/html/custom_apps/
+#RUN mkdir /var/www/html/custom_apps/
+#RUN chmod -R 777 /var/www/html/custom_apps/

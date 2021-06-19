@@ -1,6 +1,7 @@
 tasks:
   - name: Dev Server
     init: |
+      chmod -R 777 gitpod
       cd gitpod
       docker-compose up --no-start
     command: |
