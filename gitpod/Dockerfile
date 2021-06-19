@@ -4,6 +4,6 @@ FROM nextcloud
 #RUN cat /entrypoint.sh
 COPY custom-entrypoint.sh /custom-entrypoint.sh
 RUN chmod +x /custom-entrypoint.sh
-ENTRYPOINT ["/custom-entrypoint.sh"]
+ENTRYPOINT ["bash /custom-entrypoint.sh"]
 #RUN ls -la  /var/www/html/
 #RUN chown www-data:root /var/www/html/custom_apps/
