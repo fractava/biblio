@@ -11,7 +11,7 @@ To install it change into your Nextcloud's apps directory:
 
 Then run:
 
-    git clone https://github.com/nextcloud/app-tutorial.git notestutorial
+    git clone https://github.com/fractava/biblio biblio
 
 Then install the dependencies using:
 
