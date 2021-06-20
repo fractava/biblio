@@ -3,8 +3,13 @@
 [![PHPUnit GitHub Action](https://github.com/fractava/biblio/workflows/PHPUnit/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3APHPUnit)
 [![Node GitHub Action](https://github.com/fractava/biblio/workflows/Node/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ANode)
 [![Lint GitHub Action](https://github.com/fractava/biblio/workflows/Lint/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ALint)
- 
-## Try it 
+
+## Try it on Gitpod
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fractava/biblio/)
+
+It will automatically open a full dev server.
+
+## Try it on your server
 To install it change into your Nextcloud's apps directory:
 
     cd nextcloud/apps
