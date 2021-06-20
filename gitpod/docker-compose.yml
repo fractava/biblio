@@ -1,4 +1,4 @@
-# This is for gitpod, DO NOT USE THIS TO HOST YOUR NEXTCLOUD
+# This is for gitpod, DO NOT USE THIS TO HOST YOUR PRODUCTION NEXTCLOUD
 
 version: '2'
 
@@ -15,10 +15,30 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=5)7t}5H$c@_Rs(?3aA{s40y6&
-      - MYSQL_PASSWORD=5)7t}5H$c@_Rs(?3aA{s40y6&
+      - MYSQL_ROOT_PASSWORD=wdGq73jQB0p373gLdf6yLRj5
+      - MYSQL_PASSWORD=wdGq73jQB0p373gLdf6yLRj5
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      #PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+
+
+  #adminer:
+  #  image: adminer
+  #  restart: always
+  #  ports:
+  #    - 8081:8080
 
   app:
     image: nextcloud
@@ -36,7 +56,7 @@ services:
       - config:/var/www/html/config
       - /workspace/biblio/:/var/www/html/custom_apps/biblio/
     environment:
-      - MYSQL_PASSWORD=5)7t}5H$c@_Rs(?3aA{s40y6&
+      - MYSQL_PASSWORD=wdGq73jQB0p373gLdf6yLRj5
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db
