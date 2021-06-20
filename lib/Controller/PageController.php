@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\Biblio\Controller;
 
-use OCA\NotesTutorial\AppInfo\Application;
+use OCA\Biblio\AppInfo\Application;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;

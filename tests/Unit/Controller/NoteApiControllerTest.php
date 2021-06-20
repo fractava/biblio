@@ -1,12 +1,12 @@
 <?php
 
-namespace OCA\NotesTutorial\Tests\Unit\Controller;
+namespace OCA\Biblio\Tests\Unit\Controller;
 
-use OCA\NotesTutorial\Controller\NoteApiController;
+use OCA\Biblio\Controller\BiblioApiController;
 
-class NoteApiControllerTest extends NoteControllerTest {
+class BiblioApiControllerTest extends BiblioControllerTest {
 	public function setUp(): void {
 		parent::setUp();
-		$this->controller = new NoteApiController($this->request, $this->service, $this->userId);
+		$this->controller = new BiblioApiController($this->request, $this->service, $this->userId);
 	}
 }

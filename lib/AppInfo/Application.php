@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\NotesTutorial\AppInfo;
+namespace OCA\Biblio\AppInfo;
 
 use OCP\AppFramework\App;
 

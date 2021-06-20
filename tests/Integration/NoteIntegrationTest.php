@@ -1,23 +1,23 @@
 <?php
 
-namespace OCA\NotesTutorial\Tests\Integration\Controller;
+namespace OCA\Biblio\Tests\Integration\Controller;
 
 use OCP\AppFramework\App;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
 
 
-use OCA\NotesTutorial\Db\Note;
-use OCA\NotesTutorial\Db\NoteMapper;
-use OCA\NotesTutorial\Controller\NoteController;
+use OCA\Biblio\Db\Medium;
+use OCA\Biblio\Db\MediumMapper;
+use OCA\Biblio\Controller\MediumController;
 
-class NoteIntegrationTest extends TestCase {
+class MediumIntegrationTest extends TestCase {
 	private $controller;
 	private $mapper;
 	private $userId = 'john';
 
 	public function setUp(): void {
-		$app = new App('notestutorial');
+		$app = new App('biblio');
 		$container = $app->getContainer();
 
 		// only replace the user id
@@ -30,30 +30,30 @@ class NoteIntegrationTest extends TestCase {
 			return $this->createMock(IRequest::class);
 		});
 
-		$this->controller = $container->query(NoteController::class);
-		$this->mapper = $container->query(NoteMapper::class);
+		$this->controller = $container->query(MediumController::class);
+		$this->mapper = $container->query(MediumMapper::class);
 	}
 
 	public function testUpdate() {
-		// create a new note that should be updated
-		$note = new Note();
-		$note->setTitle('old_title');
-		$note->setContent('old_content');
-		$note->setUserId($this->userId);
+		// create a new medium that should be updated
+		$medium = new Medium();
+		$medium->setTitle('old_title');
+		$medium->setData('old_data');
+		$medium->setUserId($this->userId);
 
-		$id = $this->mapper->insert($note)->getId();
+		$id = $this->mapper->insert($medium)->getId();
 
 		// fromRow does not set the fields as updated
-		$updatedNote = Note::fromRow([
+		$updatedMedium = Medium::fromRow([
 			'id' => $id,
 			'user_id' => $this->userId
 		]);
-		$updatedNote->setContent('content');
-		$updatedNote->setTitle('title');
+		$updatedMedium->setData('data');
+		$updatedMedium->setTitle('title');
 
-		$result = $this->controller->update($id, 'title', 'content');
+		$result = $this->controller->update($id, 'title', 'data');
 
-		$this->assertEquals($updatedNote, $result->getData());
+		$this->assertEquals($updatedMedium, $result->getData());
 
 		// clean up
 		$this->mapper->delete($result->getData());

@@ -1,15 +1,15 @@
 <?php
 
-namespace OCA\NotesTutorial\Controller;
+namespace OCA\Biblio\Controller;
 
-use OCA\NotesTutorial\AppInfo\Application;
-use OCA\NotesTutorial\Service\NoteService;
-use OCP\AppFramework\ApiController;
+use OCA\Biblio\AppInfo\Application;
+use OCA\Biblio\Service\MediumService;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
-class NoteApiController extends ApiController {
-	/** @var NoteService */
+class MediumController extends Controller {
+	/** @var MediumService */
 	private $service;
 
 	/** @var string */
@@ -18,7 +18,7 @@ class NoteApiController extends ApiController {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								NoteService $service,
+								MediumService $service,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
@@ -26,8 +26,6 @@ class NoteApiController extends ApiController {
 	}
 
 	/**
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
 	public function index(): DataResponse {
@@ -35,8 +33,6 @@ class NoteApiController extends ApiController {
 	}
 
 	/**
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
 	public function show(int $id): DataResponse {
@@ -46,30 +42,24 @@ class NoteApiController extends ApiController {
 	}
 
 	/**
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $content): DataResponse {
-		return new DataResponse($this->service->create($title, $content,
+	public function create(string $title, string $data): DataResponse {
+		return new DataResponse($this->service->create($title, $data,
 			$this->userId));
 	}
 
 	/**
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
 	public function update(int $id, string $title,
-						   string $content): DataResponse {
-		return $this->handleNotFound(function () use ($id, $title, $content) {
-			return $this->service->update($id, $title, $content, $this->userId);
+						   string $data): DataResponse {
+		return $this->handleNotFound(function () use ($id, $title, $data) {
+			return $this->service->update($id, $title, $data, $this->userId);
 		});
 	}
 
 	/**
-	 * @CORS
-	 * @NoCSRFRequired
 	 * @NoAdminRequired
 	 */
 	public function destroy(int $id): DataResponse {

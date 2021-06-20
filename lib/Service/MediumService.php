@@ -1,21 +1,21 @@
 <?php
 
-namespace OCA\NotesTutorial\Service;
+namespace OCA\Biblio\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\NotesTutorial\Db\Note;
-use OCA\NotesTutorial\Db\NoteMapper;
+use OCA\Biblio\Db\Medium;
+use OCA\Biblio\Db\MediumMapper;
 
-class NoteService {
+class MediumService {
 
-	/** @var NoteMapper */
+	/** @var MediumMapper */
 	private $mapper;
 
-	public function __construct(NoteMapper $mapper) {
+	public function __construct(MediumMapper $mapper) {
 		$this->mapper = $mapper;
 	}
 
@@ -26,7 +26,7 @@ class NoteService {
 	private function handleException(Exception $e): void {
 		if ($e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException) {
-			throw new NoteNotFound($e->getMessage());
+			throw new MediumNotFound($e->getMessage());
 		} else {
 			throw $e;
 		}
@@ -45,20 +45,20 @@ class NoteService {
 		}
 	}
 
-	public function create($title, $content, $userId) {
-		$note = new Note();
-		$note->setTitle($title);
-		$note->setContent($content);
-		$note->setUserId($userId);
-		return $this->mapper->insert($note);
+	public function create($title, $data, $userId) {
+		$medium = new Medium();
+		$medium->setTitle($title);
+		$medium->setData($data);
+		$medium->setUserId($userId);
+		return $this->mapper->insert($medium);
 	}
 
-	public function update($id, $title, $content, $userId) {
+	public function update($id, $title, $data, $userId) {
 		try {
-			$note = $this->mapper->find($id, $userId);
-			$note->setTitle($title);
-			$note->setContent($content);
-			return $this->mapper->update($note);
+			$medium = $this->mapper->find($id, $userId);
+			$medium->setTitle($title);
+			$edium->setData($data);
+			return $this->mapper->update($medium);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
@@ -66,9 +66,9 @@ class NoteService {
 
 	public function delete($id, $userId) {
 		try {
-			$note = $this->mapper->find($id, $userId);
-			$this->mapper->delete($note);
-			return $note;
+			$medium = $this->mapper->find($id, $userId);
+			$this->mapper->delete($mediumj);
+			return $medium;
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}

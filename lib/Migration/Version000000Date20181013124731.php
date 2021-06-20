@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OCA\NotesTutorial\Migration;
+namespace OCA\Biblio\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
@@ -21,27 +21,26 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->hasTable('notestutorial')) {
-			$table = $schema->createTable('notestutorial');
+		if (!$schema->hasTable('biblio_mediums')) {
+			$table = $schema->createTable('biblio_mediums');
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
-			]);
+            ]);
 			$table->addColumn('title', 'string', [
 				'notnull' => true,
-				'length' => 200
+				'length' => 200,
+			]);
+			$table->addColumn('data', 'string', [
+				'notnull' => true,
 			]);
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
 				'length' => 200,
 			]);
-			$table->addColumn('content', 'text', [
-				'notnull' => true,
-				'default' => ''
-			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'notestutorial_user_id_index');
+			$table->addIndex(['user_id'], 'biblio_medium_id_index');
 		}
 		return $schema;
 	}

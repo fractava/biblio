@@ -1,17 +1,17 @@
 <?php
 
-namespace OCA\NotesTutorial\Tests\Unit\Controller;
+namespace OCA\Biblio\Tests\Unit\Controller;
 
 use PHPUnit\Framework\TestCase;
 
 use OCP\AppFramework\Http;
 use OCP\IRequest;
 
-use OCA\NotesTutorial\Service\NoteNotFound;
-use OCA\NotesTutorial\Service\NoteService;
-use OCA\NotesTutorial\Controller\NoteController;
+use OCA\Biblio\Service\MediumNotFound;
+use OCA\Biblio\Service\MediumService;
+use OCA\Biblio\Controller\MediumController;
 
-class NoteControllerTest extends TestCase {
+class MediumControllerTest extends TestCase {
 	protected $controller;
 	protected $service;
 	protected $userId = 'john';
@@ -19,33 +19,33 @@ class NoteControllerTest extends TestCase {
 
 	public function setUp(): void {
 		$this->request = $this->getMockBuilder(IRequest::class)->getMock();
-		$this->service = $this->getMockBuilder(NoteService::class)
+		$this->service = $this->getMockBuilder(MediumService::class)
 			->disableOriginalConstructor()
 			->getMock();
-		$this->controller = new NoteController($this->request, $this->service, $this->userId);
+		$this->controller = new MediumController($this->request, $this->service, $this->userId);
 	}
 
 	public function testUpdate() {
-		$note = 'just check if this value is returned correctly';
+		$medium = 'just check if this value is returned correctly';
 		$this->service->expects($this->once())
 			->method('update')
 			->with($this->equalTo(3),
 					$this->equalTo('title'),
-					$this->equalTo('content'),
+					$this->equalTo('data'),
 				   $this->equalTo($this->userId))
-			->will($this->returnValue($note));
+			->will($this->returnValue($medium));
 
 		$result = $this->controller->update(3, 'title', 'content');
 
-		$this->assertEquals($note, $result->getData());
+		$this->assertEquals($medium, $result->getData());
 	}
 
 
 	public function testUpdateNotFound() {
-		// test the correct status code if no note is found
+		// test the correct status code if no medium is found
 		$this->service->expects($this->once())
 			->method('update')
-			->will($this->throwException(new NoteNotFound()));
+			->will($this->throwException(new MediumNotFound()));
 
 		$result = $this->controller->update(3, 'title', 'content');
 
