@@ -10,7 +10,7 @@ tasks:
       docker-compose up
 
   - name: Backend
-    init: |
+    command: |
       make composer
 
   - name: Frontend
