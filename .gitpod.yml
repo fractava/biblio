@@ -24,10 +24,10 @@ tasks:
     command: exit
 
   - name: Frontend
-    command: |
-      make watch-js
+    command: make watch-js
 
   - name: Terminal
+    command: clear
 
 ports:
   - port: 8080

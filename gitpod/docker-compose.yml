@@ -28,24 +28,15 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      #PMA_ARBITRARY: 1
     restart: always
     ports:
       - 8081:80
-
-
-  #adminer:
-  #  image: adminer
-  #  restart: always
-  #  ports:
-  #    - 8081:8080
 
   app:
     image: nextcloud
     build:
       context: .
       dockerfile: Dockerfile
-      #args:
     restart: always
     ports:
       - 8080:80
