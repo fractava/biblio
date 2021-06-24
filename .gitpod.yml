@@ -1,3 +1,13 @@
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
+    addComment: false
+    addBadge: true
+
 tasks:
   - name: Nextcloud Server
     init: |
@@ -11,6 +21,7 @@ tasks:
 
   - name: Dependency install
     init: make dev-setup
+    command: exit
 
   - name: Frontend
     command: |
