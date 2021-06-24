@@ -9,15 +9,14 @@ tasks:
       cd gitpod
       docker-compose up
 
-  - name: Backend
-    command: |
-      make composer
+  - name: Dependency install
+    init: make dev-setup
 
   - name: Frontend
-    init: |
-      make dev-setup
     command: |
       make watch-js
+
+  - name: Terminal
 
 ports:
   - port: 8080
