@@ -1,5 +1,5 @@
 tasks:
-  - name: Dev Server
+  - name: Nextcloud Server
     init: |
       cd gitpod
       docker-compose up --no-start
@@ -9,14 +9,20 @@ tasks:
       cd gitpod
       docker-compose up
 
-# TODO:
+  - name: Backend
+    init: |
+      make composer
 
-# Backend dev setup:
-# - run make composer
-
-# Frontend dev setup:
-# - run make dev-setup
-# - run make watch-js
+  - name: Frontend
+    init: |
+      make dev-setup
+    command: |
+      make watch-js
 
 ports:
   - port: 8080
+    onOpen: open-browser
+    visibility: private
+  - port: 8081
+    visibility: private
+    onOpen: ignore
