@@ -1,43 +1,35 @@
 <template>
 	<div id="content" class="app-biblio">
-		<AppNavigation>
-			<AppNavigationItem :title="t('biblio', 'Lend/Return')" icon="icon-medium" />
-            <AppNavigationItem :title="t('biblio', 'Mediums')" icon="icon-category-enabled" />
-            <AppNavigationItem :title="t('biblio', 'Customers')" icon="icon-category-enabled" />
-		</AppNavigation>
+		<Sidebar />
 		<AppContent>
-            <ul>
-                <listItem
-                    v-for="medium in mediums"
-                    :title="medium.title"
-                    />
-            </ul>
+			<ul>
+				<Table
+					:columns="['title', 'data']"
+					:items="mediums" />
+			</ul>
 		</AppContent>
 	</div>
 </template>
 
 <script>
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+// import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import AppContent from '@nextcloud/vue/dist/Components/AppContent'
-import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
-import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
-import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
-import ListItem from '@nextcloud/vue/dist/Components/ListItem'
 
 import '@nextcloud/dialogs/styles/toast.scss'
 import { generateUrl } from '@nextcloud/router'
 import { showError, showSuccess } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 
+import Sidebar from './components/Sidebar.vue'
+import Table from './components/Table.vue'
+
 export default {
 	name: 'App',
 	components: {
-		ActionButton,
+		// ActionButton,
 		AppContent,
-		AppNavigation,
-		AppNavigationItem,
-		AppNavigationNew,
-        ListItem,
+		Sidebar,
+		Table,
 	},
 	data() {
 		return {
@@ -183,21 +175,9 @@ export default {
 }
 </script>
 <style scoped>
-	#app-content > div {
-		width: 100%;
-		height: 100%;
-		padding: 20px;
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
-	}
-
-	input[type='text'] {
-		width: 100%;
-	}
-
-	textarea {
-		flex-grow: 1;
-		width: 100%;
-	}
+	.app-content {
+		margin-left: 4% !important;
+        margin-right: 4% !important;
+        margin-top: 7px !important;
+    }
 </style>
