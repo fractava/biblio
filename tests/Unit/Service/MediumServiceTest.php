@@ -28,7 +28,7 @@ class MediumServiceTest extends TestCase {
 		$medium = Medium::fromRow([
 			'id' => 3,
 			'title' => 'yo',
-			'content' => 'nope'
+			'data' => 'nope'
 		]);
 		$this->mapper->expects($this->once())
 			->method('find')
