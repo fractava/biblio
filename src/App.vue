@@ -1,50 +1,9 @@
 <template>
 	<div id="content" class="app-biblio">
 		<AppNavigation>
-			<AppNavigationNew v-if="!loading"
-				:text="t('biblio', 'New note')"
-				:disabled="false"
-				button-id="new-notestutorial-button"
-				button-class="icon-add"
-				@click="newNote" />
-			<!--<ul>
-				<AppNavigationItem v-for="note in notes"
-					:key="note.id"
-					:title="note.title ? note.title : t('biblio', 'New note')"
-					:class="{active: currentNoteId === note.id}"
-					@click="openNote(note)">
-					<template slot="actions">
-						<ActionButton v-if="note.id === -1"
-							icon="icon-close"
-							@click="cancelNewNote(note)">
-							{{ t('biblio', 'Cancel note creation') }}
-						</ActionButton>
-						<ActionButton v-else
-							icon="icon-delete"
-							@click="deleteNote(note)">
-							{{ t('biblio', 'Delete note') }}
-						</ActionButton>
-					</template>
-				</AppNavigationItem>
-			</ul>-->
+			<AppNavigationItem :title="t('Lend/Return')" icon="icon-category-enabled" />
 		</AppNavigation>
 		<AppContent>
-			<div v-if="currentNote">
-				<input ref="title"
-					v-model="currentNote.title"
-					type="text"
-					:disabled="updating">
-				<textarea ref="content" v-model="currentNote.data" :disabled="updating" />
-				<input type="button"
-					class="primary"
-					:value="t('biblio', 'Save')"
-					:disabled="updating || !savePossible"
-					@click="saveNote">
-			</div>
-			<div v-else id="emptycontent">
-				<div class="icon-file" />
-				<h2>{{ t('biblio', 'Create a note to get started') }}</h2>
-			</div>
 		</AppContent>
 	</div>
 </template>
@@ -103,11 +62,11 @@ export default {
 	 */
 	async mounted() {
 		try {
-			//const response = await axios.get(generateUrl('/apps/biblio/mediums'))
-			//this.notes = response.data
+			const response = await axios.get(generateUrl('/apps/biblio/mediums'))
+			this.notes = response.data
 		} catch (e) {
 			console.error(e)
-			showError(t('biblio', 'Could not fetch notes'))
+			showError(t('biblio', 'Could not fetch mediums'))
 		}
 		this.loading = false
 	},
@@ -166,7 +125,7 @@ export default {
 		 * Create a new note by sending the information to the server
 		 * @param {Object} note Note object
 		 */
-		async createNote(note) {
+		async createMedium(note) {
 			this.updating = true
 			try {
 				const response = await axios.post(generateUrl('/apps/biblio/mediums'), note)
@@ -175,7 +134,7 @@ export default {
 				this.currentNoteId = response.data.id
 			} catch (e) {
 				console.error(e)
-				showError(t('biblio', 'Could not create the note'))
+				showError(t('biblio', 'Could not create the medium'))
 			}
 			this.updating = false
 		},
@@ -183,13 +142,13 @@ export default {
 		 * Update an existing note on the server
 		 * @param {Object} note Note object
 		 */
-		async updateNote(note) {
+		async updateMedium(note) {
 			this.updating = true
 			try {
 				await axios.put(generateUrl(`/apps/biblio/mediums${note.id}`), note)
 			} catch (e) {
 				console.error(e)
-				showError(t('biblio', 'Could not update the note'))
+				showError(t('biblio', 'Could not update the medium'))
 			}
 			this.updating = false
 		},
@@ -197,17 +156,17 @@ export default {
 		 * Delete a note, remove it from the frontend and show a hint
 		 * @param {Object} note Note object
 		 */
-		async deleteNote(note) {
+		async deleteMedium(note) {
 			try {
 				await axios.delete(generateUrl(`/apps/biblio/mediums/${note.id}`))
 				this.notes.splice(this.notes.indexOf(note), 1)
 				if (this.currentNoteId === note.id) {
 					this.currentNoteId = null
 				}
-				showSuccess(t('biblio', 'Note deleted'))
+				showSuccess(t('biblio', 'Medium deleted'))
 			} catch (e) {
 				console.error(e)
-				showError(t('biblio', 'Could not delete the note'))
+				showError(t('biblio', 'Could not delete the medium'))
 			}
 		},
 	},
