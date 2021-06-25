@@ -65,60 +65,60 @@ export default {
 	border-spacing: 0;
 	white-space: nowrap;
 
-    > thead {
-        box-sizing: border-box;
-        display: table-header-group;
-        vertical-align: middle;
-        border-color: inherit;
+	> thead {
+		box-sizing: border-box;
+		display: table-header-group;
+		vertical-align: middle;
+		border-color: inherit;
 
-        > tr > th {
-            border-bottom: 1px solid var(--color-border);
-            text-align: left;
-            font-weight: normal;
-            color: var(--color-text-maxcontrast);
+		> tr > th {
+			border-bottom: 1px solid var(--color-border);
+			text-align: left;
+			font-weight: normal;
+			color: var(--color-text-maxcontrast);
 
-            > a, > span, > p {
-                display: block;
-                padding: 15px;
-                height: 50px;
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                vertical-align: middle;
-                color: var(--color-text-maxcontrast);
-            }
-        }
+			> a, > span, > p {
+				display: block;
+				padding: 15px;
+				height: 50px;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				vertical-align: middle;
+				color: var(--color-text-maxcontrast);
+			}
+		}
 
-    }
+	}
 
-    tbody > tr {
-        transition: background-color 0.3s ease;
-        height: 51px;
+	tbody > tr {
+		transition: background-color 0.3s ease;
+		height: 51px;
 
-        > th {
-            > a, > span, > p {
-                display: block;
-                padding: 15px;
-                height: 50px;
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                vertical-align: middle;
-            }
-        }
-    }
+		> th {
+			> a, > span, > p {
+				display: block;
+				padding: 15px;
+				height: 50px;
+				box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				vertical-align: middle;
+			}
+		}
+	}
 
-    .action .icon {
-        display: inline-block;
-        vertical-align: middle;
-        background-size: 16px 16px;
-    }
+	.action .icon {
+		display: inline-block;
+		vertical-align: middle;
+		background-size: 16px 16px;
+	}
 
-    .sortIndicator {
-        width: 10px;
-        height: 8px;
-        margin-left: 5px;
-        display: inline-block;
-        vertical-align: text-bottom;
-        opacity: 0.3;
-    }
+	.sortIndicator {
+		width: 10px;
+		height: 8px;
+		margin-left: 5px;
+		display: inline-block;
+		vertical-align: text-bottom;
+		opacity: 0.3;
+	}
 }
 </style>
