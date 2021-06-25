@@ -1,7 +1,7 @@
 <template>
 	<div id="content" class="app-biblio">
 		<AppNavigation>
-			<AppNavigationItem :title="t('Lend/Return')" icon="icon-category-enabled" />
+			<AppNavigationItem :title="t('biblio', 'Lend/Return')" icon="icon-category-enabled" />
 		</AppNavigation>
 		<AppContent>
 		</AppContent>
