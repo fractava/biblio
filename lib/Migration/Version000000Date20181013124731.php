@@ -26,7 +26,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
-            ]);
+			]);
 			$table->addColumn('title', 'string', [
 				'notnull' => true,
 				'length' => 200,
