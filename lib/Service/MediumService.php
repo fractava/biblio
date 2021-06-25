@@ -57,7 +57,7 @@ class MediumService {
 		try {
 			$medium = $this->mapper->find($id, $userId);
 			$medium->setTitle($title);
-			$edium->setData($data);
+			$medium->setData($data);
 			return $this->mapper->update($medium);
 		} catch (Exception $e) {
 			$this->handleException($e);

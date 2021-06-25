@@ -44,7 +44,7 @@ class MediumServiceTest extends TestCase {
 			->with($this->equalTo($updatedMedium))
 			->will($this->returnValue($updatedMedium));
 
-		$result = $this->service->update(3, 'title', 'content', $this->userId);
+		$result = $this->service->update(3, 'title', 'data', $this->userId);
 
 		$this->assertEquals($updatedMedium, $result);
 	}
@@ -57,6 +57,6 @@ class MediumServiceTest extends TestCase {
 			->with($this->equalTo(3))
 			->will($this->throwException(new DoesNotExistException('')));
 
-		$this->service->update(3, 'title', 'content', $this->userId);
+		$this->service->update(3, 'title', 'data', $this->userId);
 	}
 }
