@@ -6,6 +6,12 @@
             <AppNavigationItem :title="t('biblio', 'Customers')" icon="icon-category-enabled" />
 		</AppNavigation>
 		<AppContent>
+            <ul>
+                <listItem
+                    v-for="medium in mediums"
+                    :title="medium.title"
+                    />
+            </ul>
 		</AppContent>
 	</div>
 </template>
@@ -16,6 +22,7 @@ import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
+import ListItem from '@nextcloud/vue/dist/Components/ListItem'
 
 import '@nextcloud/dialogs/styles/toast.scss'
 import { generateUrl } from '@nextcloud/router'
@@ -30,10 +37,11 @@ export default {
 		AppNavigation,
 		AppNavigationItem,
 		AppNavigationNew,
+        ListItem,
 	},
 	data() {
 		return {
-			notes: [],
+			mediums: [],
 			currentNoteId: null,
 			updating: false,
 			loading: true,
@@ -65,7 +73,7 @@ export default {
 	async mounted() {
 		try {
 			const response = await axios.get(generateUrl('/apps/biblio/mediums'))
-			this.notes = response.data
+			this.mediums = response.data
 		} catch (e) {
 			console.error(e)
 			showError(t('biblio', 'Could not fetch mediums'))
