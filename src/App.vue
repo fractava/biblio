@@ -177,7 +177,7 @@ export default {
 <style scoped>
 	.app-content {
 		margin-left: 4% !important;
-        margin-right: 4% !important;
-        margin-top: 7px !important;
-    }
+		margin-right: 4% !important;
+		margin-top: 7px !important;
+	}
 </style>

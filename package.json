@@ -22,8 +22,8 @@
 		"watch": "NODE_ENV=development webpack --progress --watch --config webpack.js",
 		"lint": "eslint --ext .js,.vue src",
 		"lint:fix": "eslint --ext .js,.vue src --fix",
-		"stylelint": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue",
-		"stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.scss src/**/*.vue --fix"
+		"stylelint": "stylelint css/*.css css/*.scss src/**/*.css src/**/*.scss src/*.vue src/**/*.vue",
+		"stylelint:fix": "stylelint css/*.css css/*.scss src/**/*.css src/**/*.scss src/*.vue src/**/*.vue --fix"
 	},
 	"dependencies": {
 		"@babel/eslint-parser": "^7.14.5",
