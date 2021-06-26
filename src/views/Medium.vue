@@ -103,12 +103,21 @@ export default {
 				}
 			},
 		},
-        thisFields() {
+        thisFields: {
+            get() {
 				if (this.createNew) {
 					return this.newFields
 				} else {
 					return this.$store.getters.getMediumById(this.$route.params.id).fields
 				}
+            },
+			set(value) {
+				if (this.createNew) {
+					this.newFields = value
+				} else {
+				    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: value })
+				}
+			},
 		},
 	},
 	methods: {
