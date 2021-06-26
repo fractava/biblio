@@ -2,7 +2,8 @@
 	<ul>
 		<Table
 			:columns="['title', 'data']"
-			:items="mediums" />
+			:items="mediums"
+			@click="openMedium($event)" />
 	</ul>
 </template>
 
@@ -22,7 +23,12 @@ export default {
 		}),
 	},
 	methods: {
-
+		openMedium(medium) {
+			console.log(medium)
+			this.$router.push({
+				path: '/medium/' + medium,
+			})
+		},
 	},
 }
 
