@@ -38,7 +38,7 @@ class MediumIntegrationTest extends TestCase {
 		// create a new medium that should be updated
 		$medium = new Medium();
 		$medium->setTitle('old_title');
-		$medium->setData('old_data');
+		$medium->setFields('old_fields');
 		$medium->setUserId($this->userId);
 
 		$id = $this->mapper->insert($medium)->getId();
@@ -48,14 +48,14 @@ class MediumIntegrationTest extends TestCase {
 			'id' => $id,
 			'user_id' => $this->userId
 		]);
-		$updatedMedium->setData('data');
+		$updatedMedium->setFields('fields');
 		$updatedMedium->setTitle('title');
 
-		$result = $this->controller->update($id, 'title', 'data');
+		$result = $this->controller->update($id, 'title', 'fields');
 
-		$this->assertEquals($updatedMedium, $result->getData());
+		$this->assertEquals($updatedMedium, $result->getFields());
 
 		// clean up
-		$this->mapper->delete($result->getData());
+		$this->mapper->delete($result->getFields());
 	}
 }

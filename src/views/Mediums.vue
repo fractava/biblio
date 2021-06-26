@@ -1,7 +1,7 @@
 <template>
 	<ul>
 		<Table
-			:columns="['title', 'data']"
+			:columns="['title', 'fields']"
 			:items="mediums"
 			@click="openMedium($event)" />
 	</ul>

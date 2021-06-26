@@ -8,14 +8,14 @@ use OCP\AppFramework\Db\Entity;
 
 class Medium extends Entity implements JsonSerializable {
 	protected $title;
-	protected $data;
+	protected $fields;
 	protected $userId;
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
 			'title' => $this->title,
-			'data' => $this->data
+			'fields' => $this->fields
 		];
 	}
 }

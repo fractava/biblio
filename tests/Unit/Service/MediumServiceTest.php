@@ -28,7 +28,7 @@ class MediumServiceTest extends TestCase {
 		$medium = Medium::fromRow([
 			'id' => 3,
 			'title' => 'yo',
-			'data' => 'nope'
+			'fields' => 'nope'
 		]);
 		$this->mapper->expects($this->once())
 			->method('find')
@@ -38,13 +38,13 @@ class MediumServiceTest extends TestCase {
 		// the medium when updated
 		$updatedMedium = Medium::fromRow(['id' => 3]);
 		$updatedMedium->setTitle('title');
-		$updatedMedium->setData('data');
+		$updatedMedium->setFields('fields');
 		$this->mapper->expects($this->once())
 			->method('update')
 			->with($this->equalTo($updatedMedium))
 			->will($this->returnValue($updatedMedium));
 
-		$result = $this->service->update(3, 'title', 'data', $this->userId);
+		$result = $this->service->update(3, 'title', 'fields', $this->userId);
 
 		$this->assertEquals($updatedMedium, $result);
 	}
@@ -57,6 +57,6 @@ class MediumServiceTest extends TestCase {
 			->with($this->equalTo(3))
 			->will($this->throwException(new DoesNotExistException('')));
 
-		$this->service->update(3, 'title', 'data', $this->userId);
+		$this->service->update(3, 'title', 'fields', $this->userId);
 	}
 }
