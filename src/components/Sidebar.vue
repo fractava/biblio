@@ -1,8 +1,8 @@
 <template>
 	<AppNavigation>
-		<AppNavigationItem :title="t('biblio', 'Lend/Return')" icon="icon-medium" />
-		<AppNavigationItem :title="t('biblio', 'Mediums')" icon="icon-category-enabled" />
-		<AppNavigationItem :title="t('biblio', 'Customers')" icon="icon-category-enabled" />
+		<AppNavigationItem :title="t('biblio', 'Lend/Return')" to="/lend-return" icon="icon-medium" />
+		<AppNavigationItem :title="t('biblio', 'Mediums')" to="/mediums" icon="icon-category-enabled" />
+		<AppNavigationItem :title="t('biblio', 'Customers')" to="/customers" icon="icon-category-enabled" />
 	</AppNavigation>
 </template>
 <script>
