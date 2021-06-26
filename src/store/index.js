@@ -6,9 +6,9 @@ import mediums from './mediums.js'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  modules: {
-    mediums,
-  }
+	modules: {
+		mediums,
+	},
 })
 
-export default store;
+export default store

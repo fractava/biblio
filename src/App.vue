@@ -2,7 +2,7 @@
 	<div id="content" class="app-biblio">
 		<Sidebar />
 		<AppContent>
-            <router-view />
+			<router-view />
 		</AppContent>
 	</div>
 </template>
@@ -52,6 +52,9 @@ export default {
 		savePossible() {
 			return this.currentNote && this.currentNote.title !== ''
 		},
+	},
+	mounted() {
+		this.$store.dispatch('fecthMediums')
 	},
 
 	methods: {
