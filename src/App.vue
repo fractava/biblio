@@ -2,11 +2,7 @@
 	<div id="content" class="app-biblio">
 		<Sidebar />
 		<AppContent>
-			<ul>
-				<Table
-					:columns="['title', 'data']"
-					:items="mediums" />
-			</ul>
+            <router-view />
 		</AppContent>
 	</div>
 </template>
@@ -21,7 +17,6 @@ import { showError, showSuccess } from '@nextcloud/dialogs'
 import axios from '@nextcloud/axios'
 
 import Sidebar from './components/Sidebar.vue'
-import Table from './components/Table.vue'
 
 export default {
 	name: 'App',
@@ -29,7 +24,6 @@ export default {
 		// ActionButton,
 		AppContent,
 		Sidebar,
-		Table,
 	},
 	data() {
 		return {
@@ -58,19 +52,6 @@ export default {
 		savePossible() {
 			return this.currentNote && this.currentNote.title !== ''
 		},
-	},
-	/**
-	 * Fetch list of notes when the component is loaded
-	 */
-	async mounted() {
-		try {
-			const response = await axios.get(generateUrl('/apps/biblio/mediums'))
-			this.mediums = response.data
-		} catch (e) {
-			console.error(e)
-			showError(t('biblio', 'Could not fetch mediums'))
-		}
-		this.loading = false
 	},
 
 	methods: {
