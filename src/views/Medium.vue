@@ -9,13 +9,12 @@
 			:animation="200"
 			tag="ul"
 			handle=".question__drag-handle"
-			@change="onQuestionOrderChange"
 			@start="isDragging = true"
 			@end="isDragging = false"
-            v-model="fields">
+            v-model="thisFields">
 			<Questions
 				:is="answerTypes[field.type].component"
-				v-for="field in fields"
+				v-for="field in thisFields"
 				ref="questions"
 				:answer-type="answerTypes[field.type]"
 				:is-required="false"
@@ -23,6 +22,11 @@
 				v-bind.sync="field"
 				@delete="deleteQuestion(question)" />
 		</Draggable>
+
+        <a class="button" v-on:click="saveNew()">
+            <span class="icon icon-add"></span>
+            <span>{{ t('biblio', 'Save') }}</span>
+        </a>
 	</div>
 </template>
 
@@ -55,12 +59,7 @@ export default {
 	data() {
 		return {
 			newTitle: '',
-			newData: '',
-            newFields: [],
-			answerTypes,
-			isLoadingQuestions: false,
-			isDragging: false,
-			fields: [
+            newFields: [
 				{
 					type: 'short',
 					title: 'baum',
@@ -77,6 +76,9 @@ export default {
 					value: [],
 				},
 			],
+			answerTypes,
+			isLoadingQuestions: false,
+			isDragging: false,
 		}
 	},
 	computed: {
@@ -117,8 +119,8 @@ export default {
 		},
 	},
 	methods: {
-		onQuestionOrderChange() {
-
+		saveNew() {
+            this.$store.dispatch('createMedium', { title: this.newTitle, fields: JSON.stringify(this.newFields) })
 		},
 	},
 }

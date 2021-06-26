@@ -7,8 +7,8 @@ export default {
 		mediums: [],
 	}),
 	mutations: {
-		createMedium(state, medium) {
-
+		createMedium(state, options) {
+            this.state.mediums.mediums.push(options);
 		},
 		setMediums(state, mediums) {
 			this.state.mediums.mediums = mediums
@@ -18,8 +18,14 @@ export default {
 		},
 	},
 	actions: {
-		createMedium() {
+		createMedium(context, options) {
 			return new Promise((resolve, reject) => {
+                axios.post(generateUrl('/apps/biblio/mediums'), options).then(function(response) {
+                    ontext.commit('createMedium', response.data)
+                })
+                .catch(function() {
+                    showError(t('biblio', 'Could not create medium'))
+                })
 				resolve()
 			})
 		},

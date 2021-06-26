@@ -165,7 +165,6 @@ export default {
 			const value = this.value.slice()
 			value.push({
 				id: GenRandomId(),
-				questionId: this.id,
 				text: '',
 			})
 
