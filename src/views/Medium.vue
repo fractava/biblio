@@ -19,11 +19,13 @@
 				:answer-type="answerTypes[field.type]"
 				:is-required="false"
 				:options="{}"
-				v-bind.sync="field"
+				:title.sync="field.title"
+                :value="field.value"
+                @update:value="onFieldUpdate(field, $event)"
 				@delete="deleteQuestion(question)" />
 		</Draggable>
 
-        <a class="button" v-on:click="saveNew()">
+        <a class="button" v-on:click="saveNew()" v-if="createNew">
             <span class="icon icon-add"></span>
             <span>{{ t('biblio', 'Save') }}</span>
         </a>
@@ -101,27 +103,26 @@ export default {
 				}
 			},
 		},
-        thisFields: {
-			get() {
+        thisFields() {
 				if (this.createNew) {
 					return this.newFields
 				} else {
 					return this.$store.getters.getMediumById(this.$route.params.id).fields
 				}
-			},
-			set(value) {
-				if (this.createNew) {
-					this.newFields = value
-				} else {
-				    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: value })
-				}
-			},
 		},
 	},
 	methods: {
 		saveNew() {
             this.$store.dispatch('createMedium', { title: this.newTitle, fields: JSON.stringify(this.newFields) })
 		},
+        onFieldUpdate(field, event) {
+            field.value = event
+
+            if (!this.createNew) {
+                console.log("dispatch");
+			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
+			}
+        }
 	},
 }
 </script>

@@ -15,6 +15,9 @@ export default {
 		},
 		updateMediumTitle(state, options) {
 			this.getters.getMediumById(options.id).title = options.title
+        },
+        updateMediumFields(state, options) {
+			this.getters.getMediumById(options.id).fields = options.fields
 		},
 	},
 	actions: {
@@ -32,18 +35,37 @@ export default {
 		fecthMediums(context) {
 			return new Promise((resolve, reject) => {
 				axios.get(generateUrl('/apps/biblio/mediums')).then(function(response) {
-					context.commit('setMediums', response.data)
+                    let mediums = response.data;
+
+                    for(let medium in mediums) {
+                        console.log(medium);
+                        mediums[medium].fields = JSON.parse(mediums[medium].fields)
+                    }
+
+					context.commit('setMediums', mediums)
 					resolve()
 				})
-					.catch(function() {
+					/*.catch(function() {
 						showError(t('biblio', 'Could not fetch mediums'))
-					})
+					})*/
 			})
 		},
 		updateMediumTitle(context, options) {
 			return new Promise((resolve, reject) => {
 				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { title: options.title }).then(function(response) {
 					context.commit('updateMediumTitle', options)
+				})
+					.catch(function() {
+						showError(t('biblio', 'Could not update title'))
+					})
+
+				resolve()
+			})
+        },
+        updateMediumFields(context, options) {
+			return new Promise((resolve, reject) => {
+				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fields: JSON.stringify(options.fields) }).then(function(response) {
+					context.commit('updateMediumFields', options)
 				})
 					.catch(function() {
 						showError(t('biblio', 'Could not update title'))
