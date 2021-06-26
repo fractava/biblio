@@ -53,8 +53,8 @@ const router = new Router({
 		{
 			path: '/mediums',
 			component: Mediums,
-        },
-        {
+		},
+		{
 			path: '/medium/new',
 			component: Medium,
 			props: { createNew: true },

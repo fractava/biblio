@@ -11,8 +11,11 @@ export default {
 
 		},
 		setMediums(state, mediums) {
-			this.state.mediums.mediums = mediums
-		},
+			this.state.mediums.mediums = mediums;
+        },
+        updateMediumTitle(state, options) {
+            this.getters.getMediumById(options.id).title = options.title;
+        }
 	},
 	actions: {
 		createMedium() {
@@ -26,11 +29,28 @@ export default {
 					context.commit('setMediums', response.data)
 					resolve()
 				})
-					.catch(function() {
-						showError(t('biblio', 'Could not fetch mediums'))
-					})
+				.catch(function() {
+					showError(t('biblio', 'Could not fetch mediums'))
+				})
 			})
-		},
+        },
+        updateMediumTitle(context, options) {
+            return new Promise((resolve, reject) => {
+                axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { title: options.title }).then(function(response) {
+                    context.commit("updateMediumTitle", options);
+                })
+                .catch(function() {
+                    showError(t('biblio', 'Could not update title'))
+                });
+
+                resolve();
+            });
+        },
 	},
-	getters: {},
+	getters: {
+        getMediumById: (state) => (id) => {
+            console.log(state);
+            return state.mediums.find(medium => medium.id == id)
+        }
+    },
 }

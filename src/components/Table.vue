@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(item, index) in items" :key="item+'-item'" @click="$emit('click', index)">
+				<tr v-for="item in items" :key="item+'-item'" @click="$emit('click', item.id)">
 					<th v-for="column in columns" :key="column+'-body-column'">
 						<span>{{ item[column] }}</span>
 					</th>

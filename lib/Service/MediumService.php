@@ -55,9 +55,15 @@ class MediumService {
 
 	public function update($id, $title, $data, $userId) {
 		try {
-			$medium = $this->mapper->find($id, $userId);
-			$medium->setTitle($title);
-			$medium->setData($data);
+            $medium = $this->mapper->find($id, $userId);
+            
+            if(!is_null($title)) {
+                $medium->setTitle($title);
+            }
+            if(!is_null($data)) {
+                $medium->setData($data);
+            }
+
 			return $this->mapper->update($medium);
 		} catch (Exception $e) {
 			$this->handleException($e);
