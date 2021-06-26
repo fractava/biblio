@@ -23,15 +23,12 @@
 <template>
 	<Question
 		v-bind.sync="$attrs"
-		:text="text"
-		:is-required="isRequired"
+		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:max-question-length="maxStringLengths.questionText"
 		:title-placeholder="answerType.titlePlaceholder"
 		:warning-invalid="answerType.warningInvalid"
-		@update:text="onTitleChange"
-		@update:isRequired="onRequiredChange"
+		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="question__content">
 			<DatetimePicker
@@ -132,7 +129,7 @@ export default {
 		 * @param {String} dateString The parsed string to store
 		 */
 		onValueChange(dateString) {
-			this.$emit('update:values', [dateString])
+			this.$emit('update:value', [dateString])
 		},
 	},
 }

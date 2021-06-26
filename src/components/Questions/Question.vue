@@ -23,7 +23,6 @@
 <template>
 	<li v-click-outside="disableEdit"
 		:class="{ 'question--edit': edit }"
-		:aria-label="t('forms', 'Question number {index}', {index})"
 		class="question"
 		@click="enableEdit">
 		<!-- Drag handle -->
@@ -35,29 +34,22 @@
 
 		<!-- Header -->
 		<div class="question__header">
-			<input v-if="edit || !text"
+			<input v-if="edit || !title"
 				:placeholder="titlePlaceholder"
-				:aria-label="t('forms', 'Title of question number {index}', {index})"
-				:value="text"
+				:value="title"
 				class="question__header-title"
 				type="text"
 				minlength="1"
-				:maxlength="maxQuestionLength"
 				required
 				@input="onTitleChange">
-			<h3 v-else class="question__header-title" v-text="computedText" />
+			<h3 v-else class="question__header-title" v-text="title" />
 			<div v-if="!edit && !questionValid"
 				v-tooltip.auto="warningInvalid"
 				class="question__header-warning icon-error-color"
 				tabindex="0" />
 			<Actions v-if="!readOnly" class="question__header-menu" :force-menu="true">
-				<ActionCheckbox :checked="isRequired"
-					@update:checked="onRequiredChange">
-					<!-- TRANSLATORS Making this question necessary to be answered when submitting to a form -->
-					{{ t('forms', 'Required') }}
-				</ActionCheckbox>
 				<ActionButton icon="icon-delete" @click="onDelete">
-					{{ t('forms', 'Delete question') }}
+					{{ t('forms', 'Delete Field') }}
 				</ActionButton>
 			</Actions>
 		</div>
@@ -87,20 +79,12 @@ export default {
 	},
 
 	props: {
-		index: {
-			type: Number,
-			required: true,
-		},
-		text: {
+		title: {
 			type: String,
 			required: true,
 		},
 		titlePlaceholder: {
 			type: String,
-			required: true,
-		},
-		isRequired: {
-			type: Boolean,
 			required: true,
 		},
 		shiftDragHandle: {
@@ -115,10 +99,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		maxQuestionLength: {
-			type: Number,
-			required: true,
-		},
 		contentValid: {
 			type: Boolean,
 			default: true,
@@ -130,29 +110,19 @@ export default {
 	},
 
 	computed: {
-		/**
-		 * Extend text with asterisk if question is required
-		 * @returns {Boolean}
-		 */
-		computedText() {
-			if (this.isRequired) {
-				return this.text + ' *'
-			}
-			return this.text
-		},
 
 		/**
-		 * Question valid, if text not empty and content valid
+		 * Question valid, if title not empty and content valid
 		 * @returns {Boolean} true if question valid
 		 */
 		questionValid() {
-			return this.text && this.contentValid
+			return this.title && this.contentValid
 		},
 	},
 
 	methods: {
 		onTitleChange({ target }) {
-			this.$emit('update:text', target.value)
+			this.$emit('update:title', target.value)
 		},
 
 		onRequiredChange(isRequired) {

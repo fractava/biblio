@@ -23,25 +23,19 @@
 <template>
 	<Question
 		v-bind.sync="$attrs"
-		:text="text"
-		:is-required="isRequired"
+		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:max-question-length="maxStringLengths.questionText"
-		:title-placeholder="answerType.titlePlaceholder"
+		:title-placeholder="t('biblio', 'Title')"
 		:warning-invalid="answerType.warningInvalid"
-		@update:text="onTitleChange"
-		@update:isRequired="onRequiredChange"
+		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="question__content">
 			<input ref="input"
-				:aria-label="t('forms', 'A short answer for the question “{text}”', { text })"
-				:placeholder="submissionInputPlaceholder"
-				:disabled="!readOnly"
-				:required="isRequired"
-				:value="values[0]"
+				:placeholder="t('biblio', 'Value')"
+				:disabled="readOnly"
+				:value="value"
 				class="question__input"
-				:maxlength="maxStringLengths.answerText"
 				minlength="1"
 				type="text"
 				@input="onInput"
@@ -58,19 +52,10 @@ export default {
 
 	mixins: [QuestionMixin],
 
-	computed: {
-		submissionInputPlaceholder() {
-			if (this.readOnly) {
-				return this.answerType.submitPlaceholder
-			}
-			return this.answerType.createPlaceholder
-		},
-	},
-
 	methods: {
 		onInput() {
 			const input = this.$refs.input
-			this.$emit('update:values', [input.value])
+			this.$emit('update:value', input.value)
 		},
 	},
 }

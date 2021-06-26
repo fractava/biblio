@@ -23,25 +23,19 @@
 <template>
 	<Question
 		v-bind.sync="$attrs"
-		:text="text"
-		:is-required="isRequired"
+		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:max-question-length="maxStringLengths.questionText"
 		:title-placeholder="answerType.titlePlaceholder"
 		:warning-invalid="answerType.warningInvalid"
-		@update:text="onTitleChange"
-		@update:isRequired="onRequiredChange"
+		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="question__content">
 			<textarea ref="textarea"
-				:aria-label="t('forms', 'A long answer for the question “{text}”', { text })"
-				:placeholder="submissionInputPlaceholder"
-				:disabled="!readOnly"
-				:required="isRequired"
-				:value="values[0]"
+				:placeholder="t('biblio', 'Value')"
+				:disabled="readOnly"
+				:value="value"
 				class="question__text"
-				:maxlength="maxStringLengths.answerText"
 				minlength="1"
 				@input="onInput"
 				@keypress="autoSizeText"
@@ -80,7 +74,7 @@ export default {
 	methods: {
 		onInput() {
 			const textarea = this.$refs.textarea
-			this.$emit('update:values', [textarea.value])
+			this.$emit('update:value', textarea.value)
 			this.autoSizeText()
 		},
 		autoSizeText() {

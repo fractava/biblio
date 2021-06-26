@@ -23,63 +23,49 @@
 <template>
 	<Question
 		v-bind.sync="$attrs"
-		:text="text"
-		:is-required="isRequired"
+		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:max-question-length="maxStringLengths.questionText"
-		:title-placeholder="answerType.titlePlaceholder"
-		:warning-invalid="answerType.warningInvalid"
-		:content-valid="contentValid"
+		:title-placeholder="t('biblio', 'Title')"
 		:shift-drag-handle="shiftDragHandle"
-		@update:text="onTitleChange"
-		@update:isRequired="onRequiredChange"
+		@update:title="onTitleChange"
 		@delete="onDelete">
 		<ul class="question__content">
-			<template v-for="(answer, index) in options">
-				<li v-if="!edit" :key="answer.id" class="question__item">
-					<!-- Answer radio/checkbox + label -->
+			<template v-for="(entry, index) in value">
+				<li v-if="!edit" :key="entry.id" class="question__item">
+					<!-- entry radio/checkbox + label -->
 					<!-- TODO: migrate to radio/checkbox component once available -->
-					<input :id="`${id}-answer-${answer.id}`"
+					<input :id="`entry-${entry.id}`"
 						ref="checkbox"
-						:aria-checked="isChecked(answer.id)"
-						:checked="isChecked(answer.id)"
-						:class="{
-							'radio question__radio': isUnique,
-							'checkbox question__checkbox': !isUnique,
-						}"
-						:name="`${id}-answer`"
-						:required="checkRequired(answer.id)"
-						:type="isUnique ? 'radio' : 'checkbox'"
-						@change="onChange($event, answer.id)"
+                        class="radio question__radio"
+						:name="`${entry.id}-entry`"
+						type="radio"
+						@change="onChange($event, entry.id)"
 						@keydown.enter.exact.prevent="onKeydownEnter">
 					<label v-if="!edit"
 						ref="label"
-						:for="`${id}-answer-${answer.id}`"
-						class="question__label">{{ answer.text }}</label>
+						:for="`entry-${entry.id}`"
+						class="question__label">{{ entry.text }}</label>
 				</li>
 
-				<!-- Answer text input edit -->
+				<!-- entry text input edit -->
 				<AnswerInput v-else
-					:key="index /* using index to keep the same vnode after new answer creation */"
+					:key="index /* using index to keep the same vnode after new entry creation */"
 					ref="input"
-					:answer="answer"
+					:answer="entry"
 					:index="index"
-					:is-unique="isUnique"
 					:is-dropdown="false"
-					:max-option-length="maxStringLengths.optionText"
 					@add="addNewEntry"
-					@delete="deleteOption"
-					@update:answer="updateAnswer" />
+					@delete="deleteEntry"
+					@update:answer="updateEntry" />
 			</template>
 
-			<li v-if="(edit && !isLastEmpty) || hasNoAnswer" class="question__item">
-				<div class="question__item__pseudoInput" :class="{'question__item__pseudoInput--unique':isUnique}" />
+			<li v-if="(edit && !isLastEmpty) || hasNoEntry" class="question__item">
+				<div class="question__item__pseudoInput" />
 				<input
-					:aria-label="t('forms', 'Add a new answer')"
-					:placeholder="t('forms', 'Add a new answer')"
+					:aria-label="t('biblio', 'Add a new entry')"
+					:placeholder="t('biblio', 'Add a new entry')"
 					class="question__input"
-					:maxlength="maxStringLengths.optionText"
 					minlength="1"
 					type="text"
 					@click="addNewEntry"
@@ -111,215 +97,111 @@ export default {
 	mixins: [QuestionMixin],
 
 	computed: {
-		contentValid() {
-			return this.answerType.validate(this)
-		},
-
 		isLastEmpty() {
-			const value = this.options[this.options.length - 1]
+			const value = this.value[this.value.length - 1]
 			return value?.text?.trim().length === 0
 		},
 
-		isUnique() {
-			return this.answerType.unique === true
-		},
-
-		hasNoAnswer() {
-			return this.options.length === 0
+		hasNoEntry() {
+			return this.value.length === 0
 		},
 
 		areNoneChecked() {
-			return this.values.length === 0
+			return this.value.length === 0
 		},
 
 		shiftDragHandle() {
-			return this.edit && this.options.length !== 0 && !this.isLastEmpty
+			return this.edit && this.value.length !== 0 && !this.isLastEmpty
 		},
 	},
 
 	watch: {
 		edit(edit) {
-			// When leaving edit mode, filter and delete empty options
+			// When leaving edit mode, filter and delete empty value
 			if (!edit) {
-				const options = this.options.filter(option => {
-					if (!option.text) {
-						this.deleteOptionFromDatabase(option)
-						return false
-					}
-					return true
-				})
+				const value = this.value.filter(entry => entry.text)
 
 				// update parent
-				this.updateOptions(options)
+				this.updateValue(value)
 			}
 		},
 	},
 
 	methods: {
-		onChange(event, answerId) {
-			const isChecked = event.target.checked === true
-			let values = this.values.slice()
-
-			// Radio
-			if (this.isUnique) {
-				this.$emit('update:values', [answerId])
-				return
-			}
-
-			// Checkbox
-			if (isChecked) {
-				values.push(answerId)
-			} else {
-				values = values.filter(id => id !== answerId)
-			}
-
-			// Emit values and remove duplicates
-			this.$emit('update:values', [...new Set(values)])
+		onChange(event, entryId) {
+			this.$emit('update:value', [entryId])
 		},
 
 		/**
-		 * Is the provided answer checked ?
-		 * @param {number} id the answer id
-		 * @returns {boolean}
+		 * Update the value
+		 * @param {Array} value entries to change
 		 */
-		isChecked(id) {
-			return this.values.indexOf(id) > -1
+		updateValue(value) {
+			this.$emit('update:value', value)
 		},
 
 		/**
-		 * Is the provided answer required ?
-		 * This is needed for checkboxes as html5
-		 * doesn't allow to require at least ONE checked.
-		 * So we require the one that are checked or all
-		 * if none are checked yet.
-		 * @param {number} id the answer id
-		 * @returns {boolean}
-		 */
-		checkRequired(id) {
-			// false, if question not required
-			if (!this.isRequired) {
-				return false
-			}
-
-			// true for Radiobuttons
-			if (this.isUnique) {
-				return true
-			}
-
-			// For checkboxes, only required if no other is checked
-			return this.areNoneChecked
-		},
-
-		/**
-		 * Update the options
-		 * @param {Array} options options to change
-		 */
-		updateOptions(options) {
-			this.$emit('update:options', options)
-		},
-
-		/**
-		 * Update an existing answer locally
+		 * Update an existing entry
 		 *
-		 * @param {string|number} id the answer id
-		 * @param {Object} answer the answer to update
+		 * @param {string|number} id the entry id
+		 * @param {Object} entry to update
 		 */
-		updateAnswer(id, answer) {
-			const options = this.options.slice()
-			const answerIndex = options.findIndex(option => option.id === id)
-			options[answerIndex] = answer
+		updateEntry(id, entry) {
+			const value = this.value.slice()
+			const entryIndex = value.findIndex(entry => entry.id === id)
+			value[entryIndex] = entry
 
-			this.updateOptions(options)
+			this.updateValue(value)
 		},
 
 		/**
-		 * Add a new empty answer locally
+		 * Add a new empty entry
 		 */
 		addNewEntry() {
 			// If entering from non-edit-mode (possible by click), activate edit-mode
 			this.edit = true
 
-			// Add local entry
-			const options = this.options.slice()
-			options.push({
+			// Add entry
+			const value = this.value.slice()
+			value.push({
 				id: GenRandomId(),
 				questionId: this.id,
 				text: '',
-				local: true,
 			})
 
 			// Update question
-			this.updateOptions(options)
+			this.updateValue(value)
 
 			this.$nextTick(() => {
-				this.focusIndex(options.length - 1)
+				this.focusIndex(value.length - 1)
 			})
 		},
 
 		/**
-		 * Restore an option locally
+		 * Delete an entry
 		 *
-		 * @param {Object} option the option
-		 * @param {number} index the options index in this.options
+		 * @param {number} id the entry id
 		 */
-		restoreOption(option, index) {
-			const options = this.options.slice()
-			options.splice(index, 0, option)
+		deleteEntry(id) {
+			const value = this.value.slice()
+			const entryIndex = value.findIndex(entry => entry.id === id)
 
-			this.updateOptions(options)
-			this.focusIndex(index)
-		},
-
-		/**
-		 * Delete an option
-		 *
-		 * @param {number} id the options id
-		 */
-		deleteOption(id) {
-			const options = this.options.slice()
-			const optionIndex = options.findIndex(option => option.id === id)
-
-			if (options.length === 1) {
+			if (value.length === 1) {
 				// Clear Text, but don't remove. Will be removed, when leaving edit-mode
-				options[0].text = ''
+				value[0].text = ''
 			} else {
 				// Remove entry
-				const option = Object.assign({}, this.options[optionIndex])
+				const entry = Object.assign({}, this.value[entryIndex])
 
-				// delete locally
-				options.splice(optionIndex, 1)
-
-				// delete from Db
-				this.deleteOptionFromDatabase(option)
+				value.splice(entryIndex, 1)
 			}
 
 			// Update question
-			this.updateOptions(options)
+			this.updateValue(value)
 
 			this.$nextTick(() => {
-				this.focusIndex(optionIndex - 1)
+				this.focusIndex(entryIndex - 1)
 			})
-		},
-
-		/**
-		 * Delete the option from Db in background.
-		 * Restore option if delete not possible
-		 *
-		 * @param {Object} option The option to delete
-		 */
-		deleteOptionFromDatabase(option) {
-			const optionIndex = this.options.findIndex(opt => opt.id === option.id)
-
-			if (!option.local) {
-				// let's not await, deleting in background
-				axios.delete(generateOcsUrl('apps/forms/api/v1.1/option/{id}', { id: option.id }))
-					.catch(error => {
-						showError(t('forms', 'There was an issue deleting this option'))
-						console.error(error)
-						// restore option
-						this.restoreOption(option, optionIndex)
-					})
-			}
 		},
 
 		/**
@@ -362,11 +244,7 @@ export default {
 		// Adjust position manually to match pseudo-input and proper position to text
 		position: relative;
 		top: 10px;
-
-		// Show round for Pseudo-Radio-Button
-		&--unique {
-			border-radius: 50%;
-		}
+		border-radius: 50%;
 
 		&:hover {
 			border-color: var(--color-primary-element);

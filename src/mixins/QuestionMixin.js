@@ -30,17 +30,9 @@ export default {
 	props: {
 
 		/**
-		 * Question-Id
-		 */
-		id: {
-			type: Number,
-			required: true,
-		},
-
-		/**
 		 * The question title
 		 */
-		text: {
+		title: {
 			type: String,
 			required: true,
 		},
@@ -56,19 +48,7 @@ export default {
 		/**
 		 * The user answers
 		 */
-		values: {
-			type: Array,
-			default() {
-				return []
-			},
-		},
-
-		/**
-		 * The question list of answers
-		 */
-		options: {
-			type: Array,
-			required: true,
+		value: {
 		},
 
 		/**
@@ -86,14 +66,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-
-		/**
-		 * Database-Restrictions
-		 */
-		maxStringLengths: {
-			type: Object,
-			required: true,
-		},
 	},
 
 	components: {
@@ -103,7 +75,7 @@ export default {
 	data() {
 		return {
 			// Do we display this question in edit or fill mode
-			edit: false,
+			edit: true,
 		}
 	},
 
@@ -114,27 +86,16 @@ export default {
 		 * @param {string} text the title
 		 */
 		onTitleChange: debounce(function(text) {
-			this.$emit('update:text', text)
-			this.saveQuestionProperty('text', text)
-		}, 200),
-
-		/**
-		 * Forward the required change to the parent and store to db
-		 *
-		 * @param {Boolean} isRequiredValue new isRequired Value
-		 */
-		onRequiredChange: debounce(function(isRequiredValue) {
-			this.$emit('update:isRequired', isRequiredValue)
-			this.saveQuestionProperty('isRequired', isRequiredValue)
+			this.$emit('update:title', text)
 		}, 200),
 
 		/**
 		 * Forward the answer(s) change to the parent
 		 *
-		 * @param {Array} values the array of answers
+		 * @param {Array} value the array of answers
 		 */
-		onValuesChange(values) {
-			this.$emit('update:values', values)
+		onValueChange(value) {
+			this.$emit('update:value', value)
 		},
 
 		/**
@@ -168,7 +129,7 @@ export default {
 		},
 
 		async saveQuestionProperty(key, value) {
-			try {
+			/* try {
 				// TODO: add loading status feedback ?
 				await axios.post(generateOcsUrl('apps/forms/api/v1.1/question/update'), {
 					id: this.id,
@@ -179,7 +140,7 @@ export default {
 			} catch (error) {
 				showError(t('forms', 'Error while saving question'))
 				console.error(error)
-			}
+			} */
 		},
 	},
 }
