@@ -21,56 +21,78 @@
   -->
 
 <template>
-	<Question
+	<Field
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:title-placeholder="t('biblio', 'Title')"
-		:warning-invalid="answerType.warningInvalid"
 		@update:title="onTitleChange"
 		@delete="onDelete">
-		<div class="question__content">
-			<input ref="input"
-				:placeholder="t('biblio', 'Value')"
+		<div class="field__content">
+			<textarea ref="textarea"
+				:placeholder="fieldType.valuePlaceholder"
 				:disabled="readOnly"
 				:value="value"
-				class="question__input"
+				class="field__text"
 				minlength="1"
-				type="text"
 				@input="onInput"
-				@keydown.enter.exact.prevent="onKeydownEnter">
+				@keypress="autoSizeText"
+				@keydown.ctrl.enter="onKeydownCtrlEnter" />
 		</div>
-	</Question>
+	</Field>
 </template>
 
 <script>
-import QuestionMixin from '../../mixins/QuestionMixin'
+import FieldMixin from '../../mixins/FieldMixin'
 
 export default {
-	name: 'QuestionShort',
+	name: 'LongTextField',
 
-	mixins: [QuestionMixin],
+	mixins: [FieldMixin],
+
+	data() {
+		return {
+			height: 1,
+		}
+	},
+
+	mounted() {
+		this.autoSizeText()
+	},
 
 	methods: {
 		onInput() {
-			const input = this.$refs.input
-			this.$emit('update:value', input.value)
+			const textarea = this.$refs.textarea
+			this.$emit('update:value', textarea.value)
+			this.autoSizeText()
+		},
+		autoSizeText() {
+			const textarea = this.$refs.textarea
+			textarea.style.cssText = 'height:auto; padding:0'
+			textarea.style.cssText = `height: ${textarea.scrollHeight + 20}px`
+		},
+		onKeydownCtrlEnter(event) {
+			this.$emit('keydown', event)
 		},
 	},
 }
 </script>
 
 <style lang="scss" scoped>
-// Using type to have a higher order than the input styling of server
-.question__input[type=text] {
+.field__text {
+	// make sure height calculations are correct
+	box-sizing: content-box !important;
 	width: 100%;
+	min-width: 100%;
+	max-width: 100%;
 	min-height: 44px;
 	margin: 0;
 	padding: 6px 0;
 	border: 0;
 	border-bottom: 1px dotted var(--color-border-dark);
 	border-radius: 0;
+	resize: none;
+	font-size: 14px;
 
 	&:disabled {
 		// Just overrides Server CSS-Styling for disabled inputs. -> Not Good??

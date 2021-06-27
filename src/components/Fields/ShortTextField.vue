@@ -21,89 +21,55 @@
   -->
 
 <template>
-	<Question
+	<Field
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:title-placeholder="answerType.titlePlaceholder"
-		:warning-invalid="answerType.warningInvalid"
+		:title-placeholder="t('biblio', 'Title')"
 		@update:title="onTitleChange"
 		@delete="onDelete">
-		<div class="question__content">
-			<textarea ref="textarea"
+		<div class="field__content">
+			<input ref="input"
 				:placeholder="t('biblio', 'Value')"
 				:disabled="readOnly"
 				:value="value"
-				class="question__text"
+				class="field__input"
 				minlength="1"
+				type="text"
 				@input="onInput"
-				@keypress="autoSizeText"
-				@keydown.ctrl.enter="onKeydownCtrlEnter" />
+				@keydown.enter.exact.prevent="onKeydownEnter">
 		</div>
-	</Question>
+	</Field>
 </template>
 
 <script>
-import QuestionMixin from '../../mixins/QuestionMixin'
+import FieldMixin from '../../mixins/FieldMixin'
 
 export default {
-	name: 'QuestionLong',
+	name: 'ShortTextField',
 
-	mixins: [QuestionMixin],
-
-	data() {
-		return {
-			height: 1,
-		}
-	},
-
-	computed: {
-		submissionInputPlaceholder() {
-			if (this.readOnly) {
-				return this.answerType.submitPlaceholder
-			}
-			return this.answerType.createPlaceholder
-		},
-	},
-
-	mounted() {
-		this.autoSizeText()
-	},
+	mixins: [FieldMixin],
 
 	methods: {
 		onInput() {
-			const textarea = this.$refs.textarea
-			this.$emit('update:value', textarea.value)
-			this.autoSizeText()
-		},
-		autoSizeText() {
-			const textarea = this.$refs.textarea
-			textarea.style.cssText = 'height:auto; padding:0'
-			textarea.style.cssText = `height: ${textarea.scrollHeight + 20}px`
-		},
-		onKeydownCtrlEnter(event) {
-			this.$emit('keydown', event)
+			const input = this.$refs.input
+			this.$emit('update:value', input.value)
 		},
 	},
 }
 </script>
 
 <style lang="scss" scoped>
-.question__text {
-	// make sure height calculations are correct
-	box-sizing: content-box !important;
+// Using type to have a higher order than the input styling of server
+.field__input[type=text] {
 	width: 100%;
-	min-width: 100%;
-	max-width: 100%;
 	min-height: 44px;
 	margin: 0;
 	padding: 6px 0;
 	border: 0;
 	border-bottom: 1px dotted var(--color-border-dark);
 	border-radius: 0;
-	resize: none;
-	font-size: 14px;
 
 	&:disabled {
 		// Just overrides Server CSS-Styling for disabled inputs. -> Not Good??

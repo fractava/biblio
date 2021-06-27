@@ -6,29 +6,30 @@
 		<input v-model="thisTitle">
 
 		<Draggable
+			v-model="thisFields"
 			:animation="200"
 			tag="ul"
-			handle=".question__drag-handle"
+			handle=".field__drag-handle"
 			@start="isDragging = true"
-			@end="isDragging = false"
-            v-model="thisFields">
-			<Questions
-				:is="answerTypes[field.type].component"
+			@end="isDragging = false">
+			<Fields
+				:is="FieldTypes[field.type].component"
 				v-for="field in thisFields"
-				ref="questions"
-				:answer-type="answerTypes[field.type]"
+				:key="field.title + '-field'"
+				ref="fields"
+				:field-type="FieldTypes[field.type]"
 				:is-required="false"
 				:options="{}"
 				:title.sync="field.title"
-                :value="field.value"
-                @update:value="onFieldUpdate(field, $event)"
-				@delete="deleteQuestion(question)" />
+				:value="field.value"
+				@update:value="onFieldUpdate(field, $event)"
+				@delete="deleteField(field)" />
 		</Draggable>
 
-        <a class="button" v-on:click="saveNew()" v-if="createNew">
-            <span class="icon icon-add"></span>
-            <span>{{ t('biblio', 'Save') }}</span>
-        </a>
+		<a v-if="createNew" class="button" @click="saveNew()">
+			<span class="icon icon-add" />
+			<span>{{ t('biblio', 'Save') }}</span>
+		</a>
 	</div>
 </template>
 
@@ -36,21 +37,23 @@
 import debounce from 'debounce'
 import Draggable from 'vuedraggable'
 
-import answerTypes from '../models/AnswerTypes'
-import Question from '../components/Questions/Question'
-import QuestionLong from '../components/Questions/QuestionLong'
-import QuestionMultiple from '../components/Questions/QuestionMultiple'
-import QuestionShort from '../components/Questions/QuestionShort'
+import FieldTypes from '../models/FieldTypes'
+import Field from '../components/Fields/Field'
+import ListField from '../components/Fields/ListField'
+import ShortTextField from '../components/Fields/ShortTextField'
+import LongTextField from '../components/Fields/LongTextField'
+import DateField from '../components/Fields/DateField'
 
 import { mapState } from 'vuex'
 
 export default {
 	components: {
 		Draggable,
-		Question,
-		QuestionLong,
-		QuestionShort,
-		QuestionMultiple,
+		Field,
+		ListField,
+		ShortTextField,
+		LongTextField,
+		DateField,
 	},
 	props: {
 		createNew: {
@@ -61,7 +64,7 @@ export default {
 	data() {
 		return {
 			newTitle: '',
-            newFields: [
+			newFields: [
 				{
 					type: 'short',
 					title: 'baum',
@@ -78,8 +81,7 @@ export default {
 					value: [],
 				},
 			],
-			answerTypes,
-			isLoadingQuestions: false,
+			FieldTypes,
 			isDragging: false,
 		}
 	},
@@ -103,14 +105,14 @@ export default {
 				}
 			},
 		},
-        thisFields: {
-            get() {
+		thisFields: {
+			get() {
 				if (this.createNew) {
 					return this.newFields
 				} else {
 					return this.$store.getters.getMediumById(this.$route.params.id).fields
 				}
-            },
+			},
 			set(value) {
 				if (this.createNew) {
 					this.newFields = value
@@ -122,23 +124,23 @@ export default {
 	},
 	methods: {
 		async saveNew() {
-            let self = this;
+			const self = this
 
-            this.$store.dispatch('createMedium', { title: this.newTitle, fields: this.newFields })
-            .then(function(id) {
-                self.$router.push({
-                    path: '/medium/' + id,
-                })
-            });
+			this.$store.dispatch('createMedium', { title: this.newTitle, fields: this.newFields })
+				.then(function(id) {
+					self.$router.push({
+						path: '/medium/' + id,
+					})
+				})
 		},
-        onFieldUpdate(field, event) {
-            field.value = event
+		onFieldUpdate(field, event) {
+			field.value = event
 
-            if (!this.createNew) {
-                console.log("dispatch");
+			if (!this.createNew) {
+				console.log('dispatch')
 			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
 			}
-        }
+		},
 	},
 }
 </script>

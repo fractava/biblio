@@ -1,16 +1,16 @@
 <template>
-	<li class="question__item">
-		<div class="question__item__pseudoInput" />
+	<li class="field__item">
+		<div class="field__item__pseudoInput" />
 		<input
 			ref="input"
-			v-model="answer.text"
-			class="question__input"
+			v-model="entry.text"
+			class="field__input"
 			minlength="1"
 			type="text"
 			@keydown.delete="deleteEntry"
 			@keydown.enter.prevent="addNewEntry">
 
-		<!-- Delete answer -->
+		<!-- Delete entry -->
 		<Actions>
 			<ActionButton icon="icon-close" @click="deleteEntry">
 				{{ t('biblio', 'Delete entry') }}
@@ -21,18 +21,14 @@
 
 <script>
 import { showError } from '@nextcloud/dialogs'
-import { generateOcsUrl } from '@nextcloud/router'
-import axios from '@nextcloud/axios'
 import pDebounce from 'p-debounce'
 import PQueue from 'p-queue'
 
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 
-import OcsResponse2Data from '../../utils/OcsResponse2Data'
-
 export default {
-	name: 'AnswerInput',
+	name: 'EntryInput',
 
 	components: {
 		Actions,
@@ -40,12 +36,8 @@ export default {
 	},
 
 	props: {
-		answer: {
+		entry: {
 			type: Object,
-			required: true,
-		},
-		isDropdown: {
-			type: Boolean,
 			required: true,
 		},
 	},
@@ -65,14 +57,14 @@ export default {
 		},
 
 		/**
-		 * Request a new answer
+		 * Request a new entry
 		 */
 		addNewEntry() {
 			this.$emit('add')
 		},
 
 		/**
-		 * Emit a delete request for this answer
+		 * Emit a delete request for this entry
 		 * when pressing the delete key on an empty input
 		 *
 		 * @param {Event} e the event
@@ -85,14 +77,14 @@ export default {
 			// Dismiss delete key action
 			e.preventDefault()
 
-			this.$emit('delete', this.answer.id)
+			this.$emit('delete', this.entry.id)
 		},
-    },
+	},
 }
 </script>
 
 <style lang="scss" scoped>
-.question__item {
+.field__item {
 	position: relative;
 	display: inline-flex;
 	min-height: 44px;
@@ -124,7 +116,7 @@ export default {
 }
 
 // Using type to have a higher order than the input styling of server
-.question__input[type=text] {
+.field__input[type=text] {
 	width: 100%;
 	// Height 34px + 1px Border
 	min-height: 35px;

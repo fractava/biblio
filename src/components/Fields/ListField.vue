@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<Question
+	<Field
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
@@ -30,14 +30,14 @@
 		:shift-drag-handle="shiftDragHandle"
 		@update:title="onTitleChange"
 		@delete="onDelete">
-		<ul class="question__content">
+		<ul class="field__content">
 			<template v-for="(entry, index) in value">
-				<li v-if="!edit" :key="entry.id" class="question__item">
+				<li v-if="!edit" :key="entry.id" class="field__item">
 					<!-- entry radio/checkbox + label -->
 					<!-- TODO: migrate to radio/checkbox component once available -->
 					<input :id="`entry-${entry.id}`"
 						ref="checkbox"
-                        class="radio question__radio"
+						class="radio field__radio"
 						:name="`${entry.id}-entry`"
 						type="radio"
 						@change="onChange($event, entry.id)"
@@ -45,56 +45,54 @@
 					<label v-if="!edit"
 						ref="label"
 						:for="`entry-${entry.id}`"
-						class="question__label">{{ entry.text }}</label>
+						class="field__label">{{ entry.text }}</label>
 				</li>
 
 				<!-- entry text input edit -->
-				<AnswerInput v-else
+				<EntryInput v-else
 					:key="index /* using index to keep the same vnode after new entry creation */"
 					ref="input"
-					:answer="entry"
+					:entry="entry"
 					:index="index"
 					:is-dropdown="false"
 					@add="addNewEntry"
 					@delete="deleteEntry"
-					@update:answer="updateEntry" />
+					@update:entry="updateEntry" />
 			</template>
 
-			<li v-if="(edit && !isLastEmpty) || hasNoEntry" class="question__item">
-				<div class="question__item__pseudoInput" />
+			<li v-if="(edit && !isLastEmpty) || hasNoEntry" class="field__item">
+				<div class="field__item__pseudoInput" />
 				<input
 					:aria-label="t('biblio', 'Add a new entry')"
 					:placeholder="t('biblio', 'Add a new entry')"
-					class="question__input"
+					class="field__input"
 					minlength="1"
 					type="text"
 					@click="addNewEntry"
 					@focus="addNewEntry">
 			</li>
 		</ul>
-	</Question>
+	</Field>
 </template>
 
 <script>
-import { generateOcsUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-import axios from '@nextcloud/axios'
 
-import AnswerInput from './AnswerInput'
-import QuestionMixin from '../../mixins/QuestionMixin'
+import EntryInput from './EntryInput'
+import FieldMixin from '../../mixins/FieldMixin'
 import GenRandomId from '../../utils/GenRandomId'
 
 // Implementations docs
 // https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/examples/radio/radio.html
 // https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/examples/checkbox/checkbox-2.html
 export default {
-	name: 'QuestionMultiple',
+	name: 'ListField',
 
 	components: {
-		AnswerInput,
+		EntryInput,
 	},
 
-	mixins: [QuestionMixin],
+	mixins: [FieldMixin],
 
 	computed: {
 		isLastEmpty() {
@@ -168,7 +166,7 @@ export default {
 				text: '',
 			})
 
-			// Update question
+			// Update field
 			this.updateValue(value)
 
 			this.$nextTick(() => {
@@ -189,13 +187,10 @@ export default {
 				// Clear Text, but don't remove. Will be removed, when leaving edit-mode
 				value[0].text = ''
 			} else {
-				// Remove entry
-				const entry = Object.assign({}, this.value[entryIndex])
-
 				value.splice(entryIndex, 1)
 			}
 
-			// Update question
+			// Update field
 			this.updateValue(value)
 
 			this.$nextTick(() => {
@@ -220,12 +215,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.question__content {
+.field__content {
 	display: flex;
 	flex-direction: column;
 }
 
-.question__item {
+.field__item {
 	position: relative;
 	display: inline-flex;
 	min-height: 44px;
@@ -250,11 +245,11 @@ export default {
 		}
 	}
 
-	.question__label {
+	.field__label {
 		flex: 1 1 100%;
 		// Overwrite guest page core styles
 		text-align: left !important;
-		// Some rounding issues lead to this strange number, so label and answerInput show up a the same position, working on different browsers.
+		// Some rounding issues lead to this strange number, so label and EntryInput show up a the same position, working on different browsers.
 		padding: 6.5px 0 0 30px;
 		line-height: 22px;
 		min-height: 34px;
@@ -276,7 +271,7 @@ export default {
 }
 
 // Using type to have a higher order than the input styling of server
-.question__input[type=text] {
+.field__input[type=text] {
 	width: 100%;
 	// Height 34px + 1px Border
 	min-height: 35px;
@@ -289,8 +284,8 @@ export default {
 	position: relative;
 }
 
-input.question__radio,
-input.question__checkbox {
+input.field__radio,
+input.field__checkbox {
 	z-index: -1;
 	// make sure browser warnings are properly
 	// displayed at the correct location

@@ -19,18 +19,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import { debounce } from 'debounce'
-import { generateOcsUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-import axios from '@nextcloud/axios'
 
-import Question from '../components/Questions/Question'
+import Field from '../components/Fields/Field'
 
 export default {
 	inheritAttrs: false,
 	props: {
 
 		/**
-		 * The question title
+		 * The Field title
 		 */
 		title: {
 			type: String,
@@ -46,15 +44,15 @@ export default {
 		},
 
 		/**
-		 * The user answers
+		 * The fields value
 		 */
 		value: {
 		},
 
 		/**
-		 * Answer type model object
+		 * Field type model object
 		 */
-		answerType: {
+		fieldType: {
 			type: Object,
 			required: true,
 		},
@@ -69,12 +67,12 @@ export default {
 	},
 
 	components: {
-		Question,
+		Field,
 	},
 
 	data() {
 		return {
-			// Do we display this question in edit or fill mode
+			// Do we display this Field in edit or fill mode
 			edit: true,
 		}
 	},
@@ -90,16 +88,16 @@ export default {
 		}, 200),
 
 		/**
-		 * Forward the answer(s) change to the parent
+		 * Forward the value change to the parent
 		 *
-		 * @param {Array} value the array of answers
+		 * @param {Array} value the array of entries
 		 */
 		onValueChange(value) {
 			this.$emit('update:value', value)
 		},
 
 		/**
-		 * Delete this question
+		 * Delete this Field
 		 */
 		onDelete() {
 			this.$emit('delete')
@@ -121,26 +119,11 @@ export default {
 			this.edit = true
 			this.$el.scrollIntoView({ behavior: 'smooth' })
 			this.$nextTick(() => {
-				const title = this.$el.querySelector('.question__header-title')
+				const title = this.$el.querySelector('.field__header-title')
 				if (title) {
 					title.select()
 				}
 			})
-		},
-
-		async saveQuestionProperty(key, value) {
-			/* try {
-				// TODO: add loading status feedback ?
-				await axios.post(generateOcsUrl('apps/forms/api/v1.1/question/update'), {
-					id: this.id,
-					keyValuePairs: {
-						[key]: value,
-					},
-				})
-			} catch (error) {
-				showError(t('forms', 'Error while saving question'))
-				console.error(error)
-			} */
 		},
 	},
 }

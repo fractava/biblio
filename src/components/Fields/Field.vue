@@ -22,39 +22,38 @@
 
 <template>
 	<li v-click-outside="disableEdit"
-		:class="{ 'question--edit': edit }"
-		class="question"
+		:class="{ 'field--edit': edit }"
+		class="field"
 		@click="enableEdit">
 		<!-- Drag handle -->
-		<!-- TODO: implement arrow key mapping to reorder question -->
 		<div v-if="!readOnly"
-			class="question__drag-handle icon-drag-handle"
-			:class="{'question__drag-handle--shiftup': shiftDragHandle}"
-			:aria-label="t('forms', 'Drag to reorder the questions')" />
+			class="field__drag-handle icon-drag-handle"
+			:class="{'field__drag-handle--shiftup': shiftDragHandle}"
+			:aria-label="t('biblio', 'Drag to reorder the fields')" />
 
 		<!-- Header -->
-		<div class="question__header">
+		<div class="field__header">
 			<input v-if="edit || !title"
-				:placeholder="titlePlaceholder"
+				:placeholder="t('biblio', 'Title')"
 				:value="title"
-				class="question__header-title"
+				class="field__header-title"
 				type="text"
 				minlength="1"
 				required
 				@input="onTitleChange">
-			<h3 v-else class="question__header-title" v-text="title" />
-			<div v-if="!edit && !questionValid"
-				v-tooltip.auto="warningInvalid"
-				class="question__header-warning icon-error-color"
+			<h3 v-else class="field__header-title" v-text="title" />
+			<div v-if="!edit && !fieldValid"
+				v-tooltip.auto="t('biblio', 'A title is required!')"
+				class="field__header-warning icon-error-color"
 				tabindex="0" />
-			<Actions v-if="!readOnly" class="question__header-menu" :force-menu="true">
+			<Actions v-if="!readOnly" class="field__header-menu" :force-menu="true">
 				<ActionButton icon="icon-delete" @click="onDelete">
 					{{ t('forms', 'Delete Field') }}
 				</ActionButton>
 			</Actions>
 		</div>
 
-		<!-- Question content -->
+		<!-- Field content -->
 		<slot />
 	</li>
 </template>
@@ -63,10 +62,9 @@
 import { directive as ClickOutside } from 'v-click-outside'
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import ActionCheckbox from '@nextcloud/vue/dist/Components/ActionCheckbox'
 
 export default {
-	name: 'Question',
+	name: 'Field',
 
 	directives: {
 		ClickOutside,
@@ -75,15 +73,10 @@ export default {
 	components: {
 		Actions,
 		ActionButton,
-		ActionCheckbox,
 	},
 
 	props: {
 		title: {
-			type: String,
-			required: true,
-		},
-		titlePlaceholder: {
 			type: String,
 			required: true,
 		},
@@ -103,19 +96,15 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		warningInvalid: {
-			type: String,
-			default: t('forms', 'This question needs a title!'),
-		},
 	},
 
 	computed: {
 
 		/**
-		 * Question valid, if title not empty and content valid
-		 * @returns {Boolean} true if question valid
+		 * Field valid, if title not empty and content valid
+		 * @returns {Boolean} true if field valid
 		 */
-		questionValid() {
+		fieldValid() {
 			return this.title && this.contentValid
 		},
 	},
@@ -148,7 +137,7 @@ export default {
 		},
 
 		/**
-		 * Delete this question
+		 * Delete this field
 		 */
 		onDelete() {
 			this.$emit('delete')
@@ -158,7 +147,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.question {
+.field {
 	position: relative;
 	display: flex;
 	align-items: stretch;
@@ -180,7 +169,6 @@ export default {
 		height: 100%;
 		opacity: .5;
 
-		// Avoid moving drag-handle due to newAnswer-input on multiple-Questions
 		&--shiftup {
 			height: calc(100% - 44px);
 		}

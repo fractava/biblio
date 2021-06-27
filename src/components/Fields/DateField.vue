@@ -21,44 +21,42 @@
   -->
 
 <template>
-	<Question
+	<Field
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
 		:read-only="readOnly"
-		:title-placeholder="answerType.titlePlaceholder"
-		:warning-invalid="answerType.warningInvalid"
 		@update:title="onTitleChange"
 		@delete="onDelete">
-		<div class="question__content">
+		<div class="field__content">
 			<DatetimePicker
 				v-model="time"
 				value-type="format"
 				:disabled="!readOnly"
 				:formatter="formatter"
-				:placeholder="datetimePickerPlaceholder"
+				:placeholder="fieldType.valuePlaceholder"
 				:show-second="false"
 				:type="datetimePickerType"
 				:input-attr="inputAttr"
 				@change="onValueChange" />
 		</div>
-	</Question>
+	</Field>
 </template>
 
 <script>
 import moment from '@nextcloud/moment'
 
-import QuestionMixin from '../../mixins/QuestionMixin'
+import FieldMixin from '../../mixins/FieldMixin'
 import DatetimePicker from '@nextcloud/vue/dist/Components/DatetimePicker'
 
 export default {
-	name: 'QuestionDate',
+	name: 'DateField',
 
 	components: {
 		DatetimePicker,
 	},
 
-	mixins: [QuestionMixin],
+	mixins: [FieldMixin],
 
 	data() {
 		return {
@@ -71,16 +69,9 @@ export default {
 	},
 
 	computed: {
-		// Allow picking time or not, depending on variable in answerType.
+		// Allow picking time or not, depending on variable in fieldType.
 		datetimePickerType() {
-			return this.answerType.includeTime ? 'datetime' : 'date'
-		},
-
-		datetimePickerPlaceholder() {
-			if (this.readOnly) {
-				return this.answerType.submitPlaceholder
-			}
-			return this.answerType.createPlaceholder
+			return this.fieldType.includeTime ? 'datetime' : 'date'
 		},
 
 		/**
