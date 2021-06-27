@@ -26,6 +26,20 @@
 				@delete="deleteField(field)" />
 		</Draggable>
 
+        <Actions ref="addFieldMenu"
+            :open.sync="addFieldMenuOpened"
+            :menu-title="t('biblio', 'Add a field')"
+            :primary="true"
+            default-icon="icon-add-primary">
+            <ActionButton v-for="(field, type) in FieldTypes"
+                :key="field.label"
+                :close-after-click="true"
+                :icon="field.icon"
+                @click="addField(type)">
+                {{ field.label }}
+            </ActionButton>
+        </Actions>
+
 		<a v-if="createNew" class="button" @click="saveNew()">
 			<span class="icon icon-add" />
 			<span>{{ t('biblio', 'Save') }}</span>
@@ -36,6 +50,9 @@
 <script>
 import debounce from 'debounce'
 import Draggable from 'vuedraggable'
+
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import Actions from '@nextcloud/vue/dist/Components/Actions'
 
 import FieldTypes from '../models/FieldTypes'
 import Field from '../components/Fields/Field'
@@ -54,6 +71,8 @@ export default {
 		ShortTextField,
 		LongTextField,
 		DateField,
+        ActionButton,
+        Actions,
 	},
 	props: {
 		createNew: {
@@ -88,6 +107,7 @@ export default {
 			],
 			FieldTypes,
 			isDragging: false,
+            addFieldMenuOpened: false,
 		}
 	},
 	computed: {
