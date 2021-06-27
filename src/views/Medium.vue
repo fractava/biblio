@@ -80,6 +80,11 @@ export default {
 					title: 'multiple baum',
 					value: [],
 				},
+                {
+					type: 'date',
+					title: 'date baum',
+					value: "",
+				},
 			],
 			FieldTypes,
 			isDragging: false,

@@ -30,9 +30,9 @@
 		@delete="onDelete">
 		<div class="field__content">
 			<DatetimePicker
-				v-model="time"
+				:value="value"
 				value-type="format"
-				:disabled="!readOnly"
+				:disabled="readOnly"
 				:formatter="formatter"
 				:placeholder="fieldType.valuePlaceholder"
 				:show-second="false"
@@ -120,7 +120,7 @@ export default {
 		 * @param {String} dateString The parsed string to store
 		 */
 		onValueChange(dateString) {
-			this.$emit('update:value', [dateString])
+			this.$emit('update:value', dateString)
 		},
 	},
 }
