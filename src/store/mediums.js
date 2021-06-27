@@ -8,6 +8,8 @@ export default {
 	}),
 	mutations: {
 		createMedium(state, options) {
+            //options.fields = JSON.parse(options.fields);
+
             this.state.mediums.mediums.push(options);
 		},
 		setMediums(state, mediums) {
@@ -23,13 +25,23 @@ export default {
 	actions: {
 		createMedium(context, options) {
 			return new Promise((resolve, reject) => {
-                axios.post(generateUrl('/apps/biblio/mediums'), options).then(function(response) {
-                    ontext.commit('createMedium', response.data)
+                let parameters = {
+                    title: options.title,
+                    fields: JSON.stringify(options.fields),
+                }
+                axios.post(generateUrl('/apps/biblio/mediums'), parameters).then(function(response) {
+                    context.commit('createMedium', {
+                        title: options.title,
+                        fields: options.fields,
+                        id: response.data.id,
+                    })
+                    resolve(response.data.id);
                 })
-                .catch(function() {
+                .catch(function(error) {
                     showError(t('biblio', 'Could not create medium'))
+                    reject(error);
                 })
-				resolve()
+				
 			})
 		},
 		fecthMediums(context) {
@@ -45,9 +57,10 @@ export default {
 					context.commit('setMediums', mediums)
 					resolve()
 				})
-					/*.catch(function() {
+					.catch(function(error) {
+                        console.error(error);
 						showError(t('biblio', 'Could not fetch mediums'))
-					})*/
+					})
 			})
 		},
 		updateMediumTitle(context, options) {
@@ -55,7 +68,8 @@ export default {
 				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { title: options.title }).then(function(response) {
 					context.commit('updateMediumTitle', options)
 				})
-					.catch(function() {
+					.catch(function(error) {
+                        console.error(error);
 						showError(t('biblio', 'Could not update title'))
 					})
 
@@ -67,7 +81,8 @@ export default {
 				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fields: JSON.stringify(options.fields) }).then(function(response) {
 					context.commit('updateMediumFields', options)
 				})
-					.catch(function() {
+					.catch(function(error) {
+                        console.error(error);
 						showError(t('biblio', 'Could not update title'))
 					})
 

@@ -121,8 +121,15 @@ export default {
 		},
 	},
 	methods: {
-		saveNew() {
-            this.$store.dispatch('createMedium', { title: this.newTitle, fields: JSON.stringify(this.newFields) })
+		async saveNew() {
+            let self = this;
+
+            this.$store.dispatch('createMedium', { title: this.newTitle, fields: this.newFields })
+            .then(function(id) {
+                self.$router.push({
+                    path: '/medium/' + id,
+                })
+            });
 		},
         onFieldUpdate(field, event) {
             field.value = event

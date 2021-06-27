@@ -1,5 +1,11 @@
 <template>
 	<ul>
+        <router-link to="medium/new">
+            <a class="button">
+                <span class="icon icon-add"></span>
+                <span>{{ t('biblio', 'New Medium') }}</span>
+            </a>
+        </router-link>
 		<Table
 			:columns="['title', 'fields']"
 			:items="mediums"
