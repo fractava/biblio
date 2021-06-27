@@ -27,7 +27,7 @@ import QuestionDate from '../components/Questions/QuestionDate'
 
 /**
  * @typedef {Object} AnswerTypes
- * @property {string} multiple_unique
+ * @property {string} multiple
  * @property {string} short
  * @property {string} long
  * @property {string} date
@@ -41,7 +41,6 @@ export default {
 	 * @prop component The vue-component this answer-type relies on
 	 * @prop icon The icon corresponding to this answer-type
 	 * @prop label The answer-type label, that users will see as answer-type.
-	 * @prop SYNC predefined This AnswerType has/needs predefined Options.
 	 * @prop validate *optional* Define conditions where this question is not ok
 	 *
 	 * @prop titlePlaceholder The placeholder users see as empty question-title in edit-mode
@@ -55,17 +54,12 @@ export default {
 		icon: 'icon-answer-multiple',
 		// TRANSLATORS Take care, a translation by word might not match! The english called 'Multiple-Choice' only allows to select a single-option (basically single-choice)!
 		label: t('forms', 'Multiple choice'),
-		predefined: true,
-
-		// Using the same vue-component as multiple, this specifies that the component renders as multiple_unique.
-		unique: true,
 	},
 
 	short: {
 		component: QuestionShort,
 		icon: 'icon-answer-short',
 		label: t('forms', 'Short answer'),
-		predefined: false,
 
 		titlePlaceholder: t('forms', 'Title'),
 		warningInvalid: t('forms', 'A title is required!'),
@@ -75,7 +69,6 @@ export default {
 		component: QuestionLong,
 		icon: 'icon-answer-long',
 		label: t('forms', 'Long text'),
-		predefined: false,
 
 		titlePlaceholder: t('forms', 'Long text question title'),
 		createPlaceholder: t('forms', 'People can enter a long text'),
@@ -87,7 +80,6 @@ export default {
 		component: QuestionDate,
 		icon: 'icon-answer-date',
 		label: t('forms', 'Date'),
-		predefined: false,
 
 		titlePlaceholder: t('forms', 'Date question title'),
 		createPlaceholder: t('forms', 'People can pick a date'),
@@ -99,7 +91,6 @@ export default {
 		component: QuestionDate,
 		icon: 'icon-answer-datetime',
 		label: t('forms', 'Datetime'),
-		predefined: false,
 
 		titlePlaceholder: t('forms', 'Datetime question title'),
 		createPlaceholder: t('forms', 'People can pick a date and time'),
