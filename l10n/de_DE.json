@@ -1,0 +1,15 @@
+{ "translations": {
+    "Biblio" : "Biblio",
+    "A library management system" : "Ein Bibliotheksverwaltungssystem",
+    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Dies kann verwendet werden, um eine Bibliothek, ein Notenarchiv, eine Lehrbuchbibliothek zu verwalten",
+    "Could not create the medium" : "Das Medium konnte nicht erstellt werden",
+    "Could not update the medium" : "Das Medium konnte nicht aktualisiert werden",
+    "Medium deleted" : "Medium gelöscht",
+    "Could not delete the medium" : "Das Medium konnte nicht gelöscht werden",
+    "Lend/Return" : "Ausleihen/Zurückgeben",
+    "Mediums" : "Medien",
+    "Customers" : "Kunden",
+    "Could not fetch mediums" : "Medien konnten nicht abgerufen werden",
+    "Could not update title" : "Titel konnte nicht aktualisiert werden"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,0 +1,17 @@
+OC.L10N.register(
+    "biblio",
+    {
+    "Biblio" : "Biblio ",
+    "A library management system" : "图书馆管理系统",
+    "This can be used to manage a book library, Sheet music archive, Textbook library" : "可使用此软件来管理书库、乐谱库、教材库",
+    "Could not create the medium" : "无法创建介质",
+    "Could not update the medium" : "无法更新介质",
+    "Medium deleted" : "已删除介质",
+    "Could not delete the medium" : "无法删除介质",
+    "Lend/Return" : "借出/归还",
+    "Mediums" : "介质",
+    "Customers" : "顾客",
+    "Could not fetch mediums" : "无法获取介质",
+    "Could not update title" : "无法更新标题"
+},
+"nplurals=1; plural=0;");
