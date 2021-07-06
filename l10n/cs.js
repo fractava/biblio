@@ -2,7 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Biblio" : "Biblio",
-    "A library management system" : "Systém správy knihovny",
+    "A library management system" : "Systém pro správy knihovny",
     "This can be used to manage a book library, Sheet music archive, Textbook library" : "Toto je možné použít ke správě knihovny, gramodesek, učebnic",
     "Could not create the medium" : "Médium se nedaří vytvořit",
     "Could not update the medium" : "Médium se nedaří aktualizovat",
