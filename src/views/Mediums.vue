@@ -30,7 +30,6 @@ export default {
 	},
 	methods: {
 		openMedium(medium) {
-			console.log(medium)
 			this.$router.push({
 				path: '/medium/' + medium,
 			})

@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import debounce from 'debounce'
 import Draggable from 'vuedraggable'
 
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
@@ -162,7 +161,6 @@ export default {
 			field.value = event
 
 			if (!this.createNew) {
-				console.log('dispatch')
 			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
 			}
 		},

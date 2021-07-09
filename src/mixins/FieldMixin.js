@@ -19,7 +19,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 import { debounce } from 'debounce'
-import { showError } from '@nextcloud/dialogs'
 
 import Field from '../components/Fields/Field'
 

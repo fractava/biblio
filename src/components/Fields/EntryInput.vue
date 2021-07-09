@@ -20,10 +20,6 @@
 </template>
 
 <script>
-import { showError } from '@nextcloud/dialogs'
-import pDebounce from 'p-debounce'
-import PQueue from 'p-queue'
-
 import Actions from '@nextcloud/vue/dist/Components/Actions'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 
@@ -40,12 +36,6 @@ export default {
 			type: Object,
 			required: true,
 		},
-	},
-
-	data() {
-		return {
-			queue: new PQueue({ concurrency: 1 }),
-		}
 	},
 
 	methods: {

@@ -76,8 +76,6 @@
 </template>
 
 <script>
-import { showError } from '@nextcloud/dialogs'
-
 import EntryInput from './EntryInput'
 import FieldMixin from '../../mixins/FieldMixin'
 import GenRandomId from '../../utils/GenRandomId'

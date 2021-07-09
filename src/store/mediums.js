@@ -1,6 +1,6 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
-import { showError, showSuccess } from '@nextcloud/dialogs'
+import { showError /*, showSuccess */ } from '@nextcloud/dialogs'
 
 export default {
 	state: () => ({
@@ -50,7 +50,6 @@ export default {
 					const mediums = response.data
 
 					for (const medium in mediums) {
-						console.log(medium)
 						mediums[medium].fields = JSON.parse(mediums[medium].fields)
 					}
 
@@ -92,7 +91,6 @@ export default {
 	},
 	getters: {
 		getMediumById: (state) => (id) => {
-			console.log(state)
 			return state.mediums.find(medium => medium.id == id)
 		},
 	},
