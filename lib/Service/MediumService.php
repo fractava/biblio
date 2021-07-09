@@ -55,14 +55,14 @@ class MediumService {
 
 	public function update($id, $title, $fields, $userId) {
 		try {
-            $medium = $this->mapper->find($id, $userId);
-            
-            if(!is_null($title)) {
-                $medium->setTitle($title);
-            }
-            if(!is_null($fields)) {
-                $medium->setFields($fields);
-            }
+			$medium = $this->mapper->find($id, $userId);
+			
+			if (!is_null($title)) {
+				$medium->setTitle($title);
+			}
+			if (!is_null($fields)) {
+				$medium->setFields($fields);
+			}
 
 			return $this->mapper->update($medium);
 		} catch (Exception $e) {

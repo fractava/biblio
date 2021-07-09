@@ -52,8 +52,8 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, string $title=NULL,
-						   string $fields=NULL): DataResponse {
+	public function update(int $id, string $title = null,
+						   string $fields = null): DataResponse {
 		return $this->handleNotFound(function () use ($id, $title, $fields) {
 			return $this->service->update($id, $title, $fields, $this->userId);
 		});
