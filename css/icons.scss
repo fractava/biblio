@@ -1,2 +1,8 @@
 @include icon-black-white('medium', 'biblio', 1, false);
 @include icon-black-white('drag-handle', 'biblio', 1, false);
+
+@include icon-black-white('list-field', 'biblio', 1, false);
+@include icon-black-white('short-text-field', 'biblio', 1, false);
+@include icon-black-white('long-text-field', 'biblio', 1, false);
+@include icon-black-white('date-field', 'biblio', 1, false);
+@include icon-black-white('datetime-field', 'biblio', 1, false);
