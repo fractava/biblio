@@ -1,5 +1,6 @@
+
 /**
- * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
+ * @copyright Copyright (c) 2020 John Molakvoæ <skjnldsv@protonmail.com>
  *
  * @author John Molakvoæ <skjnldsv@protonmail.com>
  *
@@ -12,28 +13,19 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import Vue from 'vue'
-import App from './App'
 
-import router from './router'
-import store from './store'
+const GenRandomId = (length) => {
+	return Math.random()
+		.toString(36)
+		.replace(/[^a-z]+/g, '')
+		.substr(0, length || 5)
+}
 
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
-
-Vue.directive('tooltip', Tooltip)
-
-Vue.mixin({ methods: { t, n } })
-
-export default new Vue({
-	router,
-	store,
-	el: '#content',
-	render: h => h(App),
-})
+export default GenRandomId

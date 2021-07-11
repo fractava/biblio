@@ -31,13 +31,13 @@ class MediumControllerTest extends TestCase {
 			->method('update')
 			->with($this->equalTo(3),
 					$this->equalTo('title'),
-					$this->equalTo('data'),
+					$this->equalTo('fields'),
 				   $this->equalTo($this->userId))
 			->will($this->returnValue($medium));
 
-		$result = $this->controller->update(3, 'title', 'data');
+		$result = $this->controller->update(3, 'title', 'fields');
 
-		$this->assertEquals($medium, $result->getData());
+		$this->assertEquals($medium, $result->getFields());
 	}
 
 
@@ -47,7 +47,7 @@ class MediumControllerTest extends TestCase {
 			->method('update')
 			->will($this->throwException(new MediumNotFound()));
 
-		$result = $this->controller->update(3, 'title', 'data');
+		$result = $this->controller->update(3, 'title', 'fields');
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $result->getStatus());
 	}

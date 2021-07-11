@@ -1,7 +1,13 @@
 <template>
 	<ul>
+		<router-link to="medium/new">
+			<a class="button">
+				<span class="icon icon-add" />
+				<span>{{ t('biblio', 'New Medium') }}</span>
+			</a>
+		</router-link>
 		<Table
-			:columns="['title', 'data']"
+			:columns="['title', 'fields']"
 			:items="mediums"
 			@click="openMedium($event)" />
 	</ul>
@@ -24,7 +30,6 @@ export default {
 	},
 	methods: {
 		openMedium(medium) {
-			console.log(medium)
 			this.$router.push({
 				path: '/medium/' + medium,
 			})

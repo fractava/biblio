@@ -45,24 +45,24 @@ class MediumService {
 		}
 	}
 
-	public function create($title, $data, $userId) {
+	public function create($title, $fields, $userId) {
 		$medium = new Medium();
 		$medium->setTitle($title);
-		$medium->setData($data);
+		$medium->setFields($fields);
 		$medium->setUserId($userId);
 		return $this->mapper->insert($medium);
 	}
 
-	public function update($id, $title, $data, $userId) {
+	public function update($id, $title, $fields, $userId) {
 		try {
-            $medium = $this->mapper->find($id, $userId);
-            
-            if(!is_null($title)) {
-                $medium->setTitle($title);
-            }
-            if(!is_null($data)) {
-                $medium->setData($data);
-            }
+			$medium = $this->mapper->find($id, $userId);
+			
+			if (!is_null($title)) {
+				$medium->setTitle($title);
+			}
+			if (!is_null($fields)) {
+				$medium->setFields($fields);
+			}
 
 			return $this->mapper->update($medium);
 		} catch (Exception $e) {

@@ -101,13 +101,6 @@ export default {
 			}
 		},
 		/**
-		 * Abort creating a new note
-		 */
-		cancelNewNote() {
-			this.notes.splice(this.notes.findIndex((note) => note.id === -1), 1)
-			this.currentNoteId = null
-		},
-		/**
 		 * Create a new note by sending the information to the server
 		 * @param {Object} note Note object
 		 */
