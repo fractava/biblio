@@ -67,25 +67,25 @@ export default {
 		icon: 'icon-long-text-field',
 		label: t('biblio', 'Long text'),
 
-		valuePlaceholder: t('forms', 'Enter a long text'),
+		valuePlaceholder: t('biblio', 'Enter a long text'),
 		defaultValue: '',
 	},
 
 	date: {
 		component: DateField,
 		icon: 'icon-date-field',
-		label: t('forms', 'Date'),
+		label: t('biblio', 'Date'),
 
-		valuePlaceholder: t('forms', 'Pick a date'),
+		valuePlaceholder: t('biblio', 'Pick a date'),
 		defaultValue: '',
 	},
 
 	datetime: {
 		component: DateField,
 		icon: 'icon-datetime-field',
-		label: t('forms', 'Datetime'),
+		label: t('biblio', 'Datetime'),
 
-		valuePlaceholder: t('forms', 'Pick a date and time'),
+		valuePlaceholder: t('biblio', 'Pick a date and time'),
 		defaultValue: '',
 
 		// Using the same vue-component as date, this specifies that the component renders as datetime.
