@@ -30,8 +30,7 @@
 				:is-required="false"
 				:options="{}"
 				:title.sync="field.title"
-				:value="field.value"
-				@update:value="onFieldUpdate(field, $event)"
+				:value.sync="field.value"
 				@delete="deleteField(field)" />
 		</Draggable>
 
@@ -88,6 +87,15 @@ export default {
 			default: false,
 		},
 	},
+	mounted() {
+		if (this.createNew) {
+			this.thisTitle = this.newTitle
+			this.thisFields = this.newFields
+		} else {
+			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
+			this.thisFields = this.$store.getters.getMediumById(this.$route.params.id).fields
+		}
+	},
 	data() {
 		return {
 			newTitle: '',
@@ -129,44 +137,33 @@ export default {
 			FieldTypes,
 			isDragging: false,
 			addFieldMenuOpened: false,
+			thisTitle: "",
+			thisFields: [],
 		}
+	},
+	watch: {
+		thisTitle(value) {
+			if (this.createNew) {
+				this.newTitle = value
+			} else {
+				this.$store.dispatch('updateMediumTitle', { id: this.$route.params.id, title: value })
+			}
+		},
+		thisFields: {
+			handler(value) {
+				if (this.createNew) {
+					this.newFields = value
+				} else {
+					this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: value })
+				}
+			},
+			deep: true,
+		},
 	},
 	computed: {
 		...mapState({
 			mediums: state => state.mediums.mediums,
 		}),
-		thisTitle: {
-			get() {
-				if (this.createNew) {
-					return this.newTitle
-				} else {
-					return this.$store.getters.getMediumById(this.$route.params.id).title
-				}
-			},
-			set(value) {
-				if (this.createNew) {
-					this.newTitle = value
-				} else {
-				    this.$store.dispatch('updateMediumTitle', { id: this.$route.params.id, title: value })
-				}
-			},
-		},
-		thisFields: {
-			get() {
-				if (this.createNew) {
-					return this.newFields
-				} else {
-					return this.$store.getters.getMediumById(this.$route.params.id).fields
-				}
-			},
-			set(value) {
-				if (this.createNew) {
-					this.newFields = value
-				} else {
-				    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: value })
-				}
-			},
-		},
 	},
 	methods: {
 		async saveNew() {
@@ -180,12 +177,19 @@ export default {
 				})
 		},
 		onFieldUpdate(field, event) {
-			field.value = event
+			this.$set(field, "value", event)
+		},
+		deleteField(field) {
+			console.log(field);
+
+			this.thisFields = this.thisFields.filter(function(value){ 
+				return value != field;
+			});
 
 			if (!this.createNew) {
 			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
 			}
-		},
+		}
 	},
 }
 </script>
