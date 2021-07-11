@@ -11,7 +11,7 @@
 			:enable-drag-handle="false"
 			:is-required="true"
 			:options="{}"
-			title="title"
+			:title="t('biblio', 'Title')"
 			:value.sync="thisTitle" />
 
 		<Draggable
@@ -38,7 +38,7 @@
 			:open.sync="addFieldMenuOpened"
 			:menu-title="t('biblio', 'Add a field')"
 			:primary="true"
-			default-icon="icon-add-primary">
+			default-icon="icon-add">
 			<ActionButton v-for="(field, type) in FieldTypes"
 				:key="field.label"
 				:close-after-click="true"
