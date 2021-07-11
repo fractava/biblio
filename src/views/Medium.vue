@@ -43,7 +43,7 @@
 				:key="field.label"
 				:close-after-click="true"
 				:icon="field.icon"
-				@click="addField(type)">
+				@click="addField(type, field)">
 				{{ field.label }}
 			</ActionButton>
 		</Actions>
@@ -178,6 +178,13 @@ export default {
 		},
 		onFieldUpdate(field, event) {
 			this.$set(field, "value", event)
+		},
+		addField(type, field) {
+			this.thisFields.push({
+				title: field.label,
+				type,
+				value: field.defaultValue,
+			})
 		},
 		deleteField(field) {
 			console.log(field);
