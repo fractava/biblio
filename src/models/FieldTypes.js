@@ -59,7 +59,7 @@ export default {
 		label: t('biblio', 'Short text'),
 
 		valuePlaceholder: t('biblio', 'Enter a short text'),
-		defaultValue: "",
+		defaultValue: '',
 	},
 
 	long: {
@@ -68,7 +68,7 @@ export default {
 		label: t('biblio', 'Long text'),
 
 		valuePlaceholder: t('forms', 'Enter a long text'),
-		defaultValue: "",
+		defaultValue: '',
 	},
 
 	date: {
@@ -77,7 +77,7 @@ export default {
 		label: t('forms', 'Date'),
 
 		valuePlaceholder: t('forms', 'Pick a date'),
-		defaultValue: "",
+		defaultValue: '',
 	},
 
 	datetime: {
@@ -86,7 +86,7 @@ export default {
 		label: t('forms', 'Datetime'),
 
 		valuePlaceholder: t('forms', 'Pick a date and time'),
-		defaultValue: "",
+		defaultValue: '',
 
 		// Using the same vue-component as date, this specifies that the component renders as datetime.
 		includeTime: true,

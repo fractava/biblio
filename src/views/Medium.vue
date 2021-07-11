@@ -87,15 +87,6 @@ export default {
 			default: false,
 		},
 	},
-	mounted() {
-		if (this.createNew) {
-			this.thisTitle = this.newTitle
-			this.thisFields = this.newFields
-		} else {
-			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
-			this.thisFields = this.$store.getters.getMediumById(this.$route.params.id).fields
-		}
-	},
 	data() {
 		return {
 			newTitle: '',
@@ -115,16 +106,16 @@ export default {
 					title: 'multiple baum',
 					value: [
 						{
-							"id":"wblyp",
-							"text":"t"
+							id: 'wblyp',
+							text: 't',
 						},
 						{
-							"id":"nnwfq",
-							"text":"test"
+							id: 'nnwfq',
+							text: 'test',
 						},
 						{
-							"id":"bikng",
-							"text":"baum"
+							id: 'bikng',
+							text: 'baum',
 						},
 					],
 				},
@@ -137,7 +128,7 @@ export default {
 			FieldTypes,
 			isDragging: false,
 			addFieldMenuOpened: false,
-			thisTitle: "",
+			thisTitle: '',
 			thisFields: [],
 		}
 	},
@@ -160,6 +151,15 @@ export default {
 			deep: true,
 		},
 	},
+	mounted() {
+		if (this.createNew) {
+			this.thisTitle = this.newTitle
+			this.thisFields = this.newFields
+		} else {
+			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
+			this.thisFields = this.$store.getters.getMediumById(this.$route.params.id).fields
+		}
+	},
 	computed: {
 		...mapState({
 			mediums: state => state.mediums.mediums,
@@ -177,7 +177,7 @@ export default {
 				})
 		},
 		onFieldUpdate(field, event) {
-			this.$set(field, "value", event)
+			this.$set(field, 'value', event)
 		},
 		addField(type, field) {
 			this.thisFields.push({
@@ -187,16 +187,16 @@ export default {
 			})
 		},
 		deleteField(field) {
-			console.log(field);
+			console.log(field)
 
-			this.thisFields = this.thisFields.filter(function(value){ 
-				return value != field;
-			});
+			this.thisFields = this.thisFields.filter(function(value) {
+				return value != field
+			})
 
 			if (!this.createNew) {
 			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
 			}
-		}
+		},
 	},
 }
 </script>
