@@ -25,7 +25,9 @@
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
-		:read-only="readOnly"
+		:allow-title-edit="allowTitleEdit"
+		:allow-deletion="allowDeletion"
+		:enable-drag-handle="enableDragHandle"
 		:title-placeholder="t('biblio', 'Title')"
 		:shift-drag-handle="shiftDragHandle"
 		@update:title="onTitleChange"
@@ -55,12 +57,13 @@
 					:entry="entry"
 					:index="index"
 					:is-dropdown="false"
+					:allow-value-edit="allowValueEdit"
 					@add="addNewEntry"
 					@delete="deleteEntry"
 					@update:entry="updateEntry" />
 			</template>
 
-			<li v-if="(edit && !isLastEmpty) || hasNoEntry" class="field__item">
+			<li v-if="((edit && !isLastEmpty) || hasNoEntry) && allowValueEdit" class="field__item">
 				<div class="field__item__pseudoInput" />
 				<input
 					:aria-label="t('biblio', 'Add a new entry')"

@@ -1,9 +1,18 @@
 <template>
 	<div>
-		<p>{{ $route.params.id }}</p>
-		<p>{{ createNew }}</p>
-		<p>{{ thisTitle }}</p>
-		<input v-model="thisTitle">
+		<p>ID: {{ $route.params.id }}</p>
+		<p>createNew: {{ createNew }}</p>
+
+		<Fields
+			:is="FieldTypes['short'].component"
+			:field-type="FieldTypes['short']"
+			:allow-title-edit="false"
+			:allow-deletion="false"
+			:enable-drag-handle="false"
+			:is-required="true"
+			:options="{}"
+			title="title"
+			:value.sync="thisTitle" />
 
 		<Draggable
 			v-model="thisFields"
@@ -96,7 +105,20 @@ export default {
 				{
 					type: 'multiple',
 					title: 'multiple baum',
-					value: [],
+					value: [
+						{
+							"id":"wblyp",
+							"text":"t"
+						},
+						{
+							"id":"nnwfq",
+							"text":"test"
+						},
+						{
+							"id":"bikng",
+							"text":"baum"
+						},
+					],
 				},
 				{
 					type: 'date',

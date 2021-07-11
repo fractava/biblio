@@ -26,14 +26,14 @@
 		class="field"
 		@click="enableEdit">
 		<!-- Drag handle -->
-		<div v-if="!readOnly"
+		<div v-if="enableDragHandle"
 			class="field__drag-handle icon-drag-handle"
 			:class="{'field__drag-handle--shiftup': shiftDragHandle}"
 			:aria-label="t('biblio', 'Drag to reorder the fields')" />
 
 		<!-- Header -->
 		<div class="field__header">
-			<input v-if="edit || !title"
+			<input v-if="(edit || !title) && allowTitleEdit"
 				:placeholder="t('biblio', 'Title')"
 				:value="title"
 				class="field__header-title"
@@ -46,7 +46,7 @@
 				v-tooltip.auto="t('biblio', 'A title is required!')"
 				class="field__header-warning icon-error-color"
 				tabindex="0" />
-			<Actions v-if="!readOnly" class="field__header-menu" :force-menu="true">
+			<Actions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
 				<ActionButton icon="icon-delete" @click="onDelete">
 					{{ t('forms', 'Delete Field') }}
 				</ActionButton>
@@ -80,6 +80,18 @@ export default {
 			type: String,
 			required: true,
 		},
+		allowTitleEdit: {
+			type: Boolean,
+			default: true,
+		},
+		allowDeletion: {
+			type: Boolean,
+			default: true,
+		},
+		enableDragHandle: {
+			type: Boolean,
+			default: true,
+		},
 		shiftDragHandle: {
 			type: Boolean,
 			default: false,
@@ -87,10 +99,6 @@ export default {
 		edit: {
 			type: Boolean,
 			required: true,
-		},
-		readOnly: {
-			type: Boolean,
-			default: false,
 		},
 		contentValid: {
 			type: Boolean,
@@ -122,7 +130,7 @@ export default {
 		 * Enable the edit mode
 		 */
 		enableEdit() {
-			if (!this.readOnly) {
+			if (!this.allowTitleEdit) {
 				this.$emit('update:edit', true)
 			}
 		},
@@ -131,7 +139,7 @@ export default {
 		 * Disable the edit mode
 		 */
 		disableEdit() {
-			if (!this.readOnly) {
+			if (!this.allowTitleEdit) {
 				this.$emit('update:edit', false)
 			}
 		},

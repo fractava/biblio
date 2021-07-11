@@ -25,14 +25,16 @@
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
-		:read-only="readOnly"
+		:allow-title-edit="allowTitleEdit"
+		:allow-deletion="allowDeletion"
+		:enable-drag-handle="enableDragHandle"
 		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="field__content">
 			<DatetimePicker
 				:value="value"
 				value-type="format"
-				:disabled="readOnly"
+				:disabled="!allowValueEdit"
 				:formatter="formatter"
 				:placeholder="fieldType.valuePlaceholder"
 				:show-second="false"

@@ -7,11 +7,12 @@
 			class="field__input"
 			minlength="1"
 			type="text"
+			:disabled="!allowValueEdit"
 			@keydown.delete="deleteEntry"
 			@keydown.enter.prevent="addNewEntry">
 
 		<!-- Delete entry -->
-		<Actions>
+		<Actions v-if="allowValueEdit">
 			<ActionButton icon="icon-close" @click="deleteEntry">
 				{{ t('biblio', 'Delete entry') }}
 			</ActionButton>
@@ -35,6 +36,10 @@ export default {
 		entry: {
 			type: Object,
 			required: true,
+		},
+		allowValueEdit: {
+			type: Boolean,
+			default: true,
 		},
 	},
 

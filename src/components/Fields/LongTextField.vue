@@ -25,13 +25,15 @@
 		v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
-		:read-only="readOnly"
+		:allow-title-edit="allowTitleEdit"
+		:allow-deletion="allowDeletion"
+		:enable-drag-handle="enableDragHandle"
 		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="field__content">
 			<textarea ref="textarea"
 				:placeholder="fieldType.valuePlaceholder"
-				:disabled="readOnly"
+				:disabled="!allowValueEdit"
 				:value="value"
 				class="field__text"
 				minlength="1"

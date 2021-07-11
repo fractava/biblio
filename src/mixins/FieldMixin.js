@@ -34,6 +34,26 @@ export default {
 			required: true,
 		},
 
+		allowTitleEdit: {
+			type: Boolean,
+			default: true,
+		},
+
+		allowValueEdit: {
+			type: Boolean,
+			default: true,
+		},
+
+		allowDeletion: {
+			type: Boolean,
+			default: true,
+		},
+
+		enableDragHandle: {
+			type: Boolean,
+			default: true,
+		},
+
 		/**
 		 * Required-Setting
 		 */
@@ -54,14 +74,6 @@ export default {
 		fieldType: {
 			type: Object,
 			required: true,
-		},
-
-		/**
-		 * Submission or Edit-Mode
-		 */
-		readOnly: {
-			type: Boolean,
-			default: false,
 		},
 	},
 
