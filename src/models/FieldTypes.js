@@ -83,7 +83,7 @@ export default {
 	datetime: {
 		component: DateField,
 		icon: 'icon-datetime-field',
-		label: t('biblio', 'Datetime'),
+		label: t('biblio', 'Date and time'),
 
 		valuePlaceholder: t('biblio', 'Pick a date and time'),
 		defaultValue: '',
