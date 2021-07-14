@@ -28,6 +28,7 @@ OC.L10N.register(
     "Enter a long text" : "Uzun bir metin yazın",
     "Date" : "Tarih",
     "Pick a date" : "Bir tarih seçin",
+    "Date and time" : "Tarih ve saat",
     "Pick a date and time" : "Bir tarih ve saat seçin",
     "Could not create medium" : "Ortam eklenemedi",
     "Could not fetch mediums" : "Ortamlar alınamadı",

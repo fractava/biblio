@@ -28,6 +28,7 @@ OC.L10N.register(
     "Enter a long text" : "输入长文本",
     "Date" : "日期",
     "Pick a date" : "挑选日期",
+    "Date and time" : "日期和时间",
     "Pick a date and time" : "挑一个日期和时间",
     "Could not create medium" : "无法创建介质",
     "Could not fetch mediums" : "无法获取介质",

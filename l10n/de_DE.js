@@ -28,6 +28,7 @@ OC.L10N.register(
     "Enter a long text" : "Einen langen Text eingeben",
     "Date" : "Datum",
     "Pick a date" : "Datum auswählen",
+    "Date and time" : "Datum und Zeit",
     "Pick a date and time" : "Datum und Zeit auswählen",
     "Could not create medium" : "Das Medium konnte nicht erstellt werden",
     "Could not fetch mediums" : "Medien konnten nicht abgerufen werden",

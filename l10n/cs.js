@@ -28,6 +28,7 @@ OC.L10N.register(
     "Enter a long text" : "Zadejte dlouhý text",
     "Date" : "Datum",
     "Pick a date" : "Vyberte datum",
+    "Date and time" : "Datum a čas",
     "Pick a date and time" : "Vyberte datum a čas",
     "Could not create medium" : "Médium se nedaří vytvořit",
     "Could not fetch mediums" : "Nedaří se získat média",
