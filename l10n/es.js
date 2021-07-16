@@ -28,6 +28,7 @@ OC.L10N.register(
     "Enter a long text" : "Introduce un texto extenso",
     "Date" : "Fecha",
     "Pick a date" : "Escoge una fecha",
+    "Date and time" : "Fecha y hora",
     "Pick a date and time" : "Escoge hora y fecha",
     "Could not create medium" : "No se pudo crear el medio",
     "Could not fetch mediums" : "No se pudieron recuperar los medios",
