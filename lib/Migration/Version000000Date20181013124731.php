@@ -31,9 +31,6 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 200,
 			]);
-			$table->addColumn('fields', 'text', [
-				'notnull' => true,
-			]);
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
 				'length' => 200,

@@ -7,8 +7,8 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\Biblio\Db\Medium;
-use OCA\Biblio\Db\MediumMapper;
+use OCA\Biblio\Db\MediumField;
+use OCA\Biblio\Db\MediumFieldMapper;
 
 class MediumService {
 
@@ -45,36 +45,36 @@ class MediumService {
 		}
 	}
 
-	public function create($title, $fields, $userId) {
-		$medium = new Medium();
-		$medium->setTitle($title);
-		$medium->setFields($fields);
-		$medium->setUserId($userId);
-		return $this->mapper->insert($medium);
+	public function create($medium_id, $title, $value) {
+		$field = new MediumField();
+        $field->setMediumId($medium_id);
+		$field->setTitle($title);
+		$field->setValue($value);
+		return $this->mapper->insert($field);
 	}
 
-	public function update($id, $title, $fields, $userId) {
+	public function update($id, $medium_id, $title, $value) {
 		try {
-			$medium = $this->mapper->find($id, $userId);
+			$field = $this->mapper->find($id, $medium_id);
 			
 			if (!is_null($title)) {
-				$medium->setTitle($title);
+				$field->setTitle($title);
 			}
-			if (!is_null($fields)) {
-				$medium->setFields($fields);
+			if (!is_null($value)) {
+				$field->setValue($value);
 			}
 
-			return $this->mapper->update($medium);
+			return $this->mapper->update($field);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function delete($id, $userId) {
+	public function delete($id, $medium_id) {
 		try {
-			$medium = $this->mapper->find($id, $userId);
-			$this->mapper->delete($mediumj);
-			return $medium;
+			$field = $this->mapper->find($id, $medium_id);
+			$this->mapper->delete($field);
+			return $field;
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}

@@ -28,14 +28,14 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function index(int $medium_id): DataResponse {
+	public function findAllByMediumId(int $medium_id): DataResponse {
 		return new DataResponse($this->service->findAll($medium_id));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function show(int $id, int $medium_id): DataResponse {
+	public function findById(int $id, int $medium_id): DataResponse {
 		return $this->handleNotFound(function () use ($id, $medium_id) {
 			return $this->service->find($id, $medium_id);
 		});
@@ -44,26 +44,25 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $value, int $medium_id): DataResponse {
-		return new DataResponse($this->service->create($title, $fields, $medium_id));
+	public function create(int $medium_id, string $title, string $value): DataResponse {
+		return new DataResponse($this->service->create($medium_id, $title, $fields));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, string $title = null,
-						   string $fields = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $title, $fields) {
-			return $this->service->update($id, $title, $fields, $this->userId);
+	public function update(int $id, int $medium_id, string $title = null, string $value = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $medium_id, $title, $value) {
+			return $this->service->update($id, $medium_id, $title, $value);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $id): DataResponse {
-		return $this->handleNotFound(function () use ($id) {
-			return $this->service->delete($id, $this->userId);
+	public function destroy(int $id, int $medium_id): DataResponse {
+		return $this->handleNotFound(function () use ($id, $medium_id) {
+			return $this->service->delete($id, $medium_id);
 		});
 	}
 }
