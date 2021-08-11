@@ -40,7 +40,28 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'biblio_medium_id_index');
+			$table->addIndex(['user_id'], 'biblio_mediums_user_id_index');
+		}
+
+		if (!$schema->hasTable('biblio_medium_fields')) {
+			$table = $schema->createTable('biblio_medium_fields');
+			$table->addColumn('id', 'integer', [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('medium_id', 'integer', [
+				'notnull' => true,
+			]);
+			$table->addColumn('title', 'string', [
+				'notnull' => true,
+				'length' => 200,
+			]);
+			$table->addColumn('value', 'text', [
+				'notnull' => true,
+			]);
+
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['medium_id'], 'biblio_medium_fields_medium_id_index');
 		}
 		return $schema;
 	}
