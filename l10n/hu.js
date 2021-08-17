@@ -31,6 +31,7 @@ OC.L10N.register(
     "Date and time" : "Dátum és idő",
     "Pick a date and time" : "Válasszon dátumot és időt",
     "Could not create medium" : "A médium nem hozható létre",
-    "Could not fetch mediums" : "A médiumok nem kérhetők le"
+    "Could not fetch mediums" : "A médiumok nem kérhetők le",
+    "Could not update title" : "A cím nem frissíthető"
 },
 "nplurals=2; plural=(n != 1);");
