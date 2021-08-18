@@ -20,6 +20,7 @@ OC.L10N.register(
     "Customers" : "Clients",
     "Add a field" : "Ajouter un champ",
     "Save" : "Enregistrer",
+    "New Medium" : "Nouveau média",
     "List" : "Liste",
     "Short text" : "Court texte",
     "Enter a short text" : "Entrez un court texte",
@@ -29,6 +30,7 @@ OC.L10N.register(
     "Pick a date" : "Choisissez une date",
     "Date and time" : "Date et heure",
     "Pick a date and time" : "Choisissez une date et une heure",
+    "Could not create medium" : "Impossible de créer le média",
     "Could not fetch mediums" : "Impossible de récupérer les médias",
     "Could not update title" : "Impossible de mettre à jour le titre"
 },
