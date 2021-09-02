@@ -14,7 +14,7 @@ class Medium extends Entity implements JsonSerializable {
 		return [
 			'id' => $this->id,
 			'title' => $this->title,
-			'fields' => $this->fields
+			'fields_order' => $this->fields
 		];
 	}
 }
