@@ -10,12 +10,12 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCA\Biblio\Db\MediumField;
 use OCA\Biblio\Db\MediumFieldMapper;
 
-class MediumService {
+class MediumFieldService {
 
-	/** @var MediumMapper */
+	/** @var MediumFieldMapper */
 	private $mapper;
 
-	public function __construct(MediumMapper $mapper) {
+	public function __construct(MediumFieldMapper $mapper) {
 		$this->mapper = $mapper;
 	}
 

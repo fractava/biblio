@@ -3,13 +3,13 @@
 namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\MediumService;
+use OCA\Biblio\Service\MediumFieldService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
-class MediumController extends Controller {
-	/** @var MediumService */
+class MediumFieldController extends Controller {
+	/** @var MediumFieldService */
 	private $service;
 
 	/** @var string */
@@ -18,7 +18,7 @@ class MediumController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								MediumService $service,
+								MediumFieldService $service,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
@@ -26,10 +26,11 @@ class MediumController extends Controller {
 	}
 
 	/**
+	 * Get by Media Id
 	 * @NoAdminRequired
 	 */
-	public function findAllByMediumId(int $medium_id): DataResponse {
-		return new DataResponse($this->service->findAll($medium_id));
+	public function show(int $id): DataResponse {
+		return new DataResponse($this->service->findAll($id));
 	}
 
 	/**
@@ -45,7 +46,7 @@ class MediumController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $medium_id, string $title, string $value): DataResponse {
-		return new DataResponse($this->service->create($medium_id, $title, $fields));
+		return new DataResponse($this->service->create($medium_id, $title, $value));
 	}
 
 	/**

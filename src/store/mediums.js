@@ -25,23 +25,44 @@ export default {
 	actions: {
 		createMedium(context, options) {
 			return new Promise((resolve, reject) => {
+				let new_medium_id;
+
 				const parameters = {
 					title: options.title,
-					fields: JSON.stringify(options.fields),
+					fields_order: "[]",
 				}
 				axios.post(generateUrl('/apps/biblio/mediums'), parameters).then(function(response) {
 					context.commit('createMedium', {
 						title: options.title,
-						fields: options.fields,
 						id: response.data.id,
 					})
-					resolve(response.data.id)
-				})
-					.catch(function(error) {
-						showError(t('biblio', 'Could not create medium'))
-						reject(error)
-					})
+					new_medium_id = response.data.id;
 
+					for(let field of options.fields) {
+						console.log(field);
+						console.log(
+							new_medium_id,
+							field.title,
+							field.value,
+						);
+						axios.post(generateUrl('/apps/biblio/medium_fields'), {
+							medium_id: new_medium_id,
+							title: field.title,
+							value: JSON.stringify(field.value),
+						})
+						.then(function(response) {})
+						.catch(function(error) {
+							showError(t('biblio', 'Could not create medium'))
+							reject(error)
+						})
+					}
+	
+					resolve(new_medium_id);
+				})
+				.catch(function(error) {
+					showError(t('biblio', 'Could not create medium'))
+					reject(error)
+				})
 			})
 		},
 		fecthMediums(context) {
@@ -50,7 +71,7 @@ export default {
 					const mediums = response.data
 
 					for (const medium in mediums) {
-						mediums[medium].fields = JSON.parse(mediums[medium].fields)
+						mediums[medium].fieldsOrder = JSON.parse(mediums[medium].fieldsOrder)
 					}
 
 					context.commit('setMediums', mediums)
@@ -92,6 +113,19 @@ export default {
 	getters: {
 		getMediumById: (state) => (id) => {
 			return state.mediums.find(medium => medium.id == id)
+		},
+		getMediumFields: (state) => (id) => {
+			return new Promise((resolve, reject) => {
+				axios.get(generateUrl(`/apps/biblio/medium_fields/${id}`))
+				.then(function(response) {
+					const fields = response.data;
+					resolve(fields);
+				})
+				.catch(function(error) {
+					console.error(error)
+					showError(t('biblio', 'Could not fetch medium fields'))
+				})
+			})
 		},
 	},
 }

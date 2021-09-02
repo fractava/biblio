@@ -7,7 +7,7 @@
 			</a>
 		</router-link>
 		<Table
-			:columns="['title', 'fields']"
+			:columns="['title', 'fieldsOrder']"
 			:items="mediums"
 			@click="openMedium($event)" />
 	</ul>

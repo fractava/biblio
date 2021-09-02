@@ -157,7 +157,7 @@ export default {
 			this.thisFields = this.newFields
 		} else {
 			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
-			this.thisFields = this.$store.getters.getMediumById(this.$route.params.id).fields
+			this.thisFields = this.$store.getters.getMediumFields(this.$route.params.id)
 		}
 	},
 	computed: {
