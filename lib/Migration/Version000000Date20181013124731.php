@@ -31,13 +31,16 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 200,
 			]);
+			$table->addColumn('field_order', 'string', [
+				'notnull' => true,
+			]);
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
 				'length' => 200,
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['user_id'], 'biblio_mediums_user_id_index');
+			$table->addIndex(['user_id'], 'user_id_index');
 		}
 
 		if (!$schema->hasTable('biblio_medium_fields')) {
@@ -58,7 +61,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['medium_id'], 'biblio_medium_fields_medium_id_index');
+			$table->addIndex(['medium_id'], 'medium_id_index');
 		}
 		return $schema;
 	}
