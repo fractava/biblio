@@ -26,7 +26,7 @@ class MediumFieldController extends Controller {
 	}
 
 	/**
-	 * Get by Media Id
+	 * Get all fields of medium by medium id
 	 * @NoAdminRequired
 	 */
 	public function show(int $id): DataResponse {
@@ -34,36 +34,37 @@ class MediumFieldController extends Controller {
 	}
 
 	/**
+	 * Get specific field
 	 * @NoAdminRequired
 	 */
-	public function findById(int $id, int $medium_id): DataResponse {
-		return $this->handleNotFound(function () use ($id, $medium_id) {
-			return $this->service->find($id, $medium_id);
+	public function findById(int $id, int $mediumId): DataResponse {
+		return $this->handleNotFound(function () use ($id, $mediumId) {
+			return $this->service->find($id, $mediumId);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $medium_id, string $title, string $value): DataResponse {
-		return new DataResponse($this->service->create($medium_id, $title, $value));
+	public function create(int $mediumId, string $type, string $title, string $value): DataResponse {
+		return new DataResponse($this->service->create($mediumId, $type, $title, $value));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, int $medium_id, string $title = null, string $value = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $medium_id, $title, $value) {
-			return $this->service->update($id, $medium_id, $title, $value);
+	public function update(int $id, int $mediumId, string $type = null, string $title = null, string $value = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $mediumId, $type, $title, $value) {
+			return $this->service->update($id, $mediumId, $type, $title, $value);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $id, int $medium_id): DataResponse {
-		return $this->handleNotFound(function () use ($id, $medium_id) {
-			return $this->service->delete($id, $medium_id);
+	public function destroy(int $id, int $mediumId): DataResponse {
+		return $this->handleNotFound(function () use ($id, $mediumId) {
+			return $this->service->delete($id, $mediumId);
 		});
 	}
 }

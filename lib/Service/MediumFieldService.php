@@ -19,8 +19,8 @@ class MediumFieldService {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll($medium_id): array {
-		return $this->mapper->findAll($medium_id);
+	public function findAll(int $mediumId): array {
+		return $this->mapper->findAll($mediumId);
 	}
 
 	private function handleException(Exception $e): void {
@@ -32,9 +32,9 @@ class MediumFieldService {
 		}
 	}
 
-	public function find($id, $medium_id) {
+	public function find(int $id, int $mediumId) {
 		try {
-			return $this->mapper->find($id, $medium_id);
+			return $this->mapper->find($id, $mediumId);
 
 			// in order to be able to plug in different storage backends like files
 		// for instance it is a good idea to turn storage related exceptions
@@ -45,18 +45,22 @@ class MediumFieldService {
 		}
 	}
 
-	public function create($medium_id, $title, $value) {
+	public function create($mediumId, $type, $title, $value) {
 		$field = new MediumField();
-        $field->setMediumId($medium_id);
+        $field->setMediumId($mediumId);
+		$field->setType($type);
 		$field->setTitle($title);
 		$field->setValue($value);
 		return $this->mapper->insert($field);
 	}
 
-	public function update($id, $medium_id, $title, $value) {
+	public function update($id, $mediumId, $type, $title, $value) {
 		try {
-			$field = $this->mapper->find($id, $medium_id);
+			$field = $this->mapper->find($id, $mediumId);
 			
+			if (!is_null($type)) {
+				$field->setType($type);
+			}
 			if (!is_null($title)) {
 				$field->setTitle($title);
 			}
@@ -70,9 +74,9 @@ class MediumFieldService {
 		}
 	}
 
-	public function delete($id, $medium_id) {
+	public function delete($id, $mediumId) {
 		try {
-			$field = $this->mapper->find($id, $medium_id);
+			$field = $this->mapper->find($id, $mediumId);
 			$this->mapper->delete($field);
 			return $field;
 		} catch (Exception $e) {

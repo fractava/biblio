@@ -20,7 +20,7 @@ class MediumFieldMapper extends QBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, string $mediumId): Medium {
+	public function find(int $id, int $mediumId): Medium {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
@@ -34,12 +34,12 @@ class MediumFieldMapper extends QBMapper {
 	 * @param int $mediumId
 	 * @return array
 	 */
-	public function findAll(string $mediumId): array {
+	public function findAll(int $medium_id): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from('biblio_medium_fields')
-			->where($qb->expr()->eq('medium_id', $qb->createNamedParameter($mediumId, IQueryBuilder::PARAM_INT)));
+			->where($qb->expr()->eq('medium_id', $qb->createNamedParameter($medium_id, IQueryBuilder::PARAM_INT)));
 		return $this->findEntities($qb);
 	}
 }

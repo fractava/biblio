@@ -29,7 +29,7 @@ export default {
 
 				const parameters = {
 					title: options.title,
-					fields_order: "[]",
+					fieldsOrder: "[]",
 				}
 				axios.post(generateUrl('/apps/biblio/mediums'), parameters).then(function(response) {
 					context.commit('createMedium', {
@@ -37,16 +37,18 @@ export default {
 						id: response.data.id,
 					})
 					new_medium_id = response.data.id;
+					console.log("new_medium_id = ", new_medium_id);
 
 					for(let field of options.fields) {
 						console.log(field);
 						console.log(
-							new_medium_id,
+							field.type,
 							field.title,
 							field.value,
 						);
 						axios.post(generateUrl('/apps/biblio/medium_fields'), {
-							medium_id: new_medium_id,
+							mediumId: new_medium_id,
+							type: field.type,
 							title: field.title,
 							value: JSON.stringify(field.value),
 						})

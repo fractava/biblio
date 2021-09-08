@@ -44,8 +44,8 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $fields_order): DataResponse {
-		return new DataResponse($this->service->create($title, $fields_order,
+	public function create(string $title, string $fieldsOrder): DataResponse {
+		return new DataResponse($this->service->create($title, $fieldsOrder,
 			$this->userId));
 	}
 
@@ -53,9 +53,9 @@ class MediumController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function update(int $id, string $title = null,
-						   string $fields_order = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $title, $fields_order) {
-			return $this->service->update($id, $title, $fields_order, $this->userId);
+						   string $fieldsOrder = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $title, $fieldsOrder) {
+			return $this->service->update($id, $title, $fieldsOrder, $this->userId);
 		});
 	}
 
