@@ -34,7 +34,7 @@
 		"@nextcloud/router": "^2.0.0",
 		"@nextcloud/vue": "^4.0.2",
 		"babel-loader": "^8.2.2",
-		"css-loader": "^5.2.6",
+		"css-loader": "^6.5.1",
 		"debounce": "^1.2.1",
 		"eslint": "^7.29.0",
 		"eslint-config-standard": "^16.0.3",
