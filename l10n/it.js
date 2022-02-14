@@ -18,7 +18,7 @@ OC.L10N.register(
     "Enter a long text" : "Inserisci un testo lungo",
     "Date" : "Data",
     "Pick a date" : "Scegli una data",
-    "Date and time" : "Data e Ora",
+    "Date and time" : "Data e ora",
     "Pick a date and time" : "Scegli una data e ora"
 },
 "nplurals=2; plural=(n != 1);");
