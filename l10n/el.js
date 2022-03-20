@@ -1,7 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
-    "Biblio" : "Βιβλίο",
+    "Biblio" : "Biblio",
     "A library management system" : "Σύστημα διαχείρισης βιβλιοθηκών",
     "This can be used to manage a book library, Sheet music archive, Textbook library" : "Αυτό μπορεί να χρησιμοποιηθεί για τη διαχείριση μιας βιβλιοθήκης, ενός αρχείου μουσικής, μιας βιβλιοθήκης σχολικών βιβλίων",
     "Could not create the medium" : "Αδυναμία δημιουργίας του μέσου",
