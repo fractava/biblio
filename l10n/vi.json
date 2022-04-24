@@ -1,0 +1,8 @@
+{ "translations": {
+    "Title" : "Tiêu đề",
+    "Save" : "Lưu",
+    "List" : "Danh sách",
+    "Date" : "Date",
+    "Pick a date" : "Chọn ngày"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

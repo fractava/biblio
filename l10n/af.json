@@ -1,0 +1,8 @@
+{ "translations": {
+    "Title" : "Titel",
+    "Value" : "Waarde",
+    "Save" : "Bewaar",
+    "List" : "Lys",
+    "Date" : "Datum"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

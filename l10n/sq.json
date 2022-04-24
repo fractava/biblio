@@ -1,0 +1,8 @@
+{ "translations": {
+    "Title" : "Titulli",
+    "Value" : "Vlerë",
+    "Save" : "Ruaj",
+    "List" : "List",
+    "Date" : "Data"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

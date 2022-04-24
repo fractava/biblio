@@ -1,0 +1,8 @@
+{ "translations": {
+    "Title" : "عنوان",
+    "Value" : "ارزش",
+    "Save" : "ذخیره",
+    "List" : "لیست",
+    "Date" : "تاریخ"
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
+}

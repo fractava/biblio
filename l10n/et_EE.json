@@ -1,0 +1,6 @@
+{ "translations": {
+    "Title" : "Pealkiri",
+    "Save" : "Salvesta",
+    "Date" : "Kuupäev"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

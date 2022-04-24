@@ -1,0 +1,8 @@
+{ "translations": {
+    "Title" : "தலைப்பு",
+    "Value" : "Value",
+    "Save" : "சேமிக்க ",
+    "List" : "List",
+    "Date" : "Date"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

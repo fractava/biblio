@@ -1,0 +1,8 @@
+{ "translations": {
+    "Title" : "სათაური",
+    "Value" : "მნიშვნელობა",
+    "Save" : "შენახვა",
+    "List" : "ჩამონათვალი",
+    "Date" : "თარიღი"
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
+}
