@@ -1,6 +1,6 @@
-import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
-import { showError /*, showSuccess */ } from '@nextcloud/dialogs'
+import axios from "@nextcloud/axios";
+import { generateUrl } from "@nextcloud/router";
+import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 export default {
 	state: () => ({
@@ -8,13 +8,13 @@ export default {
 	}),
 	mutations: {
 		createMedium(state, options) {
-			this.state.mediums.mediums.push(options)
+			this.state.mediums.mediums.push(options);
 		},
 		setMediums(state, mediums) {
-			this.state.mediums.mediums = mediums
+			this.state.mediums.mediums = mediums;
 		},
 		updateMediumTitle(state, options) {
-			this.getters.getMediumById(options.id).title = options.title
+			this.getters.getMediumById(options.id).title = options.title;
 		},
 	},
 	actions: {
@@ -25,73 +25,73 @@ export default {
 				const parameters = {
 					title: options.title,
 					fieldsOrder: "[]",
-				}
-				axios.post(generateUrl('/apps/biblio/mediums'), parameters).then(function(response) {
-					context.commit('createMedium', {
+				};
+				axios.post(generateUrl("/apps/biblio/mediums"), parameters).then(function(response) {
+					context.commit("createMedium", {
 						title: options.title,
 						id: response.data.id,
-					})
+					});
 					new_medium_id = response.data.id;
 					console.log("new_medium_id = ", new_medium_id);
 
-					for(let field of options.fields) {
+					for (const field of options.fields) {
 						console.log(field);
 						console.log(
 							field.type,
 							field.title,
 							field.value,
 						);
-						axios.post(generateUrl('/apps/biblio/medium_fields'), {
+						axios.post(generateUrl("/apps/biblio/medium_fields"), {
 							mediumId: new_medium_id,
 							type: field.type,
 							title: field.title,
 							value: JSON.stringify(field.value),
 						})
-						.then(function(response) {})
-						.catch(function(error) {
-							showError(t('biblio', 'Could not create medium'))
-							reject(error)
-						})
+							.then(function(response) {})
+							.catch(function(error) {
+								showError(t("biblio", "Could not create medium"));
+								reject(error);
+							});
 					}
-	
+
 					resolve(new_medium_id);
 				})
-				.catch(function(error) {
-					showError(t('biblio', 'Could not create medium'))
-					reject(error)
-				})
-			})
+					.catch(function(error) {
+						showError(t("biblio", "Could not create medium"));
+						reject(error);
+					});
+			});
 		},
 		fecthMediums(context) {
 			return new Promise((resolve, reject) => {
-				axios.get(generateUrl('/apps/biblio/mediums')).then(function(response) {
-					const mediums = response.data
+				axios.get(generateUrl("/apps/biblio/mediums")).then(function(response) {
+					const mediums = response.data;
 
 					for (const medium in mediums) {
-						mediums[medium].fieldsOrder = JSON.parse(mediums[medium].fieldsOrder)
+						mediums[medium].fieldsOrder = JSON.parse(mediums[medium].fieldsOrder);
 					}
 
-					context.commit('setMediums', mediums)
-					resolve()
+					context.commit("setMediums", mediums);
+					resolve();
 				})
 					.catch(function(error) {
-						console.error(error)
-						showError(t('biblio', 'Could not fetch mediums'))
-					})
-			})
+						console.error(error);
+						showError(t("biblio", "Could not fetch mediums"));
+					});
+			});
 		},
 		updateMediumTitle(context, options) {
 			return new Promise((resolve, reject) => {
 				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { title: options.title }).then(function(response) {
-					context.commit('updateMediumTitle', options)
+					context.commit("updateMediumTitle", options);
 				})
 					.catch(function(error) {
-						console.error(error)
-						showError(t('biblio', 'Could not update title'))
-					})
+						console.error(error);
+						showError(t("biblio", "Could not update title"));
+					});
 
-				resolve()
-			})
+				resolve();
+			});
 		},
 		updateMediumField(context, options) {
 			return new Promise((resolve, reject) => {
@@ -102,42 +102,42 @@ export default {
 					value: JSON.stringify(options.value),
 				})
 					.catch(function(error) {
-						console.error(error)
-						showError(t('biblio', 'Could not update title'))
+						console.error(error);
+						showError(t("biblio", "Could not update title"));
 						reject(reject);
-					})
+					});
 
-				resolve()
-			})
+				resolve();
+			});
 		},
 		deleteMediumField(context, options) {
 			return axios.delete(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
 				params: {
 					mediumId: options.mediumId,
-				}
-			})
+				},
+			});
 		},
 	},
 	getters: {
 		getMediumById: (state) => (id) => {
-			return state.mediums.find(medium => medium.id == id)
+			return state.mediums.find(medium => medium.id == id);
 		},
 		getMediumFields: (state) => (id) => {
 			return new Promise((resolve, reject) => {
 				axios.get(generateUrl(`/apps/biblio/medium_fields/${id}`))
-				.then(function(response) {
-					const fields = response.data;
+					.then(function(response) {
+						const fields = response.data;
 
-					for(let field of fields) {
-						field.value = JSON.parse(field.value);
-					}
-					resolve(fields);
-				})
-				.catch(function(error) {
-					console.error(error)
-					showError(t('biblio', 'Could not fetch medium fields'))
-				})
-			})
+						for (const field of fields) {
+							field.value = JSON.parse(field.value);
+						}
+						resolve(fields);
+					})
+					.catch(function(error) {
+						console.error(error);
+						showError(t("biblio", "Could not fetch medium fields"));
+					});
+			});
 		},
 	},
-}
+};

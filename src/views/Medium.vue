@@ -56,19 +56,19 @@
 </template>
 
 <script>
-import Draggable from 'vuedraggable'
+import Draggable from "vuedraggable";
 
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
+import Actions from "@nextcloud/vue/dist/Components/Actions";
 
-import FieldTypes from '../models/FieldTypes'
-import Field from '../components/Fields/Field'
-import ListField from '../components/Fields/ListField'
-import ShortTextField from '../components/Fields/ShortTextField'
-import LongTextField from '../components/Fields/LongTextField'
-import DateField from '../components/Fields/DateField'
+import FieldTypes from "../models/FieldTypes";
+import Field from "../components/Fields/Field";
+import ListField from "../components/Fields/ListField";
+import ShortTextField from "../components/Fields/ShortTextField";
+import LongTextField from "../components/Fields/LongTextField";
+import DateField from "../components/Fields/DateField";
 
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
 	components: {
@@ -89,66 +89,66 @@ export default {
 	},
 	data() {
 		return {
-			newTitle: '',
+			newTitle: "",
 			newFields: [
 				{
-					type: 'short',
-					title: 'baum',
-					value: '',
+					type: "short",
+					title: "baum",
+					value: "",
 				},
 				{
-					type: 'long',
-					title: 'long baum',
-					value: '',
+					type: "long",
+					title: "long baum",
+					value: "",
 				},
 				{
-					type: 'multiple',
-					title: 'multiple baum',
+					type: "multiple",
+					title: "multiple baum",
 					value: [
 						{
-							id: 'wblyp',
-							text: 't',
+							id: "wblyp",
+							text: "t",
 						},
 						{
-							id: 'nnwfq',
-							text: 'test',
+							id: "nnwfq",
+							text: "test",
 						},
 						{
-							id: 'bikng',
-							text: 'baum',
+							id: "bikng",
+							text: "baum",
 						},
 					],
 				},
 				{
-					type: 'date',
-					title: 'date baum',
-					value: '',
+					type: "date",
+					title: "date baum",
+					value: "",
 				},
 			],
 			FieldTypes,
 			isDragging: false,
 			addFieldMenuOpened: false,
-			thisTitle: '',
+			thisTitle: "",
 			thisFields: [],
-		}
+		};
 	},
 	watch: {
 		thisTitle(value) {
 			if (!this.createNew) {
-				this.$store.dispatch('updateMediumTitle', { id: this.$route.params.id, title: value })
+				this.$store.dispatch("updateMediumTitle", { id: this.$route.params.id, title: value });
 			}
 		},
 	},
 	mounted() {
 		if (this.createNew) {
-			this.thisTitle = this.newTitle
-			this.thisFields = this.newFields
+			this.thisTitle = this.newTitle;
+			this.thisFields = this.newFields;
 		} else {
-			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
+			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title;
 			this.thisFields = [];
 			this.$store.getters.getMediumFields(this.$route.params.id).then((fields) => {
 				this.thisFields = fields;
-			})
+			});
 		}
 	},
 	computed: {
@@ -158,36 +158,36 @@ export default {
 	},
 	methods: {
 		async saveNew() {
-			this.$store.dispatch('createMedium', { title: this.newTitle, fields: this.newFields })
+			this.$store.dispatch("createMedium", { title: this.newTitle, fields: this.newFields })
 				.then((id) => {
 					this.$router.push({
-						path: '/medium/' + id,
-					})
-				})
+						path: "/medium/" + id,
+					});
+				});
 		},
 		onFieldUpdate(newValue, field) {
 			field.value = newValue;
 			console.log(newValue, field);
-			this.$store.dispatch('updateMediumField', field);
+			this.$store.dispatch("updateMediumField", field);
 		},
 		addField(type, field) {
 			this.thisFields.push({
 				title: field.label,
 				type,
 				value: field.defaultValue,
-			})
+			});
 		},
 		deleteField(field) {
 			console.log(field);
 
 			this.thisFields = this.thisFields.filter(function(value) {
-				return value != field
-			})
+				return value !== field;
+			});
 
 			if (!this.createNew) {
-			    this.$store.dispatch('deleteMediumField', { mediumId: this.$route.params.id, id: field.id })
+			    this.$store.dispatch("deleteMediumField", { mediumId: this.$route.params.id, id: field.id });
 			}
 		},
 	},
-}
+};
 </script>

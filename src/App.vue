@@ -9,17 +9,17 @@
 
 <script>
 // import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import AppContent from '@nextcloud/vue/dist/Components/AppContent'
+import AppContent from "@nextcloud/vue/dist/Components/AppContent";
 
-import '@nextcloud/dialogs/styles/toast.scss'
-import { generateUrl } from '@nextcloud/router'
-import { showError, showSuccess } from '@nextcloud/dialogs'
-import axios from '@nextcloud/axios'
+import "@nextcloud/dialogs/styles/toast.scss";
+import { generateUrl } from "@nextcloud/router";
+import { showError, showSuccess } from "@nextcloud/dialogs";
+import axios from "@nextcloud/axios";
 
-import Sidebar from './components/Sidebar.vue'
+import Sidebar from "./components/Sidebar.vue";
 
 export default {
-	name: 'App',
+	name: "App",
 	components: {
 		// ActionButton,
 		AppContent,
@@ -31,7 +31,7 @@ export default {
 			currentNoteId: null,
 			updating: false,
 			loading: true,
-		}
+		};
 	},
 	computed: {
 		/**
@@ -40,9 +40,9 @@ export default {
 		 */
 		currentNote() {
 			if (this.currentNoteId === null) {
-				return null
+				return null;
 			}
-			return this.notes.find((note) => note.id === this.currentNoteId)
+			return this.notes.find((note) => note.id === this.currentNoteId);
 		},
 
 		/**
@@ -50,11 +50,11 @@ export default {
 		 * @returns {Boolean}
 		 */
 		savePossible() {
-			return this.currentNote && this.currentNote.title !== ''
+			return this.currentNote && this.currentNote.title !== "";
 		},
 	},
 	mounted() {
-		this.$store.dispatch('fecthMediums')
+		this.$store.dispatch("fecthMediums");
 	},
 
 	methods: {
@@ -64,12 +64,12 @@ export default {
 		 */
 		openNote(note) {
 			if (this.updating) {
-				return
+				return;
 			}
-			this.currentNoteId = note.id
+			this.currentNoteId = note.id;
 			this.$nextTick(() => {
-				this.$refs.content.focus()
-			})
+				this.$refs.content.focus();
+			});
 		},
 		/**
 		 * Action tiggered when clicking the save button
@@ -77,9 +77,9 @@ export default {
 		 */
 		saveNote() {
 			if (this.currentNoteId === -1) {
-				this.createNote(this.currentNote)
+				this.createNote(this.currentNote);
 			} else {
-				this.updateNote(this.currentNote)
+				this.updateNote(this.currentNote);
 			}
 		},
 		/**
@@ -89,15 +89,15 @@ export default {
 		 */
 		newNote() {
 			if (this.currentNoteId !== -1) {
-				this.currentNoteId = -1
+				this.currentNoteId = -1;
 				this.notes.push({
 					id: -1,
-					title: '',
-					content: '',
-				})
+					title: "",
+					content: "",
+				});
 				this.$nextTick(() => {
-					this.$refs.title.focus()
-				})
+					this.$refs.title.focus();
+				});
 			}
 		},
 		/**
@@ -105,31 +105,31 @@ export default {
 		 * @param {Object} note Note object
 		 */
 		async createMedium(note) {
-			this.updating = true
+			this.updating = true;
 			try {
-				const response = await axios.post(generateUrl('/apps/biblio/mediums'), note)
-				const index = this.notes.findIndex((match) => match.id === this.currentNoteId)
-				this.$set(this.notes, index, response.data)
-				this.currentNoteId = response.data.id
+				const response = await axios.post(generateUrl("/apps/biblio/mediums"), note);
+				const index = this.notes.findIndex((match) => match.id === this.currentNoteId);
+				this.$set(this.notes, index, response.data);
+				this.currentNoteId = response.data.id;
 			} catch (e) {
-				console.error(e)
-				showError(t('biblio', 'Could not create the medium'))
+				console.error(e);
+				showError(t("biblio", "Could not create the medium"));
 			}
-			this.updating = false
+			this.updating = false;
 		},
 		/**
 		 * Update an existing note on the server
 		 * @param {Object} note Note object
 		 */
 		async updateMedium(note) {
-			this.updating = true
+			this.updating = true;
 			try {
-				await axios.put(generateUrl(`/apps/biblio/mediums${note.id}`), note)
+				await axios.put(generateUrl(`/apps/biblio/mediums${note.id}`), note);
 			} catch (e) {
-				console.error(e)
-				showError(t('biblio', 'Could not update the medium'))
+				console.error(e);
+				showError(t("biblio", "Could not update the medium"));
 			}
-			this.updating = false
+			this.updating = false;
 		},
 		/**
 		 * Delete a note, remove it from the frontend and show a hint
@@ -137,19 +137,19 @@ export default {
 		 */
 		async deleteMedium(note) {
 			try {
-				await axios.delete(generateUrl(`/apps/biblio/mediums/${note.id}`))
-				this.notes.splice(this.notes.indexOf(note), 1)
+				await axios.delete(generateUrl(`/apps/biblio/mediums/${note.id}`));
+				this.notes.splice(this.notes.indexOf(note), 1);
 				if (this.currentNoteId === note.id) {
-					this.currentNoteId = null
+					this.currentNoteId = null;
 				}
-				showSuccess(t('biblio', 'Medium deleted'))
+				showSuccess(t("biblio", "Medium deleted"));
 			} catch (e) {
-				console.error(e)
-				showError(t('biblio', 'Could not delete the medium'))
+				console.error(e);
+				showError(t("biblio", "Could not delete the medium"));
 			}
 		},
 	},
-}
+};
 </script>
 <style scoped>
 	.app-content {

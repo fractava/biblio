@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import Actions from "@nextcloud/vue/dist/Components/Actions";
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
 
 export default {
-	name: 'EntryInput',
+	name: "EntryInput",
 
 	components: {
 		Actions,
@@ -48,14 +48,14 @@ export default {
 		 * Focus the input
 		 */
 		focus() {
-			this.$refs.input.focus()
+			this.$refs.input.focus();
 		},
 
 		/**
 		 * Request a new entry
 		 */
 		addNewEntry() {
-			this.$emit('add')
+			this.$emit("add");
 		},
 
 		/**
@@ -65,17 +65,17 @@ export default {
 		 * @param {Event} e the event
 		 */
 		async deleteEntry(e) {
-			if (e.type !== 'click' && this.$refs.input.value.length !== 0) {
-				return
+			if (e.type !== "click" && this.$refs.input.value.length !== 0) {
+				return;
 			}
 
 			// Dismiss delete key action
-			e.preventDefault()
+			e.preventDefault();
 
-			this.$emit('delete', this.entry.id)
+			this.$emit("delete", this.entry.id);
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>

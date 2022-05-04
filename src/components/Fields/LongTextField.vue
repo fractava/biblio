@@ -45,39 +45,39 @@
 </template>
 
 <script>
-import FieldMixin from '../../mixins/FieldMixin'
+import FieldMixin from "../../mixins/FieldMixin";
 
 export default {
-	name: 'LongTextField',
+	name: "LongTextField",
 
 	mixins: [FieldMixin],
 
 	data() {
 		return {
 			height: 1,
-		}
+		};
 	},
 
 	mounted() {
-		this.autoSizeText()
+		this.autoSizeText();
 	},
 
 	methods: {
 		onInput() {
-			const textarea = this.$refs.textarea
-			this.$emit('update:value', textarea.value)
-			this.autoSizeText()
+			const textarea = this.$refs.textarea;
+			this.$emit("update:value", textarea.value);
+			this.autoSizeText();
 		},
 		autoSizeText() {
-			const textarea = this.$refs.textarea
-			textarea.style.cssText = 'height:auto; padding:0'
-			textarea.style.cssText = `height: ${textarea.scrollHeight + 20}px`
+			const textarea = this.$refs.textarea;
+			textarea.style.cssText = "height:auto; padding:0";
+			textarea.style.cssText = `height: ${textarea.scrollHeight + 20}px`;
 		},
 		onKeydownCtrlEnter(event) {
-			this.$emit('keydown', event)
+			this.$emit("keydown", event);
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>

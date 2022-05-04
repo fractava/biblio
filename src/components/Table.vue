@@ -28,13 +28,13 @@ export default {
 		columns: {
 			type: Array,
 			default() {
-				return []
+				return [];
 			},
 		},
 		items: {
 			type: Array,
 			default() {
-				return [{}]
+				return [{}];
 			},
 		},
 	},
@@ -42,19 +42,19 @@ export default {
 		return {
 			sort: this.columns[0],
 			sortReverse: false,
-		}
+		};
 	},
 	methods: {
 		selectSortingMethod(sortMethod) {
 			if (this.sort === sortMethod) {
-				this.sortReverse = !this.sortReverse
+				this.sortReverse = !this.sortReverse;
 			} else {
-				this.sort = sortMethod
-				this.sortReverse = false
+				this.sort = sortMethod;
+				this.sortReverse = false;
 			}
 		},
 	},
-}
+};
 </script>
 <style lang="scss" scoped>
 .table {

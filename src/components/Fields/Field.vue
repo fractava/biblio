@@ -25,7 +25,6 @@
 		:class="{ 'field--edit': edit }"
 		class="field"
 		@click="enableEdit">
-
 		<!-- Drag handle -->
 		<div v-if="enableDragHandle"
 			class="field__drag-handle icon-drag-handle"
@@ -62,12 +61,12 @@
 </template>
 
 <script>
-import { directive as ClickOutside } from 'v-click-outside'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import { directive as ClickOutside } from "v-click-outside";
+import Actions from "@nextcloud/vue/dist/Components/Actions";
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
 
 export default {
-	name: 'Field',
+	name: "Field",
 
 	directives: {
 		ClickOutside,
@@ -116,17 +115,17 @@ export default {
 		 * @returns {Boolean} true if field valid
 		 */
 		fieldValid() {
-			return this.title && this.contentValid
+			return this.title && this.contentValid;
 		},
 	},
 
 	methods: {
 		onTitleChange({ target }) {
-			this.$emit('update:title', target.value)
+			this.$emit("update:title", target.value);
 		},
 
 		onRequiredChange(isRequired) {
-			this.$emit('update:isRequired', isRequired)
+			this.$emit("update:isRequired", isRequired);
 		},
 
 		/**
@@ -134,7 +133,7 @@ export default {
 		 */
 		enableEdit() {
 			if (!this.allowTitleEdit) {
-				this.$emit('update:edit', true)
+				this.$emit("update:edit", true);
 			}
 		},
 
@@ -143,7 +142,7 @@ export default {
 		 */
 		disableEdit() {
 			if (!this.allowTitleEdit) {
-				this.$emit('update:edit', false)
+				this.$emit("update:edit", false);
 			}
 		},
 
@@ -151,10 +150,10 @@ export default {
 		 * Delete this field
 		 */
 		onDelete() {
-			this.$emit('delete')
+			this.$emit("delete");
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>

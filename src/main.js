@@ -19,21 +19,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import Vue from 'vue'
-import App from './App'
+import Vue from "vue";
+import App from "./App";
 
-import router from './router'
-import store from './store'
+import router from "./router";
+import store from "./store";
 
-import Tooltip from '@nextcloud/vue/dist/Directives/Tooltip'
+import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip";
 
-Vue.directive('tooltip', Tooltip)
+Vue.directive("tooltip", Tooltip);
 
-Vue.mixin({ methods: { t, n } })
+Vue.mixin({ methods: { t, n } });
 
 export default new Vue({
 	router,
 	store,
-	el: '#content',
+	el: "#content",
 	render: h => h(App),
-})
+});
