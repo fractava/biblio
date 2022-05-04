@@ -16,6 +16,9 @@ export default {
 		updateMediumTitle(state, options) {
 			this.getters.getMediumById(options.id).title = options.title;
 		},
+		updateMediumFieldsOrder(state, options) {
+			this.getters.getMediumById(options.id).fieldsOrder = options.fieldsOrder;
+		},
 	},
 	actions: {
 		createMedium(context, options) {
@@ -96,7 +99,9 @@ export default {
 		},
 		updateMediumFieldsOrder(context, options) {
 			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fieldsOrder: options.fieldsOrder })
+				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fieldsOrder: options.fieldsOrder }).then(function(response) {
+					context.commit("updateMediumFieldsOrder", options);
+				})
 					.catch(function(error) {
 						console.error(error);
 						showError(t("biblio", "Could not update fields order"));
