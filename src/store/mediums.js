@@ -18,9 +18,6 @@ export default {
 		updateMediumTitle(state, options) {
 			this.getters.getMediumById(options.id).title = options.title
 		},
-		updateMediumFields(state, options) {
-			this.getters.getMediumById(options.id).fields = options.fields
-		},
 	},
 	actions: {
 		createMedium(context, options) {
@@ -98,14 +95,18 @@ export default {
 				resolve()
 			})
 		},
-		updateMediumFields(context, options) {
+		updateMediumField(context, options) {
 			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fields: JSON.stringify(options.fields) }).then(function(response) {
-					context.commit('updateMediumFields', options)
+				axios.put(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
+					mediumId: options.mediumId,
+					type: options.type,
+					title: options.title,
+					value: JSON.stringify(options.value),
 				})
 					.catch(function(error) {
 						console.error(error)
 						showError(t('biblio', 'Could not update title'))
+						reject(reject);
 					})
 
 				resolve()
@@ -121,6 +122,10 @@ export default {
 				axios.get(generateUrl(`/apps/biblio/medium_fields/${id}`))
 				.then(function(response) {
 					const fields = response.data;
+
+					for(let field of fields) {
+						field.value = JSON.parse(field.value);
+					}
 					resolve(fields);
 				})
 				.catch(function(error) {

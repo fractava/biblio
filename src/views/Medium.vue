@@ -30,7 +30,8 @@
 				:is-required="false"
 				:options="{}"
 				:title.sync="field.title"
-				:value.sync="field.value"
+				:value="field.value"
+				@update:value="(newValue) => onFieldUpdate(newValue, field)"
 				@delete="deleteField(field)" />
 		</Draggable>
 
@@ -140,7 +141,7 @@ export default {
 				this.$store.dispatch('updateMediumTitle', { id: this.$route.params.id, title: value })
 			}
 		},
-		thisFields: {
+		/*thisFields: {
 			handler(value) {
 				if (this.createNew) {
 					this.newFields = value
@@ -149,7 +150,7 @@ export default {
 				}
 			},
 			deep: true,
-		},
+		},*/
 	},
 	mounted() {
 		if (this.createNew) {
@@ -157,7 +158,10 @@ export default {
 			this.thisFields = this.newFields
 		} else {
 			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
-			this.thisFields = this.$store.getters.getMediumFields(this.$route.params.id)
+			this.thisFields = [];
+			this.$store.getters.getMediumFields(this.$route.params.id).then((fields) => {
+				this.thisFields = fields;
+			})
 		}
 	},
 	computed: {
@@ -176,8 +180,11 @@ export default {
 					})
 				})
 		},
-		onFieldUpdate(field, event) {
-			this.$set(field, 'value', event)
+		onFieldUpdate(newValue, field) {
+			//this.$set(field, 'value', event)
+			field.value = newValue;
+			console.log(newValue, field);
+			this.$store.dispatch('updateMediumField', field);
 		},
 		addField(type, field) {
 			this.thisFields.push({
