@@ -10,7 +10,7 @@ use OCP\IDBConnection;
 
 class MediumFieldMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {
-		parent::__construct($db, 'biblio_medium_fields', Medium::class);
+		parent::__construct($db, 'biblio_medium_fields', MediumField::class);
 	}
 
 	/**
@@ -34,12 +34,12 @@ class MediumFieldMapper extends QBMapper {
 	 * @param int $mediumId
 	 * @return array
 	 */
-	public function findAll(int $medium_id): array {
+	public function findAll(int $mediumId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from('biblio_medium_fields')
-			->where($qb->expr()->eq('medium_id', $qb->createNamedParameter($medium_id, IQueryBuilder::PARAM_INT)));
+			->where($qb->expr()->eq('medium_id', $qb->createNamedParameter($mediumId, IQueryBuilder::PARAM_INT)));
 		return $this->findEntities($qb);
 	}
 }
