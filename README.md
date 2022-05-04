@@ -21,6 +21,8 @@ It will automatically spin up and configure a full Nextcloud, MariaDB and PhpMyA
 
 (It is fine to have these static logins, because gitpod has acess control built in and no sensitive data is stored in these dev servers)
 
+If you have made changes that require a database reset like changed migrations, you can reset the complete Nextcloud and MariaDB instance with the reset.sh script in gitpod/ .
+
 ## Try it on your server
 To install it change into your Nextcloud's apps directory:
 

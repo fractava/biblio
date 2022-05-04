@@ -46,13 +46,13 @@
 </template>
 
 <script>
-import moment from '@nextcloud/moment'
+import moment from "@nextcloud/moment";
 
-import FieldMixin from '../../mixins/FieldMixin'
-import DatetimePicker from '@nextcloud/vue/dist/Components/DatetimePicker'
+import FieldMixin from "../../mixins/FieldMixin";
+import DatetimePicker from "@nextcloud/vue/dist/Components/DatetimePicker";
 
 export default {
-	name: 'DateField',
+	name: "DateField",
 
 	components: {
 		DatetimePicker,
@@ -67,13 +67,13 @@ export default {
 				stringify: this.stringify,
 				parse: this.parse,
 			},
-		}
+		};
 	},
 
 	computed: {
 		// Allow picking time or not, depending on variable in fieldType.
 		datetimePickerType() {
-			return this.fieldType.includeTime ? 'datetime' : 'date'
+			return this.fieldType.includeTime ? "datetime" : "date";
 		},
 
 		/**
@@ -81,10 +81,10 @@ export default {
 		 * @returns {String}
 		 */
 		getMomentFormat() {
-			if (this.datetimePickerType === 'datetime') {
-				return 'LLL'
+			if (this.datetimePickerType === "datetime") {
+				return "LLL";
 			}
-			return 'LL'
+			return "LL";
 		},
 
 		/**
@@ -94,7 +94,7 @@ export default {
 		inputAttr() {
 			return {
 				required: this.isRequired,
-			}
+			};
 		},
 	},
 
@@ -106,7 +106,7 @@ export default {
 		 * @returns {String}
 		 */
 		stringify(date) {
-			return moment(date).format(this.getMomentFormat)
+			return moment(date).format(this.getMomentFormat);
 		},
 		/**
 		 * Reinterpret the stringified date
@@ -114,7 +114,7 @@ export default {
 		 * @returns {Date}
 		 */
 		parse(dateString) {
-			return moment(dateString, this.getMomentFormat).toDate()
+			return moment(dateString, this.getMomentFormat).toDate();
 		},
 
 		/**
@@ -122,10 +122,10 @@ export default {
 		 * @param {String} dateString The parsed string to store
 		 */
 		onValueChange(dateString) {
-			this.$emit('update:value', dateString)
+			this.$emit("update:value", dateString);
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>

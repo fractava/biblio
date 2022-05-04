@@ -3,8 +3,7 @@
 		<p>ID: {{ $route.params.id }}</p>
 		<p>createNew: {{ createNew }}</p>
 
-		<Fields
-			:is="FieldTypes['short'].component"
+		<ShortTextField
 			:field-type="FieldTypes['short']"
 			:allow-title-edit="false"
 			:allow-deletion="false"
@@ -20,7 +19,8 @@
 			tag="ul"
 			handle=".field__drag-handle"
 			@start="isDragging = true"
-			@end="isDragging = false">
+			@end="isDragging = false"
+			@change="fieldsOrderChanged">
 			<Fields
 				:is="FieldTypes[field.type].component"
 				v-for="field in thisFields"
@@ -30,7 +30,8 @@
 				:is-required="false"
 				:options="{}"
 				:title.sync="field.title"
-				:value.sync="field.value"
+				:value="field.value"
+				@update:value="(newValue) => onFieldUpdate(newValue, field)"
 				@delete="deleteField(field)" />
 		</Draggable>
 
@@ -56,19 +57,19 @@
 </template>
 
 <script>
-import Draggable from 'vuedraggable'
+import Draggable from "vuedraggable";
 
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import Actions from '@nextcloud/vue/dist/Components/Actions'
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
+import Actions from "@nextcloud/vue/dist/Components/Actions";
 
-import FieldTypes from '../models/FieldTypes'
-import Field from '../components/Fields/Field'
-import ListField from '../components/Fields/ListField'
-import ShortTextField from '../components/Fields/ShortTextField'
-import LongTextField from '../components/Fields/LongTextField'
-import DateField from '../components/Fields/DateField'
+import FieldTypes from "../models/FieldTypes";
+import Field from "../components/Fields/Field";
+import ListField from "../components/Fields/ListField";
+import ShortTextField from "../components/Fields/ShortTextField";
+import LongTextField from "../components/Fields/LongTextField";
+import DateField from "../components/Fields/DateField";
 
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
 	components: {
@@ -89,75 +90,66 @@ export default {
 	},
 	data() {
 		return {
-			newTitle: '',
+			newTitle: "",
 			newFields: [
 				{
-					type: 'short',
-					title: 'baum',
-					value: '',
+					type: "short",
+					title: "baum",
+					value: "",
 				},
 				{
-					type: 'long',
-					title: 'long baum',
-					value: '',
+					type: "long",
+					title: "long baum",
+					value: "",
 				},
 				{
-					type: 'multiple',
-					title: 'multiple baum',
+					type: "multiple",
+					title: "multiple baum",
 					value: [
 						{
-							id: 'wblyp',
-							text: 't',
+							id: "wblyp",
+							text: "t",
 						},
 						{
-							id: 'nnwfq',
-							text: 'test',
+							id: "nnwfq",
+							text: "test",
 						},
 						{
-							id: 'bikng',
-							text: 'baum',
+							id: "bikng",
+							text: "baum",
 						},
 					],
 				},
 				{
-					type: 'date',
-					title: 'date baum',
-					value: '',
+					type: "date",
+					title: "date baum",
+					value: "",
 				},
 			],
 			FieldTypes,
 			isDragging: false,
 			addFieldMenuOpened: false,
-			thisTitle: '',
+			thisTitle: "",
 			thisFields: [],
-		}
+		};
 	},
 	watch: {
 		thisTitle(value) {
-			if (this.createNew) {
-				this.newTitle = value
-			} else {
-				this.$store.dispatch('updateMediumTitle', { id: this.$route.params.id, title: value })
+			if (!this.createNew) {
+				this.$store.dispatch("updateMediumTitle", { id: this.$route.params.id, title: value });
 			}
-		},
-		thisFields: {
-			handler(value) {
-				if (this.createNew) {
-					this.newFields = value
-				} else {
-					this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: value })
-				}
-			},
-			deep: true,
 		},
 	},
 	mounted() {
 		if (this.createNew) {
-			this.thisTitle = this.newTitle
-			this.thisFields = this.newFields
+			this.thisTitle = this.newTitle;
+			this.thisFields = this.newFields;
 		} else {
-			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title
-			this.thisFields = this.$store.getters.getMediumById(this.$route.params.id).fields
+			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title;
+			this.thisFields = [];
+			this.$store.getters.getMediumFields(this.$route.params.id).then((fields) => {
+				this.thisFields = fields;
+			});
 		}
 	},
 	computed: {
@@ -167,36 +159,47 @@ export default {
 	},
 	methods: {
 		async saveNew() {
-			const self = this
-
-			this.$store.dispatch('createMedium', { title: this.newTitle, fields: this.newFields })
-				.then(function(id) {
-					self.$router.push({
-						path: '/medium/' + id,
-					})
-				})
+			this.$store.dispatch("createMedium", { title: this.newTitle, fields: this.newFields })
+				.then((id) => {
+					this.$router.push({
+						path: "/medium/" + id,
+					});
+				});
 		},
-		onFieldUpdate(field, event) {
-			this.$set(field, 'value', event)
+		onFieldUpdate(newValue, field) {
+			field.value = newValue;
+			console.log(newValue, field);
+			this.$store.dispatch("updateMediumField", field);
 		},
 		addField(type, field) {
 			this.thisFields.push({
 				title: field.label,
 				type,
 				value: field.defaultValue,
-			})
+			});
 		},
 		deleteField(field) {
-			console.log(field)
+			console.log(field);
 
 			this.thisFields = this.thisFields.filter(function(value) {
-				return value != field
-			})
+				return value !== field;
+			});
 
 			if (!this.createNew) {
-			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
+			    this.$store.dispatch("deleteMediumField", { mediumId: this.$route.params.id, id: field.id });
 			}
 		},
+		fieldsOrderChanged() {
+			let newOrder = [];
+
+			for (let field of this.thisFields) {
+				newOrder.push(field.id);
+			}
+
+			console.log(newOrder);
+
+			this.$store.dispatch("updateMediumFieldsOrder", { id: this.$route.params.id, fieldsOrder: JSON.stringify(newOrder) });
+		}
 	},
-}
+};
 </script>

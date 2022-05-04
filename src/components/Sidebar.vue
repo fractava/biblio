@@ -7,13 +7,13 @@
 </template>
 <script>
 
-import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
-import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
+import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation";
+import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem";
 
 export default {
 	components: {
 		AppNavigation,
 		AppNavigationItem,
 	},
-}
+};
 </script>

@@ -79,15 +79,15 @@
 </template>
 
 <script>
-import EntryInput from './EntryInput'
-import FieldMixin from '../../mixins/FieldMixin'
-import GenRandomId from '../../utils/GenRandomId'
+import EntryInput from "./EntryInput";
+import FieldMixin from "../../mixins/FieldMixin";
+import GenRandomId from "../../utils/GenRandomId";
 
 // Implementations docs
 // https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/examples/radio/radio.html
 // https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/examples/checkbox/checkbox-2.html
 export default {
-	name: 'ListField',
+	name: "ListField",
 
 	components: {
 		EntryInput,
@@ -97,20 +97,20 @@ export default {
 
 	computed: {
 		isLastEmpty() {
-			const value = this.value[this.value.length - 1]
-			return value?.text?.trim().length === 0
+			const value = this.value[this.value.length - 1];
+			return value?.text?.trim().length === 0;
 		},
 
 		hasNoEntry() {
-			return this.value.length === 0
+			return this.value.length === 0;
 		},
 
 		areNoneChecked() {
-			return this.value.length === 0
+			return this.value.length === 0;
 		},
 
 		shiftDragHandle() {
-			return this.edit && this.value.length !== 0 && !this.isLastEmpty
+			return this.edit && this.value.length !== 0 && !this.isLastEmpty;
 		},
 	},
 
@@ -118,17 +118,17 @@ export default {
 		edit(edit) {
 			// When leaving edit mode, filter and delete empty value
 			if (!edit) {
-				const value = this.value.filter(entry => entry.text)
+				const value = this.value.filter(entry => entry.text);
 
 				// update parent
-				this.updateValue(value)
+				this.updateValue(value);
 			}
 		},
 	},
 
 	methods: {
 		onChange(event, entryId) {
-			this.$emit('update:value', [entryId])
+			this.$emit("update:value", [entryId]);
 		},
 
 		/**
@@ -136,7 +136,7 @@ export default {
 		 * @param {Array} value entries to change
 		 */
 		updateValue(value) {
-			this.$emit('update:value', value)
+			this.$emit("update:value", value);
 		},
 
 		/**
@@ -146,11 +146,11 @@ export default {
 		 * @param {Object} entry to update
 		 */
 		updateEntry(id, entry) {
-			const value = this.value.slice()
-			const entryIndex = value.findIndex(entry => entry.id === id)
-			value[entryIndex] = entry
+			const value = this.value.slice();
+			const entryIndex = value.findIndex(entry => entry.id === id);
+			value[entryIndex] = entry;
 
-			this.updateValue(value)
+			this.updateValue(value);
 		},
 
 		/**
@@ -158,21 +158,21 @@ export default {
 		 */
 		addNewEntry() {
 			// If entering from non-edit-mode (possible by click), activate edit-mode
-			this.edit = true
+			this.edit = true;
 
 			// Add entry
-			const value = this.value.slice()
+			const value = this.value.slice();
 			value.push({
 				id: GenRandomId(),
-				text: '',
-			})
+				text: "",
+			});
 
 			// Update field
-			this.updateValue(value)
+			this.updateValue(value);
 
 			this.$nextTick(() => {
-				this.focusIndex(value.length - 1)
-			})
+				this.focusIndex(value.length - 1);
+			});
 		},
 
 		/**
@@ -181,22 +181,22 @@ export default {
 		 * @param {number} id the entry id
 		 */
 		deleteEntry(id) {
-			const value = this.value.slice()
-			const entryIndex = value.findIndex(entry => entry.id === id)
+			const value = this.value.slice();
+			const entryIndex = value.findIndex(entry => entry.id === id);
 
 			if (value.length === 1) {
 				// Clear Text, but don't remove. Will be removed, when leaving edit-mode
-				value[0].text = ''
+				value[0].text = "";
 			} else {
-				value.splice(entryIndex, 1)
+				value.splice(entryIndex, 1);
 			}
 
 			// Update field
-			this.updateValue(value)
+			this.updateValue(value);
 
 			this.$nextTick(() => {
-				this.focusIndex(entryIndex - 1)
-			})
+				this.focusIndex(entryIndex - 1);
+			});
 		},
 
 		/**
@@ -205,14 +205,14 @@ export default {
 		 * @param {Number} index the value index
 		 */
 		focusIndex(index) {
-			const inputs = this.$refs.input
+			const inputs = this.$refs.input;
 			if (inputs && inputs[index]) {
-				const input = inputs[index]
-				input.focus()
+				const input = inputs[index];
+				input.focus();
 			}
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>

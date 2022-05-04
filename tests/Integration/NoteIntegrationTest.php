@@ -46,7 +46,7 @@ class MediumIntegrationTest extends TestCase {
 		// fromRow does not set the fields as updated
 		$updatedMedium = Medium::fromRow([
 			'id' => $id,
-			'user_id' => $this->userId
+			'userId' => $this->userId
 		]);
 		$updatedMedium->setFields('fields');
 		$updatedMedium->setTitle('title');

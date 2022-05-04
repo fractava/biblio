@@ -18,9 +18,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-import { debounce } from 'debounce'
+import { debounce } from "debounce";
 
-import Field from '../components/Fields/Field'
+import Field from "../components/Fields/Field";
 
 export default {
 	inheritAttrs: false,
@@ -85,7 +85,7 @@ export default {
 		return {
 			// Do we display this Field in edit or fill mode
 			edit: true,
-		}
+		};
 	},
 
 	methods: {
@@ -95,7 +95,7 @@ export default {
 		 * @param {string} text the title
 		 */
 		onTitleChange: debounce(function(text) {
-			this.$emit('update:title', text)
+			this.$emit("update:title", text);
 		}, 200),
 
 		/**
@@ -104,14 +104,14 @@ export default {
 		 * @param {Array} value the array of entries
 		 */
 		onValueChange(value) {
-			this.$emit('update:value', value)
+			this.$emit("update:value", value);
 		},
 
 		/**
 		 * Delete this Field
 		 */
 		onDelete() {
-			this.$emit('delete')
+			this.$emit("delete");
 		},
 
 		/**
@@ -120,21 +120,21 @@ export default {
 		 * @param {Object} event The fired event
 		 */
 		onKeydownEnter(event) {
-			this.$emit('keydown', event)
+			this.$emit("keydown", event);
 		},
 
 		/**
 		 * Focus the first focusable element
 		 */
 		focus() {
-			this.edit = true
-			this.$el.scrollIntoView({ behavior: 'smooth' })
+			this.edit = true;
+			this.$el.scrollIntoView({ behavior: "smooth" });
 			this.$nextTick(() => {
-				const title = this.$el.querySelector('.field__header-title')
+				const title = this.$el.querySelector(".field__header-title");
 				if (title) {
-					title.select()
+					title.select();
 				}
-			})
+			});
 		},
 	},
-}
+};

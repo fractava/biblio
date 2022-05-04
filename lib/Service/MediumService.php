@@ -35,33 +35,28 @@ class MediumService {
 	public function find($id, $userId) {
 		try {
 			return $this->mapper->find($id, $userId);
-
-			// in order to be able to plug in different storage backends like files
-		// for instance it is a good idea to turn storage related exceptions
-		// into service related exceptions so controllers and service users
-		// have to deal with only one type of exception
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function create($title, $fields, $userId) {
+	public function create($title, $fieldsOrder, $userId) {
 		$medium = new Medium();
 		$medium->setTitle($title);
-		$medium->setFields($fields);
+		$medium->setFieldsOrder($fieldsOrder);
 		$medium->setUserId($userId);
 		return $this->mapper->insert($medium);
 	}
 
-	public function update($id, $title, $fields, $userId) {
+	public function update($id, $title, $fieldsOrder, $userId) {
 		try {
 			$medium = $this->mapper->find($id, $userId);
 			
 			if (!is_null($title)) {
 				$medium->setTitle($title);
 			}
-			if (!is_null($fields)) {
-				$medium->setFields($fields);
+			if (!is_null($fieldsOrder)) {
+				$medium->setFieldsOrder($fieldsOrder);
 			}
 
 			return $this->mapper->update($medium);

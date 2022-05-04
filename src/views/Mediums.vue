@@ -7,7 +7,7 @@
 			</a>
 		</router-link>
 		<Table
-			:columns="['title', 'fields']"
+			:columns="['title', 'fieldsOrder']"
 			:items="mediums"
 			@click="openMedium($event)" />
 	</ul>
@@ -15,9 +15,9 @@
 
 <script>
 
-import Table from '../components/Table.vue'
+import Table from "../components/Table.vue";
 
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
 	components: {
@@ -31,10 +31,10 @@ export default {
 	methods: {
 		openMedium(medium) {
 			this.$router.push({
-				path: '/medium/' + medium,
-			})
+				path: "/medium/" + medium,
+			});
 		},
 	},
-}
+};
 
 </script>

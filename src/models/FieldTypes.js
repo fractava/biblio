@@ -20,10 +20,10 @@
  *
  */
 
-import ListField from '../components/Fields/ListField'
-import ShortTextField from '../components/Fields/ShortTextField'
-import LongTextField from '../components/Fields/LongTextField'
-import DateField from '../components/Fields/DateField'
+import ListField from "../components/Fields/ListField";
+import ShortTextField from "../components/Fields/ShortTextField";
+import LongTextField from "../components/Fields/LongTextField";
+import DateField from "../components/Fields/DateField";
 
 /**
  * @typedef {Object} FieldTypes
@@ -47,48 +47,48 @@ export default {
 
 	multiple: {
 		component: ListField,
-		icon: 'icon-list-field',
+		icon: "icon-list-field",
 		// TRANSLATORS Take care, a translation by word might not match! The english called 'Multiple-Choice' only allows to select a single-option (basically single-choice)!
-		label: t('biblio', 'List'),
+		label: t("biblio", "List"),
 		defaultValue: [],
 	},
 
 	short: {
 		component: ShortTextField,
-		icon: 'icon-short-text-field',
-		label: t('biblio', 'Short text'),
+		icon: "icon-short-text-field",
+		label: t("biblio", "Short text"),
 
-		valuePlaceholder: t('biblio', 'Enter a short text'),
-		defaultValue: '',
+		valuePlaceholder: t("biblio", "Enter a short text"),
+		defaultValue: "",
 	},
 
 	long: {
 		component: LongTextField,
-		icon: 'icon-long-text-field',
-		label: t('biblio', 'Long text'),
+		icon: "icon-long-text-field",
+		label: t("biblio", "Long text"),
 
-		valuePlaceholder: t('biblio', 'Enter a long text'),
-		defaultValue: '',
+		valuePlaceholder: t("biblio", "Enter a long text"),
+		defaultValue: "",
 	},
 
 	date: {
 		component: DateField,
-		icon: 'icon-date-field',
-		label: t('biblio', 'Date'),
+		icon: "icon-date-field",
+		label: t("biblio", "Date"),
 
-		valuePlaceholder: t('biblio', 'Pick a date'),
-		defaultValue: '',
+		valuePlaceholder: t("biblio", "Pick a date"),
+		defaultValue: "",
 	},
 
 	datetime: {
 		component: DateField,
-		icon: 'icon-datetime-field',
-		label: t('biblio', 'Date and time'),
+		icon: "icon-datetime-field",
+		label: t("biblio", "Date and time"),
 
-		valuePlaceholder: t('biblio', 'Pick a date and time'),
-		defaultValue: '',
+		valuePlaceholder: t("biblio", "Pick a date and time"),
+		defaultValue: "",
 
 		// Using the same vue-component as date, this specifies that the component renders as datetime.
 		includeTime: true,
 	},
-}
+};

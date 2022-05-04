@@ -3,7 +3,8 @@
 return [
 	'resources' => [
 		'medium' => ['url' => '/mediums'],
-		'medium_api' => ['url' => '/api/0.1/mediums']
+		'medium_api' => ['url' => '/api/0.1/mediums'],
+		'medium_field' => ['url' => '/medium_fields']
 	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],

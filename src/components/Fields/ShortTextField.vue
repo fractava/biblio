@@ -46,20 +46,20 @@
 </template>
 
 <script>
-import FieldMixin from '../../mixins/FieldMixin'
+import FieldMixin from "../../mixins/FieldMixin";
 
 export default {
-	name: 'ShortTextField',
+	name: "ShortTextField",
 
 	mixins: [FieldMixin],
 
 	methods: {
 		onInput() {
-			const input = this.$refs.input
-			this.$emit('update:value', input.value)
+			const input = this.$refs.input;
+			this.$emit("update:value", input.value);
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>
