@@ -88,6 +88,19 @@ export default {
 					.catch(function(error) {
 						console.error(error);
 						showError(t("biblio", "Could not update title"));
+						reject(error);
+					});
+
+				resolve();
+			});
+		},
+		updateMediumFieldsOrder(context, options) {
+			return new Promise((resolve, reject) => {
+				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fieldsOrder: options.fieldsOrder })
+					.catch(function(error) {
+						console.error(error);
+						showError(t("biblio", "Could not update fields order"));
+						reject(error);
 					});
 
 				resolve();
@@ -103,8 +116,8 @@ export default {
 				})
 					.catch(function(error) {
 						console.error(error);
-						showError(t("biblio", "Could not update title"));
-						reject(reject);
+						showError(t("biblio", "Could not update field"));
+						reject(error);
 					});
 
 				resolve();
@@ -136,6 +149,7 @@ export default {
 					.catch(function(error) {
 						console.error(error);
 						showError(t("biblio", "Could not fetch medium fields"));
+						reject(error);
 					});
 			});
 		},

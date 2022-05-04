@@ -19,7 +19,8 @@
 			tag="ul"
 			handle=".field__drag-handle"
 			@start="isDragging = true"
-			@end="isDragging = false">
+			@end="isDragging = false"
+			@change="fieldsOrderChanged">
 			<Fields
 				:is="FieldTypes[field.type].component"
 				v-for="field in thisFields"
@@ -188,6 +189,17 @@ export default {
 			    this.$store.dispatch("deleteMediumField", { mediumId: this.$route.params.id, id: field.id });
 			}
 		},
+		fieldsOrderChanged() {
+			let newOrder = [];
+
+			for (let field of this.thisFields) {
+				newOrder.push(field.id);
+			}
+
+			console.log(newOrder);
+
+			this.$store.dispatch("updateMediumFieldsOrder", { id: this.$route.params.id, fieldsOrder: JSON.stringify(newOrder) });
+		}
 	},
 };
 </script>
