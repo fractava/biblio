@@ -3,8 +3,7 @@
 		<p>ID: {{ $route.params.id }}</p>
 		<p>createNew: {{ createNew }}</p>
 
-		<Fields
-			:is="FieldTypes['short'].component"
+		<ShortTextField
 			:field-type="FieldTypes['short']"
 			:allow-title-edit="false"
 			:allow-deletion="false"
@@ -135,22 +134,10 @@ export default {
 	},
 	watch: {
 		thisTitle(value) {
-			if (this.createNew) {
-				this.newTitle = value
-			} else {
+			if (!this.createNew) {
 				this.$store.dispatch('updateMediumTitle', { id: this.$route.params.id, title: value })
 			}
 		},
-		/*thisFields: {
-			handler(value) {
-				if (this.createNew) {
-					this.newFields = value
-				} else {
-					this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: value })
-				}
-			},
-			deep: true,
-		},*/
 	},
 	mounted() {
 		if (this.createNew) {
@@ -171,17 +158,14 @@ export default {
 	},
 	methods: {
 		async saveNew() {
-			const self = this
-
 			this.$store.dispatch('createMedium', { title: this.newTitle, fields: this.newFields })
-				.then(function(id) {
-					self.$router.push({
+				.then((id) => {
+					this.$router.push({
 						path: '/medium/' + id,
 					})
 				})
 		},
 		onFieldUpdate(newValue, field) {
-			//this.$set(field, 'value', event)
 			field.value = newValue;
 			console.log(newValue, field);
 			this.$store.dispatch('updateMediumField', field);
@@ -194,14 +178,14 @@ export default {
 			})
 		},
 		deleteField(field) {
-			console.log(field)
+			console.log(field);
 
 			this.thisFields = this.thisFields.filter(function(value) {
 				return value != field
 			})
 
 			if (!this.createNew) {
-			    this.$store.dispatch('updateMediumFields', { id: this.$route.params.id, fields: this.thisFields })
+			    this.$store.dispatch('deleteMediumField', { mediumId: this.$route.params.id, id: field.id })
 			}
 		},
 	},

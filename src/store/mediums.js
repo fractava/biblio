@@ -8,8 +8,6 @@ export default {
 	}),
 	mutations: {
 		createMedium(state, options) {
-			// options.fields = JSON.parse(options.fields);
-
 			this.state.mediums.mediums.push(options)
 		},
 		setMediums(state, mediums) {
@@ -110,6 +108,13 @@ export default {
 					})
 
 				resolve()
+			})
+		},
+		deleteMediumField(context, options) {
+			return axios.delete(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
+				params: {
+					mediumId: options.mediumId,
+				}
 			})
 		},
 	},
