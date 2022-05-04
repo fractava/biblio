@@ -16,11 +16,11 @@ class MediumFieldMapper extends QBMapper {
 	/**
 	 * @param int $id
 	 * @param int $mediumId
-	 * @return Entity|Medium
+	 * @return Entity|MediumField
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, int $mediumId): Medium {
+	public function find(int $id, int $mediumId): MediumField {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
