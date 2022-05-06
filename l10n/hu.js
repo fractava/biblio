@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Válasszon dátumot és időt",
     "Could not create medium" : "A médium nem hozható létre",
     "Could not fetch mediums" : "A médiumok nem kérhetők le",
-    "Could not update title" : "A cím nem frissíthető"
+    "Could not update title" : "A cím nem frissíthető",
+    "Could not update fields order" : "Nem sikerült frissíteni a mezők sorrendjét.",
+    "Could not update field" : "Nem sikerült frissíteni a mezőt",
+    "Could not fetch medium fields" : "Nem sikerült lekérni a médium mezőket"
 },
 "nplurals=2; plural=(n != 1);");

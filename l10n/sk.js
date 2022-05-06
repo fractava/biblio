@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Vyberte dátum a čas",
     "Could not create medium" : "Nepodarilo sa vytvoriť médium",
     "Could not fetch mediums" : "Nepodarilo sa získať médiá",
-    "Could not update title" : "Nadpis sa nepodarilo aktualizovať"
+    "Could not update title" : "Nadpis sa nepodarilo aktualizovať",
+    "Could not update fields order" : "Poradie položiek sa nepodarilo aktualizovať",
+    "Could not update field" : "Nepodarilo sa aktualizovať položku",
+    "Could not fetch medium fields" : "Nepodarilo sa získať položky médií"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

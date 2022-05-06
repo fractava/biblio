@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "挑選日期與時間",
     "Could not create medium" : "無法建立媒介",
     "Could not fetch mediums" : "無法擷取媒體",
-    "Could not update title" : "無法更新標題"
+    "Could not update title" : "無法更新標題",
+    "Could not update fields order" : "無法更新欄位順序",
+    "Could not update field" : "無法更新欄位",
+    "Could not fetch medium fields" : "無法擷取媒體欄位"
 },
 "nplurals=1; plural=0;");

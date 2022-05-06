@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Bir tarih ve saat seçin",
     "Could not create medium" : "Ortam eklenemedi",
     "Could not fetch mediums" : "Ortamlar alınamadı",
-    "Could not update title" : "Başlık güncellenemedi"
+    "Could not update title" : "Başlık güncellenemedi",
+    "Could not update fields order" : "Alan sıralaması güncellenemedi",
+    "Could not update field" : "Alan güncellenemedi",
+    "Could not fetch medium fields" : "Ortam alanları alınamadı"
 },
 "nplurals=2; plural=(n > 1);");
