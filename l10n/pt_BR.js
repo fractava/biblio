@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Selecione um data e hora",
     "Could not create medium" : "Não pode criar um meio",
     "Could not fetch mediums" : "Não foi possível buscar mídias",
-    "Could not update title" : "Não foi possível atualizar o título"
+    "Could not update title" : "Não foi possível atualizar o título",
+    "Could not update fields order" : "Não foi possível atualizar a ordem dos campos",
+    "Could not update field" : "Não foi possível atualizar o campo",
+    "Could not fetch medium fields" : "Não foi possível buscar campos médios"
 },
 "nplurals=2; plural=(n > 1);");
