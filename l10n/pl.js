@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Wybierz datę i godzinę",
     "Could not create medium" : "Nie udało się utworzyć medium",
     "Could not fetch mediums" : "Nie udało się pobrać mediów",
-    "Could not update title" : "Nie udało się zaktualizować tytułu"
+    "Could not update title" : "Nie udało się zaktualizować tytułu",
+    "Could not update fields order" : "Nie można zaktualizować kolejności pól",
+    "Could not update field" : "Nie można zaktualizować pola",
+    "Could not fetch medium fields" : "Nie udało się pobrać pól medium"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");
