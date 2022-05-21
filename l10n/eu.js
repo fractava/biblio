@@ -32,6 +32,7 @@ OC.L10N.register(
     "Pick a date and time" : "Aukeratu data eta ordua",
     "Could not create medium" : "Ezin izan da euskarria sortu",
     "Could not fetch mediums" : "Ezin izan dira medioak atzitu",
-    "Could not update title" : "Ezin izan da izenburua eguneratu"
+    "Could not update title" : "Ezin izan da izenburua eguneratu",
+    "Could not update field" : "Ezin da eremua eguneratu"
 },
 "nplurals=2; plural=(n != 1);");
