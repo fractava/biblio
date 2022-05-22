@@ -33,6 +33,8 @@ OC.L10N.register(
     "Could not create medium" : "Ezin izan da euskarria sortu",
     "Could not fetch mediums" : "Ezin izan dira medioak atzitu",
     "Could not update title" : "Ezin izan da izenburua eguneratu",
-    "Could not update field" : "Ezin da eremua eguneratu"
+    "Could not update fields order" : "Ezin izan da eremuen ordena eguneratu",
+    "Could not update field" : "Ezin da eremua eguneratu",
+    "Could not fetch medium fields" : "Ezin izan dira eremu ertainak eskuratu"
 },
 "nplurals=2; plural=(n != 1);");
