@@ -34,4 +34,4 @@ OC.L10N.register(
     "Could not fetch mediums" : "Impossible de récupérer les médias",
     "Could not update title" : "Impossible de mettre à jour le titre"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

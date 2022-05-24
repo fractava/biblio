@@ -37,4 +37,4 @@ OC.L10N.register(
     "Could not update field" : "Não foi possível atualizar o campo",
     "Could not fetch medium fields" : "Não foi possível buscar campos médios"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

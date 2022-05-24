@@ -31,5 +31,5 @@
     "Could not create medium" : "Impossibile creare supporti",
     "Could not fetch mediums" : "Impossibile recuperare i supporti",
     "Could not update title" : "Impossibile aggiornare il titolo"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
+},"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
