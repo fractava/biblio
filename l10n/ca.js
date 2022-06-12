@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Trieu una data i una hora",
     "Could not create medium" : "No s'ha pogut crear el suport",
     "Could not fetch mediums" : "No s' han pogut recuperar els suports",
-    "Could not update title" : "No s'ha pogut actualitzar el títol"
+    "Could not update title" : "No s'ha pogut actualitzar el títol",
+    "Could not update fields order" : "No s'ha pogut actualitzar l'ordre dels camps",
+    "Could not update field" : "No s'ha pogut actualitzar el camp",
+    "Could not fetch medium fields" : "No s'han pogut obtenir els camps mitjans"
 },
 "nplurals=2; plural=(n != 1);");
