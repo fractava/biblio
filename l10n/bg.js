@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Избор на дата и час",
     "Could not create medium" : "Не можа да се създаде носител",
     "Could not fetch mediums" : "Не можаха да се извлекът носители",
-    "Could not update title" : "Заглавието не можа да се актуализира "
+    "Could not update title" : "Заглавието не можа да се актуализира ",
+    "Could not update fields order" : "Редът на полетата не можа да се актуализира",
+    "Could not update field" : "Полето не можа да се актуализира",
+    "Could not fetch medium fields" : "Не можаха да се извлекът средни полета"
 },
 "nplurals=2; plural=(n != 1);");
