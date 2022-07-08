@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Выбрать дату и время",
     "Could not create medium" : "Не удалось создать носитель",
     "Could not fetch mediums" : "Не удалось получить носители",
-    "Could not update title" : "Не удалось обновить название"
+    "Could not update title" : "Не удалось обновить название",
+    "Could not update fields order" : "Не удалось обновить расположение полей",
+    "Could not update field" : "Не удалось обновить поле",
+    "Could not fetch medium fields" : "Не удалось получить носитель"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
