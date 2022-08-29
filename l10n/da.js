@@ -32,6 +32,9 @@ OC.L10N.register(
     "Pick a date and time" : "Vælg en dato og et tidspunkt",
     "Could not create medium" : "Mediet kunne ikke oprettes",
     "Could not fetch mediums" : "Kunne ikke hente medier",
-    "Could not update title" : "Kunne ikke opdatere titlen"
+    "Could not update title" : "Kunne ikke opdatere titlen",
+    "Could not update fields order" : "Kunne ikke opdatere feltrækkefølgen",
+    "Could not update field" : "Feltet kunne ikke opdateres",
+    "Could not fetch medium fields" : "Kunne ikke hente medie felter"
 },
 "nplurals=2; plural=(n != 1);");
