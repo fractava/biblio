@@ -2,6 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Назва",
+    "Value" : "Значення",
     "Save" : "Зберегти",
     "List" : "Список",
     "Date" : "Дата",
