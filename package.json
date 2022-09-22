@@ -46,7 +46,7 @@
 		"node-polyfill-webpack-plugin": "^1.1.3",
 		"p-debounce": "^4.0.0",
 		"p-queue": "^7.1.0",
-		"sass": "^1.35.1",
+		"sass": "^1.55.0",
 		"sass-loader": "^12.1.0",
 		"stylelint": "^13.13.1",
 		"stylelint-config-recommended-scss": "^4.2.0",
