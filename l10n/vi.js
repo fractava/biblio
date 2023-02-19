@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Delete entry" : "Xoá mục",
     "Title" : "Tiêu đề",
+    "Value" : "Giá trị",
     "Save" : "Lưu",
     "List" : "Danh sách",
     "Date" : "Date",
