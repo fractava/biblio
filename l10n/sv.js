@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Delete entry" : "Radera inlägg",
     "Title" : "Titel",
     "Value" : "Värde",
     "Save" : "Spara",
