@@ -47,11 +47,11 @@
 					v-tooltip.auto="t('biblio', 'A title is required!')"
 					class="field__header-warning icon-error-color"
 					tabindex="0" />
-				<Actions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
-					<ActionButton icon="icon-delete" @click="onDelete">
+				<NcActions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
+					<NcActionButton icon="icon-delete" @click="onDelete">
 						{{ t('forms', 'Delete Field') }}
-					</ActionButton>
-				</Actions>
+					</NcActionButton>
+				</NcActions>
 			</div>
 
 			<!-- Field content -->
@@ -62,8 +62,8 @@
 
 <script>
 import { directive as ClickOutside } from "v-click-outside";
-import Actions from "@nextcloud/vue/dist/Components/Actions";
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
+import NcActions from "@nextcloud/vue/dist/Components/NcActions";
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
 
 export default {
 	name: "Field",
@@ -73,8 +73,8 @@ export default {
 	},
 
 	components: {
-		Actions,
-		ActionButton,
+		NcActions,
+		NcActionButton,
 	},
 
 	props: {
@@ -112,7 +112,8 @@ export default {
 
 		/**
 		 * Field valid, if title not empty and content valid
-		 * @returns {Boolean} true if field valid
+		 *
+		 * @return {boolean} true if field valid
 		 */
 		fieldValid() {
 			return this.title && this.contentValid;

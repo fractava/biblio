@@ -21,8 +21,7 @@
   -->
 
 <template>
-	<Field
-		v-bind.sync="$attrs"
+	<Field v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
 		:allow-title-edit="allowTitleEdit"

@@ -3,8 +3,7 @@
 		<p>ID: {{ $route.params.id }}</p>
 		<p>createNew: {{ createNew }}</p>
 
-		<ShortTextField
-			:field-type="FieldTypes['short']"
+		<ShortTextField :field-type="FieldTypes['short']"
 			:allow-title-edit="false"
 			:allow-deletion="false"
 			:enable-drag-handle="false"
@@ -13,16 +12,14 @@
 			:title="t('biblio', 'Title')"
 			:value.sync="thisTitle" />
 
-		<Draggable
-			v-model="thisFields"
+		<Draggable v-model="thisFields"
 			:animation="200"
 			tag="ul"
 			handle=".field__drag-handle"
 			@start="isDragging = true"
 			@end="isDragging = false"
 			@change="fieldsOrderChanged">
-			<Fields
-				:is="FieldTypes[field.type].component"
+			<Fields :is="FieldTypes[field.type].component"
 				v-for="field in thisFields"
 				:key="field.title + '-field'"
 				ref="fields"
@@ -35,19 +32,19 @@
 				@delete="deleteField(field)" />
 		</Draggable>
 
-		<Actions ref="addFieldMenu"
+		<NcActions ref="addFieldMenu"
 			:open.sync="addFieldMenuOpened"
 			:menu-title="t('biblio', 'Add a field')"
 			:primary="true"
 			default-icon="icon-add">
-			<ActionButton v-for="(field, type) in FieldTypes"
+			<NcActionButton v-for="(field, type) in FieldTypes"
 				:key="field.label"
 				:close-after-click="true"
 				:icon="field.icon"
 				@click="addField(type, field)">
 				{{ field.label }}
-			</ActionButton>
-		</Actions>
+			</NcActionButton>
+		</NcActions>
 
 		<a v-if="createNew" class="button" @click="saveNew()">
 			<span class="icon icon-add" />
@@ -59,8 +56,8 @@
 <script>
 import Draggable from "vuedraggable";
 
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
-import Actions from "@nextcloud/vue/dist/Components/Actions";
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
+import NcActions from "@nextcloud/vue/dist/Components/NcActions";
 
 import FieldTypes from "../models/FieldTypes";
 import Field from "../components/Fields/Field";
@@ -79,8 +76,8 @@ export default {
 		ShortTextField,
 		LongTextField,
 		DateField,
-		ActionButton,
-		Actions,
+		NcActionButton,
+		NcActions,
 	},
 	props: {
 		createNew: {
@@ -190,16 +187,16 @@ export default {
 			}
 		},
 		fieldsOrderChanged() {
-			let newOrder = [];
+			const newOrder = [];
 
-			for (let field of this.thisFields) {
+			for (const field of this.thisFields) {
 				newOrder.push(field.id);
 			}
 
 			console.log(newOrder);
 
 			this.$store.dispatch("updateMediumFieldsOrder", { id: this.$route.params.id, fieldsOrder: JSON.stringify(newOrder) });
-		}
+		},
 	},
 };
 </script>

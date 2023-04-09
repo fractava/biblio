@@ -1,17 +1,16 @@
 <template>
 	<div id="content" class="app-biblio">
 		<Sidebar />
-		<AppContent>
+		<NcAppContent>
 			<router-view />
-		</AppContent>
+		</NcAppContent>
 	</div>
 </template>
 
 <script>
-// import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import AppContent from "@nextcloud/vue/dist/Components/AppContent";
+import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent";
 
-import "@nextcloud/dialogs/styles/toast.scss";
+import "@nextcloud/dialogs/dist/index.css";
 import { generateUrl } from "@nextcloud/router";
 import { showError, showSuccess } from "@nextcloud/dialogs";
 import axios from "@nextcloud/axios";
@@ -22,7 +21,7 @@ export default {
 	name: "App",
 	components: {
 		// ActionButton,
-		AppContent,
+		NcAppContent,
 		Sidebar,
 	},
 	data() {
@@ -36,7 +35,8 @@ export default {
 	computed: {
 		/**
 		 * Return the currently selected note object
-		 * @returns {Object|null}
+		 *
+		 * @return {object | null}
 		 */
 		currentNote() {
 			if (this.currentNoteId === null) {
@@ -47,7 +47,8 @@ export default {
 
 		/**
 		 * Returns true if a note is selected and its title is not empty
-		 * @returns {Boolean}
+		 *
+		 * @return {boolean}
 		 */
 		savePossible() {
 			return this.currentNote && this.currentNote.title !== "";
@@ -60,7 +61,8 @@ export default {
 	methods: {
 		/**
 		 * Create a new note and focus the note content field automatically
-		 * @param {Object} note Note object
+		 *
+		 * @param {object} note Note object
 		 */
 		openNote(note) {
 			if (this.updating) {
@@ -102,7 +104,8 @@ export default {
 		},
 		/**
 		 * Create a new note by sending the information to the server
-		 * @param {Object} note Note object
+		 *
+		 * @param {object} note Note object
 		 */
 		async createMedium(note) {
 			this.updating = true;
@@ -119,7 +122,8 @@ export default {
 		},
 		/**
 		 * Update an existing note on the server
-		 * @param {Object} note Note object
+		 *
+		 * @param {object} note Note object
 		 */
 		async updateMedium(note) {
 			this.updating = true;
@@ -133,7 +137,8 @@ export default {
 		},
 		/**
 		 * Delete a note, remove it from the frontend and show a hint
-		 * @param {Object} note Note object
+		 *
+		 * @param {object} note Note object
 		 */
 		async deleteMedium(note) {
 			try {

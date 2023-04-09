@@ -21,8 +21,7 @@
   -->
 
 <template>
-	<Field
-		v-bind.sync="$attrs"
+	<Field v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
 		:allow-title-edit="allowTitleEdit"
@@ -31,8 +30,7 @@
 		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="field__content">
-			<DatetimePicker
-				:value="value"
+			<DatetimePicker :value="value"
 				value-type="format"
 				:disabled="!allowValueEdit"
 				:formatter="formatter"
@@ -49,13 +47,13 @@
 import moment from "@nextcloud/moment";
 
 import FieldMixin from "../../mixins/FieldMixin";
-import DatetimePicker from "@nextcloud/vue/dist/Components/DatetimePicker";
+import NcDatetimePicker from "@nextcloud/vue/dist/Components/NcDatetimePicker";
 
 export default {
 	name: "DateField",
 
 	components: {
-		DatetimePicker,
+		NcDatetimePicker,
 	},
 
 	mixins: [FieldMixin],
@@ -78,7 +76,8 @@ export default {
 
 		/**
 		 * Calculating the format, that moment should use. With or without time.
-		 * @returns {String}
+		 *
+		 * @return {string}
 		 */
 		getMomentFormat() {
 			if (this.datetimePickerType === "datetime") {
@@ -89,7 +88,8 @@ export default {
 
 		/**
 		 * All non-exposed props onto datepicker input-element.
-		 * @returns {Object}
+		 *
+		 * @return {object}
 		 */
 		inputAttr() {
 			return {
@@ -102,16 +102,18 @@ export default {
 		/**
 		 * DateTimepicker show date-text
 		 * Format depends on component-type date/datetime
+		 *
 		 * @param {Date} date the selected datepicker Date
-		 * @returns {String}
+		 * @return {string}
 		 */
 		stringify(date) {
 			return moment(date).format(this.getMomentFormat);
 		},
 		/**
 		 * Reinterpret the stringified date
-		 * @param {String} dateString Stringified date
-		 * @returns {Date}
+		 *
+		 * @param {string} dateString Stringified date
+		 * @return {Date}
 		 */
 		parse(dateString) {
 			return moment(dateString, this.getMomentFormat).toDate();
@@ -119,7 +121,8 @@ export default {
 
 		/**
 		 * Store Value
-		 * @param {String} dateString The parsed string to store
+		 *
+		 * @param {string} dateString The parsed string to store
 		 */
 		onValueChange(dateString) {
 			this.$emit("update:value", dateString);

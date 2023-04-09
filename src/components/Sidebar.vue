@@ -1,19 +1,19 @@
 <template>
-	<AppNavigation>
-		<AppNavigationItem :title="t('biblio', 'Lend/Return')" to="/lend-return" icon="icon-medium" />
-		<AppNavigationItem :title="t('biblio', 'Mediums')" to="/mediums" icon="icon-category-enabled" />
-		<AppNavigationItem :title="t('biblio', 'Customers')" to="/customers" icon="icon-category-enabled" />
-	</AppNavigation>
+	<NcAppNavigation>
+		<NcAppNavigationItem :title="t('biblio', 'Lend/Return')" to="/lend-return" icon="icon-medium" />
+		<NcAppNavigationItem :title="t('biblio', 'Mediums')" to="/mediums" icon="icon-category-enabled" />
+		<NcAppNavigationItem :title="t('biblio', 'Customers')" to="/customers" icon="icon-category-enabled" />
+	</NcAppNavigation>
 </template>
 <script>
 
-import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation";
-import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem";
+import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation'
+import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem'
 
 export default {
 	components: {
-		AppNavigation,
-		AppNavigationItem,
+		NcAppNavigation,
+		NcAppNavigationItem,
 	},
 };
 </script>

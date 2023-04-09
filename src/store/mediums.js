@@ -149,7 +149,7 @@ export default {
 						for (const field of fields) {
 							field.value = JSON.parse(field.value);
 						}
-						
+
 						const fieldsOrder = state.mediums.find(medium => medium.id == id).fieldsOrder;
 
 						fields.sort(function(a, b) {

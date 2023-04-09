@@ -21,8 +21,7 @@
   -->
 
 <template>
-	<Field
-		v-bind.sync="$attrs"
+	<Field v-bind.sync="$attrs"
 		:title="title"
 		:edit.sync="edit"
 		:allow-title-edit="allowTitleEdit"
@@ -65,8 +64,7 @@
 
 			<li v-if="((edit && !isLastEmpty) || hasNoEntry) && allowValueEdit" class="field__item">
 				<div class="field__item__pseudoInput" />
-				<input
-					:aria-label="t('biblio', 'Add a new entry')"
+				<input :aria-label="t('biblio', 'Add a new entry')"
 					:placeholder="t('biblio', 'Add a new entry')"
 					class="field__input"
 					minlength="1"
@@ -133,6 +131,7 @@ export default {
 
 		/**
 		 * Update the value
+		 *
 		 * @param {Array} value entries to change
 		 */
 		updateValue(value) {
@@ -143,7 +142,7 @@ export default {
 		 * Update an existing entry
 		 *
 		 * @param {string|number} id the entry id
-		 * @param {Object} entry to update
+		 * @param {object} entry to update
 		 */
 		updateEntry(id, entry) {
 			const value = this.value.slice();
@@ -202,7 +201,7 @@ export default {
 		/**
 		 * Focus the input matching the index
 		 *
-		 * @param {Number} index the value index
+		 * @param {number} index the value index
 		 */
 		focusIndex(index) {
 			const inputs = this.$refs.input;

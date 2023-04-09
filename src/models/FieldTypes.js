@@ -26,7 +26,7 @@ import LongTextField from "../components/Fields/LongTextField";
 import DateField from "../components/Fields/DateField";
 
 /**
- * @typedef {Object} FieldTypes
+ * @typedef {object} FieldTypes
  * @property {string} multiple
  * @property {string} short
  * @property {string} long
@@ -37,12 +37,13 @@ export default {
 	/**
 	 * Specifying Field-Models in a common place
 	 * Further type-specific parameters are possible.
-	 * @prop component The vue-component this field-type relies on
-	 * @prop icon The icon corresponding to this field-type
-	 * @prop label The field-type label, that users will see as field-type.
-	 * @prop validate *optional* Define conditions where this field is not ok
 	 *
-	 * @prop valuePlaceholder *optional* The placeholder for value input fields
+	 * @property component The vue-component this field-type relies on
+	 * @property icon The icon corresponding to this field-type
+	 * @property label The field-type label, that users will see as field-type.
+	 * @property validate *optional* Define conditions where this field is not ok
+	 *
+	 * @property valuePlaceholder *optional* The placeholder for value input fields
 	 */
 
 	multiple: {

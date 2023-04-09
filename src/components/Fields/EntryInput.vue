@@ -1,8 +1,7 @@
 <template>
 	<li class="field__item">
 		<div class="field__item__pseudoInput" />
-		<input
-			ref="input"
+		<input ref="input"
 			v-model="entry.text"
 			class="field__input"
 			minlength="1"
@@ -12,24 +11,24 @@
 			@keydown.enter.prevent="addNewEntry">
 
 		<!-- Delete entry -->
-		<Actions v-if="allowValueEdit">
-			<ActionButton icon="icon-close" @click="deleteEntry">
+		<NcActions v-if="allowValueEdit">
+			<NcActionButton icon="icon-close" @click="deleteEntry">
 				{{ t('biblio', 'Delete entry') }}
-			</ActionButton>
-		</Actions>
+			</NcActionButton>
+		</NcActions>
 	</li>
 </template>
 
 <script>
-import Actions from "@nextcloud/vue/dist/Components/Actions";
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton";
+import NcActions from "@nextcloud/vue/dist/Components/NcActions";
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
 
 export default {
 	name: "EntryInput",
 
 	components: {
-		Actions,
-		ActionButton,
+		NcActions,
+		NcActionButton,
 	},
 
 	props: {
