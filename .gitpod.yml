@@ -17,8 +17,8 @@ tasks:
       git config core.fileMode false
       # Both gitpod and Nextcloud need read/write acess
       # Obviously not recommended for a production system
-      chown -R www-data:www-data .
-      chmod -R 777 .
+      sudo chown -R www-data:www-data ${GITPOD_REPO_ROOT}
+      sudo chmod -R 777 ${GITPOD_REPO_ROOT}
       cd gitpod
       docker-compose up
 
