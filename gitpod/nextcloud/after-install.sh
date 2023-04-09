@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 run_as() {
     if [ "$(id -u)" = 0 ]; then
@@ -7,6 +7,22 @@ run_as() {
         sh -c "$1"
     fi
 }
+
+is_installed() {
+    echo "$(run_as 'php /var/www/html/occ status --output=json' | jq '.installed')"
+}
+
+wait_until_finished() {
+    until [[ $(is_installed) == "true" ]]; do
+        echo "waiting for nextcloud to initialize, so biblio can be activated"
+        run_as "php /var/www/html/occ status --output=json"
+        sleep 5
+    done
+}
+
+echo "$(is_installed)"
+
+wait_until_finished
 
 run_as "php /var/www/html/occ config:system:set debug --value='true' --type=boolean"
 
