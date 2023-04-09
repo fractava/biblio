@@ -22,11 +22,8 @@ tasks:
       cd gitpod
       docker-compose up
 
-  - name: Dependency install
+  - name: Dependency install & Frontend watch
     init: make dev-setup
-    command: exit
-
-  - name: Frontend
     command: make watch-js
 
   - name: Terminal
