@@ -15,6 +15,9 @@ tasks:
       docker-compose up --no-start
     command: |
       git config core.fileMode false
+      # Both gitpod and Nextcloud need read/write acess
+      # Obviously not recommended for a production system
+      chown -R www-data:www-data .
       chmod -R 777 .
       cd gitpod
       docker-compose up
