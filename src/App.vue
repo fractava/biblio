@@ -2,7 +2,9 @@
 	<div id="content" class="app-biblio">
 		<Sidebar />
 		<NcAppContent>
-			<router-view />
+			<div id="biblio-main-content">
+				<router-view />
+			</div>
 		</NcAppContent>
 	</div>
 </template>
@@ -157,9 +159,9 @@ export default {
 };
 </script>
 <style scoped>
-	.app-content {
-		margin-left: 4% !important;
-		margin-right: 4% !important;
-		margin-top: 7px !important;
+	#biblio-main-content {
+		padding-left: 4% !important;
+		padding-right: 4% !important;
+		padding-top: 7px !important;
 	}
 </style>

@@ -30,7 +30,7 @@
 		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="field__content">
-			<DatetimePicker :value="value"
+			<NcDatetimePicker :value="value"
 				value-type="format"
 				:disabled="!allowValueEdit"
 				:formatter="formatter"
