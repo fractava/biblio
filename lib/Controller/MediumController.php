@@ -6,6 +6,7 @@ use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\MediumService;
 use OCA\Biblio\Helper\ApiObjects\MediumObjectHelper;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
@@ -35,7 +36,7 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function index(?string $include): DataResponse {
+	public function index(?string $include): JSONResponse {
 		$entities = $this->service->findAll($this->userId);
 		$result = [];
 

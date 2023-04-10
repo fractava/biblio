@@ -46,8 +46,12 @@ class MediumObjectHelper extends AbstractObjectHelper {
      */
     public function getApiObject(
         Entity $entity,
-        string $include = self::MODEL_INCLUDE,
+        string $include = null,
     ): ?array {
+        if(!isset($include)) {
+            $include = self::MODEL_INCLUDE;
+        }
+
         $includes = $this->parseIncludesString($include);
 
         $result = [
@@ -55,11 +59,11 @@ class MediumObjectHelper extends AbstractObjectHelper {
         ];
 
         if($this->shouldInclude(self::MODEL_INCLUDE, $includes) || $this->shouldInclude(self::TITLE_INCLUDE, $includes)) {
-            $result->title = $entity->getTitle();
+            $result["title"] = $entity->getTitle();
         }
 
         if($this->shouldInclude(self::FIELDS_INCLUDE, $includes)) {
-            $result->fields = this->getFields();
+            $result["fields"] = $this->getFields($entity->getId());
         }
 
         return $result;
