@@ -4,13 +4,18 @@ namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\MediumService;
+use OCA\Biblio\Helper\ApiObjects\MediumObjectHelper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
 class MediumController extends Controller {
 	/** @var MediumService */
 	private $service;
+
+	/** @var MediumObjectHelper */
+	private $objectHelper;
 
 	/** @var string */
 	private $userId;
@@ -19,17 +24,30 @@ class MediumController extends Controller {
 
 	public function __construct(IRequest $request,
 								MediumService $service,
+								MediumObjectHelper $objectHelper,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
+		$this->objectHelper = $objectHelper;
 		$this->userId = $userId;
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function index(): DataResponse {
-		return new DataResponse($this->service->findAll($this->userId));
+	public function index(?string $include): DataResponse {
+		$entities = $this->service->findAll($this->userId);
+		$result = [];
+
+		foreach($entities as $entity) {
+			$object = $this->objectHelper->getApiObject($entity, $include);
+
+			if($object !== null) {
+				$result[] = $object;
+			}
+		}
+
+		return new JSONResponse($result, Http::STATUS_OK);
 	}
 
 	/**
@@ -37,7 +55,9 @@ class MediumController extends Controller {
 	 */
 	public function show(int $id): DataResponse {
 		return $this->handleNotFound(function () use ($id) {
-			return $this->service->find($id, $this->userId);
+			$medium = $this->service->find($id, $this->userId);
+			$result = $medium->jsonSerialize();
+			$medium->fields = this->getFields($id);
 		});
 	}
 
