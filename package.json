@@ -31,7 +31,7 @@
 		"@nextcloud/dialogs": "^4.0.1",
 		"@nextcloud/eslint-plugin": "^2.0.0",
 		"@nextcloud/moment": "^1.2.1",
-		"@nextcloud/router": "^2.0.1",
+		"@nextcloud/router": "^2.1.0",
 		"@nextcloud/vue": "^7.9.0",
 		"@nextcloud/webpack-vue-config": "^5.5.0",
 		"babel-loader": "^9.1.2",
