@@ -35,7 +35,7 @@
 		"@nextcloud/vue": "^7.9.0",
 		"@nextcloud/webpack-vue-config": "^5.5.0",
 		"babel-loader": "^9.1.2",
-		"caniuse-lite": "^1.0.30001476",
+		"caniuse-lite": "^1.0.30001511",
 		"debounce": "^1.2.1",
 		"eslint": "^8.38.0",
 		"eslint-plugin-import": "^2.27.5",
