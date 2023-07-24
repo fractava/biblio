@@ -61,4 +61,16 @@ abstract class AbstractObjectHelper {
         string $include = self::MODEL_INCLUDE,
     ): ?array;
 
+    public function getApiObjects(array $entities, string $include = self::MODEL_INCLUDE,): ?array {
+        $result = [];
+		foreach($entities as $entity) {
+			$object = $this->getApiObject($entity, $include);
+
+			if($object !== null) {
+				$result[] = $object;
+			}
+		}
+
+        return $result;
+    }
 }

@@ -10,13 +10,19 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCA\Biblio\Db\Medium;
 use OCA\Biblio\Db\MediumMapper;
 
+use OCA\Biblio\Service\MediumFieldService;
+
 class MediumService {
 
 	/** @var MediumMapper */
 	private $mapper;
 
-	public function __construct(MediumMapper $mapper) {
+	/** @var MediumFieldService */
+	private $fieldService;
+
+	public function __construct(MediumMapper $mapper, MediumFieldService $fieldService) {
 		$this->mapper = $mapper;
+		$this->fieldService = $fieldService;
 	}
 
 	public function findAll(string $userId): array {
@@ -40,12 +46,31 @@ class MediumService {
 		}
 	}
 
-	public function create($title, $fieldsOrder, $userId) {
+	public function create(string $title, array $fields, string $userId) {
 		$medium = new Medium();
 		$medium->setTitle($title);
+
+		$fieldsOrder = [];
+
 		$medium->setFieldsOrder($fieldsOrder);
 		$medium->setUserId($userId);
-		return $this->mapper->insert($medium);
+
+		$medium = $this->mapper->insert($medium);
+
+		if(sizeof($fields) > 0){
+			$mediumId = $medium->getId();
+
+			foreach($fields as $field) {
+				$fieldEntity = $this->fieldService->create($mediumId, $field["type"], $field["title"], $field["value"]);
+				$fieldsOrder[] = $fieldEntity->getId();
+			}
+
+			$medium->setFieldsOrder(json_encode($fieldsOrder));
+
+			$medium = $this->mapper->update($medium);
+		}
+
+		return $medium;
 	}
 
 	public function update($id, $title, $fieldsOrder, $userId) {

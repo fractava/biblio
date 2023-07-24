@@ -7,6 +7,7 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+use OCA\Biblio\Db\Medium;
 use OCA\Biblio\Db\MediumField;
 use OCA\Biblio\Db\MediumFieldMapper;
 
@@ -21,6 +22,33 @@ class MediumFieldService {
 
 	public function findAll(int $mediumId): array {
 		return $this->mapper->findAll($mediumId);
+	}
+
+	public function findAllInOrder(Medium $entity): array {
+		$fieldsOrder = json_decode($entity->getFieldsOrder(), true) ?: [];
+		$fields = $this->findAll($entity->getId());
+
+		$fieldsFiltered = [];
+		foreach($fields as $field) {
+			if(in_array($field->getId(), $fieldsOrder)) {
+				$fieldsFiltered[] = $field;
+			}
+		}
+
+		$cmp = function (MediumField $a, MediumField $b) use ($fieldsOrder): int {
+			$pos1 = array_search($a->getId(), $fieldsOrder);
+   			$pos2 = array_search($b->getId(), $fieldsOrder);
+
+			if($pos1==$pos2) {
+			   return 0;
+			} else {
+				return ($pos1 < $pos2 ? -1 : 1);
+			}
+		};
+
+		usort($fieldsFiltered, $cmp);
+
+		return $fieldsFiltered;
 	}
 
 	private function handleException(Exception $e): void {
@@ -77,5 +105,9 @@ class MediumFieldService {
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
+	}
+
+	public function findUniqueTitles() {
+		return $this->mapper->findUniqueTitles();
 	}
 }

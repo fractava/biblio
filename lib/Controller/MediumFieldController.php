@@ -67,4 +67,12 @@ class MediumFieldController extends Controller {
 			return $this->service->delete($id, $mediumId);
 		});
 	}
+	
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function uniqueTitles(): DataResponse {
+		return new DataResponse($this->service->findUniqueTitles());
+	}
 }

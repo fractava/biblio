@@ -42,4 +42,17 @@ class MediumFieldMapper extends QBMapper {
 			->where($qb->expr()->eq('medium_id', $qb->createNamedParameter($mediumId, IQueryBuilder::PARAM_INT)));
 		return $this->findEntities($qb);
 	}
+
+	/**
+	 * @return array
+	 */
+	public function findUniqueTitles(): array {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+
+		$qb->selectDistinct('title') ->from('biblio_medium_fields');
+		$result = $qb->executeQuery();
+
+		return array_column($result->fetchAll(), "title");
+	}
 }

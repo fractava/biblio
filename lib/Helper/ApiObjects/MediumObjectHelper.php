@@ -11,6 +11,7 @@ use OCP\AppFramework\IAppContainer;
 class MediumObjectHelper extends AbstractObjectHelper {
     const TITLE_INCLUDE = 'model';
     const FIELDS_INCLUDE = 'fields';
+    const FIELDS_ORDER_INCLUDE = 'fieldsOrder';
 
     /** @var MediumService */
 	private $mediumService;
@@ -62,21 +63,25 @@ class MediumObjectHelper extends AbstractObjectHelper {
             $result["title"] = $entity->getTitle();
         }
 
+        if($this->shouldInclude(self::MODEL_INCLUDE, $includes) || $this->shouldInclude(self::FIELDS_ORDER_INCLUDE, $includes)) {
+            $result["fieldsOrder"] = $entity->getFieldsOrder();
+        }
+
         if($this->shouldInclude(self::FIELDS_INCLUDE, $includes)) {
-            $result["fields"] = $this->getFields($entity->getId());
+            $result["fields"] = $this->getFields($entity);
         }
 
         return $result;
     }
 
     /**
-     * @param int $id
+     * @param Medium $entity
      *
      * @return array
      * @throws DoesNotExistException
      */
-	public function getFields(int $id) {
-        return $this->fieldService->findAll($id);
+	public function getFields(Medium $entity) {
+        return $this->fieldService->findAllInOrder($entity);
 	}
 
 }

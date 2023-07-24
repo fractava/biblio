@@ -6,7 +6,7 @@
 				<span>{{ t('biblio', 'New Medium') }}</span>
 			</a>
 		</router-link>
-		<Table :columns="['title', 'fieldsOrder']"
+		<Table :columns="['title', 'fields']"
 			:items="mediums"
 			@click="openMedium($event)" />
 	</ul>

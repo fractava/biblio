@@ -25,9 +25,23 @@ export default {
 			return new Promise((resolve, reject) => {
 				let new_medium_id;
 
+				console.log(options);
+
+				let fields = [];
+
+				for(let field of options.fields) {
+					const { value, ...rest } = field;
+					fields.push({
+						value: JSON.stringify(value),
+						...rest,
+					});
+				}
+
+				console.log(fields);
+
 				const parameters = {
 					title: options.title,
-					fieldsOrder: "[]",
+					fields: JSON.stringify(fields),
 				};
 				axios.post(generateUrl("/apps/biblio/mediums"), parameters).then(function(response) {
 					context.commit("createMedium", {
@@ -36,26 +50,6 @@ export default {
 					});
 					new_medium_id = response.data.id;
 					console.log("new_medium_id = ", new_medium_id);
-
-					for (const field of options.fields) {
-						console.log(field);
-						console.log(
-							field.type,
-							field.title,
-							field.value,
-						);
-						axios.post(generateUrl("/apps/biblio/medium_fields"), {
-							mediumId: new_medium_id,
-							type: field.type,
-							title: field.title,
-							value: JSON.stringify(field.value),
-						})
-							.then(function(response) {})
-							.catch(function(error) {
-								showError(t("biblio", "Could not create medium"));
-								reject(error);
-							});
-					}
 
 					resolve(new_medium_id);
 				})
@@ -67,11 +61,20 @@ export default {
 		},
 		fecthMediums(context) {
 			return new Promise((resolve, reject) => {
-				axios.get(generateUrl("/apps/biblio/mediums")).then(function(response) {
+				axios.get(generateUrl("/apps/biblio/mediums"), {
+					params: {
+						include: "model+fields",
+					},
+				}).then(function(response) {
 					const mediums = response.data;
 
-					for (const medium in mediums) {
-						mediums[medium].fieldsOrder = JSON.parse(mediums[medium].fieldsOrder);
+					console.log(mediums);
+
+					for (const medium of mediums) {
+						for (const fieldIndex in medium.fields) {
+							console.log(medium.fields[fieldIndex]);
+							medium.fields[fieldIndex].value = JSON.parse(medium.fields[fieldIndex].value);
+						}
 					}
 
 					context.commit("setMediums", mediums);

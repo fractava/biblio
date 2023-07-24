@@ -35,39 +35,37 @@ class MediumController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
 	 */
 	public function index(?string $include): JSONResponse {
 		$entities = $this->service->findAll($this->userId);
-		$result = [];
-
-		foreach($entities as $entity) {
-			$object = $this->objectHelper->getApiObject($entity, $include);
-
-			if($object !== null) {
-				$result[] = $object;
-			}
-		}
+		$result = $this->objectHelper->getApiObjects($entities, $include);
 
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
 	 */
-	public function show(int $id): DataResponse {
-		return $this->handleNotFound(function () use ($id) {
+	public function show(int $id, ?string $include): DataResponse {
+		return $this->handleNotFound(function () use ($id, $include) {
 			$medium = $this->service->find($id, $this->userId);
-			$result = $medium->jsonSerialize();
-			$medium->fields = this->getFields($id);
+			return $this->objectHelper->getApiObject($medium, $include);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $title, string $fieldsOrder): DataResponse {
-		return new DataResponse($this->service->create($title, $fieldsOrder,
-			$this->userId));
+	public function create(string $title, string $fields): JSONResponse {
+		$fieldsParsed = json_decode($fields, true);
+		$newMedium = $this->service->create($title, $fieldsParsed, $this->userId);
+		$result = $this->objectHelper->getApiObject($newMedium, "model+fields+fieldsOrder");
+
+		return new JSONResponse($result, Http::STATUS_OK);
+
+		//return new DataResponse($this->service->create($title, $fieldsParsed, $this->userId));
 	}
 
 	/**
