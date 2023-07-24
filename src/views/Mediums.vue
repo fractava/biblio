@@ -23,7 +23,7 @@ export default {
 		Table,
 	},
 	computed: {
-		...mapStores(useMediumsStore)
+		...mapStores(useMediumsStore),
 	},
 	methods: {
 		openMedium(medium) {

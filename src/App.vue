@@ -11,10 +11,11 @@
 
 <script>
 import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent";
-
 import "@nextcloud/dialogs/dist/index.css";
+import { mapStores } from "pinia";
 
 import Sidebar from "./components/Sidebar.vue";
+import { useMediumsStore } from "./store/mediums.js";
 
 export default {
 	name: "App",
@@ -23,9 +24,10 @@ export default {
 		Sidebar,
 	},
 	computed: {
+		...mapStores(useMediumsStore),
 	},
 	mounted() {
-		this.$store.dispatch("fecthMediums");
+		this.mediumsStore.fetchMediums();
 	},
 };
 </script>

@@ -53,7 +53,7 @@ export const useMediumsStore = defineStore("mediums", {
 					params: {
 						include: "model+fields",
 					},
-				}).then(function(response) {
+				}).then((response) => {
 					const mediums = response.data;
 
 					console.log(mediums);
@@ -65,7 +65,7 @@ export const useMediumsStore = defineStore("mediums", {
 						}
 					}
 
-					cthis.mediums = mediums;
+					this.mediums = mediums;
 					resolve();
 				})
 					.catch(function(error) {
