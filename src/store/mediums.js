@@ -1,27 +1,14 @@
+import { defineStore } from "pinia";
 import axios from "@nextcloud/axios";
 import { generateUrl } from "@nextcloud/router";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
-export default {
+export const useMediumsStore = defineStore("mediums", {
 	state: () => ({
 		mediums: [],
 	}),
-	mutations: {
-		createMedium(state, options) {
-			this.state.mediums.mediums.push(options);
-		},
-		setMediums(state, mediums) {
-			this.state.mediums.mediums = mediums;
-		},
-		updateMediumTitle(state, options) {
-			this.getters.getMediumById(options.id).title = options.title;
-		},
-		updateMediumFieldsOrder(state, options) {
-			this.getters.getMediumById(options.id).fieldsOrder = options.fieldsOrder;
-		},
-	},
 	actions: {
-		createMedium(context, options) {
+		createMedium(options) {
 			return new Promise((resolve, reject) => {
 				let new_medium_id;
 
@@ -44,10 +31,11 @@ export default {
 					fields: JSON.stringify(fields),
 				};
 				axios.post(generateUrl("/apps/biblio/mediums"), parameters).then(function(response) {
-					context.commit("createMedium", {
+					this.mediums.push({
 						title: options.title,
 						id: response.data.id,
 					});
+
 					new_medium_id = response.data.id;
 					console.log("new_medium_id = ", new_medium_id);
 
@@ -59,7 +47,7 @@ export default {
 					});
 			});
 		},
-		fecthMediums(context) {
+		fetchMediums() {
 			return new Promise((resolve, reject) => {
 				axios.get(generateUrl("/apps/biblio/mediums"), {
 					params: {
@@ -77,7 +65,7 @@ export default {
 						}
 					}
 
-					context.commit("setMediums", mediums);
+					cthis.mediums = mediums;
 					resolve();
 				})
 					.catch(function(error) {
@@ -86,10 +74,10 @@ export default {
 					});
 			});
 		},
-		updateMediumTitle(context, options) {
+		updateMediumTitle(options) {
 			return new Promise((resolve, reject) => {
 				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { title: options.title }).then(function(response) {
-					context.commit("updateMediumTitle", options);
+					this.getMediumById(options.id).title = options.title;
 				})
 					.catch(function(error) {
 						console.error(error);
@@ -100,10 +88,10 @@ export default {
 				resolve();
 			});
 		},
-		updateMediumFieldsOrder(context, options) {
+		updateMediumFieldsOrder(options) {
 			return new Promise((resolve, reject) => {
 				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fieldsOrder: options.fieldsOrder }).then(function(response) {
-					context.commit("updateMediumFieldsOrder", options);
+					this.getMediumById(options.id).fieldsOrder = options.fieldsOrder;
 				})
 					.catch(function(error) {
 						console.error(error);
@@ -114,7 +102,7 @@ export default {
 				resolve();
 			});
 		},
-		updateMediumField(context, options) {
+		updateMediumField(options) {
 			return new Promise((resolve, reject) => {
 				axios.put(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
 					mediumId: options.mediumId,
@@ -131,7 +119,7 @@ export default {
 				resolve();
 			});
 		},
-		deleteMediumField(context, options) {
+		deleteMediumField(options) {
 			return axios.delete(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
 				params: {
 					mediumId: options.mediumId,
@@ -169,4 +157,4 @@ export default {
 			});
 		},
 	},
-};
+});

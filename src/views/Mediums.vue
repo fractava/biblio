@@ -7,25 +7,23 @@
 			</a>
 		</router-link>
 		<Table :columns="['title', 'fields']"
-			:items="mediums"
+			:items="mediumsStore.mediums"
 			@click="openMedium($event)" />
 	</ul>
 </template>
 
 <script>
+import { mapStores } from "pinia";
 
 import Table from "../components/Table.vue";
-
-import { mapState } from "vuex";
+import { useMediumsStore } from "../store/mediums.js";
 
 export default {
 	components: {
 		Table,
 	},
 	computed: {
-		...mapState({
-			mediums: state => state.mediums.mediums,
-		}),
+		...mapStores(useMediumsStore)
 	},
 	methods: {
 		openMedium(medium) {

@@ -66,7 +66,7 @@ import ShortTextField from "../components/Fields/ShortTextField";
 import LongTextField from "../components/Fields/LongTextField";
 import DateField from "../components/Fields/DateField";
 
-import { mapState } from "vuex";
+import { mapStores } from 'pinia';
 
 export default {
 	components: {

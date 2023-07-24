@@ -5,9 +5,10 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useStore } from "vuex";
+import { useMediumsStore } from "../store/mediums";
 
-const store = useStore();
+
+const store = useMediumsStore();
 
 const medium = ref(store.getters.getMediumById(this.$route.params.id));
 

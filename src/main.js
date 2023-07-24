@@ -20,10 +20,11 @@
  *
  */
 import Vue from "vue";
+import { createPinia, PiniaVuePlugin } from 'pinia'
+
 import App from "./App";
 
 import router from "./router";
-import store from "./store";
 
 import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip";
 
@@ -31,9 +32,12 @@ Vue.directive("tooltip", Tooltip);
 
 Vue.mixin({ methods: { t, n } });
 
+Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
+
 export default new Vue({
 	router,
-	store,
 	el: "#content",
 	render: h => h(App),
+	pinia,
 });
