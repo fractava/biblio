@@ -1,3 +1,4 @@
+
 github:
   prebuilds:
     master: true
@@ -36,3 +37,7 @@ ports:
   - port: 8081
     visibility: private
     onOpen: ignore
+
+vscode:
+  extensions:
+    - zobo.php-intellisense
