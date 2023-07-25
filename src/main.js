@@ -19,25 +19,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-import Vue from "vue";
-import { createPinia, PiniaVuePlugin } from 'pinia'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip.js";
 
 import App from "./App.vue";
+import router from "./router.js";
 
-import router from "./router";
-
-import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip";
-
-Vue.directive("tooltip", Tooltip);
-
-Vue.mixin({ methods: { t, n } });
-
-Vue.use(PiniaVuePlugin);
 const pinia = createPinia();
 
-export default new Vue({
+
+const app = createApp(App);
+
+app.directive("tooltip", Tooltip);
+
+app.mixin({ methods: { t, n } });
+
+app.use(pinia);
+
+app.use(router);
+
+app.mount("#content");
+
+/*export default new Vue({
 	router,
 	el: "#content",
 	render: h => h(App),
 	pinia,
-});
+});*/

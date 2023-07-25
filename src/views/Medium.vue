@@ -29,11 +29,11 @@ import Draggable from "vuedraggable";
 
 import { useMediumsStore } from "../store/mediums";
 import FieldTypes from "../models/FieldTypes";
-import Field from "../components/Fields/Field";
-import ListField from "../components/Fields/ListField";
-import ShortTextField from "../components/Fields/ShortTextField";
-import LongTextField from "../components/Fields/LongTextField";
-import DateField from "../components/Fields/DateField";
+import Field from "../components/Fields/Field.vue";
+import ListField from "../components/Fields/ListField.vue";
+import ShortTextField from "../components/Fields/ShortTextField.vue";
+import LongTextField from "../components/Fields/LongTextField.vue";
+import DateField from "../components/Fields/DateField.vue";
 
 const store = useMediumsStore();
 

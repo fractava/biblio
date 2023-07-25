@@ -77,9 +77,9 @@
 </template>
 
 <script>
-import EntryInput from "./EntryInput";
-import FieldMixin from "../../mixins/FieldMixin";
-import GenRandomId from "../../utils/GenRandomId";
+import EntryInput from "./EntryInput.vue";
+import FieldMixin from "../../mixins/FieldMixin.js";
+import GenRandomId from "../../utils/GenRandomId.js";
 
 // Implementations docs
 // https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/examples/radio/radio.html

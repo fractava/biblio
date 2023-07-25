@@ -20,8 +20,7 @@
  *
  */
 
-import Vue from "vue";
-import Router from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
 import { getRootUrl, generateUrl } from "@nextcloud/router";
 
 import LendReturn from "./views/LendReturn.vue";
@@ -30,48 +29,48 @@ import Medium from "./views/Medium.vue";
 import Customers from "./views/Customers.vue";
 import Customer from "./views/Customer.vue";
 
-Vue.use(Router);
-
 const webRootWithIndexPHP = getRootUrl() + "/index.php";
 const doesURLContainIndexPHP = window.location.pathname.startsWith(webRootWithIndexPHP);
 const base = generateUrl("apps/biblio", {}, {
 	noRewrite: doesURLContainIndexPHP,
 });
 
-const router = new Router({
+const routes = [
+	{
+		path: "/",
+		redirect: "/lend-return",
+	},
+	{
+		path: "/lend-return",
+		component: LendReturn,
+	},
+	{
+		path: "/mediums",
+		component: Mediums,
+	},
+	{
+		path: "/medium/new",
+		component: Medium,
+		props: { createNew: true },
+	},
+	{
+		path: "/medium/:id",
+		component: Medium,
+	},
+	{
+		path: "/customers",
+		component: Customers,
+	},
+	{
+		path: "/customer/:id",
+		component: Customer,
+	},
+];
+
+const router = createRouter({
 	// mode: 'history',
 	base,
-	routes: [
-		{
-			path: "/",
-			redirect: "/lend-return",
-		},
-		{
-			path: "/lend-return",
-			component: LendReturn,
-		},
-		{
-			path: "/mediums",
-			component: Mediums,
-		},
-		{
-			path: "/medium/new",
-			component: Medium,
-			props: { createNew: true },
-		},
-		{
-			path: "/medium/:id",
-			component: Medium,
-		},
-		{
-			path: "/customers",
-			component: Customers,
-		},
-		{
-			path: "/customer/:id",
-			component: Customer,
-		},
-	],
+	routes,
 });
 
 export default router;

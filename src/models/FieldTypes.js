@@ -20,10 +20,10 @@
  *
  */
 
-import ListField from "../components/Fields/ListField";
-import ShortTextField from "../components/Fields/ShortTextField";
-import LongTextField from "../components/Fields/LongTextField";
-import DateField from "../components/Fields/DateField";
+import ListField from "../components/Fields/ListField.vue";
+import ShortTextField from "../components/Fields/ShortTextField.vue";
+import LongTextField from "../components/Fields/LongTextField.vue";
+import DateField from "../components/Fields/DateField.vue";
 
 /**
  * @typedef {object} FieldTypes

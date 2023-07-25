@@ -20,7 +20,7 @@
  */
 import { debounce } from "debounce";
 
-import Field from "../components/Fields/Field";
+import Field from "../components/Fields/Field.vue";
 
 export default {
 	inheritAttrs: false,
