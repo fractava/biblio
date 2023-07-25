@@ -24,11 +24,11 @@ import Vue from "vue";
 import Router from "vue-router";
 import { getRootUrl, generateUrl } from "@nextcloud/router";
 
-import LendReturn from "./views/LendReturn";
-import Mediums from "./views/Mediums";
-import Medium from "./views/Medium";
-import Customers from "./views/Customers";
-import Customer from "./views/Customer";
+import LendReturn from "./views/LendReturn.vue";
+import Mediums from "./views/Mediums.vue";
+import Medium from "./views/Medium.vue";
+import Customers from "./views/Customers.vue";
+import Customer from "./views/Customer.vue";
 
 Vue.use(Router);
 
