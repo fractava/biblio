@@ -25,7 +25,16 @@ tasks:
 
   - name: Dependency install & Frontend watch
     init: make dev-setup
-    command: make watch-js
+    command: |
+      git clone https://github.com/nextcloud/nextcloud-vue.git
+      cd nextcloud-vue/
+      git checkout vue3
+      npm ci
+      npm run build
+      npm link
+      cd ..
+      npm link @nextcloud/vue
+      make watch-js
 
   - name: Terminal
     command: clear

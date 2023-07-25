@@ -4,7 +4,13 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     plugins: [vue()],
+    optimizeDeps: {
+        include: ['nextcloud-vue'],
+    },
     build: {
+        commonjsOptions: {
+            include: [/nextcloud-vue/, /node_modules/],
+        },
         outDir: "js",
         lib: {
             entry: resolve(__dirname, 'src/main.js'),
