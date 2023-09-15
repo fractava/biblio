@@ -36,8 +36,14 @@ export default {
 		return {
 			newMedium: {
 				title: "Test",
-				fields: []
-			}
+				fields: [
+					{
+						type: "short",
+						title: "Test Field",
+						value: "Test Value",
+					},
+				],
+			},
 		};
 	},
 	computed: {

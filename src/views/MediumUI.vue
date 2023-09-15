@@ -9,14 +9,43 @@
 				<template>Edit</template>
 			</NcButton>
 		</div>
-		<div class="draggableTable">
-			<div>
-				<span>Titel:</span>
-			</div>
-			<div>
-				<span>{{ title }}</span>
-			</div>
-		</div>
+		<Draggable v-model="thisFields"
+			:animation="200"
+			tag="ul"
+			handle=".field__drag-handle"
+			@start="isDragging = true"
+			@end="isDragging = false"
+			@change="fieldsOrderChanged">
+			<FieldsTable>
+				<FieldsTableRow>
+					<template #left>
+						<span>Titel:</span>
+					</template>
+					<template #right>
+						<span>{{ title }}</span>
+					</template>
+				</FieldsTableRow>
+				<div class="tableRow" v-for="field in fields" :key="field.title">
+					<div>
+						<span>{{ field.title }}</span>
+					</div>
+					<div>
+						<span>{{ field.value }}</span>
+					</div>
+				</div>
+				<Fields :is="FieldTypes[field.type].component"
+					v-for="field in fields"
+					:key="field.title + '-field'"
+					ref="fields"
+					:field-type="FieldTypes[field.type]"
+					:is-required="false"
+					:options="{}"
+					:title.sync="field.title"
+					:value="field.value"
+					@update:value="(newValue) => onFieldUpdate(newValue, field)"
+					@delete="deleteField(field)" />
+			</FieldsTable>
+		</Draggable>
 	</div>
 </template>
 
@@ -24,24 +53,41 @@
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 import Pencil from 'vue-material-design-icons/Pencil.vue';
+import FieldTypes from "../models/FieldTypes";
+
+import FieldsTable from "../components/FieldsTable.vue";
+import FieldsTableRow from "../components/FieldsTableRow.vue";
 
 export default {
 	components: {
 		NcButton,
 		Pencil,
+		FieldsTable,
+		FieldsTableRow,
 	},
 	props: {
 		title: {
 			type: String,
 			default: "",
 		},
+		fields: {
+			type: Array,
+			default: () => [],
+		},
 	},
 	data() {
 		return {
 			editMode: false,
+			FieldTypes,
 		};
 	},
 	methods: {
+		fieldsOrderChanged() {
+
+		},
+		onFieldUpdate() {
+
+		},
 	},
 };
 </script>
@@ -52,15 +98,5 @@ export default {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 20px;
-}
-
-.draggableTable {
-	display: grid;
-	grid-template-columns: 50% 50%;
-}
-
-.draggableTable > div {
-	border: var(--color-text-maxcontrast) 2px solid;
-    margin: -2px 0 0 -2px;
 }
 </style>

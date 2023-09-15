@@ -21,49 +21,48 @@
   -->
 
 <template>
-	<li v-click-outside="disableEdit"
-		:class="{ 'field--edit': edit }"
-		class="field"
-		@click="enableEdit">
-		<!-- Drag handle -->
-		<div v-if="enableDragHandle"
-			class="field__drag-handle icon-drag-handle"
-			:class="{'field__drag-handle--shiftup': shiftDragHandle}"
-			:aria-label="t('biblio', 'Drag to reorder the fields')" />
-
-		<div class="field__border">
-			<!-- Header -->
-			<div class="field__header">
-				<input v-if="(edit || !title) && allowTitleEdit"
-					:placeholder="t('biblio', 'Title')"
-					:value="title"
-					class="field__header-title"
-					type="text"
-					minlength="1"
-					required
-					@input="onTitleChange">
-				<h3 v-else class="field__header-title" v-text="title" />
-				<div v-if="!edit && !fieldValid"
-					v-tooltip.auto="t('biblio', 'A title is required!')"
-					class="field__header-warning icon-error-color"
-					tabindex="0" />
-				<NcActions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
-					<NcActionButton icon="icon-delete" @click="onDelete">
-						{{ t('forms', 'Delete Field') }}
-					</NcActionButton>
-				</NcActions>
-			</div>
-
-			<!-- Field content -->
+	<FieldsTableRow>
+		<template #left>
+			<input v-if="(edit || !title) && allowTitleEdit"
+				:placeholder="t('biblio', 'Title')"
+				:value="title"
+				class="field__header-title"
+				type="text"
+				minlength="1"
+				required
+				@input="onTitleChange">
+			<h3 v-else class="field__header-title" v-text="title" />
+			<div v-if="!edit && !fieldValid"
+				v-tooltip.auto="t('biblio', 'A title is required!')"
+				class="field__header-warning icon-error-color"
+				tabindex="0" />
+		</template>
+		<template #right>
 			<slot />
-		</div>
-	</li>
+		</template>
+	</FieldsTableRow>
+
+
+	<!-- Drag handle -->
+	<!--<div v-if="enableDragHandle"
+		class="field__drag-handle icon-drag-handle"
+		:class="{'field__drag-handle--shiftup': shiftDragHandle}"
+		:aria-label="t('biblio', 'Drag to reorder the fields')" />-->
+
+	<!--<NcActions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
+		<NcActionButton icon="icon-delete" @click="onDelete">
+			{{ t('forms', 'Delete Field') }}
+		</NcActionButton>
+	</NcActions>-->
 </template>
 
 <script>
 import { directive as ClickOutside } from "v-click-outside";
+
 import NcActions from "@nextcloud/vue/dist/Components/NcActions";
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton'
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
+
+import FieldsTableRow from "../../components/FieldsTableRow.vue";
 
 export default {
 	name: "Field",
@@ -75,6 +74,7 @@ export default {
 	components: {
 		NcActions,
 		NcActionButton,
+		FieldsTableRow,
 	},
 
 	props: {
