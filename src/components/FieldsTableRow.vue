@@ -37,11 +37,11 @@ export default {
 </script>
 
 <style lang="scss">
-.fieldsTable > .tableRow {
+.fieldsTable .tableRow {
 	display: contents;
 }
 
-.fieldsTable > .tableRow > div:not(.drag-handle) {
+.fieldsTable .tableRow > div:not(.drag-handle) {
 	border: var(--color-text-maxcontrast) 2px solid;
     margin: -2px 0 0 -2px;
     padding: 5px;

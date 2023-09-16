@@ -42,6 +42,11 @@ export default {
 						title: "Test Field",
 						value: "Test Value",
 					},
+					{
+						type: "short",
+						title: "Test Field 2",
+						value: "Test Value 2",
+					},
 				],
 			},
 		};

@@ -9,36 +9,37 @@
 				<template>Edit</template>
 			</NcButton>
 		</div>
-		<Draggable v-model="fields"
-			:animation="200"
-			tag="FieldsTableRow"
-			handle=".drag-handle"
-			@start="isDragging = true"
-			@end="isDragging = false"
-			@change="fieldsOrderChanged">
-			<FieldsTable>
-				<FieldsTableRow>
-					<div></div>
-					<template #left>
-						<span>Titel:</span>
-					</template>
-					<template #right>
-						<span>{{ title }}</span>
-					</template>
-				</FieldsTableRow>
+		<FieldsTable>
+			<FieldsTableRow>
+				<div></div>
+				<template #left>
+					<span>Titel:</span>
+				</template>
+				<template #right>
+					<span>{{ title }}</span>
+				</template>
+			</FieldsTableRow>
+			<Draggable :value="fields"
+				@input="onFieldsUpdate"
+				:animation="200"
+				tag="div"
+				class="ignoreForLayout"
+				handle=".drag-handle"
+				@start="isDragging = true"
+				@end="isDragging = false"
+				@change="fieldsOrderChanged">
 				<Fields :is="FieldTypes[field.type].component"
 					v-for="field in fields"
 					:key="field.title + '-field'"
 					ref="fields"
 					:field-type="FieldTypes[field.type]"
 					:is-required="false"
-					:options="{}"
 					:title.sync="field.title"
 					:value="field.value"
 					@update:value="(newValue) => onFieldUpdate(newValue, field)"
 					@delete="deleteField(field)" />
-			</FieldsTable>
-		</Draggable>
+			</Draggable>
+		</FieldsTable>
 	</div>
 </template>
 
@@ -81,8 +82,10 @@ export default {
 		fieldsOrderChanged() {
 
 		},
+		onFieldsUpdate(fields) {
+			this.$emit("setFields", fields);
+		},
 		onFieldUpdate() {
-
 		},
 	},
 };
@@ -94,5 +97,9 @@ export default {
 	display: flex;
 	justify-content: flex-end;
 	margin-bottom: 20px;
+}
+
+.ignoreForLayout {
+	display: contents;
 }
 </style>
