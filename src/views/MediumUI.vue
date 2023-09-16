@@ -9,15 +9,16 @@
 				<template>Edit</template>
 			</NcButton>
 		</div>
-		<Draggable v-model="thisFields"
+		<Draggable v-model="fields"
 			:animation="200"
-			tag="ul"
-			handle=".field__drag-handle"
+			tag="FieldsTableRow"
+			handle=".drag-handle"
 			@start="isDragging = true"
 			@end="isDragging = false"
 			@change="fieldsOrderChanged">
 			<FieldsTable>
 				<FieldsTableRow>
+					<div></div>
 					<template #left>
 						<span>Titel:</span>
 					</template>
@@ -25,14 +26,6 @@
 						<span>{{ title }}</span>
 					</template>
 				</FieldsTableRow>
-				<div class="tableRow" v-for="field in fields" :key="field.title">
-					<div>
-						<span>{{ field.title }}</span>
-					</div>
-					<div>
-						<span>{{ field.value }}</span>
-					</div>
-				</div>
 				<Fields :is="FieldTypes[field.type].component"
 					v-for="field in fields"
 					:key="field.title + '-field'"
@@ -50,6 +43,8 @@
 </template>
 
 <script>
+import Draggable from "vuedraggable";
+
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 import Pencil from 'vue-material-design-icons/Pencil.vue';
@@ -60,6 +55,7 @@ import FieldsTableRow from "../components/FieldsTableRow.vue";
 
 export default {
 	components: {
+		Draggable,
 		NcButton,
 		Pencil,
 		FieldsTable,

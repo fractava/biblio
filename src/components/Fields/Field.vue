@@ -42,13 +42,6 @@
 		</template>
 	</FieldsTableRow>
 
-
-	<!-- Drag handle -->
-	<!--<div v-if="enableDragHandle"
-		class="field__drag-handle icon-drag-handle"
-		:class="{'field__drag-handle--shiftup': shiftDragHandle}"
-		:aria-label="t('biblio', 'Drag to reorder the fields')" />-->
-
 	<!--<NcActions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
 		<NcActionButton icon="icon-delete" @click="onDelete">
 			{{ t('forms', 'Delete Field') }}
@@ -171,28 +164,6 @@ export default {
 
 	> * {
 		cursor: pointer;
-	}
-
-	&__drag-handle {
-		position: absolute;
-		left: 0;
-		width: 44px;
-		height: 100%;
-		opacity: .5;
-
-		&--shiftup {
-			height: calc(100% - 44px);
-		}
-
-		&:hover,
-		&:focus {
-			opacity: 1;
-		}
-		cursor: grab;
-
-		&:active {
-			cursor: grabbing;
-		}
 	}
 
 	&__border {

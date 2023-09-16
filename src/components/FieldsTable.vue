@@ -7,6 +7,6 @@
 <style scoped>
 .fieldsTable {
 	display: grid;
-	grid-template-columns: 50% 50%;
+	grid-template-columns: min-content auto auto;
 }
 </style>
