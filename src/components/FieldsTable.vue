@@ -1,12 +1,19 @@
 <template>
-    <div class="fieldsTable">
+    <table class="fieldsTable">
+        <colgroup>
+            <col>
+            <col span="2" style="width: 50%;">
+        </colgroup>
         <slot></slot>
-    </div>
+    </table>
 </template>
 
-<style scoped>
+<style>
 .fieldsTable {
-	display: grid;
-	grid-template-columns: min-content auto auto;
+    width: 100%;
+}
+
+.fieldsTable tr:hover, .fieldsTable tr:focus, .fieldsTable tr:active {
+    background-color: transparent;
 }
 </style>

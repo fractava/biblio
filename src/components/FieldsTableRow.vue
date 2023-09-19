@@ -1,22 +1,23 @@
 <template>
-    <div class="tableRow">
+    <tr class="tableRow">
         <!-- Drag handle -->
-	    <div v-if="enableDragHandle"
-            class="drag-handle"
+	    <td class="drag-handle"
+            :class="{'drag-handle-active': enableDragHandle}"
+            :style="{'opacity': enableDragHandle ? .5 : 0}"
             :aria-label="t('biblio', 'Drag to reorder the fields')">
             <Drag/>
-        </div>
+        </td>
         
         <!-- Left/Title -->
-        <div>
+        <td>
             <slot name="left"></slot>
-        </div>
+        </td>
 
         <!-- Right / Value -->
-        <div>
+        <td>
             <slot name="right"></slot>
-        </div>
-    </div>
+        </td>
+    </tr>
 </template>
 
 <script>
@@ -37,29 +38,43 @@ export default {
 </script>
 
 <style lang="scss">
-.fieldsTable .tableRow {
-	display: contents;
+.fieldsTable .tableRow.ghost {
+	opacity: 0;
 }
 
-.fieldsTable .tableRow > div:not(.drag-handle) {
-	border: var(--color-text-maxcontrast) 2px solid;
-    margin: -2px 0 0 -2px;
+/* Custom Border Collapse */
+.tableRow td:not(:first-child) {
+    background-color: var(--color-main-background);
     padding: 5px;
+    border-left: 1px solid;
+}
+.tableRow td:last-child {
+    border-right: 1px solid;
+}
+
+.tableRow:not(.ghost) td:not(:first-child), .tableRow:active td:not(:first-child) {
+    border-top: 1px solid;
+}
+
+tbody:last-child .tableRow:not(.ghost):last-child td:not(:first-child), .tableRow:active td:not(:first-child), .tableRow:has(+ .tableRow.ghost) td:not(:first-child) {
+    border-bottom: 1px solid;
 }
 
 .drag-handle {
-		width: 44px;
-		height: 100%;
-		opacity: .5;
+    width: 44px;
+    height: 100%;
+    transition: opacity 0.5s;
+}
 
-		&:hover,
-		&:focus {
-			opacity: 1;
-		}
-		cursor: grab;
+.drag-handle-active {
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+    cursor: grab;
 
-		&:active {
-			cursor: grabbing;
-		}
-	}
+    &:active {
+        cursor: grabbing;
+    }
+}
 </style>

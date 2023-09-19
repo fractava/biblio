@@ -31,15 +31,14 @@
 		@update:title="onTitleChange"
 		@delete="onDelete">
 		<div class="field__content">
-			<input ref="input"
+			<NcInputField ref="input"
 				:placeholder="t('biblio', 'Value')"
 				:disabled="!allowValueEdit"
 				:value="value"
-				class="field__input"
-				minlength="1"
+				minlength="0"
 				type="text"
-				@input="onInput"
-				@keydown.enter.exact.prevent="onKeydownEnter">
+				@update:value="onInput"
+				@keydown.enter.exact.prevent="onKeydownEnter" />
 		</div>
 	</Field>
 </template>
@@ -47,8 +46,14 @@
 <script>
 import FieldMixin from "../../mixins/FieldMixin";
 
+import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
+
 export default {
 	name: "ShortTextField",
+
+	components: {
+		NcInputField,
+	},
 
 	mixins: [FieldMixin],
 
@@ -62,21 +67,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// Using type to have a higher order than the input styling of server
-.field__input[type=text] {
-	width: 100%;
-	min-height: 44px;
-	margin: 0;
-	padding: 6px 0;
-	border: 0;
-	border-bottom: 1px dotted var(--color-border-dark);
-	border-radius: 0;
-
-	&:disabled {
-		// Just overrides Server CSS-Styling for disabled inputs. -> Not Good??
-		background-color: var(--color-main-background);
-		color: var(--color-main-text);
-	}
-}
 
 </style>

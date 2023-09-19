@@ -10,32 +10,35 @@
 			</NcButton>
 		</div>
 		<FieldsTable>
-			<FieldsTableRow>
-				<div></div>
-				<template #left>
-					<span>Titel:</span>
-				</template>
-				<template #right>
-					<span>{{ title }}</span>
-				</template>
-			</FieldsTableRow>
 			<Draggable :value="fields"
-				@input="onFieldsUpdate"
+				drag-class="drag"
+				ghost-class="ghost"
 				:animation="200"
-				tag="div"
-				class="ignoreForLayout"
-				handle=".drag-handle"
+				tag="tbody"
+				draggable=".draggableitem"
+				handle=".drag-handle-active"
+				@input="onFieldsUpdate"
 				@start="isDragging = true"
 				@end="isDragging = false"
 				@change="fieldsOrderChanged">
+				<ShortTextField slot="header"
+					:enable-drag-handle="false"
+					:field-type="FieldTypes['short']"
+					:allow-title-edit="false"
+					:is-required="true"
+					title="Titel"
+					:value="title" />
 				<Fields :is="FieldTypes[field.type].component"
 					v-for="field in fields"
 					:key="field.title + '-field'"
-					ref="fields"
 					:field-type="FieldTypes[field.type]"
 					:is-required="false"
+					:allow-title-edit="editMode"
+					:allow-value-edit="editMode"
+					:enable-drag-handle="editMode"
 					:title.sync="field.title"
 					:value="field.value"
+					class="draggableitem"
 					@update:value="(newValue) => onFieldUpdate(newValue, field)"
 					@delete="deleteField(field)" />
 			</Draggable>
@@ -50,6 +53,7 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 import Pencil from 'vue-material-design-icons/Pencil.vue';
 import FieldTypes from "../models/FieldTypes";
+import ShortTextField from "../components/Fields/ShortTextField";
 
 import FieldsTable from "../components/FieldsTable.vue";
 import FieldsTableRow from "../components/FieldsTableRow.vue";
@@ -61,6 +65,7 @@ export default {
 		Pencil,
 		FieldsTable,
 		FieldsTableRow,
+		ShortTextField,
 	},
 	props: {
 		title: {
@@ -83,6 +88,8 @@ export default {
 
 		},
 		onFieldsUpdate(fields) {
+			// remove falsy entries, draggable has a bug that sometimes inserts undefined entries
+			fields = fields.filter(Boolean);
 			this.$emit("setFields", fields);
 		},
 		onFieldUpdate() {

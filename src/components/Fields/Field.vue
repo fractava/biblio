@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<FieldsTableRow>
+	<FieldsTableRow :enable-drag-handle="enableDragHandle">
 		<template #left>
 			<input v-if="(edit || !title) && allowTitleEdit"
 				:placeholder="t('biblio', 'Title')"
