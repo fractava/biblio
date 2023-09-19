@@ -21,13 +21,6 @@
 				@start="isDragging = true"
 				@end="isDragging = false"
 				@change="fieldsOrderChanged">
-				<ShortTextField slot="header"
-					:enable-drag-handle="false"
-					:field-type="FieldTypes['short']"
-					:allow-title-edit="false"
-					:is-required="true"
-					title="Titel"
-					:value="title" />
 				<Fields :is="FieldTypes[field.type].component"
 					v-for="field in fields"
 					:key="field.title + '-field'"
@@ -41,15 +34,37 @@
 					class="draggableitem"
 					@update:value="(newValue) => onFieldUpdate(newValue, field)"
 					@delete="deleteField(field)" />
+				<ShortTextField slot="header"
+					:enable-drag-handle="false"
+					:field-type="FieldTypes['short']"
+					:allow-title-edit="false"
+					:is-required="true"
+					title="Titel"
+					:value="title" />
 			</Draggable>
 		</FieldsTable>
+		<NcActions class="addFieldButton"
+			:style="{'opacity': editMode ? 1 : 0}"
+			:open.sync="addFieldMenuOpened"
+			:menu-title="t('biblio', 'Add a field')"
+			default-icon="icon-add">
+			<NcActionButton v-for="(field, type) in FieldTypes"
+				:key="field.label"
+				:close-after-click="true"
+				:icon="field.icon"
+				@click="addField(type, field)">
+				{{ field.label }}
+			</NcActionButton>
+		</NcActions>
 	</div>
 </template>
 
 <script>
 import Draggable from "vuedraggable";
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 
 import Pencil from 'vue-material-design-icons/Pencil.vue';
 import FieldTypes from "../models/FieldTypes";
@@ -62,6 +77,8 @@ export default {
 	components: {
 		Draggable,
 		NcButton,
+		NcActions,
+		NcActionButton,
 		Pencil,
 		FieldsTable,
 		FieldsTableRow,
@@ -80,6 +97,7 @@ export default {
 	data() {
 		return {
 			editMode: false,
+			addFieldMenuOpened: false,
 			FieldTypes,
 		};
 	},
@@ -88,11 +106,17 @@ export default {
 
 		},
 		onFieldsUpdate(fields) {
-			// remove falsy entries, draggable has a bug that sometimes inserts undefined entries
-			fields = fields.filter(Boolean);
+			console.log("onFieldsUpdate", JSON.stringify(fields));
 			this.$emit("setFields", fields);
 		},
 		onFieldUpdate() {
+		},
+		addField(type, field) {
+			this.onFieldsUpdate([...this.fields, {
+				title: field.label,
+				type,
+				value: field.defaultValue,
+			}]);
 		},
 	},
 };
@@ -108,5 +132,17 @@ export default {
 
 .ignoreForLayout {
 	display: contents;
+}
+</style>
+<style>
+.addFieldButton {
+	width: calc(100% - 24px);
+	margin-left: 24px;
+	margin-top: 5px;
+	transition: opacity 0.5s;
+}
+
+.addFieldButton button {
+	width: 100% !important;
 }
 </style>
