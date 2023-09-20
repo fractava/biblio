@@ -8,27 +8,26 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
-class MediumMapper extends QBMapper {
-	const TABLENAME = 'biblio_mediums';
+class LibraryMapper extends QBMapper {
+    const TABLENAME = 'biblio_libraries';
 
 	public function __construct(IDBConnection $db) {
-		parent::__construct($db, self::TABLENAME, Medium::class);
+		parent::__construct($db, self::TABLENAME, Library::class);
 	}
 
 	/**
 	 * @param int $id
-	 * @param string $userId
-	 * @return Entity|Medium
+	 * @return Entity|Library
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, int $libraryId): Medium {
+	public function find(int $id): Library {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from(self::TABLENAME)
-			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
-			->andWhere($qb->expr()->eq('library_id', $qb->createNamedParameter($libraryId)));
+			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
+        
 		return $this->findEntity($qb);
 	}
 
@@ -36,12 +35,17 @@ class MediumMapper extends QBMapper {
 	 * @param string $userId
 	 * @return array
 	 */
-	public function findAll(string $libraryId): array {
+	public function findAll(string $userId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('*')
-			->from(self::TABLENAME)
-			->where($qb->expr()->eq('library_id', $qb->createNamedParameter($libraryId)));
+
+        $qb->select('*')
+            ->from(self::TABLENAME, 'l')
+            ->innerJoin('l', 'biblio_library_members', 'm', $qb->expr()->and(
+                $qb->expr()->eq('m.library_id', 'l.id'),
+                $qb->expr()->eq('m.user_id', $qb->createNamedParameter($userId))
+            ));
+        
 		return $this->findEntities($qb);
 	}
 }

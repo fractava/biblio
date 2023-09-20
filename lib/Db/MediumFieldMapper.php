@@ -50,7 +50,7 @@ class MediumFieldMapper extends QBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->selectDistinct('title') ->from('biblio_medium_fields');
+		$qb->selectDistinct('title')->from('biblio_medium_fields');
 		$result = $qb->executeQuery();
 
 		return array_column($result->fetchAll(), "title");
