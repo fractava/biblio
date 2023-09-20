@@ -13,6 +13,9 @@
     <bugs>https://github.com/fractava/biblio/issues</bugs>
     <dependencies>
         <nextcloud min-version="19" max-version="27"/>
+        <database>pgsql</database>
+        <database>sqlite</database>
+        <database>mysql</database>
     </dependencies>
     <navigations>
         <navigation>
