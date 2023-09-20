@@ -39,7 +39,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			$table->setPrimaryKey(['id']);
 		}
 
-		if(!§schema->hasTable('biblio_library_members')) {
+		if(!$schema->hasTable('biblio_library_members')) {
 			$table = $schema->createTable('biblio_library_members');
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
