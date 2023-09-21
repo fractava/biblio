@@ -5,9 +5,29 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 export const useMediumsStore = defineStore("mediums", {
 	state: () => ({
+		libraries: [],
 		mediums: [],
 	}),
 	actions: {
+		createLibrary(options) {
+			return new Promise((resolve, reject) => {
+				console.log(options);
+
+				const parameters = {
+					name: options.name,
+				};
+
+				axios.post(generateUrl("/apps/biblio/libraries"), parameters).then(function(response) {
+					console.log(response.data);
+
+					resolve(response.data);
+				})
+					.catch(function(error) {
+						showError(t("biblio", "Could not create libraries"));
+						reject(error);
+					});
+			});
+		},
 		createMedium(options) {
 			return new Promise((resolve, reject) => {
 				let new_medium_id;
@@ -44,6 +64,22 @@ export const useMediumsStore = defineStore("mediums", {
 					.catch(function(error) {
 						showError(t("biblio", "Could not create medium"));
 						reject(error);
+					});
+			});
+		},
+		fetchLibraries() {
+			return new Promise((resolve, reject) => {
+				axios.get(generateUrl("/apps/biblio/libraries"), {}).then((response) => {
+					const libraries = response.data;
+
+					console.log(libraries);
+
+					this.libraries = libraries;
+					resolve();
+				})
+					.catch(function(error) {
+						console.error(error);
+						showError(t("biblio", "Could not libraries"));
 					});
 			});
 		},

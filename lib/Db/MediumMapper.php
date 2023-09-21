@@ -33,7 +33,7 @@ class MediumMapper extends QBMapper {
 	}
 
 	/**
-	 * @param string $userId
+	 * @param string $libraryId
 	 * @return array
 	 */
 	public function findAll(string $libraryId): array {
