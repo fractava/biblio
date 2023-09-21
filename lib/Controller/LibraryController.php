@@ -28,7 +28,6 @@ class LibraryController extends Controller {
 	/**
 	 * Get all libraries the current user has access to
 	 * @NoAdminRequired
-     * @NoCSRFRequired
 	 */
 	public function index(): DataResponse {
 		return new DataResponse($this->service->findAll($this->userId));
@@ -37,7 +36,6 @@ class LibraryController extends Controller {
 	/**
 	 * Get specific library
 	 * @NoAdminRequired
-     * @NoCSRFRequired
 	 */
 	public function show(int $libraryId): DataResponse {
 		return $this->handleNotFound(function () use ($libraryId) {
