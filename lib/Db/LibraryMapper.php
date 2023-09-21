@@ -39,9 +39,9 @@ class LibraryMapper extends QBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
+        $qb->select('l.*')
             ->from(self::TABLENAME, 'l')
-            ->innerJoin('l', 'biblio_library_members', 'm', $qb->expr()->and(
+            ->innerJoin('l', 'biblio_library_members', 'm', $qb->expr()->andX(
                 $qb->expr()->eq('m.library_id', 'l.id'),
                 $qb->expr()->eq('m.user_id', $qb->createNamedParameter($userId))
             ));
