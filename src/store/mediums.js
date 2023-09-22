@@ -6,9 +6,14 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 export const useMediumsStore = defineStore("mediums", {
 	state: () => ({
 		libraries: [],
+		selectedLibrary: false,
 		mediums: [],
 	}),
 	actions: {
+		selectLibrary(id) {
+			this.selectedLibrary = id;
+			this.fetchMediums();
+		},
 		createLibrary(options) {
 			return new Promise((resolve, reject) => {
 				console.log(options);
@@ -50,7 +55,7 @@ export const useMediumsStore = defineStore("mediums", {
 					title: options.title,
 					fields: JSON.stringify(fields),
 				};
-				axios.post(generateUrl("/apps/biblio/mediums"), parameters).then(function(response) {
+				axios.post(generateUrl(`/apps/biblio/libraries/${this.selectedLibrary}/mediums`), parameters).then(function(response) {
 					this.mediums.push({
 						title: options.title,
 						id: response.data.id,
@@ -85,7 +90,10 @@ export const useMediumsStore = defineStore("mediums", {
 		},
 		fetchMediums() {
 			return new Promise((resolve, reject) => {
-				axios.get(generateUrl("/apps/biblio/mediums"), {
+				if (!this.selectedLibrary) {
+					return;
+				}
+				axios.get(generateUrl(`/apps/biblio/libraries/${this.selectedLibrary}/mediums`), {
 					params: {
 						include: "model+fields",
 					},
