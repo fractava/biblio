@@ -1,6 +1,6 @@
 <template>
 	<NcAppNavigation>
-		<AppNavigationSelect style="margin-bottom: 22px;"
+		<AppNavigationSelect style="margin-bottom: 12px;"
 			:options="mediumsStore.libraries"
 			options-label="name"
 			button-aria-label="Open Library Settings"
