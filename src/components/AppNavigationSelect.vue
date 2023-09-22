@@ -3,17 +3,20 @@
 		<vueSelect class="navigationSelectSelect" :options="['test', 'test 2']" placeholder="Select Library">
             <template #open-indicator="{ attributes }">
                 <OpenIndicator v-bind="attributes" />
-                <NcActions ref="actions"
-                    :inline="1"
-                    class="app-navigation-entry__actions"
-                    container="#app-navigation-vue">
-                    <NcActionButton :aria-label="buttonAriaLabel"
-                        @click="handleButton">
-                        <template #icon>
-                            <slot name="button-icon" />
-                        </template>
-                    </NcActionButton>
-                </NcActions>
+                <div @mousedown.stop>
+                    <NcActions ref="actions"
+                        :inline="1"
+                        class="navigationSelectButton"
+                        type="secondary"
+                        container="#app-navigation-vue">
+                        <NcActionButton :aria-label="buttonAriaLabel"
+                            @click.stop="handleButton">
+                            <template #icon>
+                                <slot name="button-icon" />
+                            </template>
+                        </NcActionButton>
+                    </NcActions>
+                </div>
             </template>
         </vueSelect>
 	</div>
@@ -52,8 +55,11 @@ export default {
 		},
 	},
 	methods: {
-		handleButton() {
+		handleButton(event) {
+            event.stopPropagation();
+            event.stopImmediatePropagation();
 
+            console.log("handeled button", event);
 		},
 	},
 };
@@ -66,6 +72,8 @@ export default {
     width: 100%;
     padding: 8px;
     --vs-search-input-bg: var(--color-primary-element-light);
+    --vs-dropdown-bg: var(--color-primary-element-light);
+    --vs-dropdown-option--active-bg: var(--color-primary-element-light-hover);
     --vs-controls-color: var(--color-primary-element-light-text);
     --vs-search-input-color: var(--color-primary-element-light-text);
     --vs-border-color: transparent;
@@ -74,6 +82,7 @@ export default {
 }
 
 .navigationSelectSelect {
+    margin: 0px;
     width: 100%;
 }
 
@@ -110,11 +119,31 @@ export default {
     }
 
     .vs__dropdown-toggle {
-        border-radius: 20px;
+        border-radius: 24px;
+        padding-bottom: 0px;
+        overflow: hidden;
+    }
+
+    .vs__actions {
+        padding-right: 0px;
+        padding-top: 0px;
+    }
+
+    .navigationSelectButton {
+        margin-left: 5px;
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
+
+    .vs__dropdown-toggle:hover:not(:has(.navigationSelectButton:hover)) {
+        background-color: var(--color-primary-element-light-hover);
     }
 
     &.vs--open {
         .vs__dropdown-toggle {
+        }
+        .navigationSelectButton {
+            border-bottom-right-radius: 0px !important;
         }
     }
 
