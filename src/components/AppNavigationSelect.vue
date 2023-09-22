@@ -103,7 +103,8 @@ export default {
     }
 
     .vs__selected {
-        margin-top: 2px;
+        padding: 0 0.5em;
+        margin-top: 0px;
         height: 100%;
     }
 
@@ -114,7 +115,7 @@ export default {
 
     .vs__search, .vs__search:focus {
         margin-top: 0px;
-        height: 100%;
+        height: 100% !important;
         border: none;
     }
 
