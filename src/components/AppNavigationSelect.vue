@@ -3,7 +3,8 @@
 		<vueSelect class="navigationSelectSelect"
 			:options="options"
 			:label="optionsLabel"
-			:placeholder="placeholder">
+			:placeholder="placeholder"
+			@input="handleInput">
 			<template #open-indicator="{ attributes }">
 				<OpenIndicator v-bind="attributes" />
 				<div @mousedown.stop>
@@ -57,7 +58,7 @@ export default {
 
 		options: {
 			type: Array,
-			default: [],
+			default: () => [],
 		},
 
 		optionsLabel: {
@@ -72,6 +73,10 @@ export default {
 	},
 	methods: {
 		handleButton(event) {
+			this.$emit("button-clicked", event);
+		},
+		handleInput(selection) {
+			this.$emit("input", selection);
 		},
 	},
 };
