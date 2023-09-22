@@ -4,11 +4,14 @@
 			:options="mediumsStore.libraries"
 			options-label="name"
 			button-aria-label="Open Library Settings"
-			placeholder="Select Library">
+			placeholder="Select Library"
+			@button-clicked="settingsOpen = !settingsOpen"
+			@input="(selection) => { mediumsStore.selectLibrary(selection.id) }">
 			<template #button-icon>
 				<Cog :size="20" />
 			</template>
 		</AppNavigationSelect>
+		<Settings :open="settingsOpen" />
 		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" to="/lend-return">
 			<template #icon>
 				<SwapVertical :size="20" />
@@ -27,35 +30,38 @@
 	</NcAppNavigation>
 </template>
 <script>
-import { mapStores } from "pinia";
 import AppNavigationSelect from "./AppNavigationSelect.vue";
-import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation'
-import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem'
-import NcAppNavigationSpacer from '@nextcloud/vue/dist/Components/NcAppNavigationSpacer.js'
+import Settings from "./Settings.vue";
 
-import SwapVertical from 'vue-material-design-icons/SwapVertical';
-import AccountMultiple from 'vue-material-design-icons/AccountMultiple';
-import Bookshelf from 'vue-material-design-icons/Bookshelf';
-import LibraryShelves from 'vue-material-design-icons/LibraryShelves';
-import Cog from 'vue-material-design-icons/Cog';
+import { mapStores } from "pinia";
+import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation";
+import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem";
+
+import SwapVertical from "vue-material-design-icons/SwapVertical";
+import AccountMultiple from "vue-material-design-icons/AccountMultiple";
+import Bookshelf from "vue-material-design-icons/Bookshelf";
+import Cog from "vue-material-design-icons/Cog";
 
 import { useMediumsStore } from "../store/mediums.js";
 
 export default {
 	components: {
 		AppNavigationSelect,
+		Settings,
 		NcAppNavigation,
 		NcAppNavigationItem,
-		NcAppNavigationSpacer,
 		SwapVertical,
 		AccountMultiple,
 		Bookshelf,
-		LibraryShelves,
 		Cog,
+	},
+	data() {
+		return {
+			settingsOpen: false,
+		};
 	},
 	computed: {
 		...mapStores(useMediumsStore),
-
-	}
+	},
 };
 </script>
