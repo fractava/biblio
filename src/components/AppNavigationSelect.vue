@@ -1,24 +1,27 @@
 <template>
 	<div class="navigationSelectContainer">
-		<vueSelect class="navigationSelectSelect" :options="['test', 'test 2']" placeholder="Select Library">
-            <template #open-indicator="{ attributes }">
-                <OpenIndicator v-bind="attributes" />
-                <div @mousedown.stop>
-                    <NcActions ref="actions"
-                        :inline="1"
-                        class="navigationSelectButton"
-                        type="secondary"
-                        container="#app-navigation-vue">
-                        <NcActionButton :aria-label="buttonAriaLabel"
-                            @click.stop="handleButton">
-                            <template #icon>
-                                <slot name="button-icon" />
-                            </template>
-                        </NcActionButton>
-                    </NcActions>
-                </div>
-            </template>
-        </vueSelect>
+		<vueSelect class="navigationSelectSelect"
+			:options="options"
+			:label="optionsLabel"
+			:placeholder="placeholder">
+			<template #open-indicator="{ attributes }">
+				<OpenIndicator v-bind="attributes" />
+				<div @mousedown.stop>
+					<NcActions ref="actions"
+						:inline="1"
+						class="navigationSelectButton"
+						type="secondary"
+						container="#app-navigation-vue">
+						<NcActionButton :aria-label="buttonAriaLabel"
+							@click.stop="handleButton">
+							<template #icon>
+								<slot name="button-icon" />
+							</template>
+						</NcActionButton>
+					</NcActions>
+				</div>
+			</template>
+		</vueSelect>
 	</div>
 </template>
 
@@ -27,17 +30,15 @@ import vueSelect from 'vue-select';
 import OpenIndicator from 'vue-select/src/components/OpenIndicator.vue';
 
 import 'vue-select/dist/vue-select.css';
-import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 
 export default {
 	components: {
 		vueSelect,
-        OpenIndicator,
-		NcLoadingIcon,
-        NcActions,
-        NcActionButton,
+		OpenIndicator,
+		NcActions,
+		NcActionButton,
 	},
 	props: {
 		/**
@@ -51,15 +52,26 @@ export default {
 
 		buttonAriaLabel: {
 			type: String,
+			required: true,
+		},
+
+		options: {
+			type: Array,
+			default: [],
+		},
+
+		optionsLabel: {
+			type: String,
+			default: "label",
+		},
+
+		placeholder: {
+			type: String,
 			default: "",
 		},
 	},
 	methods: {
 		handleButton(event) {
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-
-            console.log("handeled button", event);
 		},
 	},
 };
@@ -78,7 +90,7 @@ export default {
     --vs-search-input-color: var(--color-primary-element-light-text);
     --vs-border-color: transparent;
     --vs-border-width: 0px;
-    --vs-dropdown-option-padding: 4px 4px;
+    /*--vs-dropdown-option-padding: 4px 4px;*/
 }
 
 .navigationSelectSelect {
@@ -106,11 +118,6 @@ export default {
         padding: 0 0.5em;
         margin-top: 0px;
         height: 100%;
-    }
-
-    .vs__dropdown-option {
-        /*padding-top: 4px;
-        padding-bottom: 4px;*/
     }
 
     .vs__search, .vs__search:focus {
@@ -141,8 +148,6 @@ export default {
     }
 
     &.vs--open {
-        .vs__dropdown-toggle {
-        }
         .navigationSelectButton {
             border-bottom-right-radius: 0px !important;
         }

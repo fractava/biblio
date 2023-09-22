@@ -1,21 +1,25 @@
 <template>
 	<NcAppNavigation>
-		<AppNavigationSelect style="margin-bottom: 22px;">
+		<AppNavigationSelect style="margin-bottom: 22px;"
+			:options="mediumsStore.libraries"
+			options-label="name"
+			button-aria-label="Open Library Settings"
+			placeholder="Select Library">
 			<template #button-icon>
 				<Cog :size="20" />
 			</template>
 		</AppNavigationSelect>
-		<NcAppNavigationItem :title="t('biblio', 'Lend/Return')" to="/lend-return">
+		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" to="/lend-return">
 			<template #icon>
 				<SwapVertical :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :title="t('biblio', 'Mediums')" to="/mediums">
+		<NcAppNavigationItem :name="t('biblio', 'Mediums')" to="/mediums">
 			<template #icon>
 				<Bookshelf :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :title="t('biblio', 'Customers')" to="/customers">
+		<NcAppNavigationItem :name="t('biblio', 'Customers')" to="/customers">
 			<template #icon>
 				<AccountMultiple :size="20" />
 			</template>
@@ -23,6 +27,7 @@
 	</NcAppNavigation>
 </template>
 <script>
+import { mapStores } from "pinia";
 import AppNavigationSelect from "./AppNavigationSelect.vue";
 import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation'
 import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem'
@@ -33,6 +38,8 @@ import AccountMultiple from 'vue-material-design-icons/AccountMultiple';
 import Bookshelf from 'vue-material-design-icons/Bookshelf';
 import LibraryShelves from 'vue-material-design-icons/LibraryShelves';
 import Cog from 'vue-material-design-icons/Cog';
+
+import { useMediumsStore } from "../store/mediums.js";
 
 export default {
 	components: {
@@ -46,5 +53,9 @@ export default {
 		LibraryShelves,
 		Cog,
 	},
+	computed: {
+		...mapStores(useMediumsStore),
+
+	}
 };
 </script>
