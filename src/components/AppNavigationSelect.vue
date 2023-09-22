@@ -1,27 +1,28 @@
 <template>
 	<div class="navigationSelectContainer">
-		<div class="navigationSelectContainerIcon">
-			<NcLoadingIcon v-if="loading" />
-			<slot v-else name="icon" />
-		</div>
-		<vueSelect class="navigationSelectSelect" :options="['test', 'test 2']" placeholder="Select Library" />
-		<NcActions ref="actions"
-			:inline="1"
-			class="app-navigation-entry__actions"
-			container="#app-navigation-vue">
-			<NcActionButton :aria-label="buttonAriaLabel"
-				@click="handleButton">
-				<template #icon>
-					<slot name="button-icon" />
-				</template>
-				{{ editLabel }}
-			</NcActionButton>
-		</NcActions>
+		<vueSelect class="navigationSelectSelect" :options="['test', 'test 2']" placeholder="Select Library">
+            <template #open-indicator="{ attributes }">
+                <OpenIndicator v-bind="attributes" />
+                <NcActions ref="actions"
+                    :inline="1"
+                    class="app-navigation-entry__actions"
+                    container="#app-navigation-vue">
+                    <NcActionButton :aria-label="buttonAriaLabel"
+                        @click="handleButton">
+                        <template #icon>
+                            <slot name="button-icon" />
+                        </template>
+                    </NcActionButton>
+                </NcActions>
+            </template>
+        </vueSelect>
 	</div>
 </template>
 
 <script>
 import vueSelect from 'vue-select';
+import OpenIndicator from 'vue-select/src/components/OpenIndicator.vue';
+
 import 'vue-select/dist/vue-select.css';
 import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
@@ -30,6 +31,7 @@ import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 export default {
 	components: {
 		vueSelect,
+        OpenIndicator,
 		NcLoadingIcon,
         NcActions,
         NcActionButton,
@@ -62,7 +64,13 @@ export default {
     display: flex;
     flex-direction: row;
     width: 100%;
-    --vs-search-input-bg: transparent;
+    padding: 8px;
+    --vs-search-input-bg: var(--color-primary-element-light);
+    --vs-controls-color: var(--color-primary-element-light-text);
+    --vs-search-input-color: var(--color-primary-element-light-text);
+    --vs-border-color: transparent;
+    --vs-border-width: 0px;
+    --vs-dropdown-option-padding: 4px 4px;
 }
 
 .navigationSelectSelect {
@@ -82,7 +90,7 @@ export default {
 <style lang="scss">
 .navigationSelectSelect {
     .vs__selected-options {
-        height: 30px;
+        height: 44px;
     }
 
     .vs__selected {
@@ -91,14 +99,23 @@ export default {
     }
 
     .vs__dropdown-option {
-        padding-top: 4px;
-        padding-bottom: 4px;
+        /*padding-top: 4px;
+        padding-bottom: 4px;*/
     }
 
     .vs__search, .vs__search:focus {
         margin-top: 0px;
         height: 100%;
         border: none;
+    }
+
+    .vs__dropdown-toggle {
+        border-radius: 20px;
+    }
+
+    &.vs--open {
+        .vs__dropdown-toggle {
+        }
     }
 
     .vs__dropdown-menu {

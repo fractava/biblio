@@ -1,9 +1,6 @@
 <template>
 	<NcAppNavigation>
 		<AppNavigationSelect style="margin-bottom: 22px;">
-			<template #icon>
-				<LibraryShelves :size="20" />
-			</template>
 			<template #button-icon>
 				<Cog :size="20" />
 			</template>
