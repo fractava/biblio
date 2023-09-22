@@ -27,7 +27,6 @@ export default {
 		...mapStores(useMediumsStore),
 	},
 	mounted() {
-		// this.mediumsStore.createLibrary({ name: "Test Library" });
 		this.mediumsStore.fetchLibraries();
 		this.mediumsStore.fetchMediums();
 	},

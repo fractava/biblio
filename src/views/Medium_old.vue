@@ -68,6 +68,8 @@ import DateField from "../components/Fields/DateField";
 
 import { mapStores } from 'pinia';
 
+import { useMediumsStore } from "../store/mediums.js";
+
 export default {
 	components: {
 		Draggable,
@@ -150,13 +152,11 @@ export default {
 		}
 	},
 	computed: {
-		...mapState({
-			mediums: state => state.mediums.mediums,
-		}),
+		...mapStores(useMediumsStore),
 	},
 	methods: {
 		async saveNew() {
-			this.$store.dispatch("createMedium", { title: this.newTitle, fields: this.newFields })
+			this.mediumsStore.createMedium({ title: this.newTitle, fields: this.newFields })
 				.then((id) => {
 					this.$router.push({
 						path: "/medium/" + id,
@@ -166,7 +166,7 @@ export default {
 		onFieldUpdate(newValue, field) {
 			field.value = newValue;
 			console.log(newValue, field);
-			this.$store.dispatch("updateMediumField", field);
+			this.mediumsStore.updateMediumField(field);
 		},
 		addField(type, field) {
 			this.thisFields.push({
