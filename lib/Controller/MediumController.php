@@ -59,6 +59,12 @@ class MediumController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $libraryId, string $title, string $fields): JSONResponse {
+		if(strlen($title) < 3) {
+			return new JSONResponse([
+				"error" => "Title must be longer than 3 characters"
+			], Http::STATUS_BAD_REQUEST);
+		}
+
 		$fieldsParsed = json_decode($fields, true);
 		$newMedium = $this->service->create($title, $fieldsParsed, $libraryId);
 		$result = $this->objectHelper->getApiObject($newMedium, "model+fields+fieldsOrder");

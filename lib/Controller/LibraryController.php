@@ -47,6 +47,12 @@ class LibraryController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(string $name): DataResponse {
+		if(strlen($name) <= 3) {
+			return new DataResponse([
+				"error" => "Name must be longer than 3 characters"
+			], Http::STATUS_BAD_REQUEST);
+		}
+
 		return new DataResponse($this->service->create($name, $this->userId));
 	}
 
