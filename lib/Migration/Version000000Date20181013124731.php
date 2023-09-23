@@ -13,8 +13,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
     const COLLECTIONS_TABLE = "biblio_collections";
 	const COLLECTION_MEMBERS_TABLE = "biblio_collection_members";
-    const MEDIUMS_TABLE = "biblio_items";
-	const MEDIUM_FIELDS_TABLE = "biblio_item_fields";
+    const ITEMS_TABLE = "biblio_items";
+	const ITEM_FIELDS_TABLE = "biblio_item_fields";
 
 	/**
 	 * @param IOutput $output
@@ -63,8 +63,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			// TODO: Unique Constraint [collection_id, user_id]
 		}
 
-		if (!$schema->hasTable(self::MEDIUMS_TABLE)) {
-			$table = $schema->createTable(self::MEDIUMS_TABLE);
+		if (!$schema->hasTable(self::ITEMS_TABLE)) {
+			$table = $schema->createTable(self::ITEMS_TABLE);
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -85,8 +85,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			$table->addForeignKeyConstraint($schema->getTable(self::COLLECTIONS_TABLE), ['collection_id'], ['id'], ['onDelete' => 'CASCADE'], 'items_collection_id_fk');
 		}
 
-		if (!$schema->hasTable(self::MEDIUM_FIELDS_TABLE)) {
-			$table = $schema->createTable(self::MEDIUM_FIELDS_TABLE);
+		if (!$schema->hasTable(self::ITEM_FIELDS_TABLE)) {
+			$table = $schema->createTable(self::ITEM_FIELDS_TABLE);
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -108,7 +108,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['item_id'], 'itemIdIndex');
-			$table->addForeignKeyConstraint($schema->getTable(self::MEDIUMS_TABLE), ['item_id'], ['id'], ['onDelete' => 'CASCADE'], 'item_fields_item_id_fk');
+			$table->addForeignKeyConstraint($schema->getTable(self::ITEMS_TABLE), ['item_id'], ['id'], ['onDelete' => 'CASCADE'], 'item_fields_item_id_fk');
 		}
 		return $schema;
 	}
