@@ -68,7 +68,7 @@ import DateField from "../components/Fields/DateField";
 
 import { mapStores } from 'pinia';
 
-import { useMediumsStore } from "../store/mediums.js";
+import { useItemsStore } from "../store/items.js";
 
 export default {
 	components: {
@@ -135,7 +135,7 @@ export default {
 	watch: {
 		thisTitle(value) {
 			if (!this.createNew) {
-				this.$store.dispatch("updateMediumTitle", { id: this.$route.params.id, title: value });
+				this.$store.dispatch("updateItemTitle", { id: this.$route.params.id, title: value });
 			}
 		},
 	},
@@ -144,29 +144,29 @@ export default {
 			this.thisTitle = this.newTitle;
 			this.thisFields = this.newFields;
 		} else {
-			this.thisTitle = this.$store.getters.getMediumById(this.$route.params.id).title;
+			this.thisTitle = this.$store.getters.getItemById(this.$route.params.id).title;
 			this.thisFields = [];
-			this.$store.getters.getMediumFields(this.$route.params.id).then((fields) => {
+			this.$store.getters.getItemFields(this.$route.params.id).then((fields) => {
 				this.thisFields = fields;
 			});
 		}
 	},
 	computed: {
-		...mapStores(useMediumsStore),
+		...mapStores(useItemsStore),
 	},
 	methods: {
 		async saveNew() {
-			this.mediumsStore.createMedium({ title: this.newTitle, fields: this.newFields })
+			this.itemsStore.createItem({ title: this.newTitle, fields: this.newFields })
 				.then((id) => {
 					this.$router.push({
-						path: "/medium/" + id,
+						path: "/item/" + id,
 					});
 				});
 		},
 		onFieldUpdate(newValue, field) {
 			field.value = newValue;
 			console.log(newValue, field);
-			this.mediumsStore.updateMediumField(field);
+			this.itemsStore.updateItemField(field);
 		},
 		addField(type, field) {
 			this.thisFields.push({
@@ -183,7 +183,7 @@ export default {
 			});
 
 			if (!this.createNew) {
-			    this.$store.dispatch("deleteMediumField", { mediumId: this.$route.params.id, id: field.id });
+			    this.$store.dispatch("deleteItemField", { itemId: this.$route.params.id, id: field.id });
 			}
 		},
 		fieldsOrderChanged() {
@@ -195,7 +195,7 @@ export default {
 
 			console.log(newOrder);
 
-			this.$store.dispatch("updateMediumFieldsOrder", { id: this.$route.params.id, fieldsOrder: JSON.stringify(newOrder) });
+			this.$store.dispatch("updateItemFieldsOrder", { id: this.$route.params.id, fieldsOrder: JSON.stringify(newOrder) });
 		},
 	},
 };

@@ -8,38 +8,38 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
-class MediumFieldMapper extends QBMapper {
+class ItemFieldMapper extends QBMapper {
 	public function __construct(IDBConnection $db) {
-		parent::__construct($db, 'biblio_medium_fields', MediumField::class);
+		parent::__construct($db, 'biblio_item_fields', ItemField::class);
 	}
 
 	/**
 	 * @param int $id
-	 * @param int $mediumId
-	 * @return Entity|MediumField
+	 * @param int $itemId
+	 * @return Entity|ItemField
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, int $mediumId): MediumField {
+	public function find(int $id, int $itemId): ItemField {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
-			->from('biblio_medium_fields')
+			->from('biblio_item_fields')
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
-			->andWhere($qb->expr()->eq('medium_id', $qb->createNamedParameter($mediumId, IQueryBuilder::PARAM_INT)));
+			->andWhere($qb->expr()->eq('item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)));
 		return $this->findEntity($qb);
 	}
 
 	/**
-	 * @param int $mediumId
+	 * @param int $itemId
 	 * @return array
 	 */
-	public function findAll(int $mediumId): array {
+	public function findAll(int $itemId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
-			->from('biblio_medium_fields')
-			->where($qb->expr()->eq('medium_id', $qb->createNamedParameter($mediumId, IQueryBuilder::PARAM_INT)));
+			->from('biblio_item_fields')
+			->where($qb->expr()->eq('item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)));
 		return $this->findEntities($qb);
 	}
 
@@ -50,7 +50,7 @@ class MediumFieldMapper extends QBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->selectDistinct('title')->from('biblio_medium_fields');
+		$qb->selectDistinct('title')->from('biblio_item_fields');
 		$result = $qb->executeQuery();
 
 		return array_column($result->fetchAll(), "title");

@@ -7,24 +7,24 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\Biblio\Db\Medium;
-use OCA\Biblio\Db\MediumField;
-use OCA\Biblio\Db\MediumFieldMapper;
+use OCA\Biblio\Db\Item;
+use OCA\Biblio\Db\ItemField;
+use OCA\Biblio\Db\ItemFieldMapper;
 
-class MediumFieldService {
+class ItemFieldService {
 
-	/** @var MediumFieldMapper */
+	/** @var ItemFieldMapper */
 	private $mapper;
 
-	public function __construct(MediumFieldMapper $mapper) {
+	public function __construct(ItemFieldMapper $mapper) {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(int $mediumId): array {
-		return $this->mapper->findAll($mediumId);
+	public function findAll(int $itemId): array {
+		return $this->mapper->findAll($itemId);
 	}
 
-	public function findAllInOrder(Medium $entity): array {
+	public function findAllInOrder(Item $entity): array {
 		$fieldsOrder = json_decode($entity->getFieldsOrder(), true) ?: [];
 		$fields = $this->findAll($entity->getId());
 
@@ -35,7 +35,7 @@ class MediumFieldService {
 			}
 		}
 
-		$cmp = function (MediumField $a, MediumField $b) use ($fieldsOrder): int {
+		$cmp = function (ItemField $a, ItemField $b) use ($fieldsOrder): int {
 			$pos1 = array_search($a->getId(), $fieldsOrder);
    			$pos2 = array_search($b->getId(), $fieldsOrder);
 
@@ -54,32 +54,32 @@ class MediumFieldService {
 	private function handleException(Exception $e): void {
 		if ($e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException) {
-			throw new MediumNotFound($e->getMessage());
+			throw new ItemNotFound($e->getMessage());
 		} else {
 			throw $e;
 		}
 	}
 
-	public function find(int $id, int $mediumId) {
+	public function find(int $id, int $itemId) {
 		try {
-			return $this->mapper->find($id, $mediumId);
+			return $this->mapper->find($id, $itemId);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function create($mediumId, $type, $title, $value) {
-		$field = new MediumField();
-        $field->setMediumId($mediumId);
+	public function create($itemId, $type, $title, $value) {
+		$field = new ItemField();
+        $field->setItemId($itemId);
 		$field->setType($type);
 		$field->setTitle($title);
 		$field->setValue($value);
 		return $this->mapper->insert($field);
 	}
 
-	public function update($id, $mediumId, $type, $title, $value) {
+	public function update($id, $itemId, $type, $title, $value) {
 		try {
-			$field = $this->mapper->find($id, $mediumId);
+			$field = $this->mapper->find($id, $itemId);
 			
 			if (!is_null($type)) {
 				$field->setType($type);
@@ -97,9 +97,9 @@ class MediumFieldService {
 		}
 	}
 
-	public function delete($id, $mediumId) {
+	public function delete($id, $itemId) {
 		try {
-			$field = $this->mapper->find($id, $mediumId);
+			$field = $this->mapper->find($id, $itemId);
 			$this->mapper->delete($field);
 			return $field;
 		} catch (Exception $e) {

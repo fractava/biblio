@@ -20,19 +20,19 @@ return [
 		['name' => 'collection_members#update', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'PUT'],
 		['name' => 'collection_members#destroy', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'DELETE'],
 
-		// Mediums
-		['name' => 'medium#index', 'url' => '/collections/{collectionId}/mediums', 'verb' => 'GET'],
-        ['name' => 'medium#show', 'url' => '/collections/{collectionId}/mediums/{id}', 'verb' => 'GET'],
-        ['name' => 'medium#create', 'url' => '/collections/{collectionId}/mediums', 'verb' => 'POST'],
-        ['name' => 'medium#update', 'url' => '/collections/{collectionId}/mediums/{id}', 'verb' => 'PUT'],
-        ['name' => 'medium#destroy', 'url' => '/collections/{collectionId}/mediums/{id}', 'verb' => 'DELETE'],
+		// Items
+		['name' => 'item#index', 'url' => '/collections/{collectionId}/items', 'verb' => 'GET'],
+        ['name' => 'item#show', 'url' => '/collections/{collectionId}/items/{id}', 'verb' => 'GET'],
+        ['name' => 'item#create', 'url' => '/collections/{collectionId}/items', 'verb' => 'POST'],
+        ['name' => 'item#update', 'url' => '/collections/{collectionId}/items/{id}', 'verb' => 'PUT'],
+        ['name' => 'item#destroy', 'url' => '/collections/{collectionId}/items/{id}', 'verb' => 'DELETE'],
 
-		// Medium Fields
-		['name' => 'medium_field#index', 'url' => '/collections/{collectionId}/medium_fields', 'verb' => 'GET'],
-        ['name' => 'medium_field#show', 'url' => '/collections/{collectionId}/medium_fields/{id}', 'verb' => 'GET'],
-        ['name' => 'medium_field#create', 'url' => '/collections/{collectionId}/medium_fields', 'verb' => 'POST'],
-        ['name' => 'medium_field#update', 'url' => '/collections/{collectionId}/medium_fields/{id}', 'verb' => 'PUT'],
-        ['name' => 'medium_field#destroy', 'url' => '/collections/{collectionId}/medium_fields/{id}', 'verb' => 'DELETE'],
-		['name' => 'medium_field#uniqueTitles', 'url' => '/collections/{collectionId}/medium_fields/uniqueTitles', 'verb' => 'GET'],
+		// Item Fields
+		['name' => 'item_field#index', 'url' => '/collections/{collectionId}/item_fields', 'verb' => 'GET'],
+        ['name' => 'item_field#show', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'GET'],
+        ['name' => 'item_field#create', 'url' => '/collections/{collectionId}/item_fields', 'verb' => 'POST'],
+        ['name' => 'item_field#update', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'PUT'],
+        ['name' => 'item_field#destroy', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'DELETE'],
+		['name' => 'item_field#uniqueTitles', 'url' => '/collections/{collectionId}/item_fields/uniqueTitles', 'verb' => 'GET'],
 	]
 ];

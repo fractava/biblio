@@ -3,13 +3,13 @@
 namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\MediumService;
+use OCA\Biblio\Service\ItemService;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
-class MediumApiController extends ApiController {
-	/** @var MediumService */
+class ItemApiController extends ApiController {
+	/** @var ItemService */
 	private $service;
 
 	/** @var string */
@@ -18,7 +18,7 @@ class MediumApiController extends ApiController {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								MediumService $service,
+								ItemService $service,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;

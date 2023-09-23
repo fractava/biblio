@@ -25,8 +25,8 @@ import Router from "vue-router";
 import { getRootUrl, generateUrl } from "@nextcloud/router";
 
 import LendReturn from "./views/LendReturn";
-import Mediums from "./views/Mediums";
-import Medium from "./views/Medium";
+import Items from "./views/Items";
+import Item from "./views/Item";
 import Customers from "./views/Customers";
 import Customer from "./views/Customer";
 
@@ -51,17 +51,17 @@ const router = new Router({
 			component: LendReturn,
 		},
 		{
-			path: "/mediums",
-			component: Mediums,
+			path: "/items",
+			component: Items,
 		},
 		{
-			path: "/medium/new",
-			component: Medium,
+			path: "/item/new",
+			component: Item,
 			props: { createNew: true },
 		},
 		{
-			path: "/medium/:id",
-			component: Medium,
+			path: "/item/:id",
+			component: Item,
 		},
 		{
 			path: "/customers",

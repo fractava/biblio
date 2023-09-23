@@ -3,13 +3,13 @@
 namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\MediumFieldService;
+use OCA\Biblio\Service\ItemFieldService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
-class MediumFieldController extends Controller {
-	/** @var MediumFieldService */
+class ItemFieldController extends Controller {
+	/** @var ItemFieldService */
 	private $service;
 
 	/** @var string */
@@ -18,7 +18,7 @@ class MediumFieldController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								MediumFieldService $service,
+								ItemFieldService $service,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
@@ -26,7 +26,7 @@ class MediumFieldController extends Controller {
 	}
 
 	/**
-	 * Get all fields of medium by medium id
+	 * Get all fields of item by item id
 	 * @NoAdminRequired
 	 */
 	public function show(int $id): DataResponse {
@@ -37,34 +37,34 @@ class MediumFieldController extends Controller {
 	 * Get specific field
 	 * @NoAdminRequired
 	 */
-	public function findById(int $id, int $mediumId): DataResponse {
-		return $this->handleNotFound(function () use ($id, $mediumId) {
-			return $this->service->find($id, $mediumId);
+	public function findById(int $id, int $itemId): DataResponse {
+		return $this->handleNotFound(function () use ($id, $itemId) {
+			return $this->service->find($id, $itemId);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $mediumId, string $type, string $title, string $value): DataResponse {
-		return new DataResponse($this->service->create($mediumId, $type, $title, $value));
+	public function create(int $itemId, string $type, string $title, string $value): DataResponse {
+		return new DataResponse($this->service->create($itemId, $type, $title, $value));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, int $mediumId, string $type = null, string $title = null, string $value = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $mediumId, $type, $title, $value) {
-			return $this->service->update($id, $mediumId, $type, $title, $value);
+	public function update(int $id, int $itemId, string $type = null, string $title = null, string $value = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $itemId, $type, $title, $value) {
+			return $this->service->update($id, $itemId, $type, $title, $value);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $id, int $mediumId): DataResponse {
-		return $this->handleNotFound(function () use ($id, $mediumId) {
-			return $this->service->delete($id, $mediumId);
+	public function destroy(int $id, int $itemId): DataResponse {
+		return $this->handleNotFound(function () use ($id, $itemId) {
+			return $this->service->delete($id, $itemId);
 		});
 	}
 	

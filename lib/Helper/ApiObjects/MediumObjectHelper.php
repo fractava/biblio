@@ -2,45 +2,45 @@
 
 namespace OCA\Biblio\Helper\ApiObjects;
 
-use OCA\Biblio\Db\Medium;
-use OCA\Biblio\Service\MediumService;
-use OCA\Biblio\Service\MediumFieldService;
+use OCA\Biblio\Db\Item;
+use OCA\Biblio\Service\ItemService;
+use OCA\Biblio\Service\ItemFieldService;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\IAppContainer;
 
-class MediumObjectHelper extends AbstractObjectHelper {
+class ItemObjectHelper extends AbstractObjectHelper {
     const TITLE_INCLUDE = 'model';
     const FIELDS_INCLUDE = 'fields';
     const FIELDS_ORDER_INCLUDE = 'fieldsOrder';
 
-    /** @var MediumService */
-	private $mediumService;
+    /** @var ItemService */
+	private $itemService;
 
-	/** @var MediumFieldService */
+	/** @var ItemFieldService */
 	private $fieldService;
 
     /**
-     * MediumObjectHelper constructor.
+     * ItemObjectHelper constructor.
      *
      * @param IAppContainer $container
-     * @param MediumService $mediumService,
-     * @param MediumFieldService $fieldService,
+     * @param ItemService $itemService,
+     * @param ItemFieldService $fieldService,
      * @param string $userId
      */
     public function __construct(
         IAppContainer $container,
-        MediumService $mediumService,
-		MediumFieldService $fieldService,
+        ItemService $itemService,
+		ItemFieldService $fieldService,
         $userId
     ) {
         parent::__construct($container, $userId);
 
-        $this->mediumService = $mediumService;
+        $this->itemService = $itemService;
         $this->fieldService = $fieldService;
     }
 
     /**
-     * @param Entity|Medium $entity
+     * @param Entity|Item $entity
      * @param string|null $include
      *
      * @return array|null
@@ -75,12 +75,12 @@ class MediumObjectHelper extends AbstractObjectHelper {
     }
 
     /**
-     * @param Medium $entity
+     * @param Item $entity
      *
      * @return array
      * @throws DoesNotExistException
      */
-	public function getFields(Medium $entity) {
+	public function getFields(Item $entity) {
         return $this->fieldService->findAllInOrder($entity);
 	}
 

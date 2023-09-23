@@ -2,7 +2,7 @@
 	<NcAppSettingsDialog :open.sync="open" :show-navigation="false" name="Application settings">
 		<NcAppSettingsSection id="main" title="Main">
 			<ul>
-				<NcListItem v-for="collection in mediumsStore.collections"
+				<NcListItem v-for="collection in itemsStore.collections"
 					:key="collection.id"
 					:title="collection.name"
 					:bold="false"
@@ -51,7 +51,7 @@ import LibraryShelves from "vue-material-design-icons/LibraryShelves";
 import Pencil from "vue-material-design-icons/Pencil";
 import Delete from "vue-material-design-icons/Delete";
 
-import { useMediumsStore } from "../store/mediums.js";
+import { useItemsStore } from "../store/items.js";
 
 export default {
 	components: {
@@ -72,16 +72,16 @@ export default {
 		},
 	},
 	computed: {
-		...mapStores(useMediumsStore),
+		...mapStores(useItemsStore),
 	},
 	methods: {
 		async addNewCollection(value) {
-			await this.mediumsStore.createCollection({ name: value });
-			await this.mediumsStore.fetchCollections();
+			await this.itemsStore.createCollection({ name: value });
+			await this.itemsStore.fetchCollections();
 		},
 		async deleteCollection(id) {
-			await this.mediumsStore.deleteCollection(id);
-			await this.mediumsStore.fetchCollections();
+			await this.itemsStore.deleteCollection(id);
+			await this.itemsStore.fetchCollections();
 		},
 	},
 };

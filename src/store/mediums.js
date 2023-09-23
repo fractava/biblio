@@ -3,16 +3,16 @@ import axios from "@nextcloud/axios";
 import { generateUrl } from "@nextcloud/router";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
-export const useMediumsStore = defineStore("mediums", {
+export const useItemsStore = defineStore("items", {
 	state: () => ({
 		collections: [],
 		selectedCollection: false,
-		mediums: [],
+		items: [],
 	}),
 	actions: {
 		selectCollection(id) {
 			this.selectedCollection = id;
-			this.fetchMediums();
+			this.fetchItems();
 		},
 		createCollection(options) {
 			return new Promise((resolve, reject) => {
@@ -46,9 +46,9 @@ export const useMediumsStore = defineStore("mediums", {
 					});
 			});
 		},
-		createMedium(options) {
+		createItem(options) {
 			return new Promise((resolve, reject) => {
-				let new_medium_id;
+				let new_item_id;
 
 				console.log(options);
 
@@ -68,19 +68,19 @@ export const useMediumsStore = defineStore("mediums", {
 					title: options.title,
 					fields: JSON.stringify(fields),
 				};
-				axios.post(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/mediums`), parameters).then(function(response) {
-					this.mediums.push({
+				axios.post(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/items`), parameters).then(function(response) {
+					this.items.push({
 						title: options.title,
 						id: response.data.id,
 					});
 
-					new_medium_id = response.data.id;
-					console.log("new_medium_id = ", new_medium_id);
+					new_item_id = response.data.id;
+					console.log("new_item_id = ", new_item_id);
 
-					resolve(new_medium_id);
+					resolve(new_item_id);
 				})
 					.catch(function(error) {
-						showError(t("biblio", "Could not create medium"));
+						showError(t("biblio", "Could not create item"));
 						reject(error);
 					});
 			});
@@ -101,40 +101,40 @@ export const useMediumsStore = defineStore("mediums", {
 					});
 			});
 		},
-		fetchMediums() {
+		fetchItems() {
 			return new Promise((resolve, reject) => {
 				if (!this.selectedCollection) {
 					return;
 				}
-				axios.get(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/mediums`), {
+				axios.get(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/items`), {
 					params: {
 						include: "model+fields",
 					},
 				}).then((response) => {
-					const mediums = response.data;
+					const items = response.data;
 
-					console.log(mediums);
+					console.log(items);
 
-					for (const medium of mediums) {
-						for (const fieldIndex in medium.fields) {
-							console.log(medium.fields[fieldIndex]);
-							medium.fields[fieldIndex].value = JSON.parse(medium.fields[fieldIndex].value);
+					for (const item of items) {
+						for (const fieldIndex in item.fields) {
+							console.log(item.fields[fieldIndex]);
+							item.fields[fieldIndex].value = JSON.parse(item.fields[fieldIndex].value);
 						}
 					}
 
-					this.mediums = mediums;
+					this.items = items;
 					resolve();
 				})
 					.catch(function(error) {
 						console.error(error);
-						showError(t("biblio", "Could not fetch mediums"));
+						showError(t("biblio", "Could not fetch items"));
 					});
 			});
 		},
-		updateMediumTitle(options) {
+		updateItemTitle(options) {
 			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { title: options.title }).then(function(response) {
-					this.getMediumById(options.id).title = options.title;
+				axios.put(generateUrl(`/apps/biblio/items/${options.id}`), { title: options.title }).then(function(response) {
+					this.getItemById(options.id).title = options.title;
 				})
 					.catch(function(error) {
 						console.error(error);
@@ -145,10 +145,10 @@ export const useMediumsStore = defineStore("mediums", {
 				resolve();
 			});
 		},
-		updateMediumFieldsOrder(options) {
+		updateItemFieldsOrder(options) {
 			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/mediums/${options.id}`), { fieldsOrder: options.fieldsOrder }).then(function(response) {
-					this.getMediumById(options.id).fieldsOrder = options.fieldsOrder;
+				axios.put(generateUrl(`/apps/biblio/items/${options.id}`), { fieldsOrder: options.fieldsOrder }).then(function(response) {
+					this.getItemById(options.id).fieldsOrder = options.fieldsOrder;
 				})
 					.catch(function(error) {
 						console.error(error);
@@ -159,10 +159,10 @@ export const useMediumsStore = defineStore("mediums", {
 				resolve();
 			});
 		},
-		updateMediumField(options) {
+		updateItemField(options) {
 			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
-					mediumId: options.mediumId,
+				axios.put(generateUrl(`/apps/biblio/item_fields/${options.id}`), {
+					itemId: options.itemId,
 					type: options.type,
 					title: options.title,
 					value: JSON.stringify(options.value),
@@ -176,21 +176,21 @@ export const useMediumsStore = defineStore("mediums", {
 				resolve();
 			});
 		},
-		deleteMediumField(options) {
-			return axios.delete(generateUrl(`/apps/biblio/medium_fields/${options.id}`), {
+		deleteItemField(options) {
+			return axios.delete(generateUrl(`/apps/biblio/item_fields/${options.id}`), {
 				params: {
-					mediumId: options.mediumId,
+					itemId: options.itemId,
 				},
 			});
 		},
 	},
 	getters: {
-		getMediumById: (state) => (id) => {
-			return state.mediums.find(medium => medium.id == id);
+		getItemById: (state) => (id) => {
+			return state.items.find(item => item.id == id);
 		},
-		getMediumFields: (state) => (id) => {
+		getItemFields: (state) => (id) => {
 			return new Promise((resolve, reject) => {
-				axios.get(generateUrl(`/apps/biblio/medium_fields/${id}`))
+				axios.get(generateUrl(`/apps/biblio/item_fields/${id}`))
 					.then((response) => {
 						const fields = response.data;
 
@@ -198,7 +198,7 @@ export const useMediumsStore = defineStore("mediums", {
 							field.value = JSON.parse(field.value);
 						}
 
-						const fieldsOrder = state.mediums.find(medium => medium.id == id).fieldsOrder;
+						const fieldsOrder = state.items.find(item => item.id == id).fieldsOrder;
 
 						fields.sort(function(a, b) {
 							return fieldsOrder.indexOf(a.id) - fieldsOrder.indexOf(b.id);
@@ -208,7 +208,7 @@ export const useMediumsStore = defineStore("mediums", {
 					})
 					.catch(function(error) {
 						console.error(error);
-						showError(t("biblio", "Could not fetch medium fields"));
+						showError(t("biblio", "Could not fetch item fields"));
 						reject(error);
 					});
 			});

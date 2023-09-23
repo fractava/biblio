@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<MediumUI :title="medium.title"
-			:fields="medium.fields"
+		<ItemUI :title="item.title"
+			:fields="item.fields"
 			@setTitle="setTitle"
 			@setFields="setFields" />
   </div>
@@ -9,22 +9,22 @@
 
 <!--<script>
 
-const medium = ref();
+const item = ref();
 
 </script>-->
 
 <script>
 import Draggable from "vuedraggable";
 
-import MediumUI from "./MediumUI.vue";
+import ItemUI from "./ItemUI.vue";
 
-import { useMediumsStore } from "../store/mediums.js";
+import { useItemsStore } from "../store/items.js";
 import { mapStores } from "pinia";
 
 export default {
 	components: {
 		Draggable,
-		MediumUI,
+		ItemUI,
 	},
 	props: {
 		createNew: {
@@ -34,7 +34,7 @@ export default {
 	},
 	data() {
 		return {
-			newMedium: {
+			newItem: {
 				title: "Test",
 				fields: [
 					{
@@ -52,22 +52,22 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useMediumsStore),
-		mediumId() {
+		...mapStores(useItemsStore),
+		itemId() {
 			return this.$route.params.id;
 		},
-		fetchedMedium() {
+		fetchedItem() {
 			if (this.createNew) {
 				return false;
 			} else {
-				return this.mediumsStore.getMediumById(this.mediumId);
+				return this.itemsStore.getItemById(this.itemId);
 			}
 		},
-		medium() {
+		item() {
 			if (this.createNew) {
-				return this.newMedium;
+				return this.newItem;
 			} else {
-				return this.fetchedMedium;
+				return this.fetchedItem;
 			}
 		}
 	},
@@ -78,14 +78,14 @@ export default {
 	methods: {
 		setTitle(newTitle) {
 			if (this.createNew) {
-				this.newMedium.title = newTitle;
+				this.newItem.title = newTitle;
 			} else {
 				// TODO
 			}
 		},
 		setFields(newFields) {
 			if (this.createNew) {
-				this.newMedium.fields = newFields;
+				this.newItem.fields = newFields;
 			} else {
 				// TODO
 			}

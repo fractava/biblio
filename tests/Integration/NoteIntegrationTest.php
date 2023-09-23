@@ -7,11 +7,11 @@ use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
 
 
-use OCA\Biblio\Db\Medium;
-use OCA\Biblio\Db\MediumMapper;
-use OCA\Biblio\Controller\MediumController;
+use OCA\Biblio\Db\Item;
+use OCA\Biblio\Db\ItemMapper;
+use OCA\Biblio\Controller\ItemController;
 
-class MediumIntegrationTest extends TestCase {
+class ItemIntegrationTest extends TestCase {
 	private $controller;
 	private $mapper;
 	private $userId = 'john';
@@ -30,30 +30,30 @@ class MediumIntegrationTest extends TestCase {
 			return $this->createMock(IRequest::class);
 		});
 
-		$this->controller = $container->query(MediumController::class);
-		$this->mapper = $container->query(MediumMapper::class);
+		$this->controller = $container->query(ItemController::class);
+		$this->mapper = $container->query(ItemMapper::class);
 	}
 
 	public function testUpdate() {
-		// create a new medium that should be updated
-		$medium = new Medium();
-		$medium->setTitle('old_title');
-		$medium->setFields('old_fields');
-		$medium->setUserId($this->userId);
+		// create a new item that should be updated
+		$item = new Item();
+		$item->setTitle('old_title');
+		$item->setFields('old_fields');
+		$item->setUserId($this->userId);
 
-		$id = $this->mapper->insert($medium)->getId();
+		$id = $this->mapper->insert($item)->getId();
 
 		// fromRow does not set the fields as updated
-		$updatedMedium = Medium::fromRow([
+		$updatedItem = Item::fromRow([
 			'id' => $id,
 			'userId' => $this->userId
 		]);
-		$updatedMedium->setFields('fields');
-		$updatedMedium->setTitle('title');
+		$updatedItem->setFields('fields');
+		$updatedItem->setTitle('title');
 
 		$result = $this->controller->update($id, 'title', 'fields');
 
-		$this->assertEquals($updatedMedium, $result->getFields());
+		$this->assertEquals($updatedItem, $result->getFields());
 
 		// clean up
 		$this->mapper->delete($result->getFields());

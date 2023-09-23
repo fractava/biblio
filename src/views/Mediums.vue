@@ -1,14 +1,14 @@
 <template>
 	<ul>
-		<router-link to="medium/new">
+		<router-link to="item/new">
 			<a class="button">
 				<span class="icon icon-add" />
-				<span>{{ t('biblio', 'New Medium') }}</span>
+				<span>{{ t('biblio', 'New Item') }}</span>
 			</a>
 		</router-link>
 		<Table :columns="['title', 'fields']"
-			:items="mediumsStore.mediums"
-			@click="openMedium($event)" />
+			:items="itemsStore.items"
+			@click="openItem($event)" />
 	</ul>
 </template>
 
@@ -16,19 +16,19 @@
 import { mapStores } from "pinia";
 
 import Table from "../components/Table.vue";
-import { useMediumsStore } from "../store/mediums.js";
+import { useItemsStore } from "../store/items.js";
 
 export default {
 	components: {
 		Table,
 	},
 	computed: {
-		...mapStores(useMediumsStore),
+		...mapStores(useItemsStore),
 	},
 	methods: {
-		openMedium(medium) {
+		openItem(item) {
 			this.$router.push({
-				path: "/medium/" + medium,
+				path: "/item/" + item,
 			});
 		},
 	},

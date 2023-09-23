@@ -6,10 +6,14 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
-class Medium extends Entity implements JsonSerializable {
+class Item extends Entity implements JsonSerializable {
 	protected $title;
 	protected $fieldsOrder;
 	protected $collectionId;
+
+	public function __construct() {
+        $this->addType('collectionId','integer');
+    }
 
 	public function jsonSerialize(): array {
 		return [

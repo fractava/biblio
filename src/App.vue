@@ -15,7 +15,7 @@ import "@nextcloud/dialogs/dist/index.css";
 import { mapStores } from "pinia";
 
 import Sidebar from "./components/Sidebar.vue";
-import { useMediumsStore } from "./store/mediums.js";
+import { useItemsStore } from "./store/items.js";
 
 export default {
 	name: "App",
@@ -24,11 +24,11 @@ export default {
 		Sidebar,
 	},
 	computed: {
-		...mapStores(useMediumsStore),
+		...mapStores(useItemsStore),
 	},
 	mounted() {
-		this.mediumsStore.fetchCollections();
-		this.mediumsStore.fetchMediums();
+		this.itemsStore.fetchCollections();
+		this.itemsStore.fetchItems();
 	},
 };
 </script>

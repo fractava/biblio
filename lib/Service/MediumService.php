@@ -7,20 +7,20 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\Biblio\Db\Medium;
-use OCA\Biblio\Db\MediumMapper;
+use OCA\Biblio\Db\Item;
+use OCA\Biblio\Db\ItemMapper;
 
-use OCA\Biblio\Service\MediumFieldService;
+use OCA\Biblio\Service\ItemFieldService;
 
-class MediumService {
+class ItemService {
 
-	/** @var MediumMapper */
+	/** @var ItemMapper */
 	private $mapper;
 
-	/** @var MediumFieldService */
+	/** @var ItemFieldService */
 	private $fieldService;
 
-	public function __construct(MediumMapper $mapper, MediumFieldService $fieldService) {
+	public function __construct(ItemMapper $mapper, ItemFieldService $fieldService) {
 		$this->mapper = $mapper;
 		$this->fieldService = $fieldService;
 	}
@@ -32,7 +32,7 @@ class MediumService {
 	private function handleException(Exception $e): void {
 		if ($e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException) {
-			throw new MediumNotFound($e->getMessage());
+			throw new ItemNotFound($e->getMessage());
 		} else {
 			throw $e;
 		}
@@ -47,44 +47,44 @@ class MediumService {
 	}
 
 	public function create(string $title, array $fields, int $collectionId) {
-		$medium = new Medium();
-		$medium->setTitle($title);
+		$item = new Item();
+		$item->setTitle($title);
 
 		$fieldsOrder = [];
 
-		$medium->setFieldsOrder($fieldsOrder);
-		$medium->setCollectionId($collectionId);
+		$item->setFieldsOrder($fieldsOrder);
+		$item->setCollectionId($collectionId);
 
-		$medium = $this->mapper->insert($medium);
+		$item = $this->mapper->insert($item);
 
 		if(sizeof($fields) > 0){
-			$mediumId = $medium->getId();
+			$itemId = $item->getId();
 
 			foreach($fields as $field) {
-				$fieldEntity = $this->fieldService->create($mediumId, $field["type"], $field["title"], $field["value"]);
+				$fieldEntity = $this->fieldService->create($itemId, $field["type"], $field["title"], $field["value"]);
 				$fieldsOrder[] = $fieldEntity->getId();
 			}
 
-			$medium->setFieldsOrder(json_encode($fieldsOrder));
+			$item->setFieldsOrder(json_encode($fieldsOrder));
 
-			$medium = $this->mapper->update($medium);
+			$item = $this->mapper->update($item);
 		}
 
-		return $medium;
+		return $item;
 	}
 
 	public function update(int $id, int $collectionId, string $title, $fieldsOrder) {
 		try {
-			$medium = $this->mapper->find($id, $collectionId);
+			$item = $this->mapper->find($id, $collectionId);
 			
 			if (!is_null($title)) {
-				$medium->setTitle($title);
+				$item->setTitle($title);
 			}
 			if (!is_null($fieldsOrder)) {
-				$medium->setFieldsOrder($fieldsOrder);
+				$item->setFieldsOrder($fieldsOrder);
 			}
 
-			return $this->mapper->update($medium);
+			return $this->mapper->update($item);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
@@ -92,9 +92,9 @@ class MediumService {
 
 	public function delete(int $id, int $collectionId) {
 		try {
-			$medium = $this->mapper->find($id, $collectionId);
-			$this->mapper->delete($mediumj);
-			return $medium;
+			$item = $this->mapper->find($id, $collectionId);
+			$this->mapper->delete($itemj);
+			return $item;
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}

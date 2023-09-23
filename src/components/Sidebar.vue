@@ -1,12 +1,12 @@
 <template>
 	<NcAppNavigation>
 		<AppNavigationSelect style="margin-bottom: 12px;"
-			:options="mediumsStore.collections"
+			:options="itemsStore.collections"
 			options-label="name"
 			button-aria-label="Open Collection Settings"
 			placeholder="Select Collection"
 			@button-clicked="settingsOpen = !settingsOpen"
-			@input="(selection) => { mediumsStore.selectCollection(selection.id) }">
+			@input="(selection) => { itemsStore.selectCollection(selection.id) }">
 			<template #button-icon>
 				<Cog :size="20" />
 			</template>
@@ -17,7 +17,7 @@
 				<SwapVertical :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Mediums')" to="/mediums">
+		<NcAppNavigationItem :name="t('biblio', 'Items')" to="/items">
 			<template #icon>
 				<Bookshelf :size="20" />
 			</template>
@@ -42,7 +42,7 @@ import AccountMultiple from "vue-material-design-icons/AccountMultiple";
 import Bookshelf from "vue-material-design-icons/Bookshelf";
 import Cog from "vue-material-design-icons/Cog";
 
-import { useMediumsStore } from "../store/mediums.js";
+import { useItemsStore } from "../store/items.js";
 
 export default {
 	components: {
@@ -61,7 +61,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useMediumsStore),
+		...mapStores(useItemsStore),
 	},
 };
 </script>

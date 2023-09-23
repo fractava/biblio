@@ -6,20 +6,20 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
-class MediumField extends Entity implements JsonSerializable {
+class ItemField extends Entity implements JsonSerializable {
 	protected $type;
 	protected $title;
 	protected $value;
-	protected $mediumId;
+	protected $itemId;
 
 	public function __construct() {
-        $this->addType('mediumId','integer');
+        $this->addType('itemId','integer');
     }
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-            'mediumId' => $this->mediumId,
+            'itemId' => $this->itemId,
 			'type' => $this->type,
 			'title' => $this->title,
 			'value' => $this->value

@@ -3,19 +3,19 @@
 namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\MediumService;
-use OCA\Biblio\Helper\ApiObjects\MediumObjectHelper;
+use OCA\Biblio\Service\ItemService;
+use OCA\Biblio\Helper\ApiObjects\ItemObjectHelper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
-class MediumController extends Controller {
-	/** @var MediumService */
+class ItemController extends Controller {
+	/** @var ItemService */
 	private $service;
 
-	/** @var MediumObjectHelper */
+	/** @var ItemObjectHelper */
 	private $objectHelper;
 
 	/** @var string */
@@ -24,8 +24,8 @@ class MediumController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								MediumService $service,
-								MediumObjectHelper $objectHelper,
+								ItemService $service,
+								ItemObjectHelper $objectHelper,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
@@ -50,8 +50,8 @@ class MediumController extends Controller {
 	 */
 	public function show(int $collectionId, int $id, ?string $include): DataResponse {
 		return $this->handleNotFound(function () use ($id, $collectionId, $include) {
-			$medium = $this->service->find($id, $collectionId);
-			return $this->objectHelper->getApiObject($medium, $include);
+			$item = $this->service->find($id, $collectionId);
+			return $this->objectHelper->getApiObject($item, $include);
 		});
 	}
 
@@ -66,8 +66,8 @@ class MediumController extends Controller {
 		}
 
 		$fieldsParsed = json_decode($fields, true);
-		$newMedium = $this->service->create($title, $fieldsParsed, $collectionId);
-		$result = $this->objectHelper->getApiObject($newMedium, "model+fields+fieldsOrder");
+		$newItem = $this->service->create($title, $fieldsParsed, $collectionId);
+		$result = $this->objectHelper->getApiObject($newItem, "model+fields+fieldsOrder");
 
 		return new JSONResponse($result, Http::STATUS_OK);
 
