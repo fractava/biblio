@@ -33,6 +33,19 @@ export const useMediumsStore = defineStore("mediums", {
 					});
 			});
 		},
+		deleteLibrary(id) {
+			return new Promise((resolve, reject) => {
+				axios.delete(generateUrl(`/apps/biblio/libraries/${id}`)).then(function(response) {
+					console.log(response.data);
+
+					resolve(response.data);
+				})
+					.catch(function(error) {
+						showError(t("biblio", "Could not delete library"));
+						reject(error);
+					});
+			});
+		},
 		createMedium(options) {
 			return new Promise((resolve, reject) => {
 				let new_medium_id;
