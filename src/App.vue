@@ -27,7 +27,7 @@ export default {
 		...mapStores(useMediumsStore),
 	},
 	mounted() {
-		this.mediumsStore.fetchLibraries();
+		this.mediumsStore.fetchCollections();
 		this.mediumsStore.fetchMediums();
 	},
 };

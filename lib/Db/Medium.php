@@ -9,12 +9,12 @@ use OCP\AppFramework\Db\Entity;
 class Medium extends Entity implements JsonSerializable {
 	protected $title;
 	protected $fieldsOrder;
-	protected $libraryId;
+	protected $collectionId;
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-			'libraryId' => $this->libraryId,
+			'collectionId' => $this->collectionId,
 			'title' => $this->title,
 			'fieldsOrder' => $this->fieldsOrder
 		];

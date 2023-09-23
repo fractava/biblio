@@ -6,14 +6,14 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
-class LibraryMember extends Entity implements JsonSerializable {
-	protected $libraryId;
+class CollectionMember extends Entity implements JsonSerializable {
+	protected $collectionId;
     protected $userId;
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-			'libraryId' => $this->libraryId,
+			'collectionId' => $this->collectionId,
             'userId' => $this->userId
 		];
 	}

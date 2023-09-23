@@ -25,8 +25,8 @@ class MediumService {
 		$this->fieldService = $fieldService;
 	}
 
-	public function findAll(int $libraryId): array {
-		return $this->mapper->findAll($libraryId);
+	public function findAll(int $collectionId): array {
+		return $this->mapper->findAll($collectionId);
 	}
 
 	private function handleException(Exception $e): void {
@@ -38,22 +38,22 @@ class MediumService {
 		}
 	}
 
-	public function find(int $id, int $libraryId) {
+	public function find(int $id, int $collectionId) {
 		try {
-			return $this->mapper->find($id, $libraryId);
+			return $this->mapper->find($id, $collectionId);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function create(string $title, array $fields, int $libraryId) {
+	public function create(string $title, array $fields, int $collectionId) {
 		$medium = new Medium();
 		$medium->setTitle($title);
 
 		$fieldsOrder = [];
 
 		$medium->setFieldsOrder($fieldsOrder);
-		$medium->setLibraryId($libraryId);
+		$medium->setCollectionId($collectionId);
 
 		$medium = $this->mapper->insert($medium);
 
@@ -73,9 +73,9 @@ class MediumService {
 		return $medium;
 	}
 
-	public function update(int $id, int $libraryId, string $title, $fieldsOrder) {
+	public function update(int $id, int $collectionId, string $title, $fieldsOrder) {
 		try {
-			$medium = $this->mapper->find($id, $libraryId);
+			$medium = $this->mapper->find($id, $collectionId);
 			
 			if (!is_null($title)) {
 				$medium->setTitle($title);
@@ -90,9 +90,9 @@ class MediumService {
 		}
 	}
 
-	public function delete(int $id, int $libraryId) {
+	public function delete(int $id, int $collectionId) {
 		try {
-			$medium = $this->mapper->find($id, $libraryId);
+			$medium = $this->mapper->find($id, $collectionId);
 			$this->mapper->delete($mediumj);
 			return $medium;
 		} catch (Exception $e) {

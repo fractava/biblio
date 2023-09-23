@@ -7,21 +7,21 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\Biblio\Db\Library;
-use OCA\Biblio\Db\LibraryMapper;
+use OCA\Biblio\Db\Collection;
+use OCA\Biblio\Db\CollectionMapper;
 
-use OCA\Biblio\Db\LibraryMember;
-use OCA\Biblio\Db\LibraryMemberMapper;
+use OCA\Biblio\Db\CollectionMember;
+use OCA\Biblio\Db\CollectionMemberMapper;
 
-class LibraryService {
+class CollectionService {
 
-	/** @var LibraryMapper */
+	/** @var CollectionMapper */
 	private $mapper;
 
-    /** @var LibraryMemberMapper */
+    /** @var CollectionMemberMapper */
 	private $memberMapper;
 
-	public function __construct(LibraryMapper $mapper, LibraryMemberMapper $memberMapper) {
+	public function __construct(CollectionMapper $mapper, CollectionMemberMapper $memberMapper) {
 		$this->mapper = $mapper;
         $this->memberMapper = $memberMapper;
 	}
@@ -33,7 +33,7 @@ class LibraryService {
 	private function handleException(Exception $e): void {
 		if ($e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException) {
-			throw new LibraryNotFound($e->getMessage());
+			throw new CollectionNotFound($e->getMessage());
 		} else {
 			throw $e;
 		}
@@ -48,31 +48,31 @@ class LibraryService {
 	}
 
 	public function create(string $name, string $firstMember) {
-		$library = new Library();
-		$library->setName($name);
+		$collection = new Collection();
+		$collection->setName($name);
 
-		$library = $this->mapper->insert($library);
+		$collection = $this->mapper->insert($collection);
 
-        $libraryId = $library->getId();
+        $collectionId = $collection->getId();
 
-        $member = new LibraryMember();
-        $member->setLibraryId($libraryId);
+        $member = new CollectionMember();
+        $member->setCollectionId($collectionId);
         $member->setUserId($firstMember);
 
         $member = $this->memberMapper->insert($member);
 
-		return $library;
+		return $collection;
 	}
 
 	public function update(int $id, string $name) {
 		try {
-			$library = $this->mapper->find($id);
+			$collection = $this->mapper->find($id);
 			
 			if (!is_null($name)) {
-				$library->setName($name);
+				$collection->setName($name);
 			}
 
-			return $this->mapper->update($library);
+			return $this->mapper->update($collection);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
@@ -80,9 +80,9 @@ class LibraryService {
 
 	public function delete(int $id) {
 		try {
-			$library = $this->mapper->find($id);
-			$this->mapper->delete($library);
-			return $library;
+			$collection = $this->mapper->find($id);
+			$this->mapper->delete($collection);
+			return $collection;
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}

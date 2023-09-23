@@ -1,12 +1,12 @@
 <template>
 	<NcAppNavigation>
 		<AppNavigationSelect style="margin-bottom: 12px;"
-			:options="mediumsStore.libraries"
+			:options="mediumsStore.collections"
 			options-label="name"
-			button-aria-label="Open Library Settings"
-			placeholder="Select Library"
+			button-aria-label="Open Collection Settings"
+			placeholder="Select Collection"
 			@button-clicked="settingsOpen = !settingsOpen"
-			@input="(selection) => { mediumsStore.selectLibrary(selection.id) }">
+			@input="(selection) => { mediumsStore.selectCollection(selection.id) }">
 			<template #button-icon>
 				<Cog :size="20" />
 			</template>

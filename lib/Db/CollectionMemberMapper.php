@@ -8,20 +8,20 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
-class LibraryMemberMapper extends QBMapper {
-    const TABLENAME = 'biblio_library_members';
+class CollectionMemberMapper extends QBMapper {
+    const TABLENAME = 'biblio_collection_members';
 
 	public function __construct(IDBConnection $db) {
-		parent::__construct($db, self::TABLENAME, LibraryMember::class);
+		parent::__construct($db, self::TABLENAME, CollectionMember::class);
 	}
 
 	/**
 	 * @param int $id
-	 * @return Entity|LibraryMember
+	 * @return Entity|CollectionMember
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id): LibraryMember {
+	public function find(int $id): CollectionMember {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
@@ -33,16 +33,16 @@ class LibraryMemberMapper extends QBMapper {
 	}
 
 	/**
-	 * @param int $libraryId
+	 * @param int $collectionId
 	 * @return array
 	 */
-	public function findAll(int $libraryId): array {
+	public function findAll(int $collectionId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
 		$qb->select('*')
 			->from(self::TABLENAME)
-			->where($qb->expr()->eq('library_id', $qb->createNamedParameter($libraryId, IQueryBuilder::PARAM_INT)));
+			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
         
 		return $this->findEntities($qb);
 	}

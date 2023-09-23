@@ -2,7 +2,7 @@
 	<NcAppSettingsDialog :open.sync="open" :show-navigation="false" name="Application settings">
 		<NcAppSettingsSection id="main" title="Main">
 			<ul>
-				<NcListItem v-for="collection in mediumsStore.libraries"
+				<NcListItem v-for="collection in mediumsStore.collections"
 					:key="collection.id"
 					:title="collection.name"
 					:bold="false"
@@ -20,7 +20,7 @@
 							</template>
 							Edit
 						</NcActionButton>
-						<NcActionButton @click="deleteLibrary(collection.id)">
+						<NcActionButton @click="deleteCollection(collection.id)">
 							<template #icon>
 								<Delete :size="20" />
 							</template>
@@ -29,7 +29,7 @@
 					</template>
 				</NcListItem>
 			</ul>
-			<NcAppNavigationNewItem title="New Library" @new-item="addNewLibrary">
+			<NcAppNavigationNewItem title="New Collection" @new-item="addNewCollection">
 				<template #icon>
 					<Plus :size="20" />
 				</template>
@@ -75,13 +75,13 @@ export default {
 		...mapStores(useMediumsStore),
 	},
 	methods: {
-		async addNewLibrary(value) {
-			await this.mediumsStore.createLibrary({ name: value });
-			await this.mediumsStore.fetchLibraries();
+		async addNewCollection(value) {
+			await this.mediumsStore.createCollection({ name: value });
+			await this.mediumsStore.fetchCollections();
 		},
-		async deleteLibrary(id) {
-			await this.mediumsStore.deleteLibrary(id);
-			await this.mediumsStore.fetchLibraries();
+		async deleteCollection(id) {
+			await this.mediumsStore.deleteCollection(id);
+			await this.mediumsStore.fetchCollections();
 		},
 	},
 };

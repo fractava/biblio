@@ -5,16 +5,16 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 export const useMediumsStore = defineStore("mediums", {
 	state: () => ({
-		libraries: [],
-		selectedLibrary: false,
+		collections: [],
+		selectedCollection: false,
 		mediums: [],
 	}),
 	actions: {
-		selectLibrary(id) {
-			this.selectedLibrary = id;
+		selectCollection(id) {
+			this.selectedCollection = id;
 			this.fetchMediums();
 		},
-		createLibrary(options) {
+		createCollection(options) {
 			return new Promise((resolve, reject) => {
 				console.log(options);
 
@@ -22,26 +22,26 @@ export const useMediumsStore = defineStore("mediums", {
 					name: options.name,
 				};
 
-				axios.post(generateUrl("/apps/biblio/libraries"), parameters).then(function(response) {
+				axios.post(generateUrl("/apps/biblio/collections"), parameters).then(function(response) {
 					console.log(response.data);
 
 					resolve(response.data);
 				})
 					.catch(function(error) {
-						showError(t("biblio", "Could not create libraries"));
+						showError(t("biblio", "Could not create collection"));
 						reject(error);
 					});
 			});
 		},
-		deleteLibrary(id) {
+		deleteCollection(id) {
 			return new Promise((resolve, reject) => {
-				axios.delete(generateUrl(`/apps/biblio/libraries/${id}`)).then(function(response) {
+				axios.delete(generateUrl(`/apps/biblio/collections/${id}`)).then(function(response) {
 					console.log(response.data);
 
 					resolve(response.data);
 				})
 					.catch(function(error) {
-						showError(t("biblio", "Could not delete library"));
+						showError(t("biblio", "Could not delete collection"));
 						reject(error);
 					});
 			});
@@ -68,7 +68,7 @@ export const useMediumsStore = defineStore("mediums", {
 					title: options.title,
 					fields: JSON.stringify(fields),
 				};
-				axios.post(generateUrl(`/apps/biblio/libraries/${this.selectedLibrary}/mediums`), parameters).then(function(response) {
+				axios.post(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/mediums`), parameters).then(function(response) {
 					this.mediums.push({
 						title: options.title,
 						id: response.data.id,
@@ -85,28 +85,28 @@ export const useMediumsStore = defineStore("mediums", {
 					});
 			});
 		},
-		fetchLibraries() {
+		fetchCollections() {
 			return new Promise((resolve, reject) => {
-				axios.get(generateUrl("/apps/biblio/libraries"), {}).then((response) => {
-					const libraries = response.data;
+				axios.get(generateUrl("/apps/biblio/collections"), {}).then((response) => {
+					const collections = response.data;
 
-					console.log(libraries);
+					console.log(collections);
 
-					this.libraries = libraries;
+					this.collections = collections;
 					resolve();
 				})
 					.catch(function(error) {
 						console.error(error);
-						showError(t("biblio", "Could not libraries"));
+						showError(t("biblio", "Could not collections"));
 					});
 			});
 		},
 		fetchMediums() {
 			return new Promise((resolve, reject) => {
-				if (!this.selectedLibrary) {
+				if (!this.selectedCollection) {
 					return;
 				}
-				axios.get(generateUrl(`/apps/biblio/libraries/${this.selectedLibrary}/mediums`), {
+				axios.get(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/mediums`), {
 					params: {
 						include: "model+fields",
 					},

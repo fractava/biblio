@@ -6,7 +6,7 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
-class Library extends Entity implements JsonSerializable {
+class Collection extends Entity implements JsonSerializable {
 	protected $name;
 
 	public function jsonSerialize(): array {

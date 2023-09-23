@@ -22,26 +22,26 @@ class MediumMapper extends QBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, int $libraryId): Medium {
+	public function find(int $id, int $collectionId): Medium {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
-			->andWhere($qb->expr()->eq('library_id', $qb->createNamedParameter($libraryId)));
+			->andWhere($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
 		return $this->findEntity($qb);
 	}
 
 	/**
-	 * @param string $libraryId
+	 * @param string $collectionId
 	 * @return array
 	 */
-	public function findAll(string $libraryId): array {
+	public function findAll(string $collectionId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from(self::TABLENAME)
-			->where($qb->expr()->eq('library_id', $qb->createNamedParameter($libraryId)));
+			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
 		return $this->findEntities($qb);
 	}
 }

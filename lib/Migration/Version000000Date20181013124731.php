@@ -11,8 +11,8 @@ use OCP\Migration\IOutput;
 
 class Version000000Date20181013124731 extends SimpleMigrationStep {
 
-    const LIBRARIES_TABLE = "biblio_libraries";
-	const LIBRARY_MEMBERS_TABLE = "biblio_library_members";
+    const COLLECTIONS_TABLE = "biblio_collections";
+	const COLLECTION_MEMBERS_TABLE = "biblio_collection_members";
     const MEDIUMS_TABLE = "biblio_mediums";
 	const MEDIUM_FIELDS_TABLE = "biblio_medium_fields";
 
@@ -26,8 +26,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 		/** @var ISchemaWrapper $schema */
 		$schema = $schemaClosure();
 
-		if (!$schema->hasTable(self::LIBRARIES_TABLE)) {
-			$table = $schema->createTable(self::LIBRARIES_TABLE);
+		if (!$schema->hasTable(self::COLLECTIONS_TABLE)) {
+			$table = $schema->createTable(self::COLLECTIONS_TABLE);
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
@@ -40,13 +40,13 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			$table->setPrimaryKey(['id']);
 		}
 
-		if(!$schema->hasTable(self::LIBRARY_MEMBERS_TABLE)) {
-			$table = $schema->createTable(self::LIBRARY_MEMBERS_TABLE);
+		if(!$schema->hasTable(self::COLLECTION_MEMBERS_TABLE)) {
+			$table = $schema->createTable(self::COLLECTION_MEMBERS_TABLE);
 			$table->addColumn('id', 'integer', [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('library_id', 'integer', [
+			$table->addColumn('collection_id', 'integer', [
 				'notnull' => true,
 			]);
 			$table->addColumn('user_id', 'string', [
@@ -57,10 +57,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			// TODO: Permissions
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['library_id'], 'library_id_index');
-			$table->addForeignKeyConstraint($schema->getTable(self::LIBRARIES_TABLE), ['library_id'], ['id'], ['onDelete' => 'CASCADE'], 'members_library_id_fk');
+			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addForeignKeyConstraint($schema->getTable(self::COLLECTIONS_TABLE), ['collection_id'], ['id'], ['onDelete' => 'CASCADE'], 'members_collection_id_fk');
 
-			// TODO: Unique Constraint [library_id, user_id]
+			// TODO: Unique Constraint [collection_id, user_id]
 		}
 
 		if (!$schema->hasTable(self::MEDIUMS_TABLE)) {
@@ -69,7 +69,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('library_id', 'integer', [
+			$table->addColumn('collection_id', 'integer', [
 				'notnull' => true,
 			]);
 			$table->addColumn('title', 'string', [
@@ -81,8 +81,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['library_id'], 'library_id_index');
-			$table->addForeignKeyConstraint($schema->getTable(self::LIBRARIES_TABLE), ['library_id'], ['id'], ['onDelete' => 'CASCADE'], 'mediums_library_id_fk');
+			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addForeignKeyConstraint($schema->getTable(self::COLLECTIONS_TABLE), ['collection_id'], ['id'], ['onDelete' => 'CASCADE'], 'mediums_collection_id_fk');
 		}
 
 		if (!$schema->hasTable(self::MEDIUM_FIELDS_TABLE)) {

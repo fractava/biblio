@@ -3,13 +3,13 @@
 namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\LibraryService;
+use OCA\Biblio\Service\CollectionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
-class LibraryController extends Controller {
-	/** @var LibraryService */
+class CollectionController extends Controller {
+	/** @var CollectionService */
 	private $service;
 
 	/** @var string */
@@ -18,7 +18,7 @@ class LibraryController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-                                LibraryService $service,
+                                CollectionService $service,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
@@ -26,7 +26,7 @@ class LibraryController extends Controller {
 	}
 
 	/**
-	 * Get all libraries the current user has access to
+	 * Get all collections the current user has access to
 	 * @NoAdminRequired
 	 */
 	public function index(): DataResponse {
@@ -34,12 +34,12 @@ class LibraryController extends Controller {
 	}
 
 	/**
-	 * Get specific library
+	 * Get specific collection
 	 * @NoAdminRequired
 	 */
-	public function show(int $libraryId): DataResponse {
-		return $this->handleNotFound(function () use ($libraryId) {
-			return $this->service->find($libraryId);
+	public function show(int $collectionId): DataResponse {
+		return $this->handleNotFound(function () use ($collectionId) {
+			return $this->service->find($collectionId);
 		});
 	}
 
@@ -59,18 +59,18 @@ class LibraryController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $libraryId, string $name): DataResponse {
-		return $this->handleNotFound(function () use ($libraryId, $name) {
-			return $this->service->update($libraryId, $name);
+	public function update(int $collectionId, string $name): DataResponse {
+		return $this->handleNotFound(function () use ($collectionId, $name) {
+			return $this->service->update($collectionId, $name);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $libraryId): DataResponse {
-		return $this->handleNotFound(function () use ($libraryId) {
-			return $this->service->delete($libraryId);
+	public function destroy(int $collectionId): DataResponse {
+		return $this->handleNotFound(function () use ($collectionId) {
+			return $this->service->delete($collectionId);
 		});
 	}
 }

@@ -37,8 +37,8 @@ class MediumController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function index(int $libraryId, ?string $include): JSONResponse {
-		$entities = $this->service->findAll($libraryId);
+	public function index(int $collectionId, ?string $include): JSONResponse {
+		$entities = $this->service->findAll($collectionId);
 		$result = $this->objectHelper->getApiObjects($entities, $include);
 
 		return new JSONResponse($result, Http::STATUS_OK);
@@ -48,9 +48,9 @@ class MediumController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function show(int $libraryId, int $id, ?string $include): DataResponse {
-		return $this->handleNotFound(function () use ($id, $libraryId, $include) {
-			$medium = $this->service->find($id, $libraryId);
+	public function show(int $collectionId, int $id, ?string $include): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId, $include) {
+			$medium = $this->service->find($id, $collectionId);
 			return $this->objectHelper->getApiObject($medium, $include);
 		});
 	}
@@ -58,7 +58,7 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $libraryId, string $title, string $fields): JSONResponse {
+	public function create(int $collectionId, string $title, string $fields): JSONResponse {
 		if(strlen($title) < 3) {
 			return new JSONResponse([
 				"error" => "Title must be longer than 3 characters"
@@ -66,7 +66,7 @@ class MediumController extends Controller {
 		}
 
 		$fieldsParsed = json_decode($fields, true);
-		$newMedium = $this->service->create($title, $fieldsParsed, $libraryId);
+		$newMedium = $this->service->create($title, $fieldsParsed, $collectionId);
 		$result = $this->objectHelper->getApiObject($newMedium, "model+fields+fieldsOrder");
 
 		return new JSONResponse($result, Http::STATUS_OK);
@@ -77,19 +77,19 @@ class MediumController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $libraryId, int $id, string $title = null,
+	public function update(int $collectionId, int $id, string $title = null,
 						   string $fieldsOrder = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $libraryId, $title, $fieldsOrder) {
-			return $this->service->update($id, $libraryId, $title, $fieldsOrder);
+		return $this->handleNotFound(function () use ($id, $collectionId, $title, $fieldsOrder) {
+			return $this->service->update($id, $collectionId, $title, $fieldsOrder);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $libraryId, int $id): DataResponse {
-		return $this->handleNotFound(function () use ($id, $libraryId) {
-			return $this->service->delete($id, $libraryId);
+	public function destroy(int $collectionId, int $id): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId) {
+			return $this->service->delete($id, $collectionId);
 		});
 	}
 }
