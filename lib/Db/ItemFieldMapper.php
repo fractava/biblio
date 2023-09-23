@@ -9,50 +9,41 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 class ItemFieldMapper extends QBMapper {
+	const TABLENAME = 'biblio_item_fields';
+
 	public function __construct(IDBConnection $db) {
-		parent::__construct($db, 'biblio_item_fields', ItemField::class);
+		parent::__construct($db, self::TABLENAME, ItemField::class);
 	}
 
 	/**
 	 * @param int $id
-	 * @param int $itemId
+	 * @param int $collectionId
 	 * @return Entity|ItemField
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, int $itemId): ItemField {
+	public function find(int $id, int $collectionId): ItemField {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
-			->from('biblio_item_fields')
+			->from(self::TABLENAME)
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
-			->andWhere($qb->expr()->eq('item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)));
+			->andWhere($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
+		
 		return $this->findEntity($qb);
 	}
 
 	/**
-	 * @param int $itemId
+	 * @param int $collectionId
 	 * @return array
 	 */
-	public function findAll(int $itemId): array {
+	public function findAll(int $collectionId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
-			->from('biblio_item_fields')
-			->where($qb->expr()->eq('item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)));
+			->from(self::TABLENAME)
+			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
+		
 		return $this->findEntities($qb);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function findUniqueTitles(): array {
-		/* @var $qb IQueryBuilder */
-		$qb = $this->db->getQueryBuilder();
-
-		$qb->selectDistinct('title')->from('biblio_item_fields');
-		$result = $qb->executeQuery();
-
-		return array_column($result->fetchAll(), "title");
 	}
 }

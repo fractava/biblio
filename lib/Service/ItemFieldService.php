@@ -7,7 +7,7 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\Biblio\Db\Item;
+use OCA\Biblio\Db\Collection;
 use OCA\Biblio\Db\ItemField;
 use OCA\Biblio\Db\ItemFieldMapper;
 
@@ -20,11 +20,11 @@ class ItemFieldService {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(int $itemId): array {
-		return $this->mapper->findAll($itemId);
+	public function findAll(int $collectionId): array {
+		return $this->mapper->findAll($collectionId);
 	}
 
-	public function findAllInOrder(Item $entity): array {
+	public function findAllInOrder(Collection $entity): array {
 		$fieldsOrder = json_decode($entity->getFieldsOrder(), true) ?: [];
 		$fields = $this->findAll($entity->getId());
 
@@ -60,35 +60,35 @@ class ItemFieldService {
 		}
 	}
 
-	public function find(int $id, int $itemId) {
+	public function find(int $id, int $collectionId): ItemField {
 		try {
-			return $this->mapper->find($id, $itemId);
+			return $this->mapper->find($id, $collectionId);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function create($itemId, $type, $title, $value) {
+	public function create(int $collectionId, string $type, string $name, bool $includeInList = false): ItemField {
 		$field = new ItemField();
-        $field->setItemId($itemId);
+        $field->setCollectionId($collectionId);
 		$field->setType($type);
-		$field->setTitle($title);
-		$field->setValue($value);
+		$field->setName($name);
+		$field->setIncludeInList($includeInList);
 		return $this->mapper->insert($field);
 	}
 
-	public function update($id, $itemId, $type, $title, $value) {
+	public function update(int $id, int $collectionId, string $newType, string $newName, bool $newIncludeInList): ItemField {
 		try {
-			$field = $this->mapper->find($id, $itemId);
+			$field = $this->mapper->find($id, $collectionId);
 			
-			if (!is_null($type)) {
-				$field->setType($type);
+			if (!is_null($newType)) {
+				$field->setType($newType);
 			}
-			if (!is_null($title)) {
-				$field->setTitle($title);
+			if (!is_null($newName)) {
+				$field->setName($newName);
 			}
-			if (!is_null($value)) {
-				$field->setValue($value);
+			if (!is_null($newIncludeInList)) {
+				$field->setIncludeInList($newIncludeInList);
 			}
 
 			return $this->mapper->update($field);
@@ -97,17 +97,13 @@ class ItemFieldService {
 		}
 	}
 
-	public function delete($id, $itemId) {
+	public function delete($id, $collectionId): ItemField {
 		try {
-			$field = $this->mapper->find($id, $itemId);
+			$field = $this->mapper->find($id, $collectionId);
 			$this->mapper->delete($field);
 			return $field;
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
-	}
-
-	public function findUniqueTitles() {
-		return $this->mapper->findUniqueTitles();
 	}
 }

@@ -103,6 +103,11 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 50,
 			]);
+			$table->addColumn('include_in_list', 'boolean', [
+				'notnull' => true,
+				'length' => 0,
+			]);
+			
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['collection_id'], 'collection_id_index');

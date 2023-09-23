@@ -11,6 +11,7 @@ class ItemField extends Entity implements JsonSerializable {
 	protected $name;
 	protected $type;
 	protected $value;
+	protected $includeInList;
 
 	public function __construct() {
         $this->addType('collectionId','integer');
@@ -22,6 +23,7 @@ class ItemField extends Entity implements JsonSerializable {
             'collectionId' => $this->collectionId,
 			'name' => $this->name,
 			'type' => $this->type,
+			'includeInList' => $this->includeInList,
 		];
 	}
 }
