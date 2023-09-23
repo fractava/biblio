@@ -68,7 +68,7 @@ import DateField from "../components/Fields/DateField";
 
 import { mapStores } from 'pinia';
 
-import { useItemsStore } from "../store/items.js";
+import { useItemsStore } from "../store/biblio.js";
 
 export default {
 	components: {

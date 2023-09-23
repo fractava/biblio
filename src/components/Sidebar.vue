@@ -42,7 +42,7 @@ import AccountMultiple from "vue-material-design-icons/AccountMultiple";
 import Bookshelf from "vue-material-design-icons/Bookshelf";
 import Cog from "vue-material-design-icons/Cog";
 
-import { useItemsStore } from "../store/items.js";
+import { useItemsStore } from "../store/biblio.js";
 
 export default {
 	components: {

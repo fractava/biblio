@@ -16,7 +16,7 @@
 import { mapStores } from "pinia";
 
 import Table from "../components/Table.vue";
-import { useItemsStore } from "../store/items.js";
+import { useItemsStore } from "../store/biblio.js";
 
 export default {
 	components: {

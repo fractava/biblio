@@ -51,7 +51,7 @@ import LibraryShelves from "vue-material-design-icons/LibraryShelves";
 import Pencil from "vue-material-design-icons/Pencil";
 import Delete from "vue-material-design-icons/Delete";
 
-import { useItemsStore } from "../store/items.js";
+import { useItemsStore } from "../store/biblio.js";
 
 export default {
 	components: {

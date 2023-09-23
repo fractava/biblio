@@ -18,7 +18,7 @@ import Draggable from "vuedraggable";
 
 import ItemUI from "./ItemUI.vue";
 
-import { useItemsStore } from "../store/items.js";
+import { useItemsStore } from "../store/biblio.js";
 import { mapStores } from "pinia";
 
 export default {

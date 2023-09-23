@@ -15,7 +15,7 @@ import "@nextcloud/dialogs/dist/index.css";
 import { mapStores } from "pinia";
 
 import Sidebar from "./components/Sidebar.vue";
-import { useItemsStore } from "./store/items.js";
+import { useItemsStore } from "./store/biblio.js";
 
 export default {
 	name: "App",
