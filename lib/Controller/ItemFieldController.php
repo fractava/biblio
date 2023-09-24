@@ -46,16 +46,16 @@ class ItemFieldController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, string $type, string $name, bool $includeInList): DataResponse {
-		return new DataResponse($this->service->create($collectionId, $type, $name, $includeInList));
+	public function create(int $collectionId, string $type, string $name, string $settings, bool $includeInList): DataResponse {
+		return new DataResponse($this->service->create($collectionId, $type, $name, $settings, $includeInList));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $includeInList = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $collectionId, $type, $name, $includeInList) {
-			return $this->service->update($id, $collectionId, $type, $name, $includeInList);
+	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $settings = null, string $includeInList = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId, $type, $name, $settings, $includeInList) {
+			return $this->service->update($id, $collectionId, $type, $name, $settings, $includeInList);
 		});
 	}
 

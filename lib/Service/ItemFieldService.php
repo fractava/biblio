@@ -68,16 +68,17 @@ class ItemFieldService {
 		}
 	}
 
-	public function create(int $collectionId, string $type, string $name, bool $includeInList = false): ItemField {
+	public function create(int $collectionId, string $type, string $name, string $settings, bool $includeInList = false): ItemField {
 		$field = new ItemField();
         $field->setCollectionId($collectionId);
 		$field->setType($type);
 		$field->setName($name);
-		$field->setIncludeInList($includeInList);
+		$field->setSettings($settings);
+		$field->setIncludeInList((int)$includeInList);
 		return $this->mapper->insert($field);
 	}
 
-	public function update(int $id, int $collectionId, string $newType, string $newName, bool $newIncludeInList): ItemField {
+	public function update(int $id, int $collectionId, string $newType, string $newName, string $newSettings, bool $newIncludeInList): ItemField {
 		try {
 			$field = $this->mapper->find($id, $collectionId);
 			
@@ -87,8 +88,11 @@ class ItemFieldService {
 			if (!is_null($newName)) {
 				$field->setName($newName);
 			}
+			if (!is_null($newSettings)) {
+				$field->setSettings($newSettings);
+			}
 			if (!is_null($newIncludeInList)) {
-				$field->setIncludeInList($newIncludeInList);
+				$field->setIncludeInList((int)$newIncludeInList);
 			}
 
 			return $this->mapper->update($field);
