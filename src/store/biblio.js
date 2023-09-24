@@ -1,3 +1,4 @@
+import Vue from "vue";
 import { defineStore } from "pinia";
 import axios from "@nextcloud/axios";
 import { generateUrl } from "@nextcloud/router";
@@ -31,6 +32,22 @@ export const useBiblioStore = defineStore("biblio", {
 						showError(t("biblio", "Could not create collection"));
 						reject(error);
 					});
+			});
+		},
+		updateCollection(id, options) {
+			return new Promise((resolve, reject) => {
+				axios.put(generateUrl(`/apps/biblio/collections/${id}`), options).then((response) => {
+					const updatedIndex = this.collections.findIndex(collection => collection.id === id);
+					Vue.set(this.collections, updatedIndex, response.data);
+					// TODO: Update store
+				})
+					.catch(function(error) {
+						console.error(error);
+						showError(t("biblio", "Could not update collection"));
+						reject(error);
+					});
+
+				resolve();
 			});
 		},
 		deleteCollection(id) {

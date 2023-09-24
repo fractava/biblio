@@ -1,7 +1,8 @@
 <template>
 	<NcAppSettingsDialog :open="open"
 		:show-navigation="showNavigation"
-		title="Application settings"
+		title="Biblio settings"
+		class="biblio-settings-dialog"
 		@update:open="openClose">
 		<!-- Home -->
 		<NcAppSettingsSection v-if="settingsStore.site === 'home'"
@@ -67,7 +68,19 @@ export default {
 	methods: {
 		async openClose(newState) {
 			this.$emit("update:open", newState);
+
+			if (!newState) {
+				this.settingsStore.site = "home";
+			}
 		},
 	},
 };
 </script>
+
+<style>
+.biblio-settings-dialog .modal-container {
+	margin: 50px;
+    min-height: 90vh;
+    min-width: 75vw;
+}
+</style>
