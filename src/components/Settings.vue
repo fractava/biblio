@@ -2,7 +2,7 @@
 	<NcAppSettingsDialog :open="open" @update:open="openClose" :show-navigation="false" name="Application settings">
 		<NcAppSettingsSection id="main" title="Main">
 			<ul>
-				<NcListItem v-for="collection in itemsStore.collections"
+				<NcListItem v-for="collection in biblioStore.collections"
 					:key="collection.id"
 					:title="collection.name"
 					:bold="false"
@@ -51,7 +51,7 @@ import LibraryShelves from "vue-material-design-icons/LibraryShelves";
 import Pencil from "vue-material-design-icons/Pencil";
 import Delete from "vue-material-design-icons/Delete";
 
-import { useItemsStore } from "../store/biblio.js";
+import { useBiblioStore } from "../store/biblio.js";
 
 export default {
 	components: {
@@ -72,20 +72,20 @@ export default {
 		},
 	},
 	computed: {
-		...mapStores(useItemsStore),
+		...mapStores(useBiblioStore),
 	},
 	methods: {
 		async addNewCollection(value) {
-			await this.itemsStore.createCollection({ name: value });
-			await this.itemsStore.fetchCollections();
+			await this.biblioStore.createCollection({ name: value });
+			await this.biblioStore.fetchCollections();
 		},
 		async deleteCollection(id) {
-			await this.itemsStore.deleteCollection(id);
-			await this.itemsStore.fetchCollections();
+			await this.biblioStore.deleteCollection(id);
+			await this.biblioStore.fetchCollections();
 		},
 		async openClose(newState) {
 			this.$emit("update:open", newState);
-		}
+		},
 	},
 };
 </script>

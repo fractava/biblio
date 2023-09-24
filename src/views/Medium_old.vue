@@ -68,7 +68,7 @@ import DateField from "../components/Fields/DateField";
 
 import { mapStores } from 'pinia';
 
-import { useItemsStore } from "../store/biblio.js";
+import { useBiblioStore } from "../store/biblio.js";
 
 export default {
 	components: {
@@ -152,11 +152,11 @@ export default {
 		}
 	},
 	computed: {
-		...mapStores(useItemsStore),
+		...mapStores(useBiblioStore),
 	},
 	methods: {
 		async saveNew() {
-			this.itemsStore.createItem({ title: this.newTitle, fields: this.newFields })
+			this.biblioStore.createItem({ title: this.newTitle, fields: this.newFields })
 				.then((id) => {
 					this.$router.push({
 						path: "/item/" + id,
@@ -166,7 +166,7 @@ export default {
 		onFieldUpdate(newValue, field) {
 			field.value = newValue;
 			console.log(newValue, field);
-			this.itemsStore.updateItemField(field);
+			this.biblioStore.updateItemField(field);
 		},
 		addField(type, field) {
 			this.thisFields.push({

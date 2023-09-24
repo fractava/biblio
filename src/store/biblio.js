@@ -3,7 +3,7 @@ import axios from "@nextcloud/axios";
 import { generateUrl } from "@nextcloud/router";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
-export const useItemsStore = defineStore("items", {
+export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
 		selectedCollection: false,

@@ -7,7 +7,7 @@
 			</a>
 		</router-link>
 		<Table :columns="['title', 'fields']"
-			:items="itemsStore.items"
+			:items="biblioStore.items"
 			@click="openItem($event)" />
 	</ul>
 </template>
@@ -16,14 +16,14 @@
 import { mapStores } from "pinia";
 
 import Table from "../components/Table.vue";
-import { useItemsStore } from "../store/biblio.js";
+import { useBiblioStore } from "../store/biblio.js";
 
 export default {
 	components: {
 		Table,
 	},
 	computed: {
-		...mapStores(useItemsStore),
+		...mapStores(useBiblioStore),
 	},
 	methods: {
 		openItem(item) {

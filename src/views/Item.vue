@@ -18,7 +18,7 @@ import Draggable from "vuedraggable";
 
 import ItemUI from "./ItemUI.vue";
 
-import { useItemsStore } from "../store/biblio.js";
+import { useBiblioStore } from "../store/biblio.js";
 import { mapStores } from "pinia";
 
 export default {
@@ -52,7 +52,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useItemsStore),
+		...mapStores(useBiblioStore),
 		itemId() {
 			return this.$route.params.id;
 		},
@@ -60,7 +60,7 @@ export default {
 			if (this.createNew) {
 				return false;
 			} else {
-				return this.itemsStore.getItemById(this.itemId);
+				return this.biblioStore.getItemById(this.itemId);
 			}
 		},
 		item() {
