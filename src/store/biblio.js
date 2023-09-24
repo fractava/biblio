@@ -6,12 +6,12 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
-		selectedCollection: false,
+		selectedCollectionId: false,
 		items: [],
 	}),
 	actions: {
 		selectCollection(id) {
-			this.selectedCollection = id;
+			this.selectedCollectionId = id;
 			this.fetchItems();
 		},
 		createCollection(options) {
@@ -68,7 +68,7 @@ export const useBiblioStore = defineStore("biblio", {
 					title: options.title,
 					fields: JSON.stringify(fields),
 				};
-				axios.post(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/items`), parameters).then(function(response) {
+				axios.post(generateUrl(`/apps/biblio/collections/${this.selectedCollectionId}/items`), parameters).then(function(response) {
 					this.items.push({
 						title: options.title,
 						id: response.data.id,
@@ -103,10 +103,10 @@ export const useBiblioStore = defineStore("biblio", {
 		},
 		fetchItems() {
 			return new Promise((resolve, reject) => {
-				if (!this.selectedCollection) {
+				if (!this.selectedCollectionId) {
 					return;
 				}
-				axios.get(generateUrl(`/apps/biblio/collections/${this.selectedCollection}/items`), {
+				axios.get(generateUrl(`/apps/biblio/collections/${this.selectedCollectionId}/items`), {
 					params: {
 						include: "model+fields",
 					},

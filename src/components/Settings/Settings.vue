@@ -1,11 +1,26 @@
 <template>
 	<NcAppSettingsDialog :open="open"
 		:show-navigation="showNavigation"
-		name="Application settings"
+		title="Application settings"
 		@update:open="openClose">
-		<NcAppSettingsSection id="error" title="Unknown site" />
-		<CollectionsList v-if="settingsStore.site === 'home'" />
-		<Collection v-else-if="settingsStore.site === 'collection'" />
+		<!-- Home -->
+		<NcAppSettingsSection v-if="settingsStore.site === 'home'"
+			id="main"
+			title="Main">
+			<CollectionsList />
+		</NcAppSettingsSection>
+
+		<!-- Collection -->
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection"
+			title="Properties">
+			<CollectionProperties />
+		</NcAppSettingsSection>
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection-item-fields"
+			title="Item Fields">
+			<CollectionItemFields />
+		</NcAppSettingsSection>
 	</NcAppSettingsDialog>
 </template>
 
@@ -17,14 +32,16 @@ import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSe
 import { useBiblioStore } from "../../store/biblio.js";
 import { useSettingsStore } from "../../store/settings.js";
 import CollectionsList from "./CollectionsList.vue";
-import Collection from "./Collection.vue";
+import CollectionProperties from "./CollectionProperties.vue";
+import CollectionItemFields from "./CollectionItemFields.vue";
 
 export default {
 	components: {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
 		CollectionsList,
-		Collection,
+		CollectionProperties,
+		CollectionItemFields,
 	},
 	props: {
 		open: {
@@ -36,6 +53,15 @@ export default {
 		...mapStores(useBiblioStore, useSettingsStore),
 		showNavigation() {
 			return this.settingsStore.site !== "home";
+		},
+		title() {
+			if (this.settingsStore.site === "home") {
+				return "Collections";
+			} else if (this.settingsStore.site === "collection") {
+				return this.settingsStore.selectedCollection?.name + " Collection";
+			} else {
+				return "";
+			}
 		},
 	},
 	methods: {

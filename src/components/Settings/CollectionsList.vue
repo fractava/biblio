@@ -1,5 +1,5 @@
 <template>
-	<NcAppSettingsSection id="main" title="Main">
+	<div>
 		<ul>
 			<NcListItem v-for="collection in biblioStore.collections"
 				:key="collection.id"
@@ -33,12 +33,11 @@
 				<Plus :size="20" />
 			</template>
 		</NcAppNavigationNewItem>
-	</NcAppSettingsSection>
+	</div>
 </template>
 
 <script>
 import { mapStores } from "pinia";
-import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSection.js";
 import NcListItem from "@nextcloud/vue/dist/Components/NcListItem.js";
 import NcAppNavigationNewItem from "@nextcloud/vue/dist/Components/NcAppNavigationNewItem.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
@@ -53,7 +52,6 @@ import { useSettingsStore } from "../../store/settings.js";
 
 export default {
 	components: {
-		NcAppSettingsSection,
 		NcListItem,
 		NcAppNavigationNewItem,
 		NcActionButton,
