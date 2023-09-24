@@ -63,6 +63,40 @@ export const useBiblioStore = defineStore("biblio", {
 					});
 			});
 		},
+		createCollectionItemField(collectionId, options) {
+			return new Promise((resolve, reject) => {
+				axios.post(generateUrl(`/apps/biblio/collections/${collectionId}/item_fields`), {
+					type: options.type,
+					name: options.name,
+					settings: options.settings,
+					includeInList: options.includeInList,
+				})
+					.catch(function(error) {
+						console.error(error);
+						showError(t("biblio", "Could not create collection item field"));
+						reject(error);
+					});
+
+				resolve();
+			});
+		},
+		updateCollectionItemField(collectionId, id, options) {
+			return new Promise((resolve, reject) => {
+				axios.put(generateUrl(`/apps/biblio/collections/${collectionId}/item_fields/${id}`), {
+					type: options.type,
+					name: options.name,
+					settings: options.settings,
+					includeInList: options.includeInList,
+				})
+					.catch(function(error) {
+						console.error(error);
+						showError(t("biblio", "Could not update collection item field"));
+						reject(error);
+					});
+
+				resolve();
+			});
+		},
 		createItem(options) {
 			return new Promise((resolve, reject) => {
 				let new_item_id;
@@ -176,23 +210,6 @@ export const useBiblioStore = defineStore("biblio", {
 				resolve();
 			});
 		},
-		updateItemField(options) {
-			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/item_fields/${options.id}`), {
-					itemId: options.itemId,
-					type: options.type,
-					title: options.title,
-					value: JSON.stringify(options.value),
-				})
-					.catch(function(error) {
-						console.error(error);
-						showError(t("biblio", "Could not update field"));
-						reject(error);
-					});
-
-				resolve();
-			});
-		},
 		deleteItemField(options) {
 			return axios.delete(generateUrl(`/apps/biblio/item_fields/${options.id}`), {
 				params: {
@@ -205,17 +222,19 @@ export const useBiblioStore = defineStore("biblio", {
 		getItemById: (state) => (id) => {
 			return state.items.find(item => item.id == id);
 		},
-		getItemFields: (state) => (id) => {
+		getCollectionItemFields: (state) => (collectionId) => {
 			return new Promise((resolve, reject) => {
-				axios.get(generateUrl(`/apps/biblio/item_fields/${id}`))
+				axios.get(generateUrl(`/apps/biblio/collections/${collectionId}/item_fields`))
 					.then((response) => {
 						const fields = response.data;
 
 						for (const field of fields) {
-							field.value = JSON.parse(field.value);
+							if (field.settings && field.settings !== "") {
+								field.settings = JSON.parse(field.settings);
+							}
 						}
 
-						const fieldsOrder = state.items.find(item => item.id == id).fieldsOrder;
+						const fieldsOrder = state.collections.find(collection => collection.id === collectionId).fieldsOrder;
 
 						fields.sort(function(a, b) {
 							return fieldsOrder.indexOf(a.id) - fieldsOrder.indexOf(b.id);
@@ -225,7 +244,7 @@ export const useBiblioStore = defineStore("biblio", {
 					})
 					.catch(function(error) {
 						console.error(error);
-						showError(t("biblio", "Could not fetch item fields"));
+						showError(t("biblio", "Could not fetch collection item fields"));
 						reject(error);
 					});
 			});

@@ -55,7 +55,7 @@ import { directive as ClickOutside } from "v-click-outside";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions";
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
 
-import FieldsTableRow from "../../components/FieldsTableRow.vue";
+import FieldsTableRow from "../Settings/FieldsTableRow.vue";
 
 export default {
 	name: "Field",

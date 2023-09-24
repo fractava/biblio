@@ -51,6 +51,7 @@ export default {
 		icon: "icon-list-field",
 		// TRANSLATORS Take care, a translation by word might not match! The english called 'Multiple-Choice' only allows to select a single-option (basically single-choice)!
 		label: t("biblio", "List"),
+		defaultSettings: "",
 		defaultValue: [],
 	},
 
@@ -60,6 +61,7 @@ export default {
 		label: t("biblio", "Short text"),
 
 		valuePlaceholder: t("biblio", "Enter a short text"),
+		defaultSettings: "",
 		defaultValue: "",
 	},
 
@@ -69,6 +71,7 @@ export default {
 		label: t("biblio", "Long text"),
 
 		valuePlaceholder: t("biblio", "Enter a long text"),
+		defaultSettings: "",
 		defaultValue: "",
 	},
 
@@ -78,6 +81,7 @@ export default {
 		label: t("biblio", "Date"),
 
 		valuePlaceholder: t("biblio", "Pick a date"),
+		defaultSettings: "",
 		defaultValue: "",
 	},
 
@@ -87,9 +91,12 @@ export default {
 		label: t("biblio", "Date and time"),
 
 		valuePlaceholder: t("biblio", "Pick a date and time"),
+		defaultSettings: "",
 		defaultValue: "",
 
 		// Using the same vue-component as date, this specifies that the component renders as datetime.
 		includeTime: true,
 	},
+
+	// TODO: Select
 };
