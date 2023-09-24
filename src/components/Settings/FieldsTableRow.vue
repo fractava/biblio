@@ -5,7 +5,12 @@
             :class="{'drag-handle-active': enableDragHandle}"
             :style="{'opacity': enableDragHandle ? .5 : 0}"
             :aria-label="t('biblio', 'Drag to reorder the fields')">
-            <Drag :size="24"/>
+            <Drag :size="24" />
+        </td>
+
+        <!-- Icon -->
+        <td>
+            <slot name="icon"></slot>
         </td>
 
         <!-- Include In List -->

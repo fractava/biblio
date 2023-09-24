@@ -21,64 +21,52 @@
   -->
 
 <template>
-	<Field v-bind.sync="$attrs"
-		:title="title"
-		:edit.sync="edit"
-		:allow-title-edit="allowTitleEdit"
-		:allow-deletion="allowDeletion"
-		:enable-drag-handle="enableDragHandle"
-		:title-placeholder="t('biblio', 'Title')"
-		:shift-drag-handle="shiftDragHandle"
-		@update:title="onTitleChange"
-		@delete="onDelete">
-		<ul class="field__content">
-			<template v-for="(entry, index) in value">
-				<li v-if="!edit" :key="entry.id" class="field__item">
-					<!-- entry radio/checkbox + label -->
-					<!-- TODO: migrate to radio/checkbox component once available -->
-					<input :id="`entry-${entry.id}`"
-						ref="checkbox"
-						class="radio field__radio"
-						:name="`${entry.id}-entry`"
-						type="radio"
-						@change="onChange($event, entry.id)"
-						@keydown.enter.exact.prevent="onKeydownEnter">
-					<label v-if="!edit"
-						ref="label"
-						:for="`entry-${entry.id}`"
-						class="field__label">{{ entry.text }}</label>
-				</li>
-
-				<!-- entry text input edit -->
-				<EntryInput v-else
-					:key="index /* using index to keep the same vnode after new entry creation */"
-					ref="input"
-					:entry="entry"
-					:index="index"
-					:is-dropdown="false"
-					:allow-value-edit="allowValueEdit"
-					@add="addNewEntry"
-					@delete="deleteEntry"
-					@update:entry="updateEntry" />
-			</template>
-
-			<li v-if="((edit && !isLastEmpty) || hasNoEntry) && allowValueEdit" class="field__item">
-				<div class="field__item__pseudoInput" />
-				<input :aria-label="t('biblio', 'Add a new entry')"
-					:placeholder="t('biblio', 'Add a new entry')"
-					class="field__input"
-					minlength="1"
-					type="text"
-					@click="addNewEntry"
-					@focus="addNewEntry">
+	<ul class="field__content">
+		<template v-for="(entry, index) in value">
+			<li v-if="!edit" :key="entry.id" class="field__item">
+				<!-- entry radio/checkbox + label -->
+				<!-- TODO: migrate to radio/checkbox component once available -->
+				<input :id="`entry-${entry.id}`"
+					ref="checkbox"
+					class="radio field__radio"
+					:name="`${entry.id}-entry`"
+					type="radio"
+					@change="onChange($event, entry.id)"
+					@keydown.enter.exact.prevent="onKeydownEnter">
+				<label v-if="!edit"
+					ref="label"
+					:for="`entry-${entry.id}`"
+					class="field__label">{{ entry.text }}</label>
 			</li>
-		</ul>
-	</Field>
+
+			<!-- entry text input edit -->
+			<EntryInput v-else
+				:key="index /* using index to keep the same vnode after new entry creation */"
+				ref="input"
+				:entry="entry"
+				:index="index"
+				:is-dropdown="false"
+				:allow-value-edit="allowValueEdit"
+				@add="addNewEntry"
+				@delete="deleteEntry"
+				@update:entry="updateEntry" />
+		</template>
+
+		<li v-if="((edit && !isLastEmpty) || hasNoEntry) && allowValueEdit" class="field__item">
+			<div class="field__item__pseudoInput" />
+			<input :aria-label="t('biblio', 'Add a new entry')"
+				:placeholder="t('biblio', 'Add a new entry')"
+				class="field__input"
+				minlength="1"
+				type="text"
+				@click="addNewEntry"
+				@focus="addNewEntry">
+		</li>
+	</ul>
 </template>
 
 <script>
 import EntryInput from "./EntryInput";
-import FieldMixin from "../../mixins/FieldMixin";
 import GenRandomId from "../../utils/GenRandomId";
 
 // Implementations docs
@@ -90,9 +78,6 @@ export default {
 	components: {
 		EntryInput,
 	},
-
-	mixins: [FieldMixin],
-
 	computed: {
 		isLastEmpty() {
 			const value = this.value[this.value.length - 1];

@@ -9,12 +9,12 @@
 				<template>Edit</template>
 			</NcButton>
 		</div>
-		<ShortTextField slot="header"
+		<ShortTextFieldValue slot="header"
 			:enable-drag-handle="false"
 			:field-type="FieldTypes['short']"
 			:allow-title-edit="false"
 			:is-required="true"
-			title="Titel"
+			name="Titel"
 			:value="title" />
 	</div>
 </template>
@@ -24,13 +24,13 @@ import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import FieldTypes from "../models/FieldTypes";
-import ShortTextField from "../components/Fields/ShortTextField";
+import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
 
 export default {
 	components: {
 		NcButton,
 		Pencil,
-		ShortTextField,
+		ShortTextFieldValue,
 	},
 	props: {
 		title: {

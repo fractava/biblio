@@ -21,32 +21,22 @@
   -->
 
 <template>
-	<Field v-bind.sync="$attrs"
-		:title="title"
-		:edit.sync="edit"
-		:allow-title-edit="allowTitleEdit"
-		:allow-deletion="allowDeletion"
-		:enable-drag-handle="enableDragHandle"
-		@update:title="onTitleChange"
-		@delete="onDelete">
-		<div class="field__content">
-			<NcDatetimePicker :value="value"
-				value-type="format"
-				:disabled="!allowValueEdit"
-				:formatter="formatter"
-				:placeholder="fieldType.valuePlaceholder"
-				:show-second="false"
-				:type="datetimePickerType"
-				:input-attr="inputAttr"
-				@change="onValueChange" />
-		</div>
-	</Field>
+	<div class="field__content">
+		<NcDatetimePicker :value="value"
+			value-type="format"
+			:disabled="!allowValueEdit"
+			:formatter="formatter"
+			:placeholder="fieldType.valuePlaceholder"
+			:show-second="false"
+			:type="datetimePickerType"
+			:input-attr="inputAttr"
+			@change="onValueChange" />
+	</div>
 </template>
 
 <script>
 import moment from "@nextcloud/moment";
 
-import FieldMixin from "../../mixins/FieldMixin";
 import NcDatetimePicker from "@nextcloud/vue/dist/Components/NcDatetimePicker";
 
 export default {
@@ -55,8 +45,6 @@ export default {
 	components: {
 		NcDatetimePicker,
 	},
-
-	mixins: [FieldMixin],
 
 	data() {
 		return {

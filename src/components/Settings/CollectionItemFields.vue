@@ -13,18 +13,16 @@
 				@end="isDragging = false"
 				@change="fieldsOrderChanged">
 				<Field v-for="field in fields"
-					:key="field.id + '-field'"
-					v-bind.sync="$attrs"
+					:key="field.id"
 					:name="field.name"
-					:edit="true"
-					:allow-name-edit="true"
-					:allow-deletion="true"
-					:enable-drag-handle="true"
-					:name-placeholder="t('biblio', 'Name')"
 					class="draggableitem"
 					@update:name="(newName) => onFieldUpdate(field.id, {name: newName})"
 					@delete="deleteField(field)">
-					<FieldSettings :is="FieldTypes[field.type].settingsComponent" />
+					<Icon :is="FieldTypes[field.type].iconComponent" slot="icon" v-tooltip="FieldTypes[field.type].label" />
+					<FieldSettings :is="FieldTypes[field.type].settingsComponent"
+						slot="settings"
+						:settings="field.settings"
+						@update:settings="(newSettings) => onFieldUpdate(field.id, {settings: newSettings})" />
 				</Field>
 			</Draggable>
 		</FieldsTable>
@@ -44,6 +42,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapStores } from "pinia";
 import Draggable from "vuedraggable";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
@@ -87,16 +86,19 @@ export default {
 			console.log("onFieldsUpdate", JSON.stringify(fields));
 			this.$emit("set-fields", fields);
 		},
-		onFieldUpdate(id, options) {
-			this.biblioStore.updateCollectionItemField(this.settingsStore.context?.collectionId, id, options);
+		async onFieldUpdate(id, options) {
+			const updatedField = await this.biblioStore.updateCollectionItemField(this.settingsStore.context?.collectionId, id, options);
+			const fieldIndex = this.fields.findIndex(field => field.id === id);
+			Vue.set(this.fields, fieldIndex, updatedField);
 		},
-		addField(type, field) {
-			this.biblioStore.createCollectionItemField(this.settingsStore.context?.collectionId, {
+		async addField(type, field) {
+			const newField = await this.biblioStore.createCollectionItemField(this.settingsStore.context?.collectionId, {
 				type,
 				name: "",
 				settings: field.defaultSettings,
 				includeInList: false,
 			});
+			this.fields.push(newField);
 		},
 	},
 };

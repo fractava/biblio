@@ -71,6 +71,9 @@ export const useBiblioStore = defineStore("biblio", {
 					settings: options.settings,
 					includeInList: options.includeInList,
 				})
+					.then(function(response) {
+						resolve(response.data);
+					})
 					.catch(function(error) {
 						console.error(error);
 						showError(t("biblio", "Could not create collection item field"));
@@ -88,13 +91,14 @@ export const useBiblioStore = defineStore("biblio", {
 					settings: options.settings,
 					includeInList: options.includeInList,
 				})
+					.then(function(response) {
+						resolve(response.data);
+					})
 					.catch(function(error) {
 						console.error(error);
 						showError(t("biblio", "Could not update collection item field"));
 						reject(error);
 					});
-
-				resolve();
 			});
 		},
 		createItem(options) {

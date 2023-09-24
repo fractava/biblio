@@ -22,6 +22,9 @@
 
 <template>
 	<FieldsTableRow :enable-drag-handle="enableDragHandle">
+		<template #icon>
+			<slot name="icon" />
+		</template>
 		<template #includeInList>
 			<NcCheckboxRadioSwitch :checked="includeInList"
 				@update:checked="onIncludeInListChange" />
@@ -37,7 +40,7 @@
 				@input="onNameChange" />
 		</template>
 		<template #settings>
-			<slot />
+			<slot name="settings" />
 		</template>
 	</FieldsTableRow>
 

@@ -20,12 +20,18 @@
  *
  */
 
-import ListField from "../components/Fields/ListField";
-import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue";
-import LongTextFieldValue from "../components/Fields/LongTextFieldValue";
-import DateField from "../components/Fields/DateField";
+import ListFieldValue from "../components/Fields/ListFieldValue.vue";
+import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
+import LongTextFieldValue from "../components/Fields/LongTextFieldValue.vue";
+import DateFieldValue from "../components/Fields/DateFieldValue.vue";
 
-import NoSettings from "../components/Fields/NoSettings";
+import NoSettings from "../components/Fields/NoSettings.vue";
+
+import FormatListNumbered from "vue-material-design-icons/FormatListNumbered";
+import TextShort from "vue-material-design-icons/TextShort";
+import TextLong from "vue-material-design-icons/TextLong";
+import CalendarMonth from "vue-material-design-icons/CalendarMonth";
+import CalendarClock from "vue-material-design-icons/CalendarClock";
 
 /**
  * @typedef {object} FieldTypes
@@ -48,10 +54,10 @@ export default {
 	 * @property valuePlaceholder *optional* The placeholder for value input fields
 	 */
 
-	multiple: {
-		component: ListField,
-		icon: "icon-list-field",
-		// TRANSLATORS Take care, a translation by word might not match! The english called 'Multiple-Choice' only allows to select a single-option (basically single-choice)!
+	list: {
+		valueComponent: ListFieldValue,
+		settingsComponent: NoSettings,
+		iconComponent: FormatListNumbered,
 		label: t("biblio", "List"),
 		defaultSettings: "",
 		defaultValue: [],
@@ -60,7 +66,7 @@ export default {
 	short: {
 		valueComponent: ShortTextFieldValue,
 		settingsComponent: NoSettings,
-		icon: "icon-short-text-field",
+		iconComponent: TextShort,
 		label: t("biblio", "Short text"),
 
 		valuePlaceholder: t("biblio", "Enter a short text"),
@@ -71,7 +77,7 @@ export default {
 	long: {
 		valueComponent: LongTextFieldValue,
 		settingsComponent: NoSettings,
-		icon: "icon-long-text-field",
+		iconComponent: TextLong,
 		label: t("biblio", "Long text"),
 
 		valuePlaceholder: t("biblio", "Enter a long text"),
@@ -80,8 +86,9 @@ export default {
 	},
 
 	date: {
-		component: DateField,
-		icon: "icon-date-field",
+		component: DateFieldValue,
+		settingsComponent: NoSettings,
+		iconComponent: CalendarMonth,
 		label: t("biblio", "Date"),
 
 		valuePlaceholder: t("biblio", "Pick a date"),
@@ -90,8 +97,9 @@ export default {
 	},
 
 	datetime: {
-		component: DateField,
-		icon: "icon-datetime-field",
+		component: DateFieldValue,
+		settingsComponent: NoSettings,
+		iconComponent: CalendarClock,
 		label: t("biblio", "Date and time"),
 
 		valuePlaceholder: t("biblio", "Pick a date and time"),

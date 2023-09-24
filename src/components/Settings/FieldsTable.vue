@@ -3,6 +3,7 @@
         <colgroup>
             <col>
             <col>
+            <col>
             <col span="2" style="width: 50%;">
         </colgroup>
         <slot></slot>
