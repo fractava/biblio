@@ -46,14 +46,14 @@ class ItemService {
 		}
 	}
 
-	public function create(string $title, array $fields, int $collectionId) {
+	public function create(int $collectionId, string $title, /*array $fields*/) {
 		$item = new Item();
-		$item->setTitle($title);
 		$item->setCollectionId($collectionId);
+		$item->setTitle($title);
 
 		$item = $this->mapper->insert($item);
 
-		if(sizeof($fields) > 0){
+		/*if(sizeof($fields) > 0){
 			$itemId = $item->getId();
 
 			foreach($fields as $field) {
@@ -61,7 +61,7 @@ class ItemService {
 
 				$fieldEntity = $this->fieldValueService->create($itemId, $field["fieldId"], $field["value"]);
 			}
-		}
+		}*/
 
 		return $item;
 	}

@@ -12,7 +12,6 @@ use OCP\AppFramework\IAppContainer;
 class ItemObjectHelper extends AbstractObjectHelper {
     const TITLE_INCLUDE = 'model';
     const FIELDS_INCLUDE = 'fields';
-    const FIELDS_ORDER_INCLUDE = 'fieldsOrder';
 
     /** @var ItemService */
 	private $itemService;
@@ -70,13 +69,9 @@ class ItemObjectHelper extends AbstractObjectHelper {
             $result["title"] = $entity->getTitle();
         }
 
-        if($this->shouldInclude(self::MODEL_INCLUDE, $includes) || $this->shouldInclude(self::FIELDS_ORDER_INCLUDE, $includes)) {
-            $result["fieldsOrder"] = $entity->getFieldsOrder();
-        }
-
-        if($this->shouldInclude(self::FIELDS_INCLUDE, $includes)) {
+        /*if($this->shouldInclude(self::FIELDS_INCLUDE, $includes)) {
             $result["fields"] = $this->getFields($entity);
-        }
+        }*/
 
         return $result;
     }
@@ -88,7 +83,7 @@ class ItemObjectHelper extends AbstractObjectHelper {
      * @throws DoesNotExistException
      */
 	public function getFields(Item $entity) {
-        return $this->fieldValueService->findAllInOrder($entity);
+        //return $this->fieldValueService->findAllInOrder($entity);
 	}
 
 }
