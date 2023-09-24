@@ -15,8 +15,10 @@
 				<Field v-for="field in fields"
 					:key="field.id"
 					:name="field.name"
+					:include-in-list="!!field.includeInList"
 					class="draggableitem"
 					@update:name="(newName) => onFieldUpdate(field.id, {name: newName})"
+					@update:includeInList="(newIncludeInList) => onFieldUpdate(field.id, {includeInList: newIncludeInList})"
 					@delete="deleteField(field)">
 					<Icon :is="FieldTypes[field.type].iconComponent" slot="icon" v-tooltip="FieldTypes[field.type].label" />
 					<FieldSettings :is="FieldTypes[field.type].settingsComponent"
