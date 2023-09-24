@@ -26,53 +26,45 @@ class ItemFieldController extends Controller {
 	}
 
 	/**
-	 * Get all fields of item by item id
+	 * Get all fields of collection
 	 * @NoAdminRequired
 	 */
-	public function show(int $id): DataResponse {
-		return new DataResponse($this->service->findAll($id));
+	public function index(int $collectionId): DataResponse {
+		return new DataResponse($this->service->findAll($collectionId));
 	}
 
 	/**
 	 * Get specific field
 	 * @NoAdminRequired
 	 */
-	public function findById(int $id, int $itemId): DataResponse {
-		return $this->handleNotFound(function () use ($id, $itemId) {
-			return $this->service->find($id, $itemId);
+	public function show(int $collectionId, int $id): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId) {
+			return $this->service->find($id, $collectionId);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $itemId, string $type, string $title, string $value): DataResponse {
-		return new DataResponse($this->service->create($itemId, $type, $title, $value));
+	public function create(int $collectionId, string $type, string $name, bool $includeInList): DataResponse {
+		return new DataResponse($this->service->create($collectionId, $type, $name, $includeInList));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $id, int $itemId, string $type = null, string $title = null, string $value = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $itemId, $type, $title, $value) {
-			return $this->service->update($id, $itemId, $type, $title, $value);
+	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $includeInList = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId, $type, $name, $includeInList) {
+			return $this->service->update($id, $collectionId, $type, $name, $includeInList);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $id, int $itemId): DataResponse {
-		return $this->handleNotFound(function () use ($id, $itemId) {
-			return $this->service->delete($id, $itemId);
+	public function destroy(int $collectionId, int $id): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId) {
+			return $this->service->delete($id, $collectionId);
 		});
-	}
-	
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
-	public function uniqueTitles(): DataResponse {
-		return new DataResponse($this->service->findUniqueTitles());
 	}
 }

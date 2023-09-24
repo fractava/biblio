@@ -5,6 +5,7 @@ namespace OCA\Biblio\Helper\ApiObjects;
 use OCA\Biblio\Db\Item;
 use OCA\Biblio\Service\ItemService;
 use OCA\Biblio\Service\ItemFieldService;
+use OCA\Biblio\Service\ItemFieldValueService;
 use OCP\AppFramework\Db\Entity;
 use OCP\AppFramework\IAppContainer;
 
@@ -19,24 +20,30 @@ class ItemObjectHelper extends AbstractObjectHelper {
 	/** @var ItemFieldService */
 	private $fieldService;
 
+    /** @var ItemFieldValueService */
+	private $fieldValueService;
+
     /**
      * ItemObjectHelper constructor.
      *
      * @param IAppContainer $container
-     * @param ItemService $itemService,
-     * @param ItemFieldService $fieldService,
+     * @param ItemService $itemService
+     * @param ItemFieldService $fieldService
+     * @param ItemFieldValueService $fieldValueService
      * @param string $userId
      */
     public function __construct(
         IAppContainer $container,
         ItemService $itemService,
 		ItemFieldService $fieldService,
+        ItemFieldValueService $fieldValueService,
         $userId
     ) {
         parent::__construct($container, $userId);
 
         $this->itemService = $itemService;
         $this->fieldService = $fieldService;
+        $this->fieldValueService = $fieldValueService;
     }
 
     /**
@@ -81,7 +88,7 @@ class ItemObjectHelper extends AbstractObjectHelper {
      * @throws DoesNotExistException
      */
 	public function getFields(Item $entity) {
-        return $this->fieldService->findAllInOrder($entity);
+        return $this->fieldValueService->findAllInOrder($entity);
 	}
 
 }

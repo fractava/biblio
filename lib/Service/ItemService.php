@@ -10,19 +10,19 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCA\Biblio\Db\Item;
 use OCA\Biblio\Db\ItemMapper;
 
-use OCA\Biblio\Service\ItemFieldService;
+use OCA\Biblio\Service\ItemFieldValueService;
 
 class ItemService {
 
 	/** @var ItemMapper */
 	private $mapper;
 
-	/** @var ItemFieldService */
-	private $fieldService;
+	/** @var ItemFieldValueService */
+	private $fieldValueService;
 
-	public function __construct(ItemMapper $mapper, ItemFieldService $fieldService) {
+	public function __construct(ItemMapper $mapper, ItemFieldValueService $fieldValueService) {
 		$this->mapper = $mapper;
-		$this->fieldService = $fieldService;
+		$this->fieldValueService = $fieldValueService;
 	}
 
 	public function findAll(int $collectionId): array {
@@ -49,10 +49,6 @@ class ItemService {
 	public function create(string $title, array $fields, int $collectionId) {
 		$item = new Item();
 		$item->setTitle($title);
-
-		$fieldsOrder = [];
-
-		$item->setFieldsOrder($fieldsOrder);
 		$item->setCollectionId($collectionId);
 
 		$item = $this->mapper->insert($item);
@@ -61,27 +57,21 @@ class ItemService {
 			$itemId = $item->getId();
 
 			foreach($fields as $field) {
-				$fieldEntity = $this->fieldService->create($itemId, $field["type"], $field["title"], $field["value"]);
-				$fieldsOrder[] = $fieldEntity->getId();
+				// TODO: Check if fieldId is in same collection as item
+
+				$fieldEntity = $this->fieldValueService->create($itemId, $field["fieldId"], $field["value"]);
 			}
-
-			$item->setFieldsOrder(json_encode($fieldsOrder));
-
-			$item = $this->mapper->update($item);
 		}
 
 		return $item;
 	}
 
-	public function update(int $id, int $collectionId, string $title, $fieldsOrder) {
+	public function update(int $id, int $collectionId, string $newTitle) {
 		try {
 			$item = $this->mapper->find($id, $collectionId);
 			
 			if (!is_null($title)) {
 				$item->setTitle($title);
-			}
-			if (!is_null($fieldsOrder)) {
-				$item->setFieldsOrder($fieldsOrder);
 			}
 
 			return $this->mapper->update($item);

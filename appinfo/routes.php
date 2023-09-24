@@ -33,6 +33,5 @@ return [
         ['name' => 'item_field#create', 'url' => '/collections/{collectionId}/item_fields', 'verb' => 'POST'],
         ['name' => 'item_field#update', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'PUT'],
         ['name' => 'item_field#destroy', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'DELETE'],
-		['name' => 'item_field#uniqueTitles', 'url' => '/collections/{collectionId}/item_fields/uniqueTitles', 'verb' => 'GET'],
 	]
 ];

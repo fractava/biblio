@@ -7,9 +7,8 @@ use JsonSerializable;
 use OCP\AppFramework\Db\Entity;
 
 class Item extends Entity implements JsonSerializable {
-	protected $title;
-	protected $fieldsOrder;
 	protected $collectionId;
+	protected $title;
 
 	public function __construct() {
         $this->addType('collectionId','integer');
@@ -20,7 +19,6 @@ class Item extends Entity implements JsonSerializable {
 			'id' => $this->id,
 			'collectionId' => $this->collectionId,
 			'title' => $this->title,
-			'fieldsOrder' => $this->fieldsOrder
 		];
 	}
 }
