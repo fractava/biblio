@@ -11,7 +11,7 @@
 				<Cog :size="20" />
 			</template>
 		</AppNavigationSelect>
-		<Settings :open="settingsOpen" />
+		<Settings :open.sync="settingsOpen" />
 		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" to="/lend-return">
 			<template #icon>
 				<SwapVertical :size="20" />

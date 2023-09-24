@@ -1,5 +1,5 @@
 <template>
-	<NcAppSettingsDialog :open.sync="open" :show-navigation="false" name="Application settings">
+	<NcAppSettingsDialog :open="open" @update:open="openClose" :show-navigation="false" name="Application settings">
 		<NcAppSettingsSection id="main" title="Main">
 			<ul>
 				<NcListItem v-for="collection in itemsStore.collections"
@@ -83,6 +83,9 @@ export default {
 			await this.itemsStore.deleteCollection(id);
 			await this.itemsStore.fetchCollections();
 		},
+		async openClose(newState) {
+			this.$emit("update:open", newState);
+		}
 	},
 };
 </script>
