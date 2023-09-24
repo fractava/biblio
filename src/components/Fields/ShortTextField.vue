@@ -23,22 +23,26 @@
 <template>
 	<Field v-bind.sync="$attrs"
 		:name="name"
-		:edit.sync="edit"
+		:edit="true"
 		:allow-name-edit="allowNameEdit"
 		:allow-deletion="allowDeletion"
 		:enable-drag-handle="enableDragHandle"
 		:name-placeholder="t('biblio', 'Name')"
 		@update:name="onNameChange"
 		@delete="onDelete">
-		<span>{{ t('biblio', 'This field type has no settings') }}</span>
+		<NoSettings />
 	</Field>
 </template>
 
 <script>
 import FieldMixin from "../../mixins/FieldMixin";
+import NoSettings from "./NoSettings.vue";
 
 export default {
 	name: "ShortTextField",
 	mixins: [FieldMixin],
+	components: {
+		NoSettings,
+	}
 };
 </script>

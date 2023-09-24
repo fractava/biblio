@@ -21,9 +21,11 @@
  */
 
 import ListField from "../components/Fields/ListField";
-import ShortTextField from "../components/Fields/ShortTextField";
-import LongTextField from "../components/Fields/LongTextField";
+import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue";
+import LongTextFieldValue from "../components/Fields/LongTextFieldValue";
 import DateField from "../components/Fields/DateField";
+
+import NoSettings from "../components/Fields/NoSettings";
 
 /**
  * @typedef {object} FieldTypes
@@ -56,7 +58,8 @@ export default {
 	},
 
 	short: {
-		component: ShortTextField,
+		valueComponent: ShortTextFieldValue,
+		settingsComponent: NoSettings,
 		icon: "icon-short-text-field",
 		label: t("biblio", "Short text"),
 
@@ -66,7 +69,8 @@ export default {
 	},
 
 	long: {
-		component: LongTextField,
+		valueComponent: LongTextFieldValue,
+		settingsComponent: NoSettings,
 		icon: "icon-long-text-field",
 		label: t("biblio", "Long text"),
 

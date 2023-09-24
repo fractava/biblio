@@ -22,22 +22,21 @@
 
 <template>
 	<FieldsTableRow :enable-drag-handle="enableDragHandle">
-		<template #left>
-			<input v-if="(edit || !name) && allowNameEdit"
-				:placeholder="t('biblio', 'Name')"
+		<template #includeInList>
+			<NcCheckboxRadioSwitch :checked="includeInList"
+				@update:checked="onIncludeInListChange" />
+		</template>
+		<template #name>
+			<NcInputField :placeholder="t('biblio', 'Name')"
 				:value="name"
 				class="field__header-name"
 				type="text"
 				minlength="1"
 				required
-				@input="onNameChange">
-			<h3 v-else class="field__header-Name" v-text="name" />
-			<div v-if="!edit && !fieldValid"
-				v-tooltip.auto="t('biblio', 'A name is required!')"
-				class="field__header-warning icon-error-color"
-				tabindex="0" />
+				:helper-text="nameValid ? '' : t('biblio', 'A name is required!')"
+				@input="onNameChange" />
 		</template>
-		<template #right>
+		<template #settings>
 			<slot />
 		</template>
 	</FieldsTableRow>
@@ -51,9 +50,12 @@
 
 <script>
 import { directive as ClickOutside } from "v-click-outside";
+import { debounce } from "debounce";
 
 import NcActions from "@nextcloud/vue/dist/Components/NcActions";
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
+import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js";
+import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
 import FieldsTableRow from "../Settings/FieldsTableRow.vue";
 
@@ -67,6 +69,8 @@ export default {
 	components: {
 		NcActions,
 		NcActionButton,
+		NcInputField,
+		NcCheckboxRadioSwitch,
 		FieldsTableRow,
 	},
 
@@ -75,9 +79,9 @@ export default {
 			type: String,
 			required: true,
 		},
-		allowNameEdit: {
+		includeInList: {
 			type: Boolean,
-			default: true,
+			default: false,
 		},
 		allowDeletion: {
 			type: Boolean,
@@ -91,10 +95,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		edit: {
-			type: Boolean,
-			required: true,
-		},
 		contentValid: {
 			type: Boolean,
 			default: true,
@@ -104,22 +104,22 @@ export default {
 	computed: {
 
 		/**
-		 * Field valid, if name not empty and content valid
+		 * Field valid, if name not under 3 characters
 		 *
-		 * @return {boolean} true if field valid
+		 * @return {boolean} true if field name valid
 		 */
-		fieldValid() {
-			return this.name && this.contentValid;
+		nameValid() {
+			return this.name && this.name.length > 3;
 		},
 	},
 
 	methods: {
-		onNameChange({ target }) {
+		onNameChange: debounce(function({ target }) {
 			this.$emit("update:name", target.value);
-		},
+		}, 200),
 
-		onRequiredChange(isRequired) {
-			this.$emit("update:isRequired", isRequired);
+		onIncludeInListChange(includeInList) {
+			this.$emit("update:includeInList", includeInList);
 		},
 
 		/**

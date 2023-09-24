@@ -7,15 +7,20 @@
             :aria-label="t('biblio', 'Drag to reorder the fields')">
             <Drag :size="24"/>
         </td>
-        
-        <!-- Left/Title -->
+
+        <!-- Include In List -->
         <td>
-            <slot name="left"></slot>
+            <slot name="includeInList"></slot>
+        </td>
+        
+        <!-- Name -->
+        <td>
+            <slot name="name"></slot>
         </td>
 
-        <!-- Right / Value -->
+        <!-- Settings -->
         <td>
-            <slot name="right"></slot>
+            <slot name="settings"></slot>
         </td>
     </tr>
 </template>

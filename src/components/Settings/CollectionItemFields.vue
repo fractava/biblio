@@ -12,19 +12,20 @@
 				@start="isDragging = true"
 				@end="isDragging = false"
 				@change="fieldsOrderChanged">
-				<Fields :is="FieldTypes[field.type].component"
-					v-for="field in fields"
+				<Field v-for="field in fields"
 					:key="field.id + '-field'"
-					:field-type="FieldTypes[field.type]"
-					:is-required="false"
-					:allow-name-edit="true"
-					:allow-value-edit="true"
-					:enable-drag-handle="true"
+					v-bind.sync="$attrs"
 					:name="field.name"
-					:settings="field.settings"
+					:edit="true"
+					:allow-name-edit="true"
+					:allow-deletion="true"
+					:enable-drag-handle="true"
+					:name-placeholder="t('biblio', 'Name')"
 					class="draggableitem"
 					@update:name="(newName) => onFieldUpdate(field.id, {name: newName})"
-					@delete="deleteField(field)" />
+					@delete="deleteField(field)">
+					<FieldSettings :is="FieldTypes[field.type].settingsComponent" />
+				</Field>
 			</Draggable>
 		</FieldsTable>
 		<NcActions class="addFieldButton"
@@ -51,6 +52,7 @@ import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 import FieldTypes from "../../models/FieldTypes.js";
 import FieldsTable from "./FieldsTable.vue";
 import FieldsTableRow from "./FieldsTableRow.vue";
+import Field from "../Fields/Field.vue";
 
 import { useBiblioStore } from "../../store/biblio.js";
 import { useSettingsStore } from "../../store/settings.js";
@@ -62,6 +64,7 @@ export default {
 		NcActionButton,
 		FieldsTable,
 		FieldsTableRow,
+		Field,
 	},
 	data() {
 		return {

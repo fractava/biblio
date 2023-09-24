@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
+import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js";
 
 export default {
 	components: {
