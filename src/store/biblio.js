@@ -107,21 +107,21 @@ export const useBiblioStore = defineStore("biblio", {
 
 				console.log(options);
 
-				let fields = [];
+				/* let fieldValues = [];
 
 				for(let field of options.fields) {
 					const { value, ...rest } = field;
-					fields.push({
+					fieldValues.push({
 						value: JSON.stringify(value),
 						...rest,
 					});
 				}
 
-				console.log(fields);
+				console.log(fieldValues); */
 
 				const parameters = {
 					title: options.title,
-					fields: JSON.stringify(fields),
+					//fields: JSON.stringify(fieldValues),
 				};
 				axios.post(generateUrl(`/apps/biblio/collections/${this.selectedCollectionId}/items`), parameters).then(function(response) {
 					this.items.push({
