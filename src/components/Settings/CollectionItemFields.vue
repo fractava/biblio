@@ -14,16 +14,16 @@
 				@change="fieldsOrderChanged">
 				<Fields :is="FieldTypes[field.type].component"
 					v-for="field in fields"
-					:key="field.title + '-field'"
+					:key="field.id + '-field'"
 					:field-type="FieldTypes[field.type]"
 					:is-required="false"
-					:allow-title-edit="true"
+					:allow-name-edit="true"
 					:allow-value-edit="true"
 					:enable-drag-handle="true"
-					:title.sync="field.name"
+					:name="field.name"
 					:settings="field.settings"
 					class="draggableitem"
-					@update:value="(newValue) => onFieldUpdate(newValue, field)"
+					@update:name="(newName) => onFieldUpdate(field.id, {name: newName})"
 					@delete="deleteField(field)" />
 			</Draggable>
 		</FieldsTable>
@@ -84,7 +84,8 @@ export default {
 			console.log("onFieldsUpdate", JSON.stringify(fields));
 			this.$emit("set-fields", fields);
 		},
-		onFieldUpdate() {
+		onFieldUpdate(id, options) {
+			this.biblioStore.updateCollectionItemField(this.settingsStore.context?.collectionId, id, options);
 		},
 		addField(type, field) {
 			this.biblioStore.createCollectionItemField(this.settingsStore.context?.collectionId, {

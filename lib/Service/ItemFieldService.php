@@ -78,7 +78,7 @@ class ItemFieldService {
 		return $this->mapper->insert($field);
 	}
 
-	public function update(int $id, int $collectionId, string $newType, string $newName, string $newSettings, bool $newIncludeInList): ItemField {
+	public function update(int $id, int $collectionId, ?string $newType, ?string $newName, ?string $newSettings, ?bool $newIncludeInList): ItemField {
 		try {
 			$field = $this->mapper->find($id, $collectionId);
 			

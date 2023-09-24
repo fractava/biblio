@@ -22,50 +22,23 @@
 
 <template>
 	<Field v-bind.sync="$attrs"
-		:title="title"
+		:name="name"
 		:edit.sync="edit"
-		:allow-title-edit="allowTitleEdit"
+		:allow-name-edit="allowNameEdit"
 		:allow-deletion="allowDeletion"
 		:enable-drag-handle="enableDragHandle"
-		:title-placeholder="t('biblio', 'Title')"
-		@update:title="onTitleChange"
+		:name-placeholder="t('biblio', 'Name')"
+		@update:name="onNameChange"
 		@delete="onDelete">
-		<div class="field__content">
-			<NcInputField ref="input"
-				:placeholder="t('biblio', 'Value')"
-				:disabled="!allowValueEdit"
-				:value="value"
-				minlength="0"
-				type="text"
-				@update:value="onInput"
-				@keydown.enter.exact.prevent="onKeydownEnter" />
-		</div>
+		<span>{{ t('biblio', 'This field type has no settings') }}</span>
 	</Field>
 </template>
 
 <script>
 import FieldMixin from "../../mixins/FieldMixin";
 
-import NcInputField from '@nextcloud/vue/dist/Components/NcInputField.js'
-
 export default {
 	name: "ShortTextField",
-
-	components: {
-		NcInputField,
-	},
-
 	mixins: [FieldMixin],
-
-	methods: {
-		onInput() {
-			const input = this.$refs.input;
-			this.$emit("update:value", input.value);
-		},
-	},
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>

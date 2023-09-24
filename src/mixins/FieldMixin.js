@@ -27,14 +27,14 @@ export default {
 	props: {
 
 		/**
-		 * The Field title
+		 * The Field name
 		 */
-		title: {
+		name: {
 			type: String,
 			required: true,
 		},
 
-		allowTitleEdit: {
+		allowNameEdit: {
 			type: Boolean,
 			default: true,
 		},
@@ -90,12 +90,12 @@ export default {
 
 	methods: {
 		/**
-		 * Forward the title change to the parent and store to db
+		 * Forward the name change to the parent and store to db
 		 *
 		 * @param {string} text the title
 		 */
-		onTitleChange: debounce(function(text) {
-			this.$emit("update:title", text);
+		onNameChange: debounce(function(text) {
+			this.$emit("update:name", text);
 		}, 200),
 
 		/**

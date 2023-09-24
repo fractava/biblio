@@ -23,17 +23,17 @@
 <template>
 	<FieldsTableRow :enable-drag-handle="enableDragHandle">
 		<template #left>
-			<input v-if="(edit || !title) && allowTitleEdit"
-				:placeholder="t('biblio', 'Title')"
-				:value="title"
-				class="field__header-title"
+			<input v-if="(edit || !name) && allowNameEdit"
+				:placeholder="t('biblio', 'Name')"
+				:value="name"
+				class="field__header-name"
 				type="text"
 				minlength="1"
 				required
-				@input="onTitleChange">
-			<h3 v-else class="field__header-title" v-text="title" />
+				@input="onNameChange">
+			<h3 v-else class="field__header-Name" v-text="name" />
 			<div v-if="!edit && !fieldValid"
-				v-tooltip.auto="t('biblio', 'A title is required!')"
+				v-tooltip.auto="t('biblio', 'A name is required!')"
 				class="field__header-warning icon-error-color"
 				tabindex="0" />
 		</template>
@@ -71,11 +71,11 @@ export default {
 	},
 
 	props: {
-		title: {
+		name: {
 			type: String,
 			required: true,
 		},
-		allowTitleEdit: {
+		allowNameEdit: {
 			type: Boolean,
 			default: true,
 		},
@@ -104,18 +104,18 @@ export default {
 	computed: {
 
 		/**
-		 * Field valid, if title not empty and content valid
+		 * Field valid, if name not empty and content valid
 		 *
 		 * @return {boolean} true if field valid
 		 */
 		fieldValid() {
-			return this.title && this.contentValid;
+			return this.name && this.contentValid;
 		},
 	},
 
 	methods: {
-		onTitleChange({ target }) {
-			this.$emit("update:title", target.value);
+		onNameChange({ target }) {
+			this.$emit("update:name", target.value);
 		},
 
 		onRequiredChange(isRequired) {
@@ -126,7 +126,7 @@ export default {
 		 * Enable the edit mode
 		 */
 		enableEdit() {
-			if (!this.allowTitleEdit) {
+			if (!this.allowNameEdit) {
 				this.$emit("update:edit", true);
 			}
 		},
@@ -135,7 +135,7 @@ export default {
 		 * Disable the edit mode
 		 */
 		disableEdit() {
-			if (!this.allowTitleEdit) {
+			if (!this.allowNameEdit) {
 				this.$emit("update:edit", false);
 			}
 		},
@@ -175,7 +175,7 @@ export default {
 		padding: 10px;
 	}
 
-	&__title,
+	&__name,
 	&__content {
 		flex: 1 1 100%;
 		max-width: 100%;
@@ -190,8 +190,8 @@ export default {
 		width: auto;
 
 		// Using type to have a higher order than the input styling of server
-		&-title,
-		&-title[type=text] {
+		&-name,
+		&-name[type=text] {
 			flex: 1 1 100%;
 			min-height: 22px;
 			margin: 0;
@@ -206,7 +206,7 @@ export default {
 			line-height: 22px;
 		}
 
-		&-title[type=text] {
+		&-name[type=text] {
 			border-bottom-color: var(--color-border-dark);
 		}
 
