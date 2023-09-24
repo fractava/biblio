@@ -53,7 +53,7 @@ class ItemFieldController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $settings = null, string $includeInList = null): DataResponse {
+	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $settings = null, bool $includeInList = null): DataResponse {
 		return $this->handleNotFound(function () use ($id, $collectionId, $type, $name, $settings, $includeInList) {
 			return $this->service->update($id, $collectionId, $type, $name, $settings, $includeInList);
 		});
