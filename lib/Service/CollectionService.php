@@ -47,9 +47,10 @@ class CollectionService {
 		}
 	}
 
-	public function create(string $name, string $firstMember) {
+	public function create(string $name, string $fieldsOrder, string $firstMember) {
 		$collection = new Collection();
 		$collection->setName($name);
+		$collection->setFieldsOrder($fieldsOrder);
 
 		$collection = $this->mapper->insert($collection);
 
