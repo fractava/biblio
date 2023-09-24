@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<ItemUI :title="item.title"
-			:fields="item.fields"
+			:fields="biblioStore.itemFields"
+			:field-values="item.fieldValues"
 			@setTitle="setTitle"
 			@setFields="setFields" />
   </div>
@@ -36,7 +37,7 @@ export default {
 		return {
 			newItem: {
 				title: "Test",
-				fields: [
+				fieldValues: [
 					{
 						type: "short",
 						title: "Test Field",

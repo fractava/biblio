@@ -9,13 +9,20 @@
 				<template>Edit</template>
 			</NcButton>
 		</div>
-		<ShortTextFieldValue slot="header"
+		<!--<ShortTextFieldValue slot="header"
 			:enable-drag-handle="false"
 			:field-type="FieldTypes['short']"
 			:allow-title-edit="false"
 			:is-required="true"
 			name="Titel"
-			:value="title" />
+			:value="title" />-->
+		<table>
+			<tbody>
+				<tr v-for="field in fields" :key="field.id">
+					<td>{{ field }}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </template>
 
@@ -38,6 +45,10 @@ export default {
 			default: "",
 		},
 		fields: {
+			type: Array,
+			default: () => [],
+		},
+		fieldValues: {
 			type: Array,
 			default: () => [],
 		},

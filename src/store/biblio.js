@@ -8,11 +8,13 @@ export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
 		selectedCollectionId: false,
+		itemFields: [],
 		items: [],
 	}),
 	actions: {
 		selectCollection(id) {
 			this.selectedCollectionId = id;
+			this.fetchItemFields();
 			this.fetchItems();
 		},
 		createCollection(options) {
@@ -153,6 +155,12 @@ export const useBiblioStore = defineStore("biblio", {
 						showError(t("biblio", "Could not collections"));
 					});
 			});
+		},
+		async fetchItemFields() {
+			if (!this.selectedCollectionId) {
+				return;
+			}
+			this.itemFields = await this.getCollectionItemFields(this.selectedCollectionId);
 		},
 		fetchItems() {
 			return new Promise((resolve, reject) => {
