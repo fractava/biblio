@@ -31,7 +31,7 @@
 </template>
 <script>
 import AppNavigationSelect from "./AppNavigationSelect.vue";
-import Settings from "./Settings.vue";
+import Settings from "./Settings/Settings.vue";
 
 import { mapStores } from "pinia";
 import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation";
