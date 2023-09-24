@@ -3,18 +3,24 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th v-for="column in columns" :key="column+'-head-column'" @click="selectSortingMethod(column)">
+					<th v-for="column in columns" :key="column" @click="selectSortingMethod(column)">
 						<a>
 							<span>{{ column }}</span>
 							<span :class="{'icon-triangle-n': sortReverse, 'icon-triangle-s': !sortReverse}" :style="{visibility: sort == column?'visible':'hidden'}" class="sortIndicator" />
 						</a>
 					</th>
+					<th v-for="fieldColumn in fieldColumns" :key="fieldColumn.id">
+						<span>{{ fieldColumn.name }}</span>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="item in items" :key="item.id+'-item'" @click="$emit('click', item.id)">
-					<th v-for="column in columns" :key="column+'-body-column'">
+				<tr v-for="item in items" :key="item.id" @click="$emit('click', item.id)">
+					<th v-for="column in columns" :key="column">
 						<span>{{ item[column] }}</span>
+					</th>
+					<th v-for="fieldColumn in fieldColumns" :key="fieldColumn.id">
+						<span>{{ getFieldValue(item, fieldColumn.id) }}</span>
 					</th>
 				</tr>
 			</tbody>
@@ -26,6 +32,12 @@
 export default {
 	props: {
 		columns: {
+			type: Array,
+			default() {
+				return [];
+			},
+		},
+		fieldColumns: {
 			type: Array,
 			default() {
 				return [];
@@ -52,6 +64,9 @@ export default {
 				this.sort = sortMethod;
 				this.sortReverse = false;
 			}
+		},
+		getFieldValue(item, fieldId) {
+			return item.fields.find((field) => (field.id === fieldId))?.value;
 		},
 	},
 };

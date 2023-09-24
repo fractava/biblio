@@ -2,7 +2,8 @@
 	<NoCollectionSelected>
 		<ul>
 			<AddItemModal />
-			<Table :columns="['title', 'fields']"
+			<Table :columns="['title']"
+				:field-columns="includedItemFields"
 				:items="biblioStore.items"
 				@click="openItem($event)" />
 		</ul>
@@ -25,6 +26,9 @@ export default {
 },
 	computed: {
 		...mapStores(useBiblioStore),
+		includedItemFields() {
+			return this.biblioStore.itemFields.filter((itemField) => (itemField.includeInList));
+		},
 	},
 	methods: {
 		openItem(item) {
