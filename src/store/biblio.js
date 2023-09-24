@@ -79,8 +79,6 @@ export const useBiblioStore = defineStore("biblio", {
 						showError(t("biblio", "Could not create collection item field"));
 						reject(error);
 					});
-
-				resolve();
 			});
 		},
 		updateCollectionItemField(collectionId, id, options) {

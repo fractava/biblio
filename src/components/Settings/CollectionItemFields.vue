@@ -36,6 +36,9 @@
 				:icon="field.icon"
 				@click="addField(type, field)">
 				{{ field.label }}
+				<template #icon>
+					<Icon :is="field.iconComponent" :size="20" />
+				</template>
 			</NcActionButton>
 		</NcActions>
 	</div>
