@@ -69,9 +69,9 @@ class ItemObjectHelper extends AbstractObjectHelper {
             $result["title"] = $entity->getTitle();
         }
 
-        /*if($this->shouldInclude(self::FIELDS_INCLUDE, $includes)) {
+        if($this->shouldInclude(self::FIELDS_INCLUDE, $includes)) {
             $result["fields"] = $this->getFields($entity);
-        }*/
+        }
 
         return $result;
     }
@@ -83,7 +83,7 @@ class ItemObjectHelper extends AbstractObjectHelper {
      * @throws DoesNotExistException
      */
 	public function getFields(Item $entity) {
-        //return $this->fieldValueService->findAllInOrder($entity);
+        return $this->fieldValueService->findAllIncludingFields($entity->getId(), $entity->getCollectionId());
 	}
 
 }
