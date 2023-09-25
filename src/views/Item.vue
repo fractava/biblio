@@ -24,7 +24,7 @@
 						<FieldValue :is="FieldTypes[field.type].valueComponent"
 							:allow-value-edit="true"
 							:value="field.value"
-							@update:value="biblioStore.updateItemValue" />
+							@update:value="(newValue) => {updateValue(newValue, field)}" />
 					</td>
 				</tr>
 			</tbody>
@@ -36,6 +36,7 @@
 import { mapStores } from "pinia";
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 
+import { api } from "../api";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
 
@@ -63,6 +64,13 @@ export default {
 		},
 		item() {
 			return this.biblioStore.getItemById(this.itemId);
+		},
+	},
+	methods: {
+		updateValue(newValue, field) {
+			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.id, {
+				value: newValue,
+			});
 		},
 	},
 };
