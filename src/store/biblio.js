@@ -4,6 +4,8 @@ import axios from "@nextcloud/axios";
 import { generateUrl } from "@nextcloud/router";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
+import { api } from "../api.js";
+
 export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
@@ -12,95 +14,74 @@ export const useBiblioStore = defineStore("biblio", {
 		items: [],
 	}),
 	actions: {
+		/* Collections */
 		selectCollection(id) {
 			this.selectedCollectionId = id;
 			this.fetchItemFields();
 			this.fetchItems();
 		},
-		createCollection(options) {
+		fetchCollections() {
+			api.getCollections()
+				.then((result) => {
+					this.collections = result;
+				}).catch(() => {
+					showError(t("biblio", "Could not fetch collections"));
+				});
+		},
+		createCollection(parameters) {
 			return new Promise((resolve, reject) => {
-				console.log(options);
-
-				const parameters = {
-					name: options.name,
-				};
-
-				axios.post(generateUrl("/apps/biblio/collections"), parameters).then(function(response) {
-					console.log(response.data);
-
-					resolve(response.data);
-				})
-					.catch(function(error) {
+				api.createCollection(parameters)
+					.then((result) => {
+						this.collections.push(result);
+						resolve();
+					}).catch(() => {
 						showError(t("biblio", "Could not create collection"));
-						reject(error);
+						resolve();
 					});
 			});
 		},
-		updateCollection(id, options) {
+		updateCollection(id, parameters) {
 			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/collections/${id}`), options).then((response) => {
-					const updatedIndex = this.collections.findIndex(collection => collection.id === id);
-					Vue.set(this.collections, updatedIndex, response.data);
-					// TODO: Update store
-				})
-					.catch(function(error) {
-						console.error(error);
+				api.updateCollection(id, parameters)
+					.then((result) => {
+						const updatedIndex = this.collections.findIndex(collection => collection.id === id);
+						Vue.set(this.collections, updatedIndex, result);
+						resolve();
+					}).catch(() => {
 						showError(t("biblio", "Could not update collection"));
-						reject(error);
+						resolve();
 					});
-
-				resolve();
 			});
 		},
 		deleteCollection(id) {
 			return new Promise((resolve, reject) => {
-				axios.delete(generateUrl(`/apps/biblio/collections/${id}`)).then(function(response) {
-					console.log(response.data);
-
-					resolve(response.data);
-				})
-					.catch(function(error) {
+				api.deleteCollection(id)
+					.then(() => {
+						this.collections = this.collections.filter(collection => collection.id !== id);
+						resolve();
+					}).catch(() => {
 						showError(t("biblio", "Could not delete collection"));
-						reject(error);
+						resolve();
 					});
 			});
 		},
-		createCollectionItemField(collectionId, options) {
-			return new Promise((resolve, reject) => {
-				axios.post(generateUrl(`/apps/biblio/collections/${collectionId}/item_fields`), {
-					type: options.type,
-					name: options.name,
-					settings: options.settings,
-					includeInList: options.includeInList,
+
+		/* Item Fields */
+		fetchItemFields() {
+			if (!this.selectedCollectionId) {
+				return;
+			}
+
+			api.getItemFields(this.selectedCollectionId)
+				.then((fields) => {
+					this.itemFields = fields;
 				})
-					.then(function(response) {
-						resolve(response.data);
-					})
-					.catch(function(error) {
-						console.error(error);
-						showError(t("biblio", "Could not create collection item field"));
-						reject(error);
-					});
-			});
+				.catch(() => {
+					showError(t("biblio", "Could not fetch item fields"));
+				});
 		},
-		updateCollectionItemField(collectionId, id, options) {
-			return new Promise((resolve, reject) => {
-				axios.put(generateUrl(`/apps/biblio/collections/${collectionId}/item_fields/${id}`), {
-					type: options.type,
-					name: options.name,
-					settings: options.settings,
-					includeInList: options.includeInList,
-				})
-					.then(function(response) {
-						resolve(response.data);
-					})
-					.catch(function(error) {
-						console.error(error);
-						showError(t("biblio", "Could not update collection item field"));
-						reject(error);
-					});
-			});
-		},
+
+		/* Items */
 		createItem(options) {
 			return new Promise((resolve, reject) => {
 				let new_item_id;
@@ -139,28 +120,6 @@ export const useBiblioStore = defineStore("biblio", {
 						reject(error);
 					});
 			});
-		},
-		fetchCollections() {
-			return new Promise((resolve, reject) => {
-				axios.get(generateUrl("/apps/biblio/collections"), {}).then((response) => {
-					const collections = response.data;
-
-					console.log(collections);
-
-					this.collections = collections;
-					resolve();
-				})
-					.catch(function(error) {
-						console.error(error);
-						showError(t("biblio", "Could not collections"));
-					});
-			});
-		},
-		async fetchItemFields() {
-			if (!this.selectedCollectionId) {
-				return;
-			}
-			this.itemFields = await this.getCollectionItemFields(this.selectedCollectionId);
 		},
 		fetchItems() {
 			return new Promise((resolve, reject) => {
@@ -231,33 +190,6 @@ export const useBiblioStore = defineStore("biblio", {
 	getters: {
 		getItemById: (state) => (id) => {
 			return state.items.find(item => item.id == id);
-		},
-		getCollectionItemFields: (state) => (collectionId) => {
-			return new Promise((resolve, reject) => {
-				axios.get(generateUrl(`/apps/biblio/collections/${collectionId}/item_fields`))
-					.then((response) => {
-						const fields = response.data;
-
-						for (const field of fields) {
-							if (field.settings && field.settings !== "") {
-								field.settings = JSON.parse(field.settings);
-							}
-						}
-
-						const fieldsOrder = state.collections.find(collection => collection.id === collectionId).fieldsOrder;
-
-						fields.sort(function(a, b) {
-							return fieldsOrder.indexOf(a.id) - fieldsOrder.indexOf(b.id);
-						});
-
-						resolve(fields);
-					})
-					.catch(function(error) {
-						console.error(error);
-						showError(t("biblio", "Could not fetch collection item fields"));
-						reject(error);
-					});
-			});
 		},
 	},
 });

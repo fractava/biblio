@@ -49,10 +49,12 @@
 <script>
 import Vue from "vue";
 import { mapStores } from "pinia";
+import { showError } from "@nextcloud/dialogs";
 import Draggable from "vuedraggable";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 
+import { api } from "../../api.js";
 import FieldTypes from "../../models/FieldTypes.js";
 import FieldsTable from "./FieldsTable.vue";
 import FieldsTableRow from "./FieldsTableRow.vue";
@@ -80,8 +82,14 @@ export default {
 	computed: {
 		...mapStores(useBiblioStore, useSettingsStore),
 	},
-	async mounted() {
-		this.fields = await this.biblioStore.getCollectionItemFields(this.settingsStore.context?.collectionId);
+	mounted() {
+		api.getItemFields(this.settingsStore.context?.collectionId)
+			.then((fields) => {
+				this.fields = fields;
+			})
+			.catch(() => {
+				showError(t("biblio", "Could not fetch item fields"));
+			});
 	},
 	methods: {
 		fieldsOrderChanged() {
@@ -91,19 +99,27 @@ export default {
 			console.log("onFieldsUpdate", JSON.stringify(fields));
 			this.$emit("set-fields", fields);
 		},
-		async onFieldUpdate(id, options) {
-			const updatedField = await this.biblioStore.updateCollectionItemField(this.settingsStore.context?.collectionId, id, options);
-			const fieldIndex = this.fields.findIndex(field => field.id === id);
-			Vue.set(this.fields, fieldIndex, updatedField);
+		async onFieldUpdate(id, parameters) {
+			api.updateItemField(this.settingsStore.context?.collectionId, id, parameters)
+				.then((updatedField) => {
+					const fieldIndex = this.fields.findIndex(field => field.id === id);
+					Vue.set(this.fields, fieldIndex, updatedField);
+				}).catch(() => {
+					showError(t("biblio", "Could not update collection item field"));
+				});
 		},
 		async addField(type, field) {
-			const newField = await this.biblioStore.createCollectionItemField(this.settingsStore.context?.collectionId, {
+			api.createItemField(this.settingsStore.context?.collectionId, {
 				type,
 				name: "",
 				settings: field.defaultSettings,
 				includeInList: false,
-			});
-			this.fields.push(newField);
+			})
+				.then((newField) => {
+					this.fields.push(newField);
+				}).catch(() => {
+					showError(t("biblio", "Could not create collection item field"));
+				});
 		},
 	},
 };
