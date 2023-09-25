@@ -81,13 +81,20 @@ export const useBiblioStore = defineStore("biblio", {
 
 		/* Items */
 		createItem(parameters) {
+			if (!this.selectedCollectionId) {
+				return;
+			}
+
 			return new Promise((resolve, reject) => {
-				api.createItem(this.selectCollectionId, parameters)
+				api.createItem(this.selectedCollectionId, parameters)
 					.then((result) => {
 						this.items.push(result);
+						resolve();
 					})
-					.catch(() => {
+					.catch((error) => {
+						console.error(error);
 						showError(t("biblio", "Could not create item"));
+						resolve();
 					});
 			});
 		},
@@ -102,13 +109,18 @@ export const useBiblioStore = defineStore("biblio", {
 						this.items = result;
 						resolve();
 					})
-					.catch(() => {
+					.catch((error) => {
+						console.error(error);
 						showError(t("biblio", "Could not fetch items"));
 						resolve();
 					});
 			});
 		},
 		updateItem(itemId, parameters) {
+			if (!this.selectedCollectionId) {
+				return;
+			}
+
 			return new Promise((resolve, reject) => {
 				api.updateItem(this.selectedCollectionId, itemId, parameters)
 					.then((result) => {
@@ -116,7 +128,8 @@ export const useBiblioStore = defineStore("biblio", {
 						Vue.set(this.items, updatedIndex, result);
 						resolve();
 					})
-					.catch(() => {
+					.catch((error) => {
+						console.error(error);
 						showError(t("biblio", "Could not update item"));
 						resolve();
 					});

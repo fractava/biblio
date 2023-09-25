@@ -88,7 +88,8 @@ export default {
 			.then((fields) => {
 				this.fields = fields;
 			})
-			.catch(() => {
+			.catch((error) => {
+				console.error(error);
 				showError(t("biblio", "Could not fetch item fields"));
 			});
 	},
@@ -101,13 +102,18 @@ export default {
 			this.$emit("set-fields", fields);
 		},
 		onFieldUpdate(id, parameters) {
+			// optimistic update
+			const fieldIndex = this.fields.findIndex(field => field.id === id);
+			Object.assign(this.fields[fieldIndex], parameters);
+
 			api.updateItemField(this.settingsStore.context?.collectionId, id, parameters)
 				.then((updatedField) => {
-					const fieldIndex = this.fields.findIndex(field => field.id === id);
-					Vue.set(this.fields, fieldIndex, updatedField);
+					// const fieldIndex = this.fields.findIndex(field => field.id === id);
+					// Vue.set(this.fields, fieldIndex, updatedField);
 
 					this.refreshItemFieldsInBiblioStoreIfNeeded();
-				}).catch(() => {
+				}).catch((error) => {
+					console.error(error);
 					showError(t("biblio", "Could not update collection item field"));
 				});
 		},
@@ -122,7 +128,9 @@ export default {
 					this.fields.push(newField);
 
 					this.refreshItemFieldsInBiblioStoreIfNeeded();
-				}).catch(() => {
+				})
+				.catch((error) => {
+					console.error(error);
 					showError(t("biblio", "Could not create collection item field"));
 				});
 		},
@@ -137,7 +145,8 @@ export default {
 
 						resolve();
 					})
-					.catch(() => {
+					.catch((error) => {
+						console.error(error);
 						showError(t("biblio", "Could not delete item field"));
 						resolve();
 					});
