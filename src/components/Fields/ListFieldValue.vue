@@ -78,6 +78,12 @@ export default {
 	components: {
 		EntryInput,
 	},
+	props: {
+		value: {
+			type: Array,
+			default: [],
+		},
+	},
 	computed: {
 		isLastEmpty() {
 			const value = this.value[this.value.length - 1];
@@ -96,7 +102,6 @@ export default {
 			return this.edit && this.value.length !== 0 && !this.isLastEmpty;
 		},
 	},
-
 	watch: {
 		edit(edit) {
 			// When leaving edit mode, filter and delete empty value

@@ -55,11 +55,6 @@ const router = new Router({
 			component: Items,
 		},
 		{
-			path: "/item/new",
-			component: Item,
-			props: { createNew: true },
-		},
-		{
 			path: "/item/:id",
 			component: Item,
 		},

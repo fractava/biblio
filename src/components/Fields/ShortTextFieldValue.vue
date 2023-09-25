@@ -18,6 +18,12 @@ export default {
 	components: {
 		NcInputField,
 	},
+	props: {
+		value: {
+			type: String,
+			default: "",
+		},
+	},
 	methods: {
 		onInput() {
 			const input = this.$refs.input;

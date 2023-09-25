@@ -1,43 +1,56 @@
 <template>
 	<div>
-		<ItemUI :title="item.title"
-			:fields="biblioStore.itemFields"
-			:field-values="item.fieldValues"
-			@setTitle="setTitle"
-			@setFields="setFields" />
-  </div>
+		<div class="editModeContainer">
+			<NcButton aria-label="Start/Stop editing mode"
+				@click="editMode = !editMode">
+				<template #icon>
+					<Pencil :size="20" />
+				</template>
+				<template>Edit</template>
+			</NcButton>
+		</div>
+		<!--<ShortTextFieldValue slot="header"
+			:enable-drag-handle="false"
+			:field-type="FieldTypes['short']"
+			:allow-title-edit="false"
+			:is-required="true"
+			name="Titel"
+			:value="item.title" />-->
+		<table>
+			<tbody>
+				<tr v-for="field in item.fieldValues" :key="field.id">
+					<td>{{ field.name }}</td>
+					<td>
+						<FieldValue :is="FieldTypes[field.type].valueComponent" :value="field.value" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
 
-<!--<script>
-
-const item = ref();
-
-</script>-->
-
 <script>
-import Draggable from "vuedraggable";
+import { mapStores } from "pinia";
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 
-import ItemUI from "./ItemUI.vue";
+import Pencil from "vue-material-design-icons/Pencil.vue";
+import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
-import { mapStores } from "pinia";
+import FieldTypes from "../models/FieldTypes";
 
 export default {
 	components: {
-		Draggable,
-		ItemUI,
+		NcButton,
+		Pencil,
+		ShortTextFieldValue,
 	},
 	props: {
-		createNew: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	data() {
 		return {
-			newItem: {
-				title: "Test",
-			},
+			editMode: false,
+			FieldTypes,
 		};
 	},
 	computed: {
@@ -45,40 +58,22 @@ export default {
 		itemId() {
 			return this.$route.params.id;
 		},
-		fetchedItem() {
-			if (this.createNew) {
-				return false;
-			} else {
-				return this.biblioStore.getItemById(this.itemId);
-			}
-		},
 		item() {
-			if (this.createNew) {
-				return this.newItem;
-			} else {
-				return this.fetchedItem;
-			}
-		}
-	},
-	watch: {
-	},
-	mounted() {
-	},
-	methods: {
-		setTitle(newTitle) {
-			if (this.createNew) {
-				this.newItem.title = newTitle;
-			} else {
-				// TODO
-			}
-		},
-		setFields(newFields) {
-			if (this.createNew) {
-				this.newItem.fields = newFields;
-			} else {
-				// TODO
-			}
+			return this.biblioStore.getItemById(this.itemId);
 		},
 	},
 };
 </script>
+
+<style scoped>
+
+.editModeContainer {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 20px;
+}
+
+.ignoreForLayout {
+	display: contents;
+}
+</style>
