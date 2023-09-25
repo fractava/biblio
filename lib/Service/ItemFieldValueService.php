@@ -83,16 +83,16 @@ class ItemFieldValueService {
 	}
 
 	public function updateByItemAndFieldId(int $itemId, int $fieldId, string $newValue): ItemFieldValue {
-		try {
-			$fieldValue = $this->mapper->findByItemAndFieldId($itemId, $fieldId);
-			
-			if (!is_null($newValue)) {
+		if (!is_null($newValue)) {
+			try {
+				$fieldValue = $this->mapper->findByItemAndFieldId($itemId, $fieldId);
 				$fieldValue->setValue($newValue);
+				return $this->mapper->update($fieldValue);
+			} catch ( DoesNotExistException $e ) {
+				return $this->create($itemId, $fieldId, $newValue);
+			} catch ( \Exception $e ) {
+				$this->handleException($e);
 			}
-
-			return $this->mapper->update($fieldValue);
-		} catch (Exception $e) {
-			$this->handleException($e);
 		}
 	}
 

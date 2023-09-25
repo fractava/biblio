@@ -59,17 +59,9 @@ class ItemFieldValueController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, int $itemId, int $fieldId, string $value): DataResponse {
-		return new DataResponse($this->service->create($itemId, $fieldId, $value));
-	}
-
-	/**
-	 * @NoAdminRequired
-	 */
 	public function update(int $collectionId, int $itemId, int $fieldId, string $value = null): DataResponse {
-		return $this->handleNotFound(function () use ($itemId, $fieldId, $value) {
-			return $this->service->updateByItemAndFieldId($itemId, $fieldId, $value);
-		});
+		// update value (or create db entry if not set previously)
+		return new DataResponse($this->service->updateByItemAndFieldId($itemId, $fieldId, $value));
 	}
 
 	/**

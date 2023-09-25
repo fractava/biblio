@@ -37,7 +37,6 @@ return [
 		// Items Field Value
 		['name' => 'item_field_value#index', 'url' => '/collections/{collectionId}/items/{itemId}/field_values', 'verb' => 'GET'],
 		['name' => 'item_field_value#show', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'GET'],
-		['name' => 'item_field_value#create', 'url' => '/collections/{collectionId}/items/{itemId}/field_values', 'verb' => 'POST'],
 		['name' => 'item_field_value#update', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'PUT'],
 		['name' => 'item_field_value#destroy', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'DELETE'],
 	]
