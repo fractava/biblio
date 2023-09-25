@@ -1,7 +1,6 @@
 <template>
 	<div class="field__content">
-		<NcInputField ref="input"
-			:placeholder="t('biblio', 'Value')"
+		<NcInputField :placeholder="t('biblio', 'Value')"
 			:disabled="!allowValueEdit"
 			:value="value"
 			minlength="0"
@@ -29,9 +28,8 @@ export default {
 		},
 	},
 	methods: {
-		onInput() {
-			const input = this.$refs.input;
-			this.$emit("update:value", input.value);
+		onInput(newValue) {
+			this.$emit("update:value", newValue);
 		},
 	},
 };
