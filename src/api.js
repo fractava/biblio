@@ -1,6 +1,8 @@
 import axios from "@nextcloud/axios";
 import { generateUrl } from "@nextcloud/router";
 
+import FieldTypes from "./models/FieldTypes.js";
+
 axios.defaults.baseURL = generateUrl("/apps/biblio");
 
 /**
@@ -76,7 +78,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   id: number
  *   collectionId: number
  *   title: string
- *   fieldValues: string
+ *   fieldValues: Array<ItemFieldValueResponse>
  * }} ItemResponse
  *
  * @typedef {{
@@ -107,7 +109,14 @@ const transforms = {
 	   * @return {ItemField}
 	   */
 	transformItemField(itemField) {
-		itemField.settings = JSON.parse(itemField.settings) || {};
+		if (itemField.settings && itemField.settings !== "") {
+			itemField.settings = JSON.parse(itemField.settings);
+		} else if (FieldTypes[itemField.type]) {
+			itemField.settings = FieldTypes[itemField.type].defaultSettings;
+		} else {
+			itemField.settings = "";
+		}
+
 		itemField.includeInList = !!itemField.includeInList;
 		return itemField;
 	},
@@ -119,7 +128,15 @@ const transforms = {
 	   */
 	transformItemFieldValue(itemFieldValue) {
 		itemFieldValue = transforms.transformItemField(itemFieldValue);
-		itemFieldValue.value = JSON.parse(itemFieldValue.value) || {};
+
+		if (itemFieldValue.value && itemFieldValue.value !== "") {
+			itemFieldValue.value = JSON.parse(itemFieldValue.value);
+		} else if (FieldTypes[itemFieldValue.type]) {
+			itemFieldValue.value = FieldTypes[itemFieldValue.type].defaultValue;
+		} else {
+			itemFieldValue.value = "";
+		}
+
 		return itemFieldValue;
 	},
 
@@ -130,7 +147,6 @@ const transforms = {
 	   */
 	transformItem(item) {
 		if (item.fieldValues) {
-			item.fieldValues = JSON.parse(item.fieldValues);
 			item.fieldValues = item.fieldValues.map(transforms.transformItemFieldValue);
 		}
 		return item;
@@ -304,7 +320,7 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			axios.post(`/collections/${collectionId}/items`, parameters)
 				.then(function(response) {
-					const item = transforms.transformItem(response);
+					const item = transforms.transformItem(response.data);
 					resolve(item);
 				})
 				.catch(function(error) {
@@ -323,15 +339,12 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			axios.put(`/collections/${collectionId}/items/${itemId}`, parameters)
 				.then(function(response) {
-					this.getItemById(options.id).title = options.title;
+					const item = transforms.transformItem(response.data);
+					resolve(item);
 				})
 				.catch(function(error) {
-					console.error(error);
-					showError(t("biblio", "Could not update title"));
 					reject(error);
 				});
-
-			resolve();
 		});
 	},
 };
