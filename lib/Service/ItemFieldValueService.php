@@ -44,6 +44,14 @@ class ItemFieldValueService {
 		}
 	}
 
+	public function findByItemAndFieldId(int $itemId, int $fieldId): ItemFieldValue {
+		try {
+			return $this->mapper->findByItemAndFieldId($itemId, $fieldId);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	public function create(int $itemId, int $fieldId, string $value): ItemFieldValue {
 		$fieldValue = new ItemFieldValue();
         $fieldValue->setItemId($itemId);
@@ -66,9 +74,33 @@ class ItemFieldValueService {
 		}
 	}
 
+	public function updateByItemAndFieldId(int $itemId, int $fieldId, string $newValue): ItemFieldValue {
+		try {
+			$fieldValue = $this->mapper->findByItemAndFieldId($itemId, $fieldId);
+			
+			if (!is_null($newValue)) {
+				$fieldValue->setValue($newValue);
+			}
+
+			return $this->mapper->update($fieldValue);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	public function delete($id): ItemFieldValue {
 		try {
 			$fieldValue = $this->mapper->find($id);
+			$this->mapper->delete($fieldValue);
+			return $fieldValue;
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
+	public function deleteByItemAndFieldId(int $itemId, int $fieldId): ItemFieldValue {
+		try {
+			$fieldValue = $this->mapper->findByItemAndFieldId($itemId, $fieldId);
 			$this->mapper->delete($fieldValue);
 			return $fieldValue;
 		} catch (Exception $e) {
