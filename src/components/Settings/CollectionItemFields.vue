@@ -50,6 +50,7 @@
 import Vue from "vue";
 import { mapStores } from "pinia";
 import { showError } from "@nextcloud/dialogs";
+import { debounce } from "debounce";
 import Draggable from "vuedraggable";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
@@ -99,16 +100,18 @@ export default {
 			console.log("onFieldsUpdate", JSON.stringify(fields));
 			this.$emit("set-fields", fields);
 		},
-		async onFieldUpdate(id, parameters) {
+		onFieldUpdate(id, parameters) {
 			api.updateItemField(this.settingsStore.context?.collectionId, id, parameters)
 				.then((updatedField) => {
 					const fieldIndex = this.fields.findIndex(field => field.id === id);
 					Vue.set(this.fields, fieldIndex, updatedField);
+
+					this.refreshItemFieldsInBiblioStoreIfNeeded();
 				}).catch(() => {
 					showError(t("biblio", "Could not update collection item field"));
 				});
 		},
-		async addField(type, field) {
+		addField(type, field) {
 			api.createItemField(this.settingsStore.context?.collectionId, {
 				type,
 				name: "",
@@ -117,10 +120,38 @@ export default {
 			})
 				.then((newField) => {
 					this.fields.push(newField);
+
+					this.refreshItemFieldsInBiblioStoreIfNeeded();
 				}).catch(() => {
 					showError(t("biblio", "Could not create collection item field"));
 				});
 		},
+
+		deleteItemField(itemFieldId) {
+			return new Promise((resolve, reject) => {
+				api.deleteItemField(this.settingsStore.context?.collectionId, itemFieldId)
+					.then(() => {
+						this.fields = this.fields.filter(itemField => itemField.id !== itemFieldId);
+
+						this.refreshItemFieldsInBiblioStoreIfNeeded();
+
+						resolve();
+					})
+					.catch(() => {
+						showError(t("biblio", "Could not delete item field"));
+						resolve();
+					});
+			});
+		},
+
+		refreshItemFieldsInBiblioStoreIfNeeded: debounce(() => {
+			// the settings made changes to the item fields of the collection currently selected in the main application
+			// refresh the data, so the changes take effect in the main application without a manual refresh
+
+			if (this.biblioStore.selectedCollectionId === this.settingsStore.context?.collectionId) {
+				this.biblioStore.fetchItemFields();
+			}
+		}, 2000),
 	},
 };
 </script>

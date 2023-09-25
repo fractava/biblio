@@ -45,6 +45,50 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   settings: object | undefined
  *   includeInList: boolean | undefined
  * }} updateItemFieldParameters
+ *
+ * @typedef {{
+ *   collectionId: number
+ *   fieldId: number
+ *   itemId: number
+ *   type: string
+ *   name: string
+ *   settings: object
+ *   includeInList: boolean
+ *   value: string
+ * }} ItemFieldValueResponse
+ *
+ * @typedef {{
+ *   collectionId: number
+ *   fieldId: number
+ *   itemId: number
+ *   type: string
+ *   name: string
+ *   settings: object
+ *   includeInList: boolean
+ *   value: object
+ * }} ItemFieldValue
+ *
+ * @typedef {{
+ *   value: object
+ * }} updateItemFieldValueParameters
+ *
+ * @typedef {{
+ *   id: number
+ *   collectionId: number
+ *   title: string
+ *   fieldValues: string
+ * }} ItemResponse
+ *
+ * @typedef {{
+ *   id: number
+ *   collectionId: number
+ *   title: string
+ *   fieldValues: Array<ItemFieldValue>
+ * }} Item
+ *
+ * @typedef {{
+ *   title: string
+ * }} updateItemParameters
  */
 
 const transforms = {
@@ -66,6 +110,30 @@ const transforms = {
 		itemField.settings = JSON.parse(itemField.settings) || {};
 		itemField.includeInList = !!itemField.includeInList;
 		return itemField;
+	},
+
+	  /**
+	   *
+	   * @param {ItemFieldValueResponse} itemFieldValue Item Field API Item
+	   * @return {ItemFieldValue}
+	   */
+	transformItemFieldValue(itemFieldValue) {
+		itemFieldValue = transforms.transformItemField(itemFieldValue);
+		itemFieldValue.value = JSON.parse(itemFieldValue.value) || {};
+		return itemFieldValue;
+	},
+
+	  /**
+	   *
+	   * @param {ItemResponse} item Item API Item
+	   * @return {Item}
+	   */
+	transformItem(item) {
+		if (item.fieldValues) {
+			item.fieldValues = JSON.parse(item.fieldValues);
+			item.fieldValues = item.fieldValues.map(transforms.transformItemFieldValue);
+		}
+		return item;
 	},
 };
 
@@ -142,7 +210,7 @@ export const api = {
 	 */
 	getItemFields: (collectionId) => {
 		return new Promise((resolve, reject) => {
-			axios.get(`/apps/biblio/collections/${collectionId}/item_fields`)
+			axios.get(`/collections/${collectionId}/item_fields`)
 				.then((response) => {
 					const itemFields = response.data.map(transforms.transformItemField);
 					resolve(itemFields);
@@ -153,8 +221,8 @@ export const api = {
 		});
 	},
 
-	/**
-	  * @param {number} collectionId Id of the collection to create an item field in
+	 /**
+	  * @param {number} collectionId Id of the collection to create the item field in
 	  * @param {updateItemFieldParameters} parameters attributes of new item field
 	  * @return {Promise<ItemField>}
 	  */
@@ -170,21 +238,100 @@ export const api = {
 		});
 	},
 
-	/**
+	 /**
 	  * @param {number} collectionId Id of the collection the item field is in
-	  * @param {number} itemFieldId id of the item field
-	  * @param {updateItemFieldParameters} parameters attributes of new item field
+	  * @param {number} itemFieldId id of the item field to update
+	  * @param {updateItemFieldParameters} parameters attributes of the item field to update
 	  * @return {Promise<ItemField>}
 	  */
 	updateItemField(collectionId, itemFieldId, parameters) {
 		return new Promise((resolve, reject) => {
-			axios.put(generateUrl(`/collections/${collectionId}/item_fields/${itemFieldId}`), parameters)
+			axios.put(`/collections/${collectionId}/item_fields/${itemFieldId}`, parameters)
 				.then(function(response) {
-					resolve(response.data);
+					resolve(transforms.transformItemField(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
 				});
+		});
+	},
+
+	 /**
+	  * @param {number} collectionId Id of the collection the item field is in
+	  * @param {number} itemFieldId id of the item field to delete
+	  * @return {Promise<ItemField>}
+	  */
+	deleteItemField(collectionId, itemFieldId) {
+		return new Promise((resolve, reject) => {
+			return axios.delete(`/collections/${collectionId}/item_fields/${itemFieldId}`)
+				.then(function(response) {
+					resolve(transforms.transformItemField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	 /**
+	  * @param {number} collectionId Id of the collection to get the items of
+	  * @param {string} include information the server should include in the returned API object
+	  * @return {Promise<Array<Item>>}
+	  */
+	getItems(collectionId, include = "model+fields") {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/items`, {
+				params: {
+					include,
+				},
+			})
+				.then((response) => {
+					const items = response.data.map(transforms.transformItem);
+					resolve(items);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	  * @param {number} collectionId Id of the collection to create the item in
+	  * @param {updateItemParameters} parameters attributes of new item
+	  * @return {Promise<Item>}
+	  */
+	createItem(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/items`, parameters)
+				.then(function(response) {
+					const item = transforms.transformItem(response);
+					resolve(item);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	  * @param {number} collectionId Id of the collection the item is in
+	  * @param {number} itemId Id of the item
+	  * @param {updateItemParameters} parameters attributes of the item to update
+	  * @return {Promise<Item>}
+	  */
+	updateItem(collectionId, itemId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.put(`/collections/${collectionId}/items/${itemId}`, parameters)
+				.then(function(response) {
+					this.getItemById(options.id).title = options.title;
+				})
+				.catch(function(error) {
+					console.error(error);
+					showError(t("biblio", "Could not update title"));
+					reject(error);
+				});
+
+			resolve();
 		});
 	},
 };
