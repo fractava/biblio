@@ -23,6 +23,10 @@ export default {
 			type: String,
 			default: "",
 		},
+		allowValueEdit: {
+			type: Boolean,
+			deafult: false,
+		},
 	},
 	methods: {
 		onInput() {

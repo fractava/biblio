@@ -21,7 +21,10 @@
 				<tr v-for="field in item.fieldValues" :key="field.id">
 					<td>{{ field.name }}</td>
 					<td>
-						<FieldValue :is="FieldTypes[field.type].valueComponent" :value="field.value" />
+						<FieldValue :is="FieldTypes[field.type].valueComponent"
+							:allow-value-edit="true"
+							:value="field.value"
+							@update:value="biblioStore.updateItemValue" />
 					</td>
 				</tr>
 			</tbody>
