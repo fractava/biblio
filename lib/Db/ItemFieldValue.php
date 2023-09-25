@@ -6,7 +6,7 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
-class ItemField extends Entity implements JsonSerializable {
+class ItemFieldValue extends Entity implements JsonSerializable {
 	protected $itemId;
 	protected $fieldId;
 	protected $value;
