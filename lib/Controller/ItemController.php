@@ -58,20 +58,17 @@ class ItemController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, string $title /*, string $fieldValues*/): JSONResponse {
+	public function create(int $collectionId, string $title): JSONResponse {
 		if(strlen($title) < 3) {
 			return new JSONResponse([
 				"error" => "Title must be longer than 3 characters"
 			], Http::STATUS_BAD_REQUEST);
 		}
 
-		//$fieldValuesParsed = json_decode($fieldValues, true);
-		$newItem = $this->service->create($collectionId, $title/*, $fieldsParsed,*/);
-		$result = $this->objectHelper->getApiObject($newItem, "model");
+		$newItem = $this->service->create($collectionId, $title);
+		$result = $this->objectHelper->getApiObject($newItem, "model+fields");
 
 		return new JSONResponse($result, Http::STATUS_OK);
-
-		//return new DataResponse($this->service->create($title, $fieldsParsed, $this->userId));
 	}
 
 	/**
