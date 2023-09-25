@@ -83,7 +83,12 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['collection_id'], 'collection_id_index');
-			$table->addForeignKeyConstraint($schema->getTable(self::COLLECTIONS_TABLE), ['collection_id'], ['id'], ['onDelete' => 'CASCADE'], 'items_collection_id_fk');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::COLLECTIONS_TABLE),
+				['collection_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'items_collection_id_fk');
 		}
 
 		if (!$schema->hasTable(self::ITEM_FIELDS_TABLE)) {
@@ -109,12 +114,17 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 			$table->addColumn('include_in_list', 'boolean', [
 				'notnull' => true,
-				'length' => 0,
 			]);
 			
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::COLLECTIONS_TABLE),
+				['collection_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'item_fields_collection_id_fk');
 			$table->addUniqueConstraint(['collection_id', 'name'], "collection_id_name_unique");
 		}
 
