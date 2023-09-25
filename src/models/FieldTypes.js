@@ -46,10 +46,13 @@ export default {
 	 * Specifying Field-Models in a common place
 	 * Further type-specific parameters are possible.
 	 *
-	 * @property component The vue-component this field-type relies on
-	 * @property icon The icon corresponding to this field-type
+	 * @property valueComponent The vue component to render and edit the value of the field
+	 * @property settingsComponent The vue component to render and edit the settings of the field
+	 * @property iconComponent vue component to render the icon of the field type
 	 * @property label The field-type label, that users will see as field-type.
 	 * @property validate *optional* Define conditions where this field is not ok
+	 * @property defaultSettings deafult settings value for new item fields
+	 * @property defaultValue deafult value for new item field values
 	 *
 	 * @property valuePlaceholder *optional* The placeholder for value input fields
 	 */
