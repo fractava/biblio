@@ -53,6 +53,27 @@ class ItemFieldValueMapper extends QBMapper {
 	 * @param int $itemId
 	 * @return array
 	 */
+	public function findByItemAndFieldIdIncludingFields(int $collectionId, int $itemId, int $fieldId): array {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+        $qb->select('*')
+            ->from(self::TABLENAME, 'v')
+            ->innerJoin('v', 'biblio_item_fields', 'f', $qb->expr()->andX(
+				$qb->expr()->eq('v.item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)),
+                $qb->expr()->eq('v.field_id', $qb->createNamedParameter($fieldId, IQueryBuilder::PARAM_INT)),
+				$qb->expr()->eq('f.id', $qb->createNamedParameter($fieldId, IQueryBuilder::PARAM_INT)),
+				$qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT))
+			));
+		
+        $result = $qb->executeQuery()->fetch();
+        
+		return $result;
+	}
+
+	/**
+	 * @param int $itemId
+	 * @return array
+	 */
 	public function findAll(int $itemId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();

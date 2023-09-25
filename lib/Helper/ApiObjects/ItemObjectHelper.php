@@ -52,7 +52,7 @@ class ItemObjectHelper extends AbstractObjectHelper {
      * @return array|null
      */
     public function getApiObject(
-        Entity $entity,
+        $entity,
         string $include = null,
     ): ?array {
         if(!isset($include)) {

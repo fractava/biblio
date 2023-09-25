@@ -4,6 +4,7 @@ namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\ItemFieldValueService;
+use OCA\Biblio\Helper\ApiObjects\ItemFieldValueObjectHelper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
@@ -12,6 +13,9 @@ class ItemFieldValueController extends Controller {
 	/** @var ItemFieldValueService */
 	private $service;
 
+    /** @var ItemFieldValueObjectHelper */
+	private $objectHelper;
+
 	/** @var string */
 	private $userId;
 
@@ -19,27 +23,36 @@ class ItemFieldValueController extends Controller {
 
 	public function __construct(IRequest $request,
                                 ItemFieldValueService $service,
+                                ItemFieldValueObjectHelper $objectHelper,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
+        $this->objectHelper = $objectHelper;
 		$this->userId = $userId;
 	}
 
 	/**
 	 * Get all fields of collection
 	 * @NoAdminRequired
+     * @NoCSRFRequired
 	 */
 	public function index(int $collectionId, int $itemId): DataResponse {
-		return new DataResponse($this->service->findAll($itemId));
+		return new DataResponse($this->objectHelper->getApiObjects([
+            "itemId" => $itemId,
+        ], $include));
 	}
 
 	/**
 	 * Get specific field
 	 * @NoAdminRequired
+     * @NoCSRFRequired
 	 */
-	public function show(int $collectionId, int $itemId, int $fieldId): DataResponse {
+	public function show(int $collectionId, int $itemId, int $fieldId, ?string $include): DataResponse {
 		return $this->handleNotFound(function () use ($itemId, $fieldId) {
-			return $this->service->findByItemAndFieldId($itemId, $fieldId);
+            return $this->objectHelper->getApiObject([
+                "itemId" => $itemId,
+                "fieldId" => $fieldId,
+            ], $include);
 		});
 	}
 

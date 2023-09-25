@@ -52,6 +52,14 @@ class ItemFieldValueService {
 		}
 	}
 
+	public function findByItemAndFieldIdIncludingFields(int $itemId, int $fieldId) {
+		try {
+			return $this->mapper->findByItemAndFieldIdIncludingFields($itemId, $fieldId);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
 	public function create(int $itemId, int $fieldId, string $value): ItemFieldValue {
 		$fieldValue = new ItemFieldValue();
         $fieldValue->setItemId($itemId);
