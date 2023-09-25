@@ -83,7 +83,7 @@ class ItemObjectHelper extends AbstractObjectHelper {
      * @throws DoesNotExistException
      */
 	public function getFieldValues(Item $entity) {
-        return $this->fieldValueService->findAllIncludingFields($entity->getId(), $entity->getCollectionId());
+        return $this->fieldValueService->findAllIncludingFields($entity->getCollectionId(), $entity->getId());
 	}
 
 }

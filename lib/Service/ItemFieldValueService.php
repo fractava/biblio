@@ -23,8 +23,8 @@ class ItemFieldValueService {
 		return $this->mapper->findAll($itemId);
 	}
 
-	public function findAllIncludingFields(int $itemId, int $collectionId) {
-		return $this->mapper->findAllIncludingFields($itemId, $collectionId);
+	public function findAllIncludingFields(int $collectionId, int $itemId) {
+		return $this->mapper->findAllIncludingFields($collectionId, $itemId);
 	}
 
 	private function handleException(Exception $e): void {

@@ -28,7 +28,7 @@ class ItemMapper extends QBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
-			->andWhere($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
+			->andWhere($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		return $this->findEntity($qb);
 	}
 
