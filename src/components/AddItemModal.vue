@@ -79,6 +79,7 @@ export default {
 			} finally {
 				this.loading = false;
 				this.closeModal();
+				this.title = "";
 			}
 		},
 	},
