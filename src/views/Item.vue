@@ -16,7 +16,10 @@
 			:is-required="true"
 			name="Titel"
 			:value="item.title" />-->
-		<table>
+		<table class="itemFieldsTable">
+			<colgroup>
+				<col span="2" style="width: 50%;">
+			</colgroup>
 			<tbody>
 				<tr v-for="field in item.fieldValues" :key="field.id">
 					<td>{{ field.name }}</td>
@@ -76,7 +79,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .editModeContainer {
 	display: flex;
@@ -86,5 +89,22 @@ export default {
 
 .ignoreForLayout {
 	display: contents;
+}
+
+.itemFieldsTable {
+	width: 100%;
+
+	tr, td, th {
+		border: 1px black solid;
+		border-collapse: collapse;
+	}
+
+	td, th {
+		padding: 5px;
+	}
+
+	tr:hover, tr:focus, tr:active {
+		background-color: transparent;
+	}
 }
 </style>
