@@ -50,29 +50,46 @@ class ItemInstanceService {
 		}
 	}
 
-	public function create(string $barcode, int $itemId, int $loanedTo, int $loanedUntil) {
+	public function create(string $barcode, int $itemId, ?int $loanedTo, ?int $loanedUntil) {
 		$itemInstance = new ItemInstance();
 		$itemInstance->setBarcode($barcode);
 		$itemInstance->setItemId($itemId);
-        $itemInstance->setLoanedTo($loanedTo);
-        $itemInstance->setLoanedUntil($loanedUntil);
+
+		if(!is_null($loanedTo) && !is_null($loanedUntil)) {
+			$itemInstance->setLoanedTo($loanedTo);
+			$itemInstance->setLoanedUntil($loanedUntil);
+		}
 
 		$itemInstance = $this->mapper->insert($itemInstance);
 
 		return $itemInstance;
 	}
 
-	public function update(int $id, string $barcode, int $loanedTo, int $loanedUntil) {
+	public function update(int $id, ?string $barcode, ?int $loanedTo, ?int $loanedUntil) {
 		try {
 			$itemInstance = $this->mapper->find($id);
 			
 			if (!is_null($barcode)) {
 				$itemInstance->setBarcode($barcode);
 			}
-            if (!is_null($loanedTo)) {
+
+			if(!is_null($loanedTo) && !is_null($loanedUntil)) {
 				$itemInstance->setLoanedTo($loanedTo);
+				$itemInstance->setLoanedUntil($loanedUntil);
 			}
-            if (!is_null($loanedUntil)) {
+
+			return $this->mapper->update($itemInstance);
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
+	public function updateByBarcode(string $barcode, ?int $loanedTo, ?int $loanedUntil) {
+		try {
+			$itemInstance = $this->mapper->findByBarcode($barcode);
+
+			if(!is_null($loanedTo) && !is_null($loanedUntil)) {
+				$itemInstance->setLoanedTo($loanedTo);
 				$itemInstance->setLoanedUntil($loanedUntil);
 			}
 
@@ -85,6 +102,16 @@ class ItemInstanceService {
 	public function delete(int $id) {
 		try {
 			$itemInstance = $this->mapper->find($id);
+			$this->mapper->delete($itemInstance);
+			return $itemInstance;
+		} catch (Exception $e) {
+			$this->handleException($e);
+		}
+	}
+
+	public function deleteByBarcode(string $barcode) {
+		try {
+			$itemInstance = $this->mapper->findByBarcode($barcode);
 			$this->mapper->delete($itemInstance);
 			return $itemInstance;
 		} catch (Exception $e) {
