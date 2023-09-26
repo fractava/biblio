@@ -14,6 +14,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
     const COLLECTIONS_TABLE = "biblio_collections";
 	const COLLECTION_MEMBERS_TABLE = "biblio_collection_members";
     const ITEMS_TABLE = "biblio_items";
+	const ITEM_INSTANCES_TABLE = "biblio_item_instances";
 	const ITEM_FIELDS_TABLE = "biblio_item_fields";
 	const ITEM_FIELDS_VALUES_TABLE = "biblio_item_fields_values";
 
@@ -162,6 +163,40 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'item_fields_field_id_fk');
 			$table->addUniqueConstraint(['item_id', 'field_id'], "item_id_field_id_unique");
 		}
+
+		if (!$schema->hasTable(self::ITEM_INSTANCES_TABLE)) {
+			$table = $schema->createTable(self::ITEM_INSTANCES_TABLE);
+			$table->addColumn('id', 'integer', [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('barcode', 'string', [
+				'notnull' => true,
+				'length' => 100,
+			]);
+			$table->addColumn('item_id', 'integer', [
+				'notnull' => true,
+			]);
+			$table->addColumn('loaned_to', 'integer', [
+				'notnull' => false,
+			]);
+			$table->addColumn('loaned_until', 'datetime', [
+				'notnull' => false,
+			]);
+
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['item_id'], 'itemIdIndex');
+			$table->addIndex(['loaned_to'], 'loanedToIndex');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::ITEMS_TABLE),
+				['item_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'item_id_fk');
+
+			// TODO: Loaned to foreign key
+		}
+
 		return $schema;
 	}
 }
