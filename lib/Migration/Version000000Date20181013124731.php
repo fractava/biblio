@@ -185,6 +185,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
+			$table->addIndex(['barcode'], 'itemIdIndex');
+			$table->addUniqueConstraint(['barcode'], "barcode_unique");
 			$table->addIndex(['item_id'], 'itemIdIndex');
 			$table->addIndex(['loaned_to'], 'loanedToIndex');
 			$table->addForeignKeyConstraint(
