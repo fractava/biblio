@@ -408,4 +408,28 @@ export const api = {
 				});
 		});
 	},
+
+	getItemInstances(collectionId, itemId) {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/items/${itemId}/instances`)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	createItemInstance(collectionId, itemId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/items/${itemId}/instances`, parameters)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
 };

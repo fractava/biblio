@@ -32,6 +32,17 @@
 				</tr>
 			</tbody>
 		</table>
+		<h2>Instances:</h2>
+		<AddItemInstance :item-id="itemId" />
+		<table class="itemInstancesTable">
+			<tbody>
+				<tr v-for="instance in instances" :key="instance.id">
+					<td>{{ instance?.barcode }}</td>
+					<td>{{ instance?.loanedTo }}</td>
+					<td>{{ instance?.loanedUntil }}</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </template>
 
@@ -45,12 +56,14 @@ import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import FieldTypes from "../models/FieldTypes";
+import AddItemInstance from "../components/AddItemInstance.vue";
 
 export default {
 	components: {
 		NcButton,
 		Pencil,
 		ShortTextFieldValue,
+		AddItemInstance,
 	},
 	props: {
 	},
@@ -58,16 +71,20 @@ export default {
 		return {
 			editMode: false,
 			FieldTypes,
+			instances: [],
 		};
 	},
 	computed: {
 		...mapStores(useBiblioStore),
 		itemId() {
-			return this.$route.params.id;
+			return parseInt(this.$route.params.id);
 		},
 		item() {
 			return this.biblioStore.getItemById(this.itemId);
 		},
+	},
+	async mounted() {
+		this.instances = await api.getItemInstances(this.biblioStore.selectedCollectionId, this.itemId);
 	},
 	methods: {
 		updateValue(newValue, field) {
@@ -91,7 +108,7 @@ export default {
 	display: contents;
 }
 
-.itemFieldsTable {
+.itemFieldsTable, .itemInstancesTable {
 	width: 100%;
 
 	tr, td, th {
