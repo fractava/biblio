@@ -1,6 +1,6 @@
 <template>
 	<div class="field__content">
-		<NcInputField :placeholder="t('biblio', 'Value')"
+		<NcInputField :placeholder="placeholder"
 			:disabled="!allowValueEdit"
 			:value="value"
 			minlength="0"
@@ -13,20 +13,13 @@
 <script>
 import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js";
 
+import FieldValue from "../mixins/FieldValue.js";
+
 export default {
 	components: {
 		NcInputField,
 	},
-	props: {
-		value: {
-			type: String,
-			default: "",
-		},
-		allowValueEdit: {
-			type: Boolean,
-			deafult: false,
-		},
-	},
+	mixins: [FieldValue],
 	methods: {
 		onInput(newValue) {
 			this.$emit("update:value", newValue);

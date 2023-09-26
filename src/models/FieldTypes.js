@@ -89,7 +89,7 @@ export default {
 	},
 
 	date: {
-		component: DateFieldValue,
+		valueComponent: DateFieldValue,
 		settingsComponent: NoSettings,
 		iconComponent: CalendarMonth,
 		label: t("biblio", "Date"),
@@ -100,7 +100,7 @@ export default {
 	},
 
 	datetime: {
-		component: DateFieldValue,
+		valueComponent: DateFieldValue,
 		settingsComponent: NoSettings,
 		iconComponent: CalendarClock,
 		label: t("biblio", "Date and time"),

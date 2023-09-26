@@ -1,7 +1,7 @@
 <template>
 	<div class="field__content">
 		<textarea ref="textarea"
-			:placeholder="fieldType.valuePlaceholder"
+			:placeholder="placeholder"
 			:disabled="!allowValueEdit"
 			:value="value"
 			class="field__text"
@@ -13,18 +13,18 @@
 </template>
 
 <script>
+import FieldValue from "../mixins/FieldValue.js";
 
 export default {
+	mixins: [FieldValue],
 	data() {
 		return {
 			height: 1,
 		};
 	},
-
 	mounted() {
 		this.autoSizeText();
 	},
-
 	methods: {
 		onInput() {
 			const textarea = this.$refs.textarea;

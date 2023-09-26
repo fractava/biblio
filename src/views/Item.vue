@@ -25,6 +25,7 @@
 					<td>{{ field.name }}</td>
 					<td>
 						<FieldValue :is="FieldTypes[field.type].valueComponent"
+							:field-type="FieldTypes[field.type]"
 							:allow-value-edit="true"
 							:value="field.value"
 							@update:value="(newValue) => {updateValue(newValue, field)}" />

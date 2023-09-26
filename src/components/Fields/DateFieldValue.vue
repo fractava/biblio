@@ -26,7 +26,7 @@
 			value-type="format"
 			:disabled="!allowValueEdit"
 			:formatter="formatter"
-			:placeholder="fieldType.valuePlaceholder"
+			:placeholder="placeholder"
 			:show-second="false"
 			:type="datetimePickerType"
 			:input-attr="inputAttr"
@@ -39,13 +39,13 @@ import moment from "@nextcloud/moment";
 
 import NcDatetimePicker from "@nextcloud/vue/dist/Components/NcDatetimePicker";
 
-export default {
-	name: "DateField",
+import FieldValue from "../mixins/FieldValue.js";
 
+export default {
 	components: {
 		NcDatetimePicker,
 	},
-
+	mixins: [FieldValue],
 	data() {
 		return {
 			time: null,
@@ -55,7 +55,6 @@ export default {
 			},
 		};
 	},
-
 	computed: {
 		// Allow picking time or not, depending on variable in fieldType.
 		datetimePickerType() {
@@ -85,7 +84,6 @@ export default {
 			};
 		},
 	},
-
 	methods: {
 		/**
 		 * DateTimepicker show date-text
