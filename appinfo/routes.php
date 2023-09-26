@@ -39,5 +39,15 @@ return [
 		['name' => 'item_field_value#show', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'GET'],
 		['name' => 'item_field_value#update', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'PUT'],
 		['name' => 'item_field_value#destroy', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'DELETE'],
+
+		// Items Instances
+		['name' => 'item_instance#index', 'url' => '/collections/{collectionId}/items/{itemId}/instances', 'verb' => 'GET'],
+		['name' => 'item_instance#show', 'url' => '/collections/{collectionId}/items/{itemId}/instances/{instanceId}', 'verb' => 'GET'],
+		['name' => 'item_instance#showByBarcode', 'url' => '/collections/{collectionId}/items/{itemId}/instances/byBarcode/{barcode}', 'verb' => 'GET'],
+		['name' => 'item_instance#create', 'url' => '/collections/{collectionId}/items/{itemId}/instances', 'verb' => 'POST'],
+		['name' => 'item_instance#update', 'url' => '/collections/{collectionId}/items/{itemId}/instances/{instanceId}', 'verb' => 'PUT'],
+		['name' => 'item_instance#updateByBarcode', 'url' => '/collections/{collectionId}/items/{itemId}/instances/byBarcode/{barcode}', 'verb' => 'PUT'],
+		['name' => 'item_instance#destroy', 'url' => '/collections/{collectionId}/items/{itemId}/instances/{instanceId}', 'verb' => 'DELETE'],
+		['name' => 'item_instance#destroyByBarcode', 'url' => '/collections/{collectionId}/items/{itemId}/instances/byBarcode/{barcode}', 'verb' => 'DELETE'],
 	]
 ];
