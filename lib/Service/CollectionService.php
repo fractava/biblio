@@ -65,12 +65,16 @@ class CollectionService {
 		return $collection;
 	}
 
-	public function update(int $id, string $name) {
+	public function update(int $id, ?string $name, ?string $fieldsOrder) {
 		try {
 			$collection = $this->mapper->find($id);
 			
 			if (!is_null($name)) {
 				$collection->setName($name);
+			}
+
+			if(!is_null($fieldsOrder)) {
+				$collection->setFieldsOrder($fieldsOrder);
 			}
 
 			return $this->mapper->update($collection);

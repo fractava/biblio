@@ -59,9 +59,9 @@ class CollectionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, string $name): DataResponse {
-		return $this->handleNotFound(function () use ($collectionId, $name) {
-			return $this->service->update($collectionId, $name);
+	public function update(int $collectionId, ?string $name, ?string $fieldsOrder): DataResponse {
+		return $this->handleNotFound(function () use ($collectionId, $name, $fieldsOrder) {
+			return $this->service->update($collectionId, $name, $fieldsOrder);
 		});
 	}
 
