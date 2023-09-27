@@ -164,6 +164,15 @@ const transforms = {
 	toAPI: {
 		/**
 		 *
+		 * @param {Collection} collection Collection API Item
+		 * @return {CollectionResponse}
+		 */
+		transformCollection(collection) {
+			collection.fieldsOrder = JSON.stringify(collection.fieldsOrder);
+			return collection;
+		},
+		/**
+		 *
 		 * @param {ItemFieldValue} itemFieldValue Item Field API Item
 		 * @return {ItemFieldValueResponse}
 		 */
@@ -172,7 +181,7 @@ const transforms = {
 
 			return itemFieldValue;
 		},
-	}
+	},
 };
 
 export const api = {
@@ -216,6 +225,8 @@ export const api = {
 	  */
 	updateCollection(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformCollection(parameters);
+
 			axios.put(`/collections/${collectionId}`, parameters)
 				.then((response) => {
 					resolve(transforms.fromAPI.transformCollection(response.data));
