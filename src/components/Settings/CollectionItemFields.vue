@@ -11,7 +11,7 @@
 				@input="onFieldsUpdate"
 				@start="isDragging = true"
 				@end="isDragging = false">
-				<Field v-for="field in fields"
+				<Field v-for="field in sortedFields"
 					:key="field.id"
 					:name="field.name"
 					:include-in-list="!!field.includeInList"
@@ -85,7 +85,7 @@ export default {
 			return this.settingsStore.selectedCollection.fieldsOrder;
 		},
 		sortedFields() {
-			return this.fields.toSorted((a, b) => this.fieldsOrder.indexOf(a.id) > this.fieldsOrder.indexOf(b.id));
+			return this.fields.toSorted((a, b) => this.fieldsOrder.indexOf(a.id) - this.fieldsOrder.indexOf(b.id));
 		},
 	},
 	mounted() {

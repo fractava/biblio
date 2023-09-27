@@ -12,7 +12,7 @@ export const useSettingsStore = defineStore("settings", {
 			this.site = site;
 			this.context = context || this.context || {};
 		},
-		updateSelectedCollection: (parameters) => {
+		updateSelectedCollection(parameters) {
 			const biblioStore = useBiblioStore();
 
 			biblioStore.updateCollection(this.context?.collectionId, parameters);
