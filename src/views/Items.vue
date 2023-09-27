@@ -30,6 +30,9 @@ export default {
 			return this.biblioStore.itemFields.filter((itemField) => (itemField.includeInList));
 		},
 	},
+	mounted() {
+		this.biblioStore.fetchItems();
+	},
 	methods: {
 		openItem(item) {
 			this.$router.push({
