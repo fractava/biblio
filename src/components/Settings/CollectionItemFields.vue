@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<FieldsTable>
-			<Draggable :value="fields"
+			<Draggable :value="sortedFields"
 				drag-class="drag"
 				ghost-class="ghost"
 				:animation="200"
@@ -10,8 +10,7 @@
 				handle=".drag-handle-active"
 				@input="onFieldsUpdate"
 				@start="isDragging = true"
-				@end="isDragging = false"
-				@change="fieldsOrderChanged">
+				@end="isDragging = false">
 				<Field v-for="field in fields"
 					:key="field.id"
 					:name="field.name"
@@ -82,6 +81,12 @@ export default {
 	},
 	computed: {
 		...mapStores(useBiblioStore, useSettingsStore),
+		fieldsOrder() {
+			return this.settingsStore.selectedCollection.fieldsOrder;
+		},
+		sortedFields() {
+			return this.fields.toSorted((a, b) => this.fieldsOrder.indexOf(a.id) > this.fieldsOrder.indexOf(b.id));
+		},
 	},
 	mounted() {
 		api.getItemFields(this.settingsStore.context?.collectionId)
@@ -94,12 +99,18 @@ export default {
 			});
 	},
 	methods: {
-		fieldsOrderChanged() {
-
-		},
 		onFieldsUpdate(fields) {
 			console.log("onFieldsUpdate", JSON.stringify(fields));
-			this.$emit("set-fields", fields);
+
+			let newFieldsOrder = [];
+
+			for (const field of fields) {
+				newFieldsOrder.push(field.id);
+			}
+
+			this.settingsStore.updateSelectedCollection({
+				fieldsOrder: newFieldsOrder,
+			});
 		},
 		onFieldUpdate(id, parameters) {
 			// optimistic update
