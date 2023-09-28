@@ -3,6 +3,7 @@
 namespace OCA\Biblio\Helper\ApiObjects;
 
 use OCA\Biblio\Db\Item;
+use OCA\Biblio\Db\ItemFieldValue;
 use OCA\Biblio\Service\ItemService;
 use OCA\Biblio\Service\ItemFieldService;
 use OCA\Biblio\Service\ItemFieldValueService;
@@ -12,6 +13,8 @@ use OCP\AppFramework\IAppContainer;
 class ItemFieldValueObjectHelper extends AbstractObjectHelper {
     const MODEL_INCLUDE = 'model';
     const FIELD_INCLUDE = 'field';
+    const FIELD_INCLUDED_IN_LIST_INCLUDE = 'field_included_in_list';
+    
 
     /** @var ItemFieldValueService */
 	private $fieldValueService;
@@ -48,33 +51,18 @@ class ItemFieldValueObjectHelper extends AbstractObjectHelper {
         
         $includes = $this->parseIncludesString($include);
 
+        $includeField = false;
+
         if($this->shouldInclude(self::FIELD_INCLUDE, $includes)) {
-            $query = $this->fieldValueService->findByItemAndFieldIdIncludingFields($entity["itemId"], $entity["fieldId"]);
+            $query = $this->fieldValueService->findByItemAndFieldIdIncludingField($entity["collectionId"], $entity["itemId"], $entity["fieldId"]);
+            $includeField = true;
         } else {
             $query = $this->fieldValueService->findByItemAndFieldId($entity["itemId"], $entity["fieldId"]);
         }
 
-        $result = this->copyValues($query, $includes);
+        $result = $this->copyValues($query, $this->shouldInclude(self::MODEL_INCLUDE, $includes), $includeField);
 
         return $result;
-    }
-
-    private function copyValues(array $query, array $includes) {
-        $result = [];
-
-        if($this->shouldInclude(self::MODEL_INCLUDE, $includes)) {
-            $result["itemId"] = $query["itemId"];
-            $result["fieldId"] = $query["fieldId"];
-            $result["value"] = $query["value"];
-        }
-
-        if($this->shouldInclude(self::FIELD_INCLUDE, $includes)) {
-            $result["collectionId"] = $query["collectionId"];
-            $result["name"] = $query["name"];
-            $result["type"] = $query["type"];
-            $result["settings"] = $query["settings"];
-            $result["includeInList"] = $query["includeInList"];
-        }
     }
 
     /**
@@ -90,8 +78,14 @@ class ItemFieldValueObjectHelper extends AbstractObjectHelper {
 
         $includes = $this->parseIncludesString($include);
 
+        $includeField = false;
+
         if($this->shouldInclude(self::FIELD_INCLUDE, $includes)) {
-            $query = $this->fieldValueService->findAllIncludingFields($entities["collectionId"], $entities["itemId"]);
+            $query = $this->fieldValueService->findAllIncludingFields($entities["collectionId"], $entities["itemId"], false);
+            $includeField = true;
+        } else if($this->shouldInclude(self::FIELD_INCLUDED_IN_LIST_INCLUDE, $includes)) {
+            $query = $this->fieldValueService->findAllIncludingFields($entities["collectionId"], $entities["itemId"], true);
+            $includeField = true;
         } else {
             $query = $this->fieldValueService->findAll($entities["itemId"]);
         }
@@ -99,7 +93,31 @@ class ItemFieldValueObjectHelper extends AbstractObjectHelper {
         $result = [];
 
         foreach ($query as $itemFieldValue) {
-            $result[] = this->copyValues($itemFieldValue, $includes);
+            $result[] = $this->copyValues($itemFieldValue, $this->shouldInclude(self::MODEL_INCLUDE, $includes), $includeField);
+        }
+
+        return $result;
+    }
+
+    //private function entityToArray($entity) {
+    //    return $entity->jsonSerialize();
+    //}
+
+    private function copyValues($entity, bool $includeModel, bool $includeField) {
+        $result = [];
+
+        if($includeModel) {
+            $result["itemId"] = $entity->getItemId();
+            $result["fieldId"] = $entity->getFieldId();
+            $result["value"] = $entity->getValue();
+        }
+
+        if($includeField) {
+            $result["collectionId"] = $entity->getCollectionId();
+            $result["name"] = $entity->getName();
+            $result["type"] = $entity->getType();
+            $result["settings"] = $entity->getSettings();
+            $result["includeInList"] = $entity->getIncludeInList();
         }
 
         return $result;

@@ -51,21 +51,22 @@ class ItemFieldValueMapper extends QBMapper {
 
 	/**
 	 * @param int $itemId
-	 * @return array
+	 * @return ItemFieldValueFieldCombination
 	 */
-	public function findByItemAndFieldIdIncludingFields(int $collectionId, int $itemId, int $fieldId): array {
+	public function findByItemAndFieldIdIncludingField(int $collectionId, int $itemId, int $fieldId): ItemFieldValueFieldCombination {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
         $qb->select('*')
+			->addSelect("f.id AS field_id")
             ->from(self::TABLENAME, 'v')
-            ->innerJoin('v', 'biblio_item_fields', 'f', $qb->expr()->andX(
+            ->rightJoin('v', 'biblio_item_fields', 'f', $qb->expr()->andX(
 				$qb->expr()->eq('v.item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)),
                 $qb->expr()->eq('v.field_id', $qb->createNamedParameter($fieldId, IQueryBuilder::PARAM_INT)),
-				$qb->expr()->eq('f.id', $qb->createNamedParameter($fieldId, IQueryBuilder::PARAM_INT)),
-				$qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT))
-			));
+			))
+			->where($qb->expr()->eq('f.id', $qb->createNamedParameter($fieldId, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
-        $result = $qb->executeQuery()->fetch();
+        $result = ItemFieldValueFieldCombination::fromRow($this->findOneQuery($qb));
         
 		return $result;
 	}
@@ -88,19 +89,33 @@ class ItemFieldValueMapper extends QBMapper {
 	 * @param int $itemId
 	 * @return array
 	 */
-	public function findAllIncludingFields(int $collectionId, int $itemId): array {
+	public function findAllIncludingFields(int $collectionId, int $itemId, bool $onlyIncludedInList = false): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
         $qb->select('*')
+			->addSelect("f.id AS field_id")
             ->from(self::TABLENAME, 'v')
             ->rightJoin('v', 'biblio_item_fields', 'f', $qb->expr()->andX(
                 $qb->expr()->eq('v.field_id', 'f.id'),
                 $qb->expr()->eq('v.item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT))
             ))
 			->where($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
+
+		if($onlyIncludedInList) {
+			$qb->andWhere($qb->expr()->eq('f.include_in_list', $qb->createNamedParameter(true, IQueryBuilder::PARAM_BOOL)));
+		}
 		
-        $result = $qb->executeQuery()->fetchAll();
+		$result = $qb->executeQuery();
+		try {
+			$entities = [];
+			while ($row = $result->fetch()) {
+				$entities[] = ItemFieldValueFieldCombination::fromRow($row);
+			}
+			return $entities;
+		} finally {
+			$result->closeCursor();
+		}
         
-		return $result;
+		return $entities;
 	}
 }

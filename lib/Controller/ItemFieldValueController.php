@@ -36,8 +36,9 @@ class ItemFieldValueController extends Controller {
 	 * @NoAdminRequired
      * @NoCSRFRequired
 	 */
-	public function index(int $collectionId, int $itemId): DataResponse {
+	public function index(int $collectionId, int $itemId, ?string $include): DataResponse {
 		return new DataResponse($this->objectHelper->getApiObjects([
+			"collectionId" => $collectionId,
             "itemId" => $itemId,
         ], $include));
 	}
@@ -48,8 +49,9 @@ class ItemFieldValueController extends Controller {
      * @NoCSRFRequired
 	 */
 	public function show(int $collectionId, int $itemId, int $fieldId, ?string $include): DataResponse {
-		return $this->handleNotFound(function () use ($itemId, $fieldId) {
+		return $this->handleNotFound(function () use ($collectionId, $itemId, $fieldId, $include/*  */) {
             return $this->objectHelper->getApiObject([
+				"collectionId" => $collectionId,
                 "itemId" => $itemId,
                 "fieldId" => $fieldId,
             ], $include);

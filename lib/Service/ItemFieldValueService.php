@@ -23,8 +23,8 @@ class ItemFieldValueService {
 		return $this->mapper->findAll($itemId);
 	}
 
-	public function findAllIncludingFields(int $collectionId, int $itemId) {
-		return $this->mapper->findAllIncludingFields($collectionId, $itemId);
+	public function findAllIncludingFields(int $collectionId, int $itemId, bool $onlyIncludedInList = false) {
+		return $this->mapper->findAllIncludingFields($collectionId, $itemId, $onlyIncludedInList);
 	}
 
 	private function handleException(Exception $e): void {
@@ -52,9 +52,9 @@ class ItemFieldValueService {
 		}
 	}
 
-	public function findByItemAndFieldIdIncludingFields(int $itemId, int $fieldId) {
+	public function findByItemAndFieldIdIncludingField(int $collectionId, int $itemId, int $fieldId) {
 		try {
-			return $this->mapper->findByItemAndFieldIdIncludingFields($itemId, $fieldId);
+			return $this->mapper->findByItemAndFieldIdIncludingField($collectionId, $itemId, $fieldId);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
