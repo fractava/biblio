@@ -1,0 +1,73 @@
+<template>
+	<table class="fieldsValueTable">
+		<colgroup>
+			<col span="2" style="width: 50%;">
+		</colgroup>
+		<tbody>
+			<tr>
+				<th>{{ t('biblio', 'Name') }}</th>
+				<th>{{ t('biblio', 'Value') }}</th>
+			</tr>
+			<slot name="head" />
+			<tr v-for="field in fieldValues" :key="field.id">
+				<td>{{ field.name }}</td>
+				<td>
+					<FieldValue :is="FieldTypes[field.type].valueComponent"
+						:field-type="FieldTypes[field.type]"
+						:allow-value-edit="true"
+						:value="field.value"
+						@update:value="(newValue) => { updateValue(newValue, field) }" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</template>
+
+<script>
+import FieldTypes from "../models/FieldTypes";
+
+export default {
+	props: {
+		fieldValues: {
+			type: Array,
+			default: () => [],
+		},
+		editMode: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	data() {
+		return {
+			FieldTypes,
+		};
+	},
+	methods: {
+		updateValue(newValue, field) {
+			this.$emit("update:value", newValue, field);
+		},
+	},
+};
+</script>
+<style lang="scss" scoped>
+.fieldsValueTable {
+	width: 100%;
+	border-collapse: collapse;
+
+	th {
+		font-weight: bold;
+	}
+
+	tr, td, th {
+		border: 1px black solid;
+	}
+
+	td, th {
+		padding: 5px;
+	}
+
+	tr:hover, tr:focus, tr:active {
+		background-color: transparent;
+	}
+}
+</style>

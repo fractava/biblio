@@ -9,30 +9,19 @@
 				<template>Edit</template>
 			</NcButton>
 		</div>
-		<!--<ShortTextFieldValue slot="header"
-			:enable-drag-handle="false"
-			:field-type="FieldTypes['short']"
-			:allow-title-edit="false"
-			:is-required="true"
-			name="Titel"
-			:value="item.title" />-->
-		<table class="itemFieldsTable">
-			<colgroup>
-				<col span="2" style="width: 50%;">
-			</colgroup>
-			<tbody>
-				<tr v-for="field in item.fieldValues" :key="field.id">
-					<td>{{ field.name }}</td>
-					<td>
-						<FieldValue :is="FieldTypes[field.type].valueComponent"
-							:field-type="FieldTypes[field.type]"
-							:allow-value-edit="true"
-							:value="field.value"
-							@update:value="(newValue) => {updateValue(newValue, field)}" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<FieldsValueTable :field-values="item.fieldValues"
+			:edit-mode="editMode"
+			@update:value="updateValue">
+			<template #head>
+				<!--<ShortTextFieldValue slot="header"
+					:enable-drag-handle="false"
+					:field-type="FieldTypes['short']"
+					:allow-title-edit="false"
+					:is-required="true"
+					name="Titel"
+					:value="item.title" />-->
+			</template>
+		</FieldsValueTable>
 		<h2>Instances:</h2>
 		<AddItemInstance :item-id="itemId" />
 		<table class="itemInstancesTable">
@@ -54,9 +43,9 @@ import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import { api } from "../api";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
+import FieldsValueTable from "../components/FieldsValueTable.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
-import FieldTypes from "../models/FieldTypes";
 import AddItemInstance from "../components/AddItemInstance.vue";
 
 export default {
@@ -64,6 +53,7 @@ export default {
 		NcButton,
 		Pencil,
 		ShortTextFieldValue,
+		FieldsValueTable,
 		AddItemInstance,
 	},
 	props: {
@@ -71,7 +61,6 @@ export default {
 	data() {
 		return {
 			editMode: false,
-			FieldTypes,
 			instances: [],
 		};
 	},
@@ -109,12 +98,12 @@ export default {
 	display: contents;
 }
 
-.itemFieldsTable, .itemInstancesTable {
+.itemInstancesTable {
 	width: 100%;
+	border-collapse: collapse;
 
 	tr, td, th {
 		border: 1px black solid;
-		border-collapse: collapse;
 	}
 
 	td, th {
