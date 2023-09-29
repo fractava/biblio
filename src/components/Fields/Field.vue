@@ -30,13 +30,15 @@
 				@update:checked="onIncludeInListChange" />
 		</template>
 		<template #name>
-			<NcInputField :placeholder="t('biblio', 'Name')"
+			<NcTextField :label="t('biblio', 'Name')"
+				:placeholder="t('biblio', 'Enter a name with at least 3 characters')"
 				:value="name"
 				class="field__header-name"
 				type="text"
-				minlength="1"
-				required
-				:helper-text="nameValid ? '' : t('biblio', 'A name is required!')"
+				minlength="3"
+				:show-trailing-button="false"
+				:error="!nameValid"
+				:helper-text="nameValid ? '' : t('biblio', 'Invalid name')"
 				@input="onNameChange" />
 		</template>
 		<template #settings>
@@ -57,7 +59,7 @@ import { debounce } from "debounce";
 
 import NcActions from "@nextcloud/vue/dist/Components/NcActions";
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
-import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js";
+import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
 import FieldsTableRow from "../Settings/FieldsTableRow.vue";
@@ -72,7 +74,7 @@ export default {
 	components: {
 		NcActions,
 		NcActionButton,
-		NcInputField,
+		NcTextField,
 		NcCheckboxRadioSwitch,
 		FieldsTableRow,
 	},
@@ -112,7 +114,7 @@ export default {
 		 * @return {boolean} true if field name valid
 		 */
 		nameValid() {
-			return this.name && this.name.length > 3;
+			return this.name && this.name.length >= 3;
 		},
 	},
 

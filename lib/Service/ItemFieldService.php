@@ -85,7 +85,7 @@ class ItemFieldService {
 			if (!is_null($newType)) {
 				$field->setType($newType);
 			}
-			if (!is_null($newName)) {
+			if (!is_null($newName) && strlen($newName) >= 3) {
 				$field->setName($newName);
 			}
 			if (!is_null($newSettings)) {
