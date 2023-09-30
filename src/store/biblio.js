@@ -10,6 +10,8 @@ export const useBiblioStore = defineStore("biblio", {
 		selectedCollectionId: false,
 		itemFields: [],
 		items: [],
+		itemSearch: "",
+		itemFilters: {},
 	}),
 	actions: {
 		/* Collections */

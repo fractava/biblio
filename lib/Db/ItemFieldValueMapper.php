@@ -8,7 +8,11 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
+use OCA\Biblio\Traits\ApiObjectMapper;
+
 class ItemFieldValueMapper extends QBMapper {
+	use ApiObjectMapper;
+
 	const TABLENAME = 'biblio_item_fields_values';
 
 	public function __construct(IDBConnection $db) {
@@ -39,7 +43,7 @@ class ItemFieldValueMapper extends QBMapper {
 		} else {
 			throw new Exception("Invalid parameters supplied to ItemFieldValueMapper->find");
 		}
-		
+
 		return $this->findEntity($qb);
 	}
 
@@ -122,11 +126,7 @@ class ItemFieldValueMapper extends QBMapper {
             ))
 			->where($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
-		if(isset($filters["includeInList"]) && is_bool($filters["includeInList"]["operand"])) {
-			if($filters["includeInList"]["operator"] === "=") {
-				$qb->andWhere($qb->expr()->eq('f.include_in_list', $qb->createNamedParameter($filters["includeInList"]["operand"], IQueryBuilder::PARAM_BOOL)));
-			}
-		}
+		$this->handleBooleanFilter($qb, $filters["includeInList"], 'f.include_in_list');
 
 		if (isset($offset)) {
 			$qb->setFirstResult($offset);
