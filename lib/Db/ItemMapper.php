@@ -36,7 +36,7 @@ class ItemMapper extends QBMapper {
 	 * @param string $collectionId
 	 * @return array
 	 */
-	public function findAll(string $collectionId): array {
+	public function findAll(string $collectionId, ?array $filters, ?int $limit, ?int $offset): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')

@@ -4,7 +4,6 @@ namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\ItemService;
-use OCA\Biblio\Helper\ApiObjects\ItemObjectHelper;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
@@ -15,8 +14,6 @@ class ItemController extends Controller {
 	/** @var ItemService */
 	private $service;
 
-	/** @var ItemObjectHelper */
-	private $objectHelper;
 
 	/** @var string */
 	private $userId;
@@ -25,11 +22,9 @@ class ItemController extends Controller {
 
 	public function __construct(IRequest $request,
 								ItemService $service,
-								ItemObjectHelper $objectHelper,
 								$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
-		$this->objectHelper = $objectHelper;
 		$this->userId = $userId;
 	}
 
@@ -37,8 +32,8 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function index(int $collectionId, ?string $include): JSONResponse {
-		$entities = $this->service->findAll($collectionId);
+	public function index(int $collectionId, ?string $include, ?string $filter, ?int $limit, ?int $offset): JSONResponse {
+		$entities = $this->service->findAll($collectionId, $include);
 		$result = $this->objectHelper->getApiObjects($entities, $include);
 
 		return new JSONResponse($result, Http::STATUS_OK);

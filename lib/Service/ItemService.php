@@ -9,10 +9,13 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
 use OCA\Biblio\Db\Item;
 use OCA\Biblio\Db\ItemMapper;
-
 use OCA\Biblio\Service\ItemFieldValueService;
+use OCA\Biblio\Traits\ApiObjectService;
 
 class ItemService {
+	use ApiObjectService;
+
+	const FIELDS_INCLUDE = 'fields';
 
 	/** @var ItemMapper */
 	private $mapper;
@@ -25,8 +28,45 @@ class ItemService {
 		$this->fieldValueService = $fieldValueService;
 	}
 
-	public function findAll(int $collectionId): array {
-		return $this->mapper->findAll($collectionId);
+	public function findAll(int $collectionId, array $includes, ?string $filter, ?int $limit, ?int $offset): array {
+		if(!isset($include)) {
+			$include = self::MODEL_INCLUDE;
+		}
+
+		$includes = $this->parseIncludesString($include);
+		$filters = $this->parseFilterString($filter);
+		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
+		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
+
+		$query = $this->mapper->findAll($collectionId, $filters, $limit, $offset);
+
+		$results = [];
+
+		if(isset($filters["fieldValues_includeInList"])) {
+			$fieldFilters = ["includeInList" => $filters["fieldValues_includeInList"]];
+		} else {
+			$fieldFilters = [];
+		}
+
+		foreach ($query as $item) {
+			$result = [];
+
+			if($includeModel) {
+				$result = $item->jsonSerialize();
+			}
+
+			if($includeFields) {
+				$fieldValues = $this->fieldValueService->findAll($collectionId, $item->getId(), "model+field", $fieldFilters);
+
+				$result = array_merge($result, [
+					"fieldValues" => $fieldValues,
+				]);
+			}
+
+			$results[] = $result;
+		}
+
+		return $results;
 	}
 
 	private function handleException(Exception $e): void {
@@ -46,22 +86,12 @@ class ItemService {
 		}
 	}
 
-	public function create(int $collectionId, string $title, /*array $fields*/) {
+	public function create(int $collectionId, string $title) {
 		$item = new Item();
 		$item->setCollectionId($collectionId);
 		$item->setTitle($title);
 
 		$item = $this->mapper->insert($item);
-
-		/*if(sizeof($fields) > 0){
-			$itemId = $item->getId();
-
-			foreach($fields as $field) {
-				// TODO: Check if fieldId is in same collection as item
-
-				$fieldEntity = $this->fieldValueService->create($itemId, $field["fieldId"], $field["value"]);
-			}
-		}*/
 
 		return $item;
 	}

@@ -10,7 +10,12 @@ use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCA\Biblio\Db\ItemFieldValue;
 use OCA\Biblio\Db\ItemFieldValueMapper;
 
+use OCA\Biblio\Traits\ApiObjectService;
+
 class ItemFieldValueService {
+	use ApiObjectService;
+
+	const FIELD_INCLUDE = 'field';
 
 	/** @var ItemFieldValueMapper */
 	private $mapper;
@@ -19,12 +24,44 @@ class ItemFieldValueService {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(int $itemId): array {
-		return $this->mapper->findAll($itemId);
-	}
+	private function copyValues($entity, bool $includeModel, bool $includeField) {
+        $result = [];
 
-	public function findAllIncludingFields(int $collectionId, int $itemId, bool $onlyIncludedInList = false) {
-		return $this->mapper->findAllIncludingFields($collectionId, $itemId, $onlyIncludedInList);
+        if($includeModel) {
+            $result["itemId"] = $entity->getItemId();
+            $result["fieldId"] = $entity->getFieldId();
+            $result["value"] = $entity->getValue();
+        }
+
+        if($includeField) {
+            $result["collectionId"] = $entity->getCollectionId();
+            $result["name"] = $entity->getName();
+            $result["type"] = $entity->getType();
+            $result["settings"] = $entity->getSettings();
+            $result["includeInList"] = $entity->getIncludeInList();
+        }
+
+        return $result;
+    }
+
+	public function findAll(int $collectionId, int $itemId, array $includes, ?string $filter, ?int $limit, ?int $offset): array {
+		$filters = $this->parseFilterString($filter);
+		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
+		$includeField = $this->shouldInclude(self::FIELD_INCLUDE, $includes);
+
+		if($includeField) {
+			$query = $this->mapper->findAllIncludingFields($collectionId, $itemId, $filters);
+		} else {
+			$query = $this->mapper->findAll($itemId, $filters);
+		}
+
+		$result = [];
+
+        foreach ($query as $itemFieldValue) {
+            $result[] = $this->copyValues($itemFieldValue, $includeModel, $includeField);
+        }
+
+		return $result;
 	}
 
 	private function handleException(Exception $e): void {
@@ -36,25 +73,20 @@ class ItemFieldValueService {
 		}
 	}
 
-	public function find(int $id): ItemFieldValue {
+	public function find(array $parameters, array $includes): ItemFieldValue {
 		try {
-			return $this->mapper->find($id);
-		} catch (Exception $e) {
-			$this->handleException($e);
-		}
-	}
+			$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
+			$includeField = $this->shouldInclude(self::FIELD_INCLUDE, $includes);
+			
+			if($includeField) {
+				$query = $this->mapper->findIncludingField($parameters);
+			} else {
+				$query = $this->mapper->find($parameters);
+			}
 
-	public function findByItemAndFieldId(int $itemId, int $fieldId): ItemFieldValue {
-		try {
-			return $this->mapper->findByItemAndFieldId($itemId, $fieldId);
-		} catch (Exception $e) {
-			$this->handleException($e);
-		}
-	}
+			$result = $this->copyValues($query, $includeModel, $includeField);
 
-	public function findByItemAndFieldIdIncludingField(int $collectionId, int $itemId, int $fieldId) {
-		try {
-			return $this->mapper->findByItemAndFieldIdIncludingField($collectionId, $itemId, $fieldId);
+			return $result;
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
