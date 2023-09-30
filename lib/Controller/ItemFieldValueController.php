@@ -35,7 +35,10 @@ class ItemFieldValueController extends Controller {
      * @NoCSRFRequired
 	 */
 	public function index(int $collectionId, int $itemId, ?string $include, ?string $filter, ?int $limit, ?int $offset): DataResponse {
-		return new DataResponse($this->service->findAll($collectionId, $itemId, $include, $filter, $limit, $offset));
+		$includes = $this->parseIncludesString($include);
+		$filters = $this->parseFilterString($filter);
+
+		return new DataResponse($this->service->findAll($collectionId, $itemId, $includes, $filters, $limit, $offset));
 	}
 
 	/**

@@ -22,7 +22,7 @@ class ItemMapper extends QBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id, int $collectionId): Item {
+	public function find(int $collectionId, int $id): Item {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
@@ -42,6 +42,15 @@ class ItemMapper extends QBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
+
+		if (isset($offset)) {
+			$qb->setFirstResult($offset);
+		}
+
+		if (isset($limit)) {
+			$qb->setMaxResults($limit);
+		}
+
 		return $this->findEntities($qb);
 	}
 }

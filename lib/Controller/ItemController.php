@@ -2,15 +2,19 @@
 
 namespace OCA\Biblio\Controller;
 
-use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\ItemService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
+use OCA\Biblio\AppInfo\Application;
+use OCA\Biblio\Service\ItemService;
+use OCA\Biblio\Traits\ApiObjectController;
+
 class ItemController extends Controller {
+	use ApiObjectController;
+
 	/** @var ItemService */
 	private $service;
 
@@ -33,8 +37,10 @@ class ItemController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index(int $collectionId, ?string $include, ?string $filter, ?int $limit, ?int $offset): JSONResponse {
-		$entities = $this->service->findAll($collectionId, $include);
-		$result = $this->objectHelper->getApiObjects($entities, $include);
+		$includes = $this->parseIncludesString($include);
+		$filters = $this->parseFilterString($filter);
+
+		$result = $this->service->findAll($collectionId, $includes, $filters, $limit, $offset);
 
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
@@ -43,10 +49,11 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function show(int $collectionId, int $id, ?string $include): DataResponse {
-		return $this->handleNotFound(function () use ($id, $collectionId, $include) {
-			$item = $this->service->find($id, $collectionId);
-			return $this->objectHelper->getApiObject($item, $include);
+	public function show(int $collectionId, int $id, ?string $include): JSONResponse {
+		$includes = $this->parseIncludesString($include);
+
+		return $this->handleNotFound(function () use ($collectionId, $id, $includes) {
+			return new JSONResponse($this->service->find($collectionId, $id, $includes), Http::STATUS_OK);
 		});
 	}
 
@@ -61,7 +68,7 @@ class ItemController extends Controller {
 		}
 
 		$newItem = $this->service->create($collectionId, $title);
-		$result = $this->objectHelper->getApiObject($newItem, "model+fields");
+		$result = $this->service->getApiObjectFromEntity($collectionId, $newItem, true, true);
 
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
@@ -69,8 +76,7 @@ class ItemController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $id, string $title = null,
-						   string $fieldsOrder = null): DataResponse {
+	public function update(int $collectionId, int $id, string $title = null, string $fieldsOrder = null): DataResponse {
 		return $this->handleNotFound(function () use ($id, $collectionId, $title, $fieldsOrder) {
 			return $this->service->update($id, $collectionId, $title, $fieldsOrder);
 		});

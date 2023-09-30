@@ -11,14 +11,16 @@ trait ApiObjectController {
      * 
      * @return array
      */
-    public function parseIncludesString(string $include) {
-        $includes = array_filter(explode('+', $include));
+    public function parseIncludesString(?string $include) {
+        if(isset($include)) {
+            $includes = array_filter(explode('+', $include));
 
-        if(!$includes) {
-            return [self::MODEL_INCLUDE];
-        } else {
-            return $includes;
+            if(!!$includes) {
+                return $includes;
+            }
         }
+
+        return [self::MODEL_INCLUDE];
     }
 
     /**
@@ -26,13 +28,24 @@ trait ApiObjectController {
      * 
      * @return array
      */
-    public function parseFilterString(string $filter): array {
-        $parsed = json_decode($filter, true);
+    public function parseFilterString(?string $filter): array {
+        if(isset($filter)) {
+            $parsed = json_decode($filter, true);
 
-        if(!array_is_list($parsed)) {
-            return $parsed;
-        } else {
-            return [];
+            if(!array_is_list($parsed)) {
+                return array_filter($parsed, array($this, 'isValidFilter'));
+            }
         }
+        
+        return [];
+    }
+
+    /**
+     * @param array $filter
+     * 
+     * @return boolean
+     */
+    public function isValidFilter(array $filter) {
+        return isset($filter["operator"]) && isset($filter["operand"]);
     }
 }

@@ -44,8 +44,7 @@ class ItemFieldValueService {
         return $result;
     }
 
-	public function findAll(int $collectionId, int $itemId, array $includes, ?string $filter, ?int $limit, ?int $offset): array {
-		$filters = $this->parseFilterString($filter);
+	public function findAll(int $collectionId, int $itemId, array $includes, ?array $filters, ?int $limit = null, ?int $offset = null): array {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeField = $this->shouldInclude(self::FIELD_INCLUDE, $includes);
 
@@ -117,7 +116,10 @@ class ItemFieldValueService {
 	public function updateByItemAndFieldId(int $itemId, int $fieldId, string $newValue): ItemFieldValue {
 		if (!is_null($newValue)) {
 			try {
-				$fieldValue = $this->mapper->findByItemAndFieldId($itemId, $fieldId);
+				$fieldValue = $this->mapper->find([
+					"itemId" => $itemId,
+					"fieldId" => $fieldId,
+				]);
 				$fieldValue->setValue($newValue);
 				return $this->mapper->update($fieldValue);
 			} catch ( DoesNotExistException $e ) {
@@ -140,7 +142,10 @@ class ItemFieldValueService {
 
 	public function deleteByItemAndFieldId(int $itemId, int $fieldId): ItemFieldValue {
 		try {
-			$fieldValue = $this->mapper->findByItemAndFieldId($itemId, $fieldId);
+			$fieldValue = $this->mapper->find([
+				"itemId" => $itemId,
+				"fieldId" => $fieldId,
+			]);
 			$this->mapper->delete($fieldValue);
 			return $fieldValue;
 		} catch (Exception $e) {

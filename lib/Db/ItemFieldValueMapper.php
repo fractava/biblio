@@ -110,7 +110,7 @@ class ItemFieldValueMapper extends QBMapper {
 	 * @param int $itemId
 	 * @return array
 	 */
-	public function findAllIncludingFields(int $collectionId, int $itemId, ?array $filters, ?int $limit, ?int $offset): array {
+	public function findAllIncludingFields(int $collectionId, int $itemId, ?array $filters, ?int $limit = null, ?int $offset = null): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
         $qb->select('*')
@@ -122,12 +122,18 @@ class ItemFieldValueMapper extends QBMapper {
             ))
 			->where($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
-		if(isset($filters["includeInList"]) && $this->isValidFilter($filters["includeInList"])) {
-			if(is_bool($filters["includeInList"]["operand"])) {
-				if($filters["includeInList"]["operator"] === "=") {
-					$qb->andWhere($qb->expr()->eq('f.include_in_list', $qb->createNamedParameter($filters["includeInList"]["operand"], IQueryBuilder::PARAM_BOOL)));
-				}
+		if(isset($filters["includeInList"]) && is_bool($filters["includeInList"]["operand"])) {
+			if($filters["includeInList"]["operator"] === "=") {
+				$qb->andWhere($qb->expr()->eq('f.include_in_list', $qb->createNamedParameter($filters["includeInList"]["operand"], IQueryBuilder::PARAM_BOOL)));
 			}
+		}
+
+		if (isset($offset)) {
+			$qb->setFirstResult($offset);
+		}
+
+		if (isset($limit)) {
+			$qb->setMaxResults($limit);
 		}
 		
 		$result = $qb->executeQuery();

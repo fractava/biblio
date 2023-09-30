@@ -28,42 +28,42 @@ class ItemService {
 		$this->fieldValueService = $fieldValueService;
 	}
 
-	public function findAll(int $collectionId, array $includes, ?string $filter, ?int $limit, ?int $offset): array {
-		if(!isset($include)) {
-			$include = self::MODEL_INCLUDE;
+	private function getFieldFiltersOutOfItemFilters(?array $filters) {
+		if(isset($filters["fieldValues_includeInList"])) {
+			return ["includeInList" => $filters["fieldValues_includeInList"]];
+		} else {
+			return [];
+		}
+	}
+
+	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = null) {
+		$result = [];
+
+		if($includeModel) {
+			$result = $entity->jsonSerialize();
 		}
 
-		$includes = $this->parseIncludesString($include);
-		$filters = $this->parseFilterString($filter);
+		if($includeFields) {
+			$result = array_merge($result, [
+				"fieldValues" => $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters),
+			]);
+		}
+
+		return $result;
+	}
+
+	public function findAll(int $collectionId, array $includes, ?array $filters, ?int $limit = null, ?int $offset = null): array {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
 		$query = $this->mapper->findAll($collectionId, $filters, $limit, $offset);
 
+		$fieldFilters = $this->getFieldFiltersOutOfItemFilters($filters);
+
 		$results = [];
 
-		if(isset($filters["fieldValues_includeInList"])) {
-			$fieldFilters = ["includeInList" => $filters["fieldValues_includeInList"]];
-		} else {
-			$fieldFilters = [];
-		}
-
 		foreach ($query as $item) {
-			$result = [];
-
-			if($includeModel) {
-				$result = $item->jsonSerialize();
-			}
-
-			if($includeFields) {
-				$fieldValues = $this->fieldValueService->findAll($collectionId, $item->getId(), "model+field", $fieldFilters);
-
-				$result = array_merge($result, [
-					"fieldValues" => $fieldValues,
-				]);
-			}
-
-			$results[] = $result;
+			$results[] = $this->getApiObjectFromEntity($collectionId, $item, $includeModel, $includeFields, $fieldFilters);
 		}
 
 		return $results;
@@ -78,9 +78,16 @@ class ItemService {
 		}
 	}
 
-	public function find(int $id, int $collectionId) {
+	public function find(int $collectionId, int $id, array $includes) {
 		try {
-			return $this->mapper->find($id, $collectionId);
+			$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
+			$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
+
+			$item = $this->mapper->find($collectionId, $id);
+
+			$fieldFilters = $this->getFieldFiltersOutOfItemFilters($filters);
+
+			return $this->getApiObjectFromEntity($collectionId, $item, $includeModel, $includeFields, $fieldFilters);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
