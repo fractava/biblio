@@ -37,7 +37,7 @@ class ItemFieldValueMapper extends QBMapper {
 			$qb->where($qb->expr()->eq('item_id', $qb->createNamedParameter($parameters["itemId"], IQueryBuilder::PARAM_INT)))
             	->andWhere($qb->expr()->eq('field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
 		} else {
-			// Error
+			throw new Exception("Invalid parameters supplied to ItemFieldValueMapper->find");
 		}
 		
 		return $this->findEntity($qb);
@@ -70,7 +70,7 @@ class ItemFieldValueMapper extends QBMapper {
 					$qb->expr()->eq('v.field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)),
 				];
 			} else {
-				// Error
+				throw new Exception("Invalid parameters supplied to ItemFieldValueMapper->findIncludingField");
 			}
 			
 			$qb->rightJoin('v', 'biblio_item_fields', 'f', $qb->expr()->andX(...$joinON));
@@ -88,7 +88,7 @@ class ItemFieldValueMapper extends QBMapper {
 			
 			return $result;
 		} else {
-			// Error
+			throw new Exception("Invalid parameters supplied to ItemFieldValueMapper->findIncludingField");
 		}
 	}
 

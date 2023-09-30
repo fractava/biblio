@@ -49,11 +49,11 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function show(int $collectionId, int $id, ?string $include): JSONResponse {
+	public function show(int $collectionId, int $id, ?string $include): DataResponse {
 		$includes = $this->parseIncludesString($include);
 
 		return $this->handleNotFound(function () use ($collectionId, $id, $includes) {
-			return new JSONResponse($this->service->find($collectionId, $id, $includes), Http::STATUS_OK);
+			return $this->service->find($collectionId, $id, $includes);
 		});
 	}
 

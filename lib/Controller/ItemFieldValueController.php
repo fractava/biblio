@@ -3,7 +3,9 @@
 namespace OCA\Biblio\Controller;
 
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
 use OCA\Biblio\AppInfo\Application;
@@ -34,11 +36,11 @@ class ItemFieldValueController extends Controller {
 	 * @NoAdminRequired
      * @NoCSRFRequired
 	 */
-	public function index(int $collectionId, int $itemId, ?string $include, ?string $filter, ?int $limit, ?int $offset): DataResponse {
+	public function index(int $collectionId, int $itemId, ?string $include, ?string $filter, ?int $limit, ?int $offset): JSONResponse {
 		$includes = $this->parseIncludesString($include);
 		$filters = $this->parseFilterString($filter);
 
-		return new DataResponse($this->service->findAll($collectionId, $itemId, $includes, $filters, $limit, $offset));
+		return new JSONResponse($this->service->findAll($collectionId, $itemId, $includes, $filters, $limit, $offset), Http::STATUS_OK);
 	}
 
 	/**
@@ -50,11 +52,11 @@ class ItemFieldValueController extends Controller {
 		$includes = $this->parseIncludesString($include);
 
 		return $this->handleNotFound(function () use ($collectionId, $itemId, $fieldId, $includes) {
-            return DataResponse($this->service->find([
+            return $this->service->find([
 				"collectionId" => $collectionId,
                 "itemId" => $itemId,
                 "fieldId" => $fieldId,
-            ], $includes));
+            ], $includes);
 		});
 	}
 

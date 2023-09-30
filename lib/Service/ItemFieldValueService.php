@@ -72,7 +72,7 @@ class ItemFieldValueService {
 		}
 	}
 
-	public function find(array $parameters, array $includes): ItemFieldValue {
+	public function find(array $parameters, array $includes): array {
 		try {
 			$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 			$includeField = $this->shouldInclude(self::FIELD_INCLUDE, $includes);
