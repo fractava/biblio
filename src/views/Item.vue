@@ -78,7 +78,7 @@ export default {
 	},
 	methods: {
 		updateValue(newValue, field) {
-			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.id, {
+			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.fieldId, {
 				value: newValue,
 			});
 		},

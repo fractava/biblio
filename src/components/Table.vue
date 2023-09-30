@@ -66,7 +66,7 @@ export default {
 			}
 		},
 		getFieldValue(item, fieldId) {
-			return item?.fieldValues?.find((field) => (field.id === fieldId))?.value;
+			return item?.fieldValues?.find((field) => (field.fieldId === fieldId))?.value;
 		},
 	},
 };

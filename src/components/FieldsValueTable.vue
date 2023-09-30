@@ -9,7 +9,7 @@
 				<th>{{ t('biblio', 'Value') }}</th>
 			</tr>
 			<slot name="head" />
-			<tr v-for="field in fieldValues" :key="field.id">
+			<tr v-for="field in fieldValues" :key="field.fieldId">
 				<td>{{ field.name }}</td>
 				<td>
 					<FieldValue :is="FieldTypes[field.type].valueComponent"
