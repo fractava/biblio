@@ -38,7 +38,7 @@
 		"caniuse-lite": "^1.0.30001541",
 		"debounce": "^1.2.1",
 		"eslint": "^8.50.0",
-		"eslint-plugin-import": "^2.27.5",
+		"eslint-plugin-import": "^2.28.1",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-vue": "^9.17.0",
 		"node-polyfill-webpack-plugin": "^2.0.1",
