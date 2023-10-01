@@ -23,7 +23,7 @@
 			</template>
 		</FieldsValueTable>
 		<h2>Instances:</h2>
-		<AddItemInstance :item-id="itemId" />
+		<AddItemInstance :item-id="itemId" @added-instance="onAddedInstance" />
 		<table class="itemInstancesTable">
 			<tbody>
 				<tr v-for="instance in instances" :key="instance.id">
@@ -62,6 +62,7 @@ export default {
 		return {
 			editMode: false,
 			instances: [],
+			item: {},
 		};
 	},
 	computed: {
@@ -69,18 +70,23 @@ export default {
 		itemId() {
 			return parseInt(this.$route.params.id);
 		},
-		item() {
-			return this.biblioStore.getItemById(this.itemId);
-		},
 	},
-	async mounted() {
-		this.instances = await api.getItemInstances(this.biblioStore.selectedCollectionId, this.itemId);
+	mounted() {
+		api.getItem(this.biblioStore.selectedCollectionId, this.itemId).then((result) => {
+			this.item = result;
+		});
+		api.getItemInstances(this.biblioStore.selectedCollectionId, this.itemId).then((result) => {
+			this.instances = result;
+		});
 	},
 	methods: {
 		updateValue(newValue, field) {
 			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.fieldId, {
 				value: newValue,
 			});
+		},
+		onAddedInstance(newInstance) {
+			this.instances.push(newInstance);
 		},
 	},
 };

@@ -28,7 +28,6 @@ export default {
 	},
 	mounted() {
 		this.biblioStore.fetchCollections();
-		this.biblioStore.fetchItems();
 	},
 };
 </script>

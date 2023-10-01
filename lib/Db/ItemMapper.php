@@ -8,7 +8,11 @@ use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
+use OCA\Biblio\Traits\ApiObjectMapper;
+
 class ItemMapper extends QBMapper {
+	use ApiObjectMapper;
+	
 	const TABLENAME = 'biblio_items';
 
 	public function __construct(IDBConnection $db) {
@@ -42,6 +46,8 @@ class ItemMapper extends QBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
+
+		$this->handleStringFilter($this->db, $qb, $filters["title"], 'title');
 
 		if (isset($offset)) {
 			$qb->setFirstResult($offset);

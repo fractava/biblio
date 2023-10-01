@@ -9,7 +9,7 @@ export const useBiblioStore = defineStore("biblio", {
 		collections: [],
 		selectedCollectionId: false,
 		itemFields: [],
-		items: [],
+		itemSearchResults: [],
 		itemSearch: "",
 		itemFilters: {},
 	}),
@@ -18,7 +18,7 @@ export const useBiblioStore = defineStore("biblio", {
 		selectCollection(id) {
 			this.selectedCollectionId = id;
 			this.fetchItemFields();
-			this.fetchItems();
+			this.refreshItemSearchResults();
 		},
 		fetchCollections() {
 			api.getCollections()
@@ -90,7 +90,7 @@ export const useBiblioStore = defineStore("biblio", {
 			return new Promise((resolve, reject) => {
 				api.createItem(this.selectedCollectionId, parameters)
 					.then((result) => {
-						this.items.push(result);
+						this.itemSearchResults.push(result);
 						resolve();
 					})
 					.catch((error) => {
@@ -100,15 +100,31 @@ export const useBiblioStore = defineStore("biblio", {
 					});
 			});
 		},
-		fetchItems() {
+		refreshItemSearchResults() {
 			return new Promise((resolve, reject) => {
 				if (!this.selectedCollectionId) {
-					this.items = [];
-					resolve();
+					this.itemSearchResults = [];
+					return resolve();
 				}
-				api.getItems(this.selectedCollectionId, "model+fields")
+
+				const filter = {};
+
+				// only fetch item field values, that will be shown in the item table
+				filter.fieldValues_includeInList = {
+					operator: "=",
+					operand: true,
+				};
+
+				if (this.itemSearch) {
+					filter.title = {
+						operator: "includes",
+						operand: this.itemSearch,
+					};
+				}
+
+				api.getItems(this.selectedCollectionId, "model+fields", filter)
 					.then((result) => {
-						this.items = result;
+						this.itemSearchResults = result;
 						resolve();
 					})
 					.catch((error) => {
@@ -126,8 +142,8 @@ export const useBiblioStore = defineStore("biblio", {
 			return new Promise((resolve, reject) => {
 				api.updateItem(this.selectedCollectionId, itemId, parameters)
 					.then((result) => {
-						const updatedIndex = this.items.findIndex(item => item.id === itemId);
-						Vue.set(this.items, updatedIndex, result);
+						const updatedIndex = this.itemSearchResults.findIndex(item => item.id === itemId);
+						Vue.set(this.itemSearchResults, updatedIndex, result);
 						resolve();
 					})
 					.catch((error) => {

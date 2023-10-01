@@ -1,10 +1,11 @@
 <template>
 	<NoCollectionSelected>
 		<ul>
+			<NcTextField :value="biblioStore.itemSearch" @update:value="onItemSearchUpdate" />
 			<AddItemModal />
 			<Table :columns="['title']"
 				:field-columns="includedItemFields"
-				:items="biblioStore.items"
+				:items="biblioStore.itemSearchResults"
 				@click="openItem($event)" />
 		</ul>
 	</NoCollectionSelected>
@@ -12,6 +13,7 @@
 
 <script>
 import { mapStores } from "pinia";
+import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import Table from "../components/Table.vue";
 import { useBiblioStore } from "../store/biblio.js";
@@ -20,10 +22,11 @@ import NoCollectionSelected from "../components/NoCollectionSelected.vue";
 
 export default {
 	components: {
-    Table,
-    AddItemModal,
-    NoCollectionSelected,
-},
+		NcTextField,
+		Table,
+		AddItemModal,
+		NoCollectionSelected,
+	},
 	computed: {
 		...mapStores(useBiblioStore),
 		includedItemFields() {
@@ -31,13 +34,17 @@ export default {
 		},
 	},
 	mounted() {
-		this.biblioStore.fetchItems();
+		this.biblioStore.refreshItemSearchResults();
 	},
 	methods: {
 		openItem(item) {
 			this.$router.push({
 				path: "/item/" + item,
 			});
+		},
+		onItemSearchUpdate(newSearch) {
+			this.biblioStore.itemSearch = newSearch;
+			this.biblioStore.refreshItemSearchResults();
 		},
 	},
 };

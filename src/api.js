@@ -325,18 +325,42 @@ export const api = {
 	 /**
 	  * @param {number} collectionId Id of the collection to get the items of
 	  * @param {string} include information the server should include in the returned API object
+	  * @param {object} filter filters result on server side
 	  * @return {Promise<Array<Item>>}
 	  */
-	getItems(collectionId, include = "model+fields") {
+	getItems(collectionId, include = "model+fields", filter = {}) {
 		return new Promise((resolve, reject) => {
 			axios.get(`/collections/${collectionId}/items`, {
 				params: {
 					include,
+					filter: JSON.stringify(filter),
 				},
 			})
 				.then((response) => {
 					const items = response.data.map(transforms.fromAPI.transformItem);
 					resolve(items);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	  * @param {number} collectionId Id of the collection the item is in
+	  * @param {number} itemId Id of the item
+      * @param {string} include information the server should include in the returned API object
+	  * @return {Promise<Item>}
+	  */
+	getItem(collectionId, itemId, include = "model+fields") {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/items/${itemId}`, {
+				params: {
+					include,
+				},
+			})
+				.then((response) => {
+					resolve(transforms.fromAPI.transformItem(response.data));
 				})
 				.catch((error) => {
 					reject(error);

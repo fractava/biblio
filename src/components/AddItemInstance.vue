@@ -78,9 +78,11 @@ export default {
 		async submit() {
 			this.loading = true;
 			try {
-				await api.createItemInstance(this.biblioStore.selectedCollectionId, this.itemId, {
+				let newInstance = await api.createItemInstance(this.biblioStore.selectedCollectionId, this.itemId, {
 					barcode: this.barcode,
 				});
+
+				this.$emit("added-instance", newInstance);
 			} catch (error) {
 				console.error(error);
 			} finally {
