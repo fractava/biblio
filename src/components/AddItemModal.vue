@@ -1,14 +1,6 @@
 <template>
 	<div>
-		<NcButton icon="add"
-			type="secondary"
-			@click="showModal">
-			{{ t('biblio', 'New Item') }}
-			<template #icon>
-				<Plus :size="20" />
-			</template>
-		</NcButton>
-		<NcModal v-if="modalOpen"
+		<NcModal v-if="open"
 			:name="t('biblio', 'Add new Item')"
 			@close="closeModal">
 			<div class="modal__content">
@@ -51,10 +43,15 @@ export default {
 		NcLoadingIcon,
 		Plus,
 	},
+	props: {
+		open: {
+			type: Boolean,
+			default: false,
+		},
+	},
 	data() {
 		return {
 			loading: false,
-			modalOpen: false,
 			title: "",
 		};
 	},
@@ -63,10 +60,10 @@ export default {
 	},
 	methods: {
 		showModal() {
-			this.modalOpen = true;
+			this.$emit("update:open", true);
 		},
 		closeModal() {
-			this.modalOpen = false;
+			this.$emit("update:open", false);
 		},
 		async submit() {
 			this.loading = true;

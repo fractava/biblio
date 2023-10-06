@@ -20,11 +20,17 @@
  *
  */
 
+// Values
 import ListFieldValue from "../components/Fields/ListFieldValue.vue";
 import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
 import LongTextFieldValue from "../components/Fields/LongTextFieldValue.vue";
 import DateFieldValue from "../components/Fields/DateFieldValue.vue";
 
+// Cells
+import ListFieldCell from "../components/Fields/Cells/ListFieldCell.vue";
+import TextCell from "../components/Fields/Cells/TextCell.vue";
+
+// Settings
 import NoSettings from "../components/Fields/NoSettings.vue";
 
 import FormatListNumbered from "vue-material-design-icons/FormatListNumbered";
@@ -46,7 +52,8 @@ export default {
 	 * Specifying Field-Models in a common place
 	 * Further type-specific parameters are possible.
 	 *
-	 * @property valueComponent The vue component to render and edit the value of the field
+	 * @property valueEditComponent The vue component to edit the value of the field
+	 * @property valueCellComponent The vue component to render the field in a data table
 	 * @property settingsComponent The vue component to render and edit the settings of the field
 	 * @property iconComponent vue component to render the icon of the field type
 	 * @property label The field-type label, that users will see as field-type.
@@ -58,16 +65,25 @@ export default {
 	 */
 
 	list: {
-		valueComponent: ListFieldValue,
+		valueEditComponent: ListFieldValue,
+		valueCellComponent: ListFieldCell,
 		settingsComponent: NoSettings,
 		iconComponent: FormatListNumbered,
 		label: t("biblio", "List"),
 		defaultSettings: "",
 		defaultValue: [],
+		canSort: false,
+		filterOperators: [
+			{
+				id: "contains",
+				label: t("biblio", "Contains"),
+			},
+		],
 	},
 
 	short: {
-		valueComponent: ShortTextFieldValue,
+		valueEditComponent: ShortTextFieldValue,
+		valueCellComponent: TextCell,
 		settingsComponent: NoSettings,
 		iconComponent: TextShort,
 		label: t("biblio", "Short text"),
@@ -75,10 +91,30 @@ export default {
 		valuePlaceholder: t("biblio", "Enter a short text"),
 		defaultSettings: "",
 		defaultValue: "",
+		canSort: true,
+		filterOperators: [
+			{
+				id: "=",
+				label: t("biblio", "Equals"),
+			},
+			{
+				id: "contains",
+				label: t("biblio", "Contains"),
+			},
+			{
+				id: "startsWith",
+				label: t("biblio", "Starts with"),
+			},
+			{
+				id: "endsWith",
+				label: t("biblio", "Ends with"),
+			},
+		],
 	},
 
 	long: {
-		valueComponent: LongTextFieldValue,
+		valueEditComponent: LongTextFieldValue,
+		valueCellComponent: TextCell,
 		settingsComponent: NoSettings,
 		iconComponent: TextLong,
 		label: t("biblio", "Long text"),
@@ -86,10 +122,30 @@ export default {
 		valuePlaceholder: t("biblio", "Enter a long text"),
 		defaultSettings: "",
 		defaultValue: "",
+		canSort: true,
+		filterOperators: [
+			{
+				id: "=",
+				label: t("biblio", "Equals"),
+			},
+			{
+				id: "contains",
+				label: t("biblio", "Contains"),
+			},
+			{
+				id: "startsWith",
+				label: t("biblio", "Starts with"),
+			},
+			{
+				id: "endsWith",
+				label: t("biblio", "Ends with"),
+			},
+		],
 	},
 
 	date: {
-		valueComponent: DateFieldValue,
+		valueEditComponent: DateFieldValue,
+		valueCellComponent: TextCell,
 		settingsComponent: NoSettings,
 		iconComponent: CalendarMonth,
 		label: t("biblio", "Date"),
@@ -97,10 +153,26 @@ export default {
 		valuePlaceholder: t("biblio", "Pick a date"),
 		defaultSettings: "",
 		defaultValue: "",
+		canSort: true,
+		filterOperators: [
+			{
+				id: "=",
+				label: t("biblio", "Equals"),
+			},
+			{
+				id: "smallerThan",
+				label: t("biblio", "Before"),
+			},
+			{
+				id: "largerThan",
+				label: t("biblio", "After"),
+			},
+		],
 	},
 
 	datetime: {
-		valueComponent: DateFieldValue,
+		valueEditComponent: DateFieldValue,
+		valueCellComponent: TextCell,
 		settingsComponent: NoSettings,
 		iconComponent: CalendarClock,
 		label: t("biblio", "Date and time"),
@@ -108,6 +180,21 @@ export default {
 		valuePlaceholder: t("biblio", "Pick a date and time"),
 		defaultSettings: "",
 		defaultValue: "",
+		canSort: true,
+		filterOperators: [
+			{
+				id: "=",
+				label: t("biblio", "Equals"),
+			},
+			{
+				id: "smallerThan",
+				label: t("biblio", "Before"),
+			},
+			{
+				id: "largerThan",
+				label: t("biblio", "After"),
+			},
+		],
 
 		// Using the same vue-component as date, this specifies that the component renders as datetime.
 		includeTime: true,

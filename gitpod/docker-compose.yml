@@ -46,6 +46,7 @@ services:
       - nextcloud:/var/www/html
       - config:/var/www/html/config
       - /workspace/biblio/:/var/www/html/custom_apps/biblio/
+      - /apache2logs/:/var/log/apache2/
     environment:
       - MYSQL_PASSWORD=wdGq73jQB0p373gLdf6yLRj5
       - MYSQL_DATABASE=nextcloud

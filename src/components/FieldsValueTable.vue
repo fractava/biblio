@@ -12,7 +12,7 @@
 			<tr v-for="field in fieldValues" :key="field.fieldId">
 				<td>{{ field.name }}</td>
 				<td>
-					<FieldValue :is="FieldTypes[field.type].valueComponent"
+					<FieldValue :is="FieldTypes[field.type].valueEditComponent"
 						:field-type="FieldTypes[field.type]"
 						:allow-value-edit="true"
 						:value="field.value"
