@@ -1,5 +1,6 @@
 import Vue from "vue";
 import { defineStore } from "pinia";
+import PCancelable from 'p-cancelable';
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 import { api } from "../api.js";
@@ -12,6 +13,9 @@ export const useBiblioStore = defineStore("biblio", {
 		itemSearchResults: [],
 		itemSearch: "",
 		itemFilters: {},
+		itemSort: "title",
+		itemSortReverse: false,
+		currentlyRunningItemFetch: false,
 	}),
 	actions: {
 		/* Collections */
@@ -101,13 +105,17 @@ export const useBiblioStore = defineStore("biblio", {
 			});
 		},
 		refreshItemSearchResults() {
-			return new Promise((resolve, reject) => {
+			if(this.currentlyRunningItemFetch) {
+				this.currentlyRunningItemFetch.cancel();
+			}
+
+			let newItemFetch = new PCancelable((resolve, reject, onCancel) => {
 				if (!this.selectedCollectionId) {
 					this.itemSearchResults = [];
 					return resolve();
 				}
 
-				const filters = this.itemFilters;
+				const filters = Object.assign({}, this.itemFilters);
 
 				// only fetch item field values, that will be shown in the item table
 				filters.fieldValues_includeInList = {
@@ -122,17 +130,30 @@ export const useBiblioStore = defineStore("biblio", {
 					};
 				}
 
-				api.getItems(this.selectedCollectionId, "model+fields", filters)
-					.then((result) => {
-						this.itemSearchResults = result;
-						resolve();
-					})
-					.catch((error) => {
+				let apiPromise = api.getItems(this.selectedCollectionId, "model+fields", filters, this.itemSort, this.itemSortReverse)
+
+				apiPromise.then((result) => {
+					console.log("setting item search results", JSON.stringify(result));
+					this.itemSearchResults = result;
+					resolve();
+				})
+				.catch((error) => {
+					if (!apiPromise.isCanceled) {
 						console.error(error);
 						showError(t("biblio", "Could not fetch items"));
-						resolve();
-					});
+					}
+
+					resolve();
+				});
+
+				onCancel(() => {
+					apiPromise.cancel();
+				});
 			});
+
+			this.currentlyRunningItemFetch = newItemFetch;
+
+			return newItemFetch;
 		},
 		updateItem(itemId, parameters) {
 			if (!this.selectedCollectionId) {
