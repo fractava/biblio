@@ -329,7 +329,7 @@ export const api = {
 	  * @param {object} filter filters result on server side
 	  * @return {PCancelable<Array<Item>>}
 	  */
-	getItems(collectionId, include = "model+fields", filters = {}, sort = "", sortReverse = false) {
+	getItems(collectionId, include = "model+fields", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
 		return new PCancelable((resolve, reject, onCancel) => {
 			const controller = new AbortController();
 
@@ -344,6 +344,8 @@ export const api = {
 					filter: JSON.stringify(filters),
 					sort,
 					sortReverse,
+					limit,
+					offset,
 				},
 			})
 				.then((response) => {
