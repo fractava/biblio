@@ -4,13 +4,12 @@ namespace OCA\Biblio\Db;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\Entity;
-use OCP\AppFramework\Db\QBMapper;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 use OCA\Biblio\Traits\ApiObjectMapper;
 
-class ItemMapper extends QBMapper {
+class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	use ApiObjectMapper;
 	
 	const TABLENAME = 'biblio_items';
@@ -60,11 +59,12 @@ class ItemMapper extends QBMapper {
 
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
+		$qb->select('i.*')
+			->addSelect($qb->createFunction('COUNT(*) OVER () AS totalResultCount'))
+			->from(self::TABLENAME, 'i');
 
 		if($includesFieldValueFilters) {
-			$qb->select('i.*')
-				->from(self::TABLENAME, 'i')
-				->innerJoin('i', 'biblio_item_fields_values', 'v', $qb->expr()->andX(
+			$qb->innerJoin('i', 'biblio_item_fields_values', 'v', $qb->expr()->andX(
 					$qb->expr()->eq('i.id', 'v.item_id'),
 					$qb->expr()->in('v.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
 				))
@@ -81,9 +81,7 @@ class ItemMapper extends QBMapper {
 			$qb->andWhere($qb->expr()->orX(...$validCombinations));
 
 		} else {
-			$qb->select('i.*')
-				->from(self::TABLENAME, 'i')
-				->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
+			$qb->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
 		}
 
 		$this->handleStringFilter($this->db, $qb, $filters["title"], 'i.title');
@@ -122,6 +120,9 @@ class ItemMapper extends QBMapper {
 			$qb->setMaxResults($limit);
 		}
 
-		return $this->findEntities($qb);
+		//echo $qb->getSql();
+		//exit(0);
+
+		return $this->findEntitiesAndSeperateColumns($qb, ["totalResultCount"]);
 	}
 }

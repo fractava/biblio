@@ -40,9 +40,12 @@ class ItemController extends Controller {
 		$includes = $this->parseIncludesString($include);
 		$filters = $this->parseFilterString($filter);
 
-		$result = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
+		list($entities, $meta) = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
 
-		return new JSONResponse($result, Http::STATUS_OK);
+		return new JSONResponse([
+			"meta" => $meta,
+			"result" => $entities,
+		], Http::STATUS_OK);
 	}
 
 	/**

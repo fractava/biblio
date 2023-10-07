@@ -56,17 +56,17 @@ class ItemService {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
-		$query = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
+		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
 		$fieldFilters = $this->getFieldFiltersOutOfItemFilters($filters);
 
 		$results = [];
 
-		foreach ($query as $item) {
+		foreach ($entities as $item) {
 			$results[] = $this->getApiObjectFromEntity($collectionId, $item, $includeModel, $includeFields, $fieldFilters);
 		}
 
-		return $results;
+		return array($results, $meta);
 	}
 
 	private function handleException(Exception $e): void {
