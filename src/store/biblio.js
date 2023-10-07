@@ -15,6 +15,7 @@ export const useBiblioStore = defineStore("biblio", {
 		itemFilters: {},
 		itemSort: "title",
 		itemSortReverse: false,
+		itemLimit: 100,
 		currentlyRunningItemFetch: false,
 	}),
 	actions: {
@@ -105,11 +106,11 @@ export const useBiblioStore = defineStore("biblio", {
 			});
 		},
 		refreshItemSearchResults() {
-			if(this.currentlyRunningItemFetch) {
+			if (this.currentlyRunningItemFetch) {
 				this.currentlyRunningItemFetch.cancel();
 			}
 
-			let newItemFetch = new PCancelable((resolve, reject, onCancel) => {
+			const newItemFetch = new PCancelable((resolve, reject, onCancel) => {
 				if (!this.selectedCollectionId) {
 					this.itemSearchResults = [];
 					return resolve();
@@ -130,21 +131,20 @@ export const useBiblioStore = defineStore("biblio", {
 					};
 				}
 
-				let apiPromise = api.getItems(this.selectedCollectionId, "model+fields", filters, this.itemSort, this.itemSortReverse)
+				const apiPromise = api.getItems(this.selectedCollectionId, "model+fields", filters, this.itemSort, this.itemSortReverse, this.itemLimit);
 
 				apiPromise.then((result) => {
-					console.log("setting item search results", JSON.stringify(result));
 					this.itemSearchResults = result;
 					resolve();
 				})
-				.catch((error) => {
-					if (!apiPromise.isCanceled) {
-						console.error(error);
-						showError(t("biblio", "Could not fetch items"));
-					}
+					.catch((error) => {
+						if (!apiPromise.isCanceled) {
+							console.error(error);
+							showError(t("biblio", "Could not fetch items"));
+						}
 
-					resolve();
-				});
+						resolve();
+					});
 
 				onCancel(() => {
 					apiPromise.cancel();
