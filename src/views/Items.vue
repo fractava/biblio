@@ -5,14 +5,16 @@
 			<DataTable :columns="columns"
 				:rows="biblioStore.itemSearchResults"
 				:can-create-rows="true"
-				:current-sort.sync="currentSort"
-				:current-sort-reverse.sync="currentSortReverse"
+				:current-sort="biblioStore.itemSort"
+				:current-sort-reverse="biblioStore.itemSortReverse"
 				:current-filters="biblioStore.itemFilters"
 				:create-row-label="t('biblio', 'Create Item')"
 				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
 				@create-row="modalOpen = true"
 				@set-search-string="onItemSearchUpdate"
 				@update:currentFilters="onItemFieltersUpdate"
+				@update:currentSort="onItemSortUpdate"
+				@update:currentSortReverse="onItemSortReverseUpdate"
 				@click-row="openItem" />
 		</ul>
 	</NoCollectionSelected>
@@ -20,7 +22,7 @@
 
 <script>
 import { mapStores } from "pinia";
-import { debounce } from "debounce";
+import debounceFn from 'debounce-fn';
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import Table from "../components/Table.vue";
@@ -43,8 +45,6 @@ export default {
 	data() {
 		return {
 			modalOpen: false,
-			currentSort: "title",
-			currentSortReverse: false,
 		};
 	},
 	computed: {
@@ -103,9 +103,25 @@ export default {
 			this.biblioStore.itemFilters = newFilters;
 			this.refreshItemSearch();
 		},
-		refreshItemSearch() {
-			this.biblioStore.refreshItemSearchResults();
+		onItemSortUpdate(newSort) {
+			this.biblioStore.itemSort = newSort;
+			this.refreshItemSearch();
 		},
+		onItemSortReverseUpdate(newSortReverse) {
+			this.biblioStore.itemSortReverse = newSortReverse;
+			this.refreshItemSearch();
+		},
+		refreshItemSearch: debounceFn(() => {
+			const biblioStore = useBiblioStore();
+
+			let refreshPromise = biblioStore.refreshItemSearchResults();
+
+			refreshPromise.catch((error) => {
+				if (!refreshPromise.isCanceled) {
+					console.error(error);
+				}
+			});
+		}, {wait: 100}),
 	},
 };
 
