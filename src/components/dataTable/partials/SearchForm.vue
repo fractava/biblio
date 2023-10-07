@@ -5,7 +5,7 @@
 			trailing-button-icon="close"
 			:show-trailing-button="localValue !== ''"
 			@trailing-button-click="clearValue"
-			@update:value="debounceSubmit">
+			@update:value="submit">
 			<Magnify :size="16" />
 		</NcTextField>
 	</div>
@@ -14,7 +14,6 @@
 <script>
 import { NcTextField } from "@nextcloud/vue";
 import Magnify from "vue-material-design-icons/Magnify.vue";
-import debounce from "debounce";
 
 export default {
 
@@ -37,10 +36,6 @@ export default {
 	},
 
 	methods: {
-		debounceSubmit: debounce(function() {
-			this.submit();
-		}, 500),
-
 		clearValue() {
 			this.localValue = "";
 			this.submit();
