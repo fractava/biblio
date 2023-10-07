@@ -349,7 +349,7 @@ export const api = {
 				},
 			})
 				.then((response) => {
-					const items = response.data.map(transforms.fromAPI.transformItem);
+					const items = response.data.result.map(transforms.fromAPI.transformItem);
 					resolve(items);
 				})
 				.catch((error) => {
