@@ -52,11 +52,11 @@ class ItemService {
 		return $result;
 	}
 
-	public function findAll(int $collectionId, array $includes, ?array $filters, ?int $limit = null, ?int $offset = null): array {
+	public function findAll(int $collectionId, array $includes, ?array $filters, ?string $sort = null, bool $sortReverse = null, ?int $limit = null, ?int $offset = null): array {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
-		$query = $this->mapper->findAll($collectionId, $filters, $limit, $offset);
+		$query = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
 		$fieldFilters = $this->getFieldFiltersOutOfItemFilters($filters);
 

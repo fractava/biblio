@@ -36,11 +36,11 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function index(int $collectionId, ?string $include, ?string $filter, ?int $limit, ?int $offset): JSONResponse {
+	public function index(int $collectionId, ?string $include, ?string $filter, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): JSONResponse {
 		$includes = $this->parseIncludesString($include);
 		$filters = $this->parseFilterString($filter);
 
-		$result = $this->service->findAll($collectionId, $includes, $filters, $limit, $offset);
+		$result = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
 
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
