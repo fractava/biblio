@@ -1,4 +1,5 @@
 import axios from "@nextcloud/axios";
+import PCancelable from 'p-cancelable';
 import { generateUrl } from "@nextcloud/router";
 
 import FieldTypes from "./models/FieldTypes.js";
@@ -326,14 +327,23 @@ export const api = {
 	  * @param {number} collectionId Id of the collection to get the items of
 	  * @param {string} include information the server should include in the returned API object
 	  * @param {object} filter filters result on server side
-	  * @return {Promise<Array<Item>>}
+	  * @return {PCancelable<Array<Item>>}
 	  */
-	getItems(collectionId, include = "model+fields", filters = {}) {
-		return new Promise((resolve, reject) => {
+	getItems(collectionId, include = "model+fields", filters = {}, sort = "", sortReverse = false) {
+		return new PCancelable((resolve, reject, onCancel) => {
+			const controller = new AbortController();
+
+			onCancel(() => {
+				controller.abort()
+			});
+
 			axios.get(`/collections/${collectionId}/items`, {
+   				signal: controller.signal,
 				params: {
 					include,
 					filter: JSON.stringify(filters),
+					sort,
+					sortReverse,
 				},
 			})
 				.then((response) => {
