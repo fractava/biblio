@@ -328,12 +328,12 @@ export const api = {
 	  * @param {object} filter filters result on server side
 	  * @return {Promise<Array<Item>>}
 	  */
-	getItems(collectionId, include = "model+fields", filter = {}) {
+	getItems(collectionId, include = "model+fields", filters = {}) {
 		return new Promise((resolve, reject) => {
 			axios.get(`/collections/${collectionId}/items`, {
 				params: {
 					include,
-					filter: JSON.stringify(filter),
+					filter: JSON.stringify(filters),
 				},
 			})
 				.then((response) => {

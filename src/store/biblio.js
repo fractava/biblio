@@ -107,22 +107,22 @@ export const useBiblioStore = defineStore("biblio", {
 					return resolve();
 				}
 
-				const filter = {};
+				const filters = this.itemFilters;
 
 				// only fetch item field values, that will be shown in the item table
-				filter.fieldValues_includeInList = {
+				filters.fieldValues_includeInList = {
 					operator: "=",
 					operand: true,
 				};
 
 				if (this.itemSearch) {
-					filter.title = {
-						operator: "includes",
+					filters.title = {
+						operator: "contains",
 						operand: this.itemSearch,
 					};
 				}
 
-				api.getItems(this.selectedCollectionId, "model+fields", filter)
+				api.getItems(this.selectedCollectionId, "model+fields", filters)
 					.then((result) => {
 						this.itemSearchResults = result;
 						resolve();

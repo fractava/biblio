@@ -7,11 +7,12 @@
 				:can-create-rows="true"
 				:current-sort.sync="currentSort"
 				:current-sort-reverse.sync="currentSortReverse"
-				:current-filters.sync="currentFilters"
+				:current-filters="biblioStore.itemFilters"
 				:create-row-label="t('biblio', 'Create Item')"
-				:create-row-description="t('biblio', 'There are currently no items in this collection')"
+				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
 				@create-row="modalOpen = true"
 				@set-search-string="onItemSearchUpdate"
+				@update:currentFilters="onItemFieltersUpdate"
 				@click-row="openItem" />
 		</ul>
 	</NoCollectionSelected>
@@ -19,6 +20,7 @@
 
 <script>
 import { mapStores } from "pinia";
+import { debounce } from "debounce";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import Table from "../components/Table.vue";
@@ -43,7 +45,6 @@ export default {
 			modalOpen: false,
 			currentSort: "title",
 			currentSortReverse: false,
-			currentFilters: {},
 		};
 	},
 	computed: {
@@ -96,6 +97,13 @@ export default {
 		},
 		onItemSearchUpdate(newSearch) {
 			this.biblioStore.itemSearch = newSearch;
+			this.refreshItemSearch();
+		},
+		onItemFieltersUpdate(newFilters) {
+			this.biblioStore.itemFilters = newFilters;
+			this.refreshItemSearch();
+		},
+		refreshItemSearch() {
 			this.biblioStore.refreshItemSearchResults();
 		},
 	},
