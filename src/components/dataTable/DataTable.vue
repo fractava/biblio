@@ -13,8 +13,7 @@
 				@delete-selected-rows="rowIds => $emit('delete-selected-rows', rowIds)" />
 		</div>
 		<div class="custom-table row">
-			<CustomTable v-if="rows.length > 0"
-				:columns="columns"
+			<CustomTable :columns="columns"
 				:rows="rows"
 				:current-sort="currentSort"
 				:current-sort-reverse="currentSortReverse"
@@ -30,7 +29,7 @@
 					<slot name="actions" />
 				</template>
 			</CustomTable>
-			<NcEmptyContent v-else
+			<NcEmptyContent v-if="rows.length === 0"
 				:title="createRowLabel"
 				:description="createRowDescription">
 				<template #icon>
