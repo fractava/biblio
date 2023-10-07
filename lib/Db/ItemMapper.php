@@ -114,11 +114,11 @@ class ItemMapper extends QBMapper {
 			}
 		}
 
-		if (isset($offset)) {
+		if (isset($offset) && $offset > 0) {
 			$qb->setFirstResult($offset);
 		}
 
-		if (isset($limit)) {
+		if (isset($limit) && $limit > 0) {
 			$qb->setMaxResults($limit);
 		}
 
