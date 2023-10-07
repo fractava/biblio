@@ -1,12 +1,13 @@
 <template>
 	<div>
-		<NcTextField :value.sync="localValue"
+		<NcTextField class="searchTextField"
+			:value.sync="localValue"
 			:label="t('biblio', 'Search')"
 			trailing-button-icon="close"
 			:show-trailing-button="localValue !== ''"
 			@trailing-button-click="clearValue"
 			@update:value="submit">
-			<Magnify :size="16" />
+			<Magnify :size="25" />
 		</NcTextField>
 	</div>
 </template>
@@ -47,10 +48,20 @@ export default {
 
 };
 </script>
-<style scoped>
+<style lang="scss">
+.searchTextField {
+	&.input-field, .input-field__main-wrapper {
+		height: 48px;
 
-:deep(.input-field input) {
-	border-color: var(--color-primary-element);
+		input {
+			padding: 22px 35px;
+			font-size: 15px;
+		}
+
+		.input-field__icon {
+		    bottom: 8px;
+		}
+	}
 }
 
 </style>

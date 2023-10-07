@@ -1,38 +1,13 @@
 <template>
 	<div class="options">
-		<div v-if="showOptions" class="fix-col-4" style="display: flex; flex-flow: column;">
-			<div :style="{'opacity': (selectedRows.length > 0) ? 1 : 0}" class="selected-rows-option">
-				<div style="padding: 10px; color: var(--color-text-maxcontrast);">
-					{{ n('biblio', '%n selected row', '%n selected rows', selectedRows.length, {}) }}
-				</div>
-				<NcActions type="secondary" :force-title="true" :inline="showFullOptions ? 2 : 0">
-					<NcActionButton @click="exportCsv">
-						<template #icon>
-							<Export :size="20" />
-						</template>
-						{{ t('biblio', 'Export CSV') }}
-					</NcActionButton>
-					<NcActionButton v-if="canDeleteRows"
-						@click="deleteSelectedRows">
-						<template #icon>
-							<Delete :size="20" />
-						</template>
-						{{ t('biblio', 'Delete') }}
-					</NcActionButton>
-					<NcActionButton v-if="!showFullOptions" @click="deselectAllRows">
-						<template #icon>
-							<Check :size="20" />
-						</template>
-						{{ t('biblio', 'Uncheck all') }}
-					</NcActionButton>
-				</NcActions>
-			</div>
+		<div v-if="showOptions" class="optionsRow fix-col-4">
 			<div :class="{'add-padding-left': isSmallMobile }"
 				class="addSearchLimitRow">
 				<NcButton v-if="!isSmallMobile && canCreateRows"
+					class="addRowButton"
 					:aria-label="createRowLabel"
 					:close-after-click="true"
-					type="tertiary"
+					type="secondary"
 					@click="$emit('create-row')">
 					{{ createRowLabel }}
 					<template #icon>
@@ -40,20 +15,52 @@
 					</template>
 				</NcButton>
 				<NcButton v-if="isSmallMobile && canCreateRows"
+					class="addRowButton"
 					:close-after-click="true"
 					:aria-label="createRowLabel"
-					type="tertiary"
+					type="secondary"
 					@click="$emit('create-row')">
 					<template #icon>
 						<Plus :size="25" />
 					</template>
 				</NcButton>
-				<div class="searchAndFilter">
-					<SearchForm :search-string="getSearchString"
-						@set-search-string="str => $emit('set-search-string', str)" />
-				</div>
-				<NcSelect :options="[20, 50, 100, 250, 1000]" :value="rowLimitFilter" @input="limit => $emit('update:rowLimitFilter', limit)" />
+				<SearchForm class="searchForm"
+					:search-string="getSearchString"
+					@set-search-string="str => $emit('set-search-string', str)" />
+				<NcSelect class="limitSelect" :options="[20, 50, 100, 250, 1000]" :value="rowLimitFilter" @input="limit => $emit('update:rowLimitFilter', limit)" />
 			</div>
+		</div>
+		<div class="optionsRow optionsRow2">
+			<div>
+				<div v-show="selectedRows.length > 0"
+					class="selected-rows-option">
+					<div style="padding: 10px; color: var(--color-text-maxcontrast);">
+						{{ n('biblio', '%n selected row', '%n selected rows', selectedRows.length, {}) }}
+					</div>
+					<NcActions type="secondary" :force-title="true" :inline="showFullOptions ? 2 : 0">
+						<NcActionButton @click="exportCsv">
+							<template #icon>
+								<Export :size="20" />
+							</template>
+							{{ t('biblio', 'Export CSV') }}
+						</NcActionButton>
+						<NcActionButton v-if="canDeleteRows"
+							@click="deleteSelectedRows">
+							<template #icon>
+								<Delete :size="20" />
+							</template>
+							{{ t('biblio', 'Delete') }}
+						</NcActionButton>
+						<NcActionButton v-if="!showFullOptions" @click="deselectAllRows">
+							<template #icon>
+								<Check :size="20" />
+							</template>
+							{{ t('biblio', 'Uncheck all') }}
+						</NcActionButton>
+					</NcActions>
+				</div>
+			</div>
+			<PageSelector />
 		</div>
 	</div>
 </template>
@@ -68,6 +75,7 @@ import Delete from "vue-material-design-icons/Delete.vue";
 import Export from "vue-material-design-icons/Export.vue";
 import viewportHelper from "../../mixins/viewportHelper.js";
 import SearchForm from "../partials/SearchForm.vue";
+import PageSelector from '../partials/PageSelector.vue';
 
 export default {
 	name: "Options",
@@ -82,6 +90,7 @@ export default {
 		Check,
 		Delete,
 		Export,
+		PageSelector,
 	},
 
 	mixins: [viewportHelper],
@@ -178,11 +187,24 @@ export default {
 	left: 0;
 }
 
+.optionsRow {
+	display: flex;
+	flex-flow: row nowrap;
+	height: 48px;
+	width: 100%;
+}
+
+.optionsRow2 {
+	justify-content: space-between;
+}
+
 .selected-rows-option {
-	display: inline-flex;
-	white-space: nowrap;
-	overflow: hidden;
+	display: flex;
+	flex-flow: row nowrap;
 	min-width: fit-content;
+	white-space: nowrap;
+	height: 48px;
+	overflow: hidden;
 }
 
 .add-padding-left {
@@ -196,6 +218,15 @@ export default {
 .addSearchLimitRow {
 	display: inline-flex;
 	align-items: center;
+	gap: 10px;
+
+	.searchForm {
+		flex-grow: 1;
+	}
+
+	.addRowButton {
+		height: 48px;
+	}
 }
 
 :deep(.addSearchLimitRow button) {
