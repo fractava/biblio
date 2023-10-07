@@ -1,34 +1,7 @@
 <template>
 	<div class="options">
-		<div v-if="showOptions" class="fix-col-4" style="justify-content: space-between;">
-			<div :class="{'add-padding-left': isSmallMobile }"
-				class="actionButtonsLeft">
-				<NcButton v-if="!isSmallMobile && canCreateRows"
-					:aria-label="createRowLabel"
-					:close-after-click="true"
-					type="tertiary"
-					@click="$emit('create-row')">
-					{{ createRowLabel }}
-					<template #icon>
-						<Plus :size="25" />
-					</template>
-				</NcButton>
-				<NcButton v-if="isSmallMobile && canCreateRows"
-					:close-after-click="true"
-					:aria-label="createRowLabel"
-					type="tertiary"
-					@click="$emit('create-row')">
-					<template #icon>
-						<Plus :size="25" />
-					</template>
-				</NcButton>
-				<div class="searchAndFilter">
-					<SearchForm :search-string="getSearchString"
-						@set-search-string="str => $emit('set-search-string', str)" />
-				</div>
-			</div>
-
-			<div v-if="selectedRows.length > 0" class="selected-rows-option">
+		<div v-if="showOptions" class="fix-col-4" style="display: flex; flex-flow: column;">
+			<div :style="{'opacity': (selectedRows.length > 0) ? 1 : 0}" class="selected-rows-option">
 				<div style="padding: 10px; color: var(--color-text-maxcontrast);">
 					{{ n('biblio', '%n selected row', '%n selected rows', selectedRows.length, {}) }}
 				</div>
@@ -54,12 +27,40 @@
 					</NcActionButton>
 				</NcActions>
 			</div>
+			<div :class="{'add-padding-left': isSmallMobile }"
+				class="addSearchLimitRow">
+				<NcButton v-if="!isSmallMobile && canCreateRows"
+					:aria-label="createRowLabel"
+					:close-after-click="true"
+					type="tertiary"
+					@click="$emit('create-row')">
+					{{ createRowLabel }}
+					<template #icon>
+						<Plus :size="25" />
+					</template>
+				</NcButton>
+				<NcButton v-if="isSmallMobile && canCreateRows"
+					:close-after-click="true"
+					:aria-label="createRowLabel"
+					type="tertiary"
+					@click="$emit('create-row')">
+					<template #icon>
+						<Plus :size="25" />
+					</template>
+				</NcButton>
+				<div class="searchAndFilter">
+					<SearchForm :search-string="getSearchString"
+						@set-search-string="str => $emit('set-search-string', str)" />
+				</div>
+				<NcSelect :options="[20, 50, 100, 250, 1000]" :value="rowLimitFilter" @input="limit => $emit('update:rowLimitFilter', limit)" />
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 import { NcButton, NcActions, NcActionButton } from "@nextcloud/vue";
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
 import { emit } from "@nextcloud/event-bus";
 import Plus from "vue-material-design-icons/Plus.vue";
 import Check from "vue-material-design-icons/CheckboxBlankOutline.vue";
@@ -74,6 +75,7 @@ export default {
 	components: {
 		NcActions,
 		NcActionButton,
+		NcSelect,
 		SearchForm,
 		NcButton,
 		Plus,
@@ -112,6 +114,10 @@ export default {
 		canDeleteRows: {
 			type: Boolean,
 			default: true,
+		},
+		rowLimitFilter: {
+			type: Number,
+			default: 100,
 		},
 	},
 
@@ -173,7 +179,6 @@ export default {
 }
 
 .selected-rows-option {
-	justify-content: flex-end;
 	display: inline-flex;
 	white-space: nowrap;
 	overflow: hidden;
@@ -188,12 +193,12 @@ export default {
 	max-width: fit-content;
 }
 
-.actionButtonsLeft {
+.addSearchLimitRow {
 	display: inline-flex;
 	align-items: center;
 }
 
-:deep(.actionButtonsLeft button) {
+:deep(.addSearchLimitRow button) {
 	min-width: fit-content;
 }
 

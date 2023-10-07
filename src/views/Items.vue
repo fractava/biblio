@@ -8,6 +8,7 @@
 				:current-sort="biblioStore.itemSort"
 				:current-sort-reverse="biblioStore.itemSortReverse"
 				:current-filters="biblioStore.itemFilters"
+				:row-limit-filter="biblioStore.itemLimit"
 				:create-row-label="t('biblio', 'Create Item')"
 				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
 				@create-row="modalOpen = true"
@@ -15,6 +16,7 @@
 				@update:currentFilters="onItemFieltersUpdate"
 				@update:currentSort="onItemSortUpdate"
 				@update:currentSortReverse="onItemSortReverseUpdate"
+				@update:rowLimitFilter="onRowLimitFilterUpdate"
 				@click-row="openItem" />
 		</ul>
 	</NoCollectionSelected>
@@ -111,10 +113,14 @@ export default {
 			this.biblioStore.itemSortReverse = newSortReverse;
 			this.refreshItemSearch();
 		},
+		onRowLimitFilterUpdate(newLimit) {
+			this.biblioStore.itemLimit = newLimit;
+			this.refreshItemSearch();
+		},
 		refreshItemSearch: debounceFn(() => {
 			const biblioStore = useBiblioStore();
 
-			let refreshPromise = biblioStore.refreshItemSearchResults();
+			const refreshPromise = biblioStore.refreshItemSearchResults();
 
 			refreshPromise.catch((error) => {
 				if (!refreshPromise.isCanceled) {

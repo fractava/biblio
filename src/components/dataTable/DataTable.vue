@@ -7,9 +7,11 @@
 				:create-row-label="createRowLabel"
 				:can-delete-rows="canDeleteRows"
 				:show-options="columns.length !== 0"
+				:row-limit-filter="rowLimitFilter"
 				@create-row="$emit('create-row')"
 				@download-csv="data => downloadCsv(data, columns, downloadTitle)"
 				@set-search-string="str => $emit('set-search-string', str)"
+				@update:rowLimitFilter="limit => $emit('update:rowLimitFilter', limit)"
 				@delete-selected-rows="rowIds => $emit('delete-selected-rows', rowIds)" />
 		</div>
 		<div class="custom-table row">
@@ -89,6 +91,10 @@ export default {
 		currentFilters: {
 			type: Object,
 			default: () => ({}),
+		},
+		rowLimitFilter: {
+			type: Number,
+			default: 100,
 		},
 		selectedRows: {
 			type: Array,

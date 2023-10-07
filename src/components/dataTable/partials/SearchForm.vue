@@ -1,5 +1,5 @@
 <template>
-	<div :class="{ empty: localValue === '' }">
+	<div>
 		<NcTextField :value.sync="localValue"
 			:label="t('biblio', 'Search')"
 			trailing-button-icon="close"
@@ -51,10 +51,6 @@ export default {
 
 :deep(.input-field input) {
 	border-color: var(--color-primary-element);
-}
-
-.empty :deep(.input-field input) {
-	border-color: transparent;
 }
 
 </style>
