@@ -2,7 +2,7 @@
 	<NoCollectionSelected>
 		<ul>
 			<AddItemModal :open.sync="modalOpen" />
-			<DataTable :columns="columns"
+			<DataTable class="itemsDataTable" :columns="columns"
 				:rows="biblioStore.itemSearchResults"
 				:can-create-rows="true"
 				:current-sort="biblioStore.itemSort"
@@ -132,3 +132,8 @@ export default {
 };
 
 </script>
+<style scoped>
+.itemsDataTable {
+	margin-bottom: 330px;
+}
+</style>
