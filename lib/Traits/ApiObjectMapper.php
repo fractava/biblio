@@ -40,8 +40,6 @@ trait ApiObjectMapper {
             } else {
                 throw new \Error("unknown operator");
             }
-        } else {
-            throw new \Error("wrong handleStringFilterExpr parameters");
         }
     }
 
