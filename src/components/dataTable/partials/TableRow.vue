@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import { NcCheckboxRadioSwitch, NcButton } from "@nextcloud/vue";
+import NcCheckboxRadioSwitch from "@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js";
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import Pencil from "vue-material-design-icons/Pencil.vue";
 
 export default {

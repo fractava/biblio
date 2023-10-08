@@ -71,8 +71,10 @@
 </template>
 
 <script>
-import { NcButton, NcActions, NcActionButton } from "@nextcloud/vue";
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js'
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
+import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
+import NcSelect from "@nextcloud/vue/dist/Components/NcSelect.js";
 import { emit } from "@nextcloud/event-bus";
 import Plus from "vue-material-design-icons/Plus.vue";
 import Check from "vue-material-design-icons/CheckboxBlankOutline.vue";
@@ -80,7 +82,7 @@ import Delete from "vue-material-design-icons/Delete.vue";
 import Export from "vue-material-design-icons/Export.vue";
 import viewportHelper from "../../mixins/viewportHelper.js";
 import SearchForm from "../partials/SearchForm.vue";
-import PageSelector from '../partials/PageSelector.vue';
+import PageSelector from "../partials/PageSelector.vue";
 
 export default {
 	name: "Options",

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { NcCheckboxRadioSwitch } from "@nextcloud/vue";
+import NcCheckboxRadioSwitch from "@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js";
 import TableHeaderColumnOptions from "./TableHeaderColumnOptions.vue";
 import FilterLabel from "./FilterLabel.vue";
 

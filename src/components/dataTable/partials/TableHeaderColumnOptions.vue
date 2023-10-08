@@ -80,7 +80,12 @@ import SortDesc from "vue-material-design-icons/SortDescending.vue";
 import ChevronLeft from "vue-material-design-icons/ChevronLeft.vue";
 import FilterCog from "vue-material-design-icons/FilterCog.vue";
 import Magnify from "vue-material-design-icons/Magnify.vue";
-import { NcActions, NcActionButton, NcActionInput, NcActionButtonGroup, NcActionCaption, NcActionRadio } from "@nextcloud/vue";
+import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
+import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput.js";
+import NcActionButtonGroup from "@nextcloud/vue/dist/Components/NcActionButtonGroup.js";
+import NcActionCaption from "@nextcloud/vue/dist/Components/NcActionCaption.js";
+import NcActionRadio from "@nextcloud/vue/dist/Components/NcActionRadio.js";
 
 export default {
 	components: {

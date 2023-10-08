@@ -58,7 +58,8 @@
 import Options from "./sections/Options.vue";
 import CustomTable from "./sections/CustomTable.vue";
 import exportTableMixin from "./mixins/exportTableMixin.js";
-import { NcEmptyContent, NcButton } from "@nextcloud/vue";
+import NcEmptyContent from "@nextcloud/vue/dist/Components/NcEmptyContent.js";
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import Plus from "vue-material-design-icons/Plus.vue";
 import Cancel from "vue-material-design-icons/Cancel.vue";
 import { subscribe, unsubscribe } from "@nextcloud/event-bus";
