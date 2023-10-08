@@ -1,14 +1,18 @@
 <template>
 	<div class="field__content">
-		<textarea ref="textarea"
-			:placeholder="placeholder"
-			:disabled="!allowValueEdit"
-			:value="value"
-			class="field__text"
-			minlength="1"
-			@input="onInput"
-			@keypress="autoSizeText"
-			@keydown.ctrl.enter="onKeydownCtrlEnter" />
+		<div v-if="allowValueEdit">
+			<textarea ref="textarea"
+				:placeholder="placeholder"
+				:disabled="!allowValueEdit"
+				:value="value"
+				class="field__text"
+				minlength="1"
+				@input="onInput"
+				@keypress="autoSizeText" />
+		</div>
+		<span v-else style="white-space: pre;">
+			{{ value }}
+		</span>
 	</div>
 </template>
 
@@ -17,10 +21,21 @@ import FieldValue from "../mixins/FieldValue.js";
 
 export default {
 	mixins: [FieldValue],
+	props: {
+		value: {
+			type: String,
+			default: "",
+		},
+	},
 	data() {
 		return {
 			height: 1,
 		};
+	},
+	watch: {
+		allowValueEdit() {
+			this.autoSizeText();
+		},
 	},
 	mounted() {
 		this.autoSizeText();
@@ -32,15 +47,25 @@ export default {
 			this.autoSizeText();
 		},
 		autoSizeText() {
-			const textarea = this.$refs.textarea;
-			textarea.style.cssText = "height:auto; padding:0";
-			textarea.style.cssText = `height: ${textarea.scrollHeight + 20}px`;
+			if (this.allowValueEdit) {
+				const refresh = () => {
+					const textarea = this.$refs.textarea;
+					console.log(textarea);
+					textarea.style.cssText = "height:auto; padding:0";
+					textarea.style.cssText = `height: ${textarea.scrollHeight + 20}px`;
+				};
+				if (this.$refs.textarea) {
+					refresh();
+				} else {
+					this.$nextTick(refresh);
+				}
+			}
 		},
 		onKeydownCtrlEnter(event) {
 			this.$emit("keydown", event);
 		},
 	},
-}
+};
 </script>
 
 <style lang="scss" scoped>
