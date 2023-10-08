@@ -239,6 +239,10 @@ export default {
 
 	.searchForm {
 		flex-grow: 1;
+
+		:deep(.input-field__main-wrapper) {
+			height: 48px !important;
+		}
 	}
 
 	.addRowButton {

@@ -59,7 +59,7 @@ export default {
 			return this.biblioStore.itemFields.filter((itemField) => (itemField.includeInList));
 		},
 		maxPage() {
-			return Math.ceil(Math.max(this.biblioStore.itemSearchMeta.totalResultCount, 1) / this.biblioStore.itemLimit);
+			return Math.ceil(Math.max(this.biblioStore.itemSearchMeta.totalResultCount, 1) / this.biblioStore.itemLimit) || 1;
 		},
 		columns() {
 			let itemFieldColumns = this.includedItemFields.map((field) => {
@@ -95,6 +95,11 @@ export default {
 			];
 		},
 	},
+	watch: {
+		maxPage() {
+			this.ensurePageIsNotExceedingMax();
+		},
+	},
 	mounted() {
 		this.biblioStore.refreshItemSearchResults();
 	},
@@ -122,6 +127,7 @@ export default {
 		},
 		onRowLimitFilterUpdate(newLimit) {
 			this.biblioStore.itemLimit = newLimit;
+			this.ensurePageIsNotExceedingMax();
 			this.refreshItemSearch();
 		},
 		onPageUpdate(newPage) {
@@ -139,6 +145,11 @@ export default {
 				}
 			});
 		}, { wait: 100 }),
+		ensurePageIsNotExceedingMax() {
+			if (this.biblioStore.itemPage > this.maxPage) {
+				this.biblioStore.itemPage = this.maxPage;
+			}
+		},
 	},
 };
 

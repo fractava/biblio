@@ -3,13 +3,14 @@
 		<NcButton class="tablePageSelectorButton"
 			:close-after-click="true"
 			:aria-label="t('biblio', 'Decrement page')"
+			:disabled="page <= 1"
 			type="secondary"
 			@click="down">
 			<template #icon>
 				<ChevronLeft :size="25" />
 			</template>
 		</NcButton>
-		<vueSelect class="limitSelect"
+		<vueSelect class="pageSelect"
 			:options="pages"
 			:value="page"
 			:placeholder="t('biblio', 'Select Page')"
@@ -18,6 +19,7 @@
 		<NcButton class="tablePageSelectorButton"
 			:close-after-click="true"
 			:aria-label="t('biblio', 'Increment page')"
+			:disabled="page >= maxPage"
 			type="secondary"
 			@click="up">
 			<template #icon>
@@ -91,7 +93,7 @@ export default {
 		}
 	}
 
-	.limitSelect {
+	.pageSelect {
 		--vs-search-input-bg: var(--color-primary-element-light);
 		--vs-dropdown-bg: var(--color-primary-element-light);
 		--vs-dropdown-option--active-bg: var(--color-primary-element-light-hover);
