@@ -11,11 +11,13 @@ export const useBiblioStore = defineStore("biblio", {
 		selectedCollectionId: false,
 		itemFields: [],
 		itemSearchResults: [],
+		itemSearchMeta: {},
 		itemSearch: "",
 		itemFilters: {},
 		itemSort: "title",
 		itemSortReverse: false,
 		itemLimit: 100,
+		itemPage: 1,
 		currentlyRunningItemFetch: false,
 	}),
 	actions: {
@@ -131,10 +133,13 @@ export const useBiblioStore = defineStore("biblio", {
 					};
 				}
 
-				const apiPromise = api.getItems(this.selectedCollectionId, "model+fields", filters, this.itemSort, this.itemSortReverse, this.itemLimit);
+				const offset = (this.itemPage - 1) * this.itemLimit;
+
+				const apiPromise = api.getItems(this.selectedCollectionId, "model+fields", filters, this.itemSort, this.itemSortReverse, this.itemLimit, offset);
 
 				apiPromise.then((result) => {
-					this.itemSearchResults = result;
+					this.itemSearchResults = result.items;
+					this.itemSearchMeta = result.meta;
 					resolve();
 				})
 					.catch((error) => {

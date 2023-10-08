@@ -2,8 +2,11 @@
 	<NoCollectionSelected>
 		<ul>
 			<AddItemModal :open.sync="modalOpen" />
-			<DataTable class="itemsDataTable" :columns="columns"
+			<DataTable class="itemsDataTable"
+				:columns="columns"
 				:rows="biblioStore.itemSearchResults"
+				:page="biblioStore.itemPage"
+				:max-page="maxPage"
 				:can-create-rows="true"
 				:current-sort="biblioStore.itemSort"
 				:current-sort-reverse="biblioStore.itemSortReverse"
@@ -17,6 +20,7 @@
 				@update:currentSort="onItemSortUpdate"
 				@update:currentSortReverse="onItemSortReverseUpdate"
 				@update:rowLimitFilter="onRowLimitFilterUpdate"
+				@update:page="onPageUpdate"
 				@click-row="openItem" />
 		</ul>
 	</NoCollectionSelected>
@@ -53,6 +57,9 @@ export default {
 		...mapStores(useBiblioStore),
 		includedItemFields() {
 			return this.biblioStore.itemFields.filter((itemField) => (itemField.includeInList));
+		},
+		maxPage() {
+			return Math.ceil(Math.max(this.biblioStore.itemSearchMeta.totalResultCount, 1) / this.biblioStore.itemLimit);
 		},
 		columns() {
 			let itemFieldColumns = this.includedItemFields.map((field) => {
@@ -117,6 +124,10 @@ export default {
 			this.biblioStore.itemLimit = newLimit;
 			this.refreshItemSearch();
 		},
+		onPageUpdate(newPage) {
+			this.biblioStore.itemPage = newPage;
+			this.refreshItemSearch();
+		},
 		refreshItemSearch: debounceFn(() => {
 			const biblioStore = useBiblioStore();
 
@@ -127,7 +138,7 @@ export default {
 					console.error(error);
 				}
 			});
-		}, {wait: 100}),
+		}, { wait: 100 }),
 	},
 };
 

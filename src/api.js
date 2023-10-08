@@ -350,7 +350,10 @@ export const api = {
 			})
 				.then((response) => {
 					const items = response.data.result.map(transforms.fromAPI.transformItem);
-					resolve(items);
+					resolve({
+						meta: response.data.meta,
+						items,
+					});
 				})
 				.catch((error) => {
 					reject(error);

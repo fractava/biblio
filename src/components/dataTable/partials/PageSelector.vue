@@ -9,11 +9,17 @@
 				<ChevronLeft :size="25" />
 			</template>
 		</NcButton>
+		<vueSelect class="limitSelect"
+			:options="pages"
+			:value="page"
+			:placeholder="t('biblio', 'Select Page')"
+			:clearable="false"
+			@input="setPage" />
 		<NcButton class="tablePageSelectorButton"
 			:close-after-click="true"
 			:aria-label="t('biblio', 'Increment page')"
 			type="secondary"
-			@click="down">
+			@click="up">
 			<template #icon>
 				<ChevronRight :size="25" />
 			</template>
@@ -22,27 +28,54 @@
 </template>
 <script>
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
+import vueSelect from 'vue-select';
 
 import ChevronLeft from "vue-material-design-icons/ChevronLeft.vue";
 import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 
+import generalHelper from '../../mixins/generalHelper';
+
 export default {
 	components: {
 		NcButton,
+		vueSelect,
 		ChevronLeft,
 		ChevronRight,
 	},
+	mixins: [generalHelper],
+	props: {
+		page: {
+			type: Number,
+			default: 1,
+		},
+		maxPage: {
+			type: Number,
+			default: 1,
+		},
+	},
+	computed: {
+		pages() {
+			return this.range(1, this.maxPage + 1);
+		},
+	},
 	methods: {
 		up() {
-
+			if (this.page < this.maxPage) {
+				this.setPage(this.page + 1);
+			}
 		},
 		down() {
-			this.$emit('update:page')
+			if (this.page > 1) {
+				this.setPage(this.page - 1);
+			}
+		},
+		setPage(pageNumber) {
+			this.$emit("update:page", pageNumber);
 		},
 	},
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .tablePageSelector {
 	display: flex;
 	flex-flow: row nowrap;
@@ -55,6 +88,31 @@ export default {
 		&:last-child {
 			border-top-left-radius: 0px;
 			border-bottom-left-radius: 0px;
+		}
+	}
+
+	.limitSelect {
+		--vs-search-input-bg: var(--color-primary-element-light);
+		--vs-dropdown-bg: var(--color-primary-element-light);
+		--vs-dropdown-option--active-bg: var(--color-primary-element-light-hover);
+		--vs-controls-color: var(--color-primary-element-light-text);
+		--vs-search-input-color: var(--color-primary-element-light-text);
+		--vs-border-color: transparent;
+		--vs-dropdown-min-width: 96px;
+
+		width: 96px;
+		margin: 0px;
+
+		.vs__dropdown-toggle {
+			border-radius: 0px;
+
+			&:hover {
+				background-color: var(--color-primary-element-light-hover);
+			}
+		}
+
+		.vs__dropdown-menu {
+			border-color: var(--vs-border-color) !important;
 		}
 	}
 }

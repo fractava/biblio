@@ -27,7 +27,10 @@
 				<SearchForm class="searchForm"
 					:search-string="getSearchString"
 					@set-search-string="str => $emit('set-search-string', str)" />
-				<NcSelect class="limitSelect" :options="[20, 50, 100, 250, 1000]" :value="rowLimitFilter" @input="limit => $emit('update:rowLimitFilter', limit)" />
+				<NcSelect class="limitSelect"
+					:options="[5, 20, 50, 100, 250, 1000]"
+					:value="rowLimitFilter"
+					@input="limit => $emit('update:rowLimitFilter', limit)" />
 			</div>
 		</div>
 		<div class="optionsRow optionsRow2">
@@ -60,7 +63,9 @@
 					</NcActions>
 				</div>
 			</div>
-			<PageSelector />
+			<PageSelector :page="page"
+				:max-page="maxPage"
+				@update:page="newPage => $emit('update:page', newPage)" />
 		</div>
 	</div>
 </template>
@@ -103,6 +108,14 @@ export default {
 		rows: {
 			type: Array,
 			default: () => [],
+		},
+		page: {
+			type: Number,
+			default: 1,
+		},
+		maxPage: {
+			type: Number,
+			default: 1,
 		},
 		showOptions: {
 			type: Boolean,
@@ -192,6 +205,7 @@ export default {
 	flex-flow: row nowrap;
 	height: 48px;
 	width: 100%;
+	margin-bottom: 5px;
 }
 
 .optionsRow2 {
@@ -216,7 +230,8 @@ export default {
 }
 
 .addSearchLimitRow {
-	display: inline-flex;
+	display: flex;
+	width: 100%;
 	align-items: center;
 	gap: 10px;
 
