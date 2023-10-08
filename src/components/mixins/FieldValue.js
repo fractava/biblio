@@ -1,9 +1,5 @@
 export default {
 	props: {
-		value: {
-			type: String,
-			default: "",
-		},
 		allowValueEdit: {
 			type: Boolean,
 			deafult: false,

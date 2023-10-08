@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import { mapStores } from "pinia";
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 
@@ -83,6 +84,10 @@ export default {
 		updateValue(newValue, field) {
 			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.fieldId, {
 				value: newValue,
+			}).then((result) => {
+				const updatedIndex = this.item.fieldValues.findIndex(fieldValue => fieldValue.fieldId === field.fieldId);
+				console.log(result, updatedIndex);
+				Vue.set(this.item.fieldValues, updatedIndex, result);
 			});
 		},
 		onAddedInstance(newInstance) {

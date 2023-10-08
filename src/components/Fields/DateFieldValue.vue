@@ -46,6 +46,12 @@ export default {
 		NcDatetimePicker,
 	},
 	mixins: [FieldValue],
+	props: {
+		value: {
+			type: String,
+			default: "",
+		},
+	},
 	data() {
 		return {
 			time: null,

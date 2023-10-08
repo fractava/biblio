@@ -65,7 +65,16 @@ class ItemFieldValueController extends Controller {
 	 */
 	public function update(int $collectionId, int $itemId, int $fieldId, string $value = null): DataResponse {
 		// update value (or create db entry if not set previously)
-		return new DataResponse($this->service->updateByItemAndFieldId($itemId, $fieldId, $value));
+		$this->service->updateByItemAndFieldId($itemId, $fieldId, $value);
+
+		// return API object including field
+		return $this->handleNotFound(function () use ($collectionId, $itemId, $fieldId) {
+            return $this->service->find([
+				"collectionId" => $collectionId,
+                "itemId" => $itemId,
+                "fieldId" => $fieldId,
+            ], ["model", "field"]);
+		});
 	}
 
 	/**
