@@ -38,10 +38,6 @@
 		"caniuse-lite": "^1.0.30001541",
 		"debounce": "^1.2.1",
 		"debounce-fn": "^5.1.2",
-		"eslint": "^8.50.0",
-		"eslint-plugin-import": "^2.28.1",
-		"eslint-plugin-node": "^11.1.0",
-		"eslint-plugin-vue": "^9.17.0",
 		"node-polyfill-webpack-plugin": "^2.0.1",
 		"p-cancelable": "^4.0.1",
 		"p-queue": "^7.3.4",
@@ -67,6 +63,11 @@
 		"@nextcloud/babel-config": "^1.0.0",
 		"@nextcloud/browserslist-config": "^2.3.0",
 		"@nextcloud/eslint-config": "^8.2.1",
+		"eslint": "^8.50.0",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-vue": "^9.17.0",
+		"webpack-bundle-analyzer": "^4.9.1",
 		"webpack-cli": "^5.1.4"
 	}
 }
