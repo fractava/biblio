@@ -451,7 +451,7 @@ export const api = {
 
 			axios.put(`/collections/${collectionId}/items/${itemId}/field_values/${fieldId}`, parameters)
 				.then(function(response) {
-					resolve(transforms.fromAPI.transformItemField(response.data));
+					resolve(transforms.fromAPI.transformItemFieldValue(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
