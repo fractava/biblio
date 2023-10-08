@@ -14,7 +14,7 @@
 				<td>
 					<FieldValue :is="FieldTypes[field.type].valueEditComponent"
 						:field-type="FieldTypes[field.type]"
-						:allow-value-edit="true"
+						:allow-value-edit="editMode"
 						:value="field.value"
 						@update:value="(newValue) => { updateValue(newValue, field) }" />
 				</td>
@@ -44,6 +44,9 @@ export default {
 	},
 	methods: {
 		updateValue(newValue, field) {
+			// optimistic update
+			field.value = newValue;
+
 			this.$emit("update:value", newValue, field);
 		},
 	},
@@ -53,6 +56,7 @@ export default {
 .fieldsValueTable {
 	width: 100%;
 	border-collapse: collapse;
+	table-layout: fixed;
 
 	th {
 		font-weight: bold;
