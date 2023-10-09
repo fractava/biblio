@@ -62,16 +62,13 @@ export default {
 		font-weight: bold;
 	}
 
-	tr, td, th {
-		border: 1px black solid;
-	}
-
 	td, th {
-		padding: 5px;
+		padding: 7px;
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	tr:hover, tr:focus, tr:active {
-		background-color: transparent;
+		background-color: var(--color-background-dark);
 	}
 }
 </style>
