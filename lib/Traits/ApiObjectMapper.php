@@ -54,4 +54,65 @@ trait ApiObjectMapper {
             }
         }
     }
+
+	public function handleSortByColumn(IQueryBuilder $qb, string $column, bool $reverse) {
+		$sortDirection = $this->getSortDirection($reverse);
+		$qb->orderBy($column, $sortDirection);
+	}
+
+	public function handleOffset(IQueryBuilder $qb, int $offset) {
+		if (isset($offset) && $offset > 0) {
+			$qb->setFirstResult($offset);
+		}
+	}
+
+	public function handleLimit(IQueryBuilder $qb, int $limit) {
+		if (isset($limit) && $limit > 0) {
+			$qb->setMaxResults($limit);
+		}
+	}
+
+	public function isFieldReference(string $name) {
+		if(str_starts_with($name, "field:")) {
+			$fieldId = substr($name, strlen("field:"));
+			if(ctype_digit($fieldId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public function parseFieldReference(string $name) {
+		$fieldId = substr($name, strlen("field:"));
+		return ((int) $fieldId);
+	}
+
+	public function getFieldValueFilters(array $filters) {
+		$fieldValueFilters = [];
+		foreach ($filters as $key => $value) {
+			if($this->isFieldReference($key)) {
+				$filterFieldId = $this->parseFieldReference($key);
+				$fieldValueFilters[$filterFieldId] = $value;
+			}
+		}
+
+		return $fieldValueFilters;
+	}
+
+	public function getValidFieldValueCombinations(IDBConnection $db, IQueryBuilder $qb, array $fieldValueFilters, string $fieldIdColumn, string $valueColumn) {
+		$validCombinations = [];
+		foreach ($fieldValueFilters as $fieldId => $filter) {
+			$validCombinations[] = $qb->expr()->andX(
+				$qb->expr()->eq($fieldIdColumn, $qb->createNamedParameter($fieldId), IQueryBuilder::PARAM_INT),
+				$this->handleStringFilterExpr($this->db, $qb, $filter, $valueColumn),
+			);
+		}
+
+		return $validCombinations;
+	}
+
+	public function getSortDirection(bool $reverse) {
+		return $reverse ? "DESC" : "ASC";
+	}
 }

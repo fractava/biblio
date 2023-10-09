@@ -13,6 +13,7 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	use ApiObjectMapper;
 	
 	const TABLENAME = 'biblio_items';
+	const FIELDS_VALUES_TABLENAME = 'biblio_item_fields_values';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, Item::class);
@@ -42,19 +43,11 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	public function findAll(string $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
-		$includesFieldValueFilters = false;
-		$fieldValueFilters = [];
 		if(isset($filters)) {
-			foreach ($filters as $key => $value) {
-				if(str_starts_with($key, "field:")) {
-					$includesFieldValueFilters = true;
-
-					$filterFieldId = substr($key, strlen("field:"));
-					if(ctype_digit($filterFieldId)) {
-						$fieldValueFilters[(int) $filterFieldId] = $value;
-					}
-				}
-			}
+			$fieldValueFilters = $this->getFieldValueFilters($filters);
+			$includesFieldValueFilters = (count($fieldValueFilters) !== 0);
+		} else {
+			$includesFieldValueFilters = false;
 		}
 
 		/* @var $qb IQueryBuilder */
@@ -64,22 +57,15 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 			->from(self::TABLENAME, 'i');
 
 		if($includesFieldValueFilters) {
-			$qb->innerJoin('i', 'biblio_item_fields_values', 'v', $qb->expr()->andX(
+			$qb->innerJoin('i', self::FIELDS_VALUES_TABLENAME, 'v', $qb->expr()->andX(
 					$qb->expr()->eq('i.id', 'v.item_id'),
 					$qb->expr()->in('v.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
 				))
 				->where($qb->expr()->eq('i.collection_id', $qb->createNamedParameter($collectionId)));
 
-			$validCombinations = [];
-			foreach ($fieldValueFilters as $key => $value) {
-				$validCombinations[] = $qb->expr()->andX(
-					$qb->expr()->eq('v.field_id', $qb->createNamedParameter($key), IQueryBuilder::PARAM_INT),
-					$this->handleStringFilterExpr($this->db, $qb, $value, 'v.value'),
-				);
-			}
+			$validCombinations = $this->getValidFieldValueCombinations($this->db, $qb, $fieldValueFilters, 'v.field_id', 'v.value');
 
 			$qb->andWhere($qb->expr()->orX(...$validCombinations));
-
 		} else {
 			$qb->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
 		}
@@ -92,33 +78,25 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 		}
 
 		if (isset($sort)) {
-			$sortDirection = $sortReverse ? "DESC" : "ASC";
+			$sortDirection = $this->getSortDirection($sortReverse);
 
 			if($sort === "title") {
-				$qb->orderBy('i.title', $sortDirection);
-			} else if (str_starts_with($sort, "field:")) {
-				$sortFieldId = substr($sort, strlen("field:"));
+				$this->handleSortByColumn($qb, 'i.title', $sortReverse);
+			} else if ($this->isFieldReference($sort)) {
+				$sortFieldId = $this->parseFieldReference($sort);
 
-				if(ctype_digit($sortFieldId)) {
-					$sortFieldId = (int) $sortFieldId;
+				$qb->leftJoin('i', self::FIELDS_VALUES_TABLENAME, 'sort', $qb->expr()->andX(
+					$qb->expr()->eq('i.id', 'sort.item_id'),
+					$qb->expr()->eq('sort.field_id', $qb->createNamedParameter($sortFieldId), IQueryBuilder::PARAM_INT),
+				));
 
-					$qb->leftJoin('i', 'biblio_item_fields_values', 'sort', $qb->expr()->andX(
-						$qb->expr()->eq('i.id', 'sort.item_id'),
-						$qb->expr()->eq('sort.field_id', $qb->createNamedParameter($sortFieldId), IQueryBuilder::PARAM_INT),
-					));
-
-					$qb->orderBy('sort.value', $sortDirection);
-				}
+				$qb->orderBy('sort.value', $sortDirection);
 			}
 		}
 
-		if (isset($offset) && $offset > 0) {
-			$qb->setFirstResult($offset);
-		}
+		$this->handleOffset($qb, $offset);
 
-		if (isset($limit) && $limit > 0) {
-			$qb->setMaxResults($limit);
-		}
+		$this->handleLimit($qb, $limit);
 
 		//echo $qb->getSql();
 		//exit(0);

@@ -81,7 +81,7 @@ class ItemController extends Controller {
 	 */
 	public function update(int $collectionId, int $id, string $title = null): DataResponse {
 		return $this->handleNotFound(function () use ($collectionId, $id, $title) {
-			return $this->service->update($id, $collectionId, $title);
+			return $this->service->update($collectionId, $id, $title);
 		});
 	}
 

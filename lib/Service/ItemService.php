@@ -103,9 +103,9 @@ class ItemService {
 		return $item;
 	}
 
-	public function update(int $id, int $collectionId, string $title) {
+	public function update(int $collectionId, int $id, string $title) {
 		try {
-			$item = $this->mapper->find($id, $collectionId);
+			$item = $this->mapper->find($collectionId, $id);
 			
 			if (!is_null($title)) {
 				$item->setTitle($title);
