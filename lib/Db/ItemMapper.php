@@ -19,8 +19,8 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	}
 
 	/**
-	 * @param int $id
-	 * @param string $userId
+	 * @param int $collectionId
+	 * @param string $id
 	 * @return Entity|Item
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException

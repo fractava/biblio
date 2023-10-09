@@ -117,9 +117,9 @@ class ItemService {
 		}
 	}
 
-	public function delete(int $id, int $collectionId) {
+	public function delete(int $collectionId, int $id) {
 		try {
-			$item = $this->mapper->find($id, $collectionId);
+			$item = $this->mapper->find($collectionId, $id);
 			$this->mapper->delete($item);
 			return $item;
 		} catch (Exception $e) {

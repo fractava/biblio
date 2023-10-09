@@ -89,8 +89,8 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function destroy(int $collectionId, int $id): DataResponse {
-		return $this->handleNotFound(function () use ($id, $collectionId) {
-			return $this->service->delete($id, $collectionId);
+		return $this->handleNotFound(function () use ($collectionId, $id) {
+			return $this->service->delete($collectionId, $id);
 		});
 	}
 }
