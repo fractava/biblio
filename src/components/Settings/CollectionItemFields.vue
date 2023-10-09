@@ -78,6 +78,10 @@ export default {
 				.then((newField) => {
 					this.fields.push(newField);
 
+					this.settingsStore.updateSelectedCollection({
+						fieldsOrder: [...this.settingsStore.selectedCollection.fieldsOrder, newField.id],
+					});
+
 					this.refreshItemFieldsInBiblioStoreIfNeeded();
 				})
 				.catch((error) => {
