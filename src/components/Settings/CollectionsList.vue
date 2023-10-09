@@ -5,7 +5,8 @@
 				:key="collection.id"
 				:title="collection.name"
 				:bold="false"
-				:active="false">
+				:active="false"
+				@click="editCollection(collection.id)">
 				<template #icon>
 					<LibraryShelves :size="20" />
 				</template>

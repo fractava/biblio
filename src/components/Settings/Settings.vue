@@ -6,8 +6,8 @@
 		@update:open="openClose">
 		<!-- Home -->
 		<NcAppSettingsSection v-if="settingsStore.site === 'home'"
-			id="main"
-			title="Main">
+			id="collections"
+			title="Collections">
 			<CollectionsList />
 		</NcAppSettingsSection>
 
