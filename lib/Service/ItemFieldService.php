@@ -25,19 +25,19 @@ class ItemFieldService {
 	}
 
 	public function findAllInOrder(Collection $entity): array {
-		$fieldsOrder = json_decode($entity->getFieldsOrder(), true) ?: [];
+		$itemFieldsOrder = json_decode($entity->getItemFieldsOrder(), true) ?: [];
 		$fields = $this->findAll($entity->getId());
 
 		$fieldsFiltered = [];
 		foreach($fields as $field) {
-			if(in_array($field->getId(), $fieldsOrder)) {
+			if(in_array($field->getId(), $itemFieldsOrder)) {
 				$fieldsFiltered[] = $field;
 			}
 		}
 
-		$cmp = function (ItemField $a, ItemField $b) use ($fieldsOrder): int {
-			$pos1 = array_search($a->getId(), $fieldsOrder);
-   			$pos2 = array_search($b->getId(), $fieldsOrder);
+		$cmp = function (ItemField $a, ItemField $b) use ($itemFieldsOrder): int {
+			$pos1 = array_search($a->getId(), $itemFieldsOrder);
+   			$pos2 = array_search($b->getId(), $itemFieldsOrder);
 
 			if($pos1==$pos2) {
 			   return 0;

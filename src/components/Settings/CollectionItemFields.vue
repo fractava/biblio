@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<FieldsTable :fields="fields"
-			:fields-order="settingsStore.selectedCollection.fieldsOrder"
+			:fields-order="settingsStore.selectedCollection.itemFieldsOrder"
 			@update:fieldsOrder="onFieldOrderUpdate"
 			@field-update="onFieldUpdate" />
 
@@ -46,9 +46,9 @@ export default {
 			});
 	},
 	methods: {
-		onFieldOrderUpdate(fieldsOrder) {
+		onFieldOrderUpdate(itemFieldsOrder) {
 			this.settingsStore.updateSelectedCollection({
-				fieldsOrder,
+				itemFieldsOrder,
 			});
 		},
 		onFieldUpdate(id, parameters) {
@@ -79,7 +79,7 @@ export default {
 					this.fields.push(newField);
 
 					this.settingsStore.updateSelectedCollection({
-						fieldsOrder: [...this.settingsStore.selectedCollection.fieldsOrder, newField.id],
+						itemFieldsOrder: [...this.settingsStore.selectedCollection.itemFieldsOrder, newField.id],
 					});
 
 					this.refreshItemFieldsInBiblioStoreIfNeeded();

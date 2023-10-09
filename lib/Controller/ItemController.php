@@ -79,9 +79,9 @@ class ItemController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $id, string $title = null, string $fieldsOrder = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $collectionId, $title, $fieldsOrder) {
-			return $this->service->update($id, $collectionId, $title, $fieldsOrder);
+	public function update(int $collectionId, int $id, string $title = null, string $itemFieldsOrder = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId, $title, $itemFieldsOrder) {
+			return $this->service->update($id, $collectionId, $title, $itemFieldsOrder);
 		});
 	}
 

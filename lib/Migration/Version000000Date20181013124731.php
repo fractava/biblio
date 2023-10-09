@@ -38,7 +38,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 200,
 			]);
-			$table->addColumn('fields_order', 'string', [
+			$table->addColumn('item_fields_order', 'string', [
 				'notnull' => true,
 			]);
 
