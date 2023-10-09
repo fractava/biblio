@@ -181,6 +181,27 @@ export const useBiblioStore = defineStore("biblio", {
 				resolve();
 			});
 		},
+		deleteItem(itemId) {
+			if (!this.selectedCollectionId) {
+				return;
+			}
+
+			return new Promise((resolve, reject) => {
+				api.deleteItem(this.selectedCollectionId, itemId)
+					.then((result) => {
+						const deletedIndex = this.itemSearchResults.findIndex(item => item.id === itemId);
+						this.itemSearchResults.splice(deletedIndex, 1);
+						resolve();
+					})
+					.catch((error) => {
+						console.error(error);
+						showError(t("biblio", "Could not delete item"));
+						resolve();
+					});
+
+				resolve();
+			});
+		},
 	},
 	getters: {
 		getItemById: (state) => (id) => {

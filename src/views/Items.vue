@@ -21,7 +21,8 @@
 				@update:currentSortReverse="onItemSortReverseUpdate"
 				@update:rowLimitFilter="onRowLimitFilterUpdate"
 				@update:page="onPageUpdate"
-				@click-row="openItem" />
+				@click-row="openItem"
+				@delete-selected-rows="deleteItems" />
 		</ul>
 	</NoCollectionSelected>
 </template>
@@ -148,6 +149,11 @@ export default {
 		ensurePageIsNotExceedingMax() {
 			if (this.biblioStore.itemPage > this.maxPage) {
 				this.biblioStore.itemPage = this.maxPage;
+			}
+		},
+		deleteItems(itemIds) {
+			for (const itemId of itemIds) {
+				this.biblioStore.deleteItem(itemId);
 			}
 		},
 	},

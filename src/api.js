@@ -420,6 +420,23 @@ export const api = {
 		});
 	},
 
+	/**
+	  * @param {number} collectionId Id of the collection the item is in
+	  * @param {number} itemId Id of the item to delete
+	  * @return {Promise<Collection>}
+	  */
+	deleteItem(collectionId, itemId) {
+		return new Promise((resolve, reject) => {
+			axios.delete(`/collections/${collectionId}/items/${itemId}`)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformItem(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
 	 /**
 	  * @param {number} collectionId Id of the collection to create the item field in
 	  * @param {number} itemId Id of the item to create the field value with
