@@ -1,12 +1,15 @@
 <template>
 	<div>
+		<h1 class="sectionHeader">
+			{{ t("biblio", "Item Properties") }}
+		</h1>
 		<div class="editModeContainer">
 			<NcButton aria-label="Start/Stop editing mode"
 				@click="editMode = !editMode">
 				<template #icon>
 					<Pencil :size="20" />
 				</template>
-				<template>Edit</template>
+				Edit
 			</NcButton>
 		</div>
 		<FieldsValueTable :field-values="item.fieldValues"
@@ -22,7 +25,9 @@
 					:value="item.title" />-->
 			</template>
 		</FieldsValueTable>
-		<h2>Instances:</h2>
+		<h1 class="sectionHeader">
+			{{ t("biblio", "Item Instances") }}
+		</h1>
 		<AddItemInstance :item-id="itemId" @added-instance="onAddedInstance" />
 		<table class="itemInstancesTable">
 			<tbody>
@@ -98,6 +103,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.sectionHeader {
+	text-align:center;
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	font-weight: bold;
+}
 
 .editModeContainer {
 	display: flex;
