@@ -46,22 +46,22 @@ class CollectionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $name, string $itemFieldsOrder="[]"): DataResponse {
+	public function create(string $name, string $itemFieldsOrder="[]", string $customerFieldsOrder="[]"): DataResponse {
 		if(strlen($name) <= 3) {
 			return new DataResponse([
 				"error" => "Name must be longer than 3 characters"
 			], Http::STATUS_BAD_REQUEST);
 		}
 
-		return new DataResponse($this->service->create($name, $itemFieldsOrder, $this->userId));
+		return new DataResponse($this->service->create($name, $itemFieldsOrder, $customerFieldsOrder, $this->userId));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, ?string $name, ?string $itemFieldsOrder): DataResponse {
-		return $this->handleNotFound(function () use ($collectionId, $name, $itemFieldsOrder) {
-			return $this->service->update($collectionId, $name, $itemFieldsOrder);
+	public function update(int $collectionId, ?string $name, ?string $itemFieldsOrder, ?string $customerFieldsOrder): DataResponse {
+		return $this->handleNotFound(function () use ($collectionId, $name, $itemFieldsOrder, $customerFieldsOrder) {
+			return $this->service->update($collectionId, $name, $itemFieldsOrder, $customerFieldsOrder);
 		});
 	}
 

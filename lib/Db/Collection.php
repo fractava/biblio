@@ -9,12 +9,14 @@ use OCP\AppFramework\Db\Entity;
 class Collection extends Entity implements JsonSerializable {
 	protected $name;
 	protected $itemFieldsOrder;
+	protected $customerFieldsOrder;
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
 			'name' => $this->name,
 			'itemFieldsOrder' => $this->itemFieldsOrder,
+			'customerFieldsOrder' => $this->customerFieldsOrder,
 		];
 	}
 }
