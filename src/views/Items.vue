@@ -30,9 +30,7 @@
 <script>
 import { mapStores } from "pinia";
 import debounceFn from "debounce-fn";
-import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
-import Table from "../components/Table.vue";
 import DataTable from "../components/dataTable/DataTable.vue";
 import { useBiblioStore } from "../store/biblio.js";
 import AddItemModal from "../components/AddItemModal.vue";
@@ -43,8 +41,6 @@ import TextCell from '../components/Fields/Cells/TextCell.vue';
 
 export default {
 	components: {
-		NcTextField,
-		Table,
 		DataTable,
 		AddItemModal,
 		NoCollectionSelected,
@@ -56,15 +52,12 @@ export default {
 	},
 	computed: {
 		...mapStores(useBiblioStore),
-		includedItemFields() {
-			return this.biblioStore.itemFields.filter((itemField) => (itemField.includeInList));
-		},
 		maxPage() {
 			return Math.ceil(Math.max(this.biblioStore.itemSearchMeta.totalResultCount, 1) / this.biblioStore.itemLimit) || 1;
 		},
 		columns() {
-			let itemFieldColumns = this.includedItemFields.map((field) => {
-				let type = FieldTypes[field.type];
+			const itemFieldColumns = this.biblioStore.includedSortedItemFields.map((field) => {
+				const type = FieldTypes[field.type];
 				return {
 					id: field.id,
 					name: field.name,

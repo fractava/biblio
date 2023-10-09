@@ -205,7 +205,19 @@ export const useBiblioStore = defineStore("biblio", {
 	},
 	getters: {
 		getItemById: (state) => (id) => {
-			return state.items.find(item => item.id == id);
+			return state.items.find(item => item.id === id);
+		},
+		getCollectionById: (state) => (id) => {
+			return state.collections.find(collection => collection.id === id);
+		},
+		selectedCollection: (state) => {
+			return state.getCollectionById(state.selectedCollectionId);
+		},
+		sortedItemFields: (state) => {
+			return state.itemFields.toSorted((a, b) => state.selectedCollection.itemFieldsOrder.indexOf(a.id) - state.selectedCollection.itemFieldsOrder.indexOf(b.id));
+		},
+		includedSortedItemFields: (state) => {
+			return state.sortedItemFields.filter((itemField) => (itemField.includeInList));
 		},
 	},
 });
