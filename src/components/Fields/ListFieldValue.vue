@@ -22,40 +22,45 @@
 
 <template>
 	<div class="field__content">
-		<div v-if="allowValueEdit">
-			<div v-for="(entry, index) in value"
-				:key="index"
-				style="display: flex; align-items: center;">
-				<NcTextField class="entry"
-					:value="entry"
-					:show-trailing-button="false"
-					:label="t('biblio', 'List Entry')" />
-				<NcActions>
-					<NcActionButton @click="deleteEntry(index)">
-						<template #icon>
-							<Delete :size="20" />
-						</template>
-						{{ t('biblio', 'Delete Entry') }}
-					</NcActionButton>
-				</NcActions>
-			</div>
-			<NcTextField class="addNewEntry"
-				:value.sync="newEntryValue"
-				:show-trailing-button="!isNewEntryEmpty"
-				:label="t('biblio', 'Add Entry')"
-				trailing-button-icon="arrowRight"
-				@trailing-button-click="addEntry"
-				@keydown.enter.prevent="addEntry">
-				<Plus :size="20" />
-			</NcTextField>
+		<div v-if="valueError">
+			<FieldError @reset="resetValue" />
 		</div>
 		<div v-else>
-			<ul style="list-style: circle; list-style-position: inside;">
-				<li v-for="(entry, index) in value"
-					:key="index">
-					{{ entry }}
-				</li>
-			</ul>
+			<div v-if="allowValueEdit">
+				<div v-for="(entry, index) in validatedValue"
+					:key="index"
+					style="display: flex; align-items: center;">
+					<NcTextField class="entry"
+						:value="entry"
+						:show-trailing-button="false"
+						:label="t('biblio', 'List Entry')" />
+					<NcActions>
+						<NcActionButton @click="deleteEntry(index)">
+							<template #icon>
+								<Delete :size="20" />
+							</template>
+							{{ t('biblio', 'Delete Entry') }}
+						</NcActionButton>
+					</NcActions>
+				</div>
+				<NcTextField class="addNewEntry"
+					:value.sync="newEntryValue"
+					:show-trailing-button="!isNewEntryEmpty"
+					:label="t('biblio', 'Add Entry')"
+					trailing-button-icon="arrowRight"
+					@trailing-button-click="addEntry"
+					@keydown.enter.prevent="addEntry">
+					<Plus :size="20" />
+				</NcTextField>
+			</div>
+			<div v-else>
+				<ul style="list-style: circle; list-style-position: inside;">
+					<li v-for="(entry, index) in validatedValue"
+						:key="index">
+						{{ entry }}
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
@@ -64,6 +69,8 @@
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
+
+import FieldError from "./FieldError.vue";
 
 import GenRandomId from "../../utils/GenRandomId";
 import FieldValue from "../mixins/FieldValue.js";
@@ -76,18 +83,19 @@ export default {
 		NcTextField,
 		NcActions,
 		NcActionButton,
+		FieldError,
 		Plus,
 		Delete,
 	},
 	mixins: [FieldValue],
 	props: {
 		value: {
-			type: Array,
 			default: () => ([]),
 		},
 	},
 	data() {
 		return {
+			defaultValue: [],
 			newEntryValue: "",
 		};
 	},
@@ -97,6 +105,16 @@ export default {
 		},
 		hasNoEntry() {
 			return this.value.length === 0;
+		},
+		valueError() {
+			return !Array.isArray(this.value);
+		},
+		validatedValue() {
+			if (Array.isArray(this.value)) {
+				return this.value;
+			} else {
+				return this.defaultValue;
+			}
 		},
 	},
 	watch: {
@@ -112,6 +130,9 @@ export default {
 			const clonedValue = this.value.slice();
 			clonedValue.splice(index, 1);
 			this.$emit("update:value", clonedValue);
+		},
+		resetValue() {
+			this.$emit("update:value", this.defaultValue);
 		},
 	},
 };

@@ -1,5 +1,5 @@
 <template>
-	<span>{{ limitedValue }}</span>
+	<span>{{ value }}</span>
 </template>
 
 <script>

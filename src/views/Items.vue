@@ -28,7 +28,7 @@
 
 <script>
 import { mapStores } from "pinia";
-import debounceFn from 'debounce-fn';
+import debounceFn from "debounce-fn";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import Table from "../components/Table.vue";
