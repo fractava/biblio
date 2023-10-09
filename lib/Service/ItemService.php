@@ -103,7 +103,7 @@ class ItemService {
 		return $item;
 	}
 
-	public function update(int $id, int $collectionId, string $newTitle) {
+	public function update(int $id, int $collectionId, string $title) {
 		try {
 			$item = $this->mapper->find($id, $collectionId);
 			

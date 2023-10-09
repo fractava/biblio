@@ -21,7 +21,8 @@
 					<td>
 						<ShortTextFieldValue :field-type="FieldTypes['short']"
 							:value="item.title"
-							:allow-value-edit="true" />
+							:allow-value-edit="editMode"
+							@update:value="updateTitle" />
 					</td>
 				</tr>
 			</template>
@@ -90,6 +91,14 @@ export default {
 		});
 	},
 	methods: {
+		updateTitle(title) {
+			// optimistic update
+			this.item.title = title;
+
+			api.updateItem(this.biblioStore.selectedCollectionId, this.itemId, {
+				title,
+			});
+		},
 		updateValue(newValue, field) {
 			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.fieldId, {
 				value: newValue,
