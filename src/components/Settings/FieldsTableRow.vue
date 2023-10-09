@@ -27,24 +27,29 @@
         <td>
             <slot name="settings"></slot>
         </td>
+
+		<!-- Actions -->
+        <td>
+            <slot name="actions"></slot>
+        </td>
     </tr>
 </template>
 
 <script>
-import Drag from 'vue-material-design-icons/Drag.vue';
+import Drag from "vue-material-design-icons/Drag.vue";
 
 
 export default {
-    components: {
-        Drag,
-    },
-    props: {
-        enableDragHandle: {
-            type: Boolean,
-            default: true,
-        }
-    },
-}
+	components: {
+		Drag,
+	},
+	props: {
+		enableDragHandle: {
+			type: Boolean,
+			default: true,
+		},
+	},
+};
 </script>
 
 <style lang="scss">

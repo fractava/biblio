@@ -23,9 +23,9 @@
 				class="draggableitem"
 				@update:name="(newName) => onFieldUpdate(field.id, { name: newName })"
 				@update:includeInList="(newIncludeInList) => onFieldUpdate(field.id, { includeInList: newIncludeInList })"
-				@delete="deleteField(field)">
+				@delete="onFieldDelete(field.id)">
 				<Icon :is="FieldTypes[field.type].iconComponent" slot="icon" v-tooltip="FieldTypes[field.type].label" />
-				<FieldSettings :is="FieldTypes[field.type].settingsComponent"
+				<component :is="FieldTypes[field.type].settingsComponent"
 					slot="settings"
 					:settings="field.settings"
 					@update:settings="(newSettings) => onFieldUpdate(field.id, {settings: newSettings})" />
@@ -79,6 +79,9 @@ export default {
 			}
 
 			this.$emit("update:fieldsOrder", newFieldsOrder);
+		},
+		onFieldDelete(fieldId) {
+			this.$emit("delete", fieldId);
 		},
 	},
 };

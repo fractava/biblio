@@ -3,7 +3,8 @@
 		<FieldsTable :fields="fields"
 			:fields-order="settingsStore.selectedCollection.itemFieldsOrder"
 			@update:fieldsOrder="onFieldOrderUpdate"
-			@field-update="onFieldUpdate" />
+			@field-update="onFieldUpdate"
+			@delete="deleteItemField" />
 
 		<AddFieldButton @add-field="addField" />
 	</div>
@@ -109,11 +110,14 @@ export default {
 		},
 
 		refreshItemFieldsInBiblioStoreIfNeeded: debounce(() => {
+			const biblioStore = useBiblioStore();
+			const settingsStore = useSettingsStore();
+
 			// the settings made changes to the item fields of the collection currently selected in the main application
 			// refresh the data, so the changes take effect in the main application without a manual refresh
 
-			if (this.biblioStore.selectedCollectionId === this.settingsStore.context?.collectionId) {
-				this.biblioStore.fetchItemFields();
+			if (biblioStore.selectedCollectionId === settingsStore.context?.collectionId) {
+				biblioStore.fetchItemFields();
 			}
 		}, 2000),
 	},

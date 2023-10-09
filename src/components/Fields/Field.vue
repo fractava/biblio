@@ -44,13 +44,17 @@
 		<template #settings>
 			<slot name="settings" />
 		</template>
+		<template #actions>
+			<NcActions>
+				<NcActionButton @click="onDelete">
+					<template #icon>
+						<Delete :size="20" />
+					</template>
+					{{ t('biblio', 'Delete Field') }}
+				</NcActionButton>
+			</NcActions>
+		</template>
 	</FieldsTableRow>
-
-	<!--<NcActions v-if="allowDeletion" class="field__header-menu" :force-menu="true">
-		<NcActionButton icon="icon-delete" @click="onDelete">
-			{{ t('forms', 'Delete Field') }}
-		</NcActionButton>
-	</NcActions>-->
 </template>
 
 <script>
@@ -61,6 +65,8 @@ import NcActions from "@nextcloud/vue/dist/Components/NcActions";
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
+
+import Delete from "vue-material-design-icons/Delete.vue";
 
 import FieldsTableRow from "../Settings/FieldsTableRow.vue";
 
@@ -76,6 +82,7 @@ export default {
 		NcActionButton,
 		NcTextField,
 		NcCheckboxRadioSwitch,
+		Delete,
 		FieldsTableRow,
 	},
 
