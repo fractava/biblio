@@ -41,20 +41,24 @@
 						{{ n('biblio', '%n selected row', '%n selected rows', selectedRows.length, {}) }}
 					</div>
 					<NcActions type="secondary" :force-title="true" :inline="showFullOptions ? 2 : 0">
-						<NcActionButton @click="exportCsv">
+						<NcActionButton :closeAfterClick="true"
+							@click="exportCsv">
 							<template #icon>
 								<Export :size="20" />
 							</template>
 							{{ t('biblio', 'Export CSV') }}
 						</NcActionButton>
 						<NcActionButton v-if="canDeleteRows"
+							:closeAfterClick="true"
 							@click="deleteSelectedRows">
 							<template #icon>
 								<Delete :size="20" />
 							</template>
 							{{ t('biblio', 'Delete') }}
 						</NcActionButton>
-						<NcActionButton v-if="!showFullOptions" @click="deselectAllRows">
+						<NcActionButton v-if="!showFullOptions"
+							:closeAfterClick="true"
+							@click="deselectAllRows">
 							<template #icon>
 								<Check :size="20" />
 							</template>

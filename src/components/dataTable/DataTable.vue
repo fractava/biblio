@@ -20,6 +20,7 @@
 		<div class="custom-table row">
 			<CustomTable :columns="columns"
 				:rows="rows"
+				:selected-rows="localSelectedRows"
 				:current-sort="currentSort"
 				:current-sort-reverse="currentSortReverse"
 				:current-filters="currentFilters"
@@ -28,7 +29,7 @@
 				@update:currentFilters="(newFilters) => $emit('update:currentFilters', newFilters)"
 				@create-row="$emit('create-row')"
 				@click-row="rowId => $emit('click-row', rowId)"
-				@update-selected-rows="rowIds => localSelectedRows = rowIds"
+				@update:selectedRows="rowIds => localSelectedRows = rowIds"
 				@download-csv="data => downloadCsv(data, columns, table)">
 				<template #actions>
 					<slot name="actions" />
@@ -139,6 +140,18 @@ export default {
 	watch: {
 		localSelectedRows() {
 			this.$emit("update:selectedRows", this.localSelectedRows);
+		},
+		rows() {
+			// ensure all selected rows are actually still shown in DataTable
+			const newLocalSelectedRows = [];
+
+			for (const selectedRow of this.localSelectedRows) {
+				if (this.rows.findIndex((row) => (row.id === selectedRow)) !== -1) {
+					newLocalSelectedRows.push(selectedRow);
+				}
+			}
+
+			this.localSelectedRows = newLocalSelectedRows;
 		},
 	},
 	mounted() {

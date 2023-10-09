@@ -3,7 +3,7 @@
 		<table>
 			<thead>
 				<TableHeader :columns="columns"
-					:selected-rows="selectedRows"
+					:selected-rows="localSelectedRows"
 					:rows="rows"
 					:current-sort="currentSort"
 					:current-sort-reverse="currentSortReverse"
@@ -56,6 +56,10 @@ export default {
 			type: Array,
 			default: () => [],
 		},
+		selectedRows: {
+			type: Array,
+			default: () => [],
+		},
 		currentSort: {
 			type: String,
 			default: "",
@@ -70,10 +74,15 @@ export default {
 		},
 	},
 
-	data() {
-		return {
-			selectedRows: [],
-		};
+	computed: {
+		localSelectedRows: {
+			get() {
+				return this.selectedRows;
+			},
+			set(selectedRows) {
+				this.$emit("update:selectedRows", selectedRows);
+			},
+		},
 	},
 
 	mounted() {
@@ -94,14 +103,14 @@ export default {
 			return null;
 		},
 		deselectAllRows() {
-			this.selectedRows = [];
+			this.localSelectedRows = [];
 		},
 		selectAllRows(value) {
-			this.selectedRows = [];
+			const newLocalSelectedRows = [];
 			if (value) {
-				this.rows.forEach(item => { this.selectedRows.push(item.id); });
+				this.rows.forEach(item => { newLocalSelectedRows.push(item.id); });
 			}
-			this.$emit("update-selected-rows", this.selectedRows);
+			this.localSelectedRows = newLocalSelectedRows;
 		},
 		isRowSelected(id) {
 			return this.selectedRows.includes(id);
@@ -110,16 +119,14 @@ export default {
 			const id = values.rowId;
 			const v = values.value;
 
-			if (this.selectedRows.includes(id) && !v) {
-				const index = this.selectedRows.indexOf(id);
+			if (this.localSelectedRows.includes(id) && !v) {
+				const index = this.localSelectedRows.indexOf(id);
 				if (index > -1) {
-					this.selectedRows.splice(index, 1);
+					this.localSelectedRows.splice(index, 1);
 				}
-				this.$emit("update-selected-rows", this.selectedRows);
 			}
-			if (!this.selectedRows.includes(id) && v) {
-				this.selectedRows.push(values.rowId);
-				this.$emit("update-selected-rows", this.selectedRows);
+			if (!this.localSelectedRows.includes(id) && v) {
+				this.localSelectedRows.push(values.rowId);
 			}
 		},
 	},

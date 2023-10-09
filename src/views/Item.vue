@@ -16,13 +16,14 @@
 			:edit-mode="editMode"
 			@update:value="updateValue">
 			<template #head>
-				<!--<ShortTextFieldValue slot="header"
-					:enable-drag-handle="false"
-					:field-type="FieldTypes['short']"
-					:allow-title-edit="false"
-					:is-required="true"
-					name="Titel"
-					:value="item.title" />-->
+				<tr>
+					<td>{{ t("biblio", "Title") }}</td>
+					<td>
+						<ShortTextFieldValue :field-type="FieldTypes['short']"
+							:value="item.title"
+							:allow-value-edit="true" />
+					</td>
+				</tr>
 			</template>
 		</FieldsValueTable>
 		<h1 class="sectionHeader">
@@ -54,6 +55,8 @@ import FieldsValueTable from "../components/FieldsValueTable.vue";
 import { useBiblioStore } from "../store/biblio.js";
 import AddItemInstance from "../components/AddItemInstance.vue";
 
+import FieldTypes from "../models/FieldTypes.js";
+
 export default {
 	components: {
 		NcButton,
@@ -66,6 +69,7 @@ export default {
 	},
 	data() {
 		return {
+			FieldTypes,
 			editMode: false,
 			instances: [],
 			item: {},
