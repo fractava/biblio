@@ -137,7 +137,7 @@ export default {
 	position: relative;
 	border-collapse: collapse;
 	border-spacing: 0;
-	table-layout: auto;
+	table-layout: fixed;
 	width: 100%;
 	border: none;
 
@@ -145,6 +145,12 @@ export default {
 		border: none;
 	}
 	// white-space: nowrap;
+
+	td {
+		text-overflow: ellipsis;
+		max-width: 100px;
+		overflow: hidden;
+	}
 
 	td, th {
 		padding-right: 8px;
