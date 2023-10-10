@@ -7,6 +7,8 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+use OCA\Biblio\Errors\CustomerNotFound;
+
 use OCA\Biblio\Db\Customer;
 use OCA\Biblio\Db\CustomerMapper;
 use OCA\Biblio\Service\CustomerFieldValueService;
