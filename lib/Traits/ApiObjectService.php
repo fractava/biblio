@@ -15,4 +15,12 @@ trait ApiObjectService {
     public function shouldInclude(string $test, array $includes) {
         return in_array($test, $includes);
     }
+
+	private function getFieldFiltersOutOfFilters(?array $filters) {
+		if(isset($filters["fieldValues_includeInList"])) {
+			return ["includeInList" => $filters["fieldValues_includeInList"]];
+		} else {
+			return [];
+		}
+	}
 }

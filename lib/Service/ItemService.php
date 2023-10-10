@@ -28,14 +28,6 @@ class ItemService {
 		$this->fieldValueService = $fieldValueService;
 	}
 
-	private function getFieldFiltersOutOfItemFilters(?array $filters) {
-		if(isset($filters["fieldValues_includeInList"])) {
-			return ["includeInList" => $filters["fieldValues_includeInList"]];
-		} else {
-			return [];
-		}
-	}
-
 	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = null) {
 		$result = [];
 
@@ -58,7 +50,7 @@ class ItemService {
 
 		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
-		$fieldFilters = $this->getFieldFiltersOutOfItemFilters($filters);
+		$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
 
 		$results = [];
 
@@ -85,7 +77,7 @@ class ItemService {
 
 			$item = $this->mapper->find($collectionId, $id);
 
-			$fieldFilters = $this->getFieldFiltersOutOfItemFilters($filters);
+			$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
 
 			return $this->getApiObjectFromEntity($collectionId, $item, $includeModel, $includeFields, $fieldFilters);
 		} catch (Exception $e) {
