@@ -7,6 +7,8 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+use OCA\Biblio\Errors\CollectionNotFound;
+
 use OCA\Biblio\Db\Collection;
 use OCA\Biblio\Db\CollectionMapper;
 
