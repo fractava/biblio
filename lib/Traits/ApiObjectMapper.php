@@ -115,4 +115,16 @@ trait ApiObjectMapper {
 	public function getSortDirection(bool $reverse) {
 		return $reverse ? "DESC" : "ASC";
 	}
+
+	public function sortByJoinedFieldValue(IQueryBuilder $qb, string $fieldReference, bool $reverse, string $leftTableAlias, string $fieldValueTableName, string $idJoinColumn) {
+		$sortFieldId = $this->parseFieldReference($fieldReference);
+		$sortDirection = $this->getSortDirection($reverse);
+
+		$qb->leftJoin($leftTableAlias, $fieldValueTableName, 'sort', $qb->expr()->andX(
+			$qb->expr()->eq($leftTableAlias . '.id', 'sort.' . $idJoinColumn),
+			$qb->expr()->eq('sort.field_id', $qb->createNamedParameter($sortFieldId), IQueryBuilder::PARAM_INT),
+		));
+
+		$qb->orderBy('sort.value', $sortDirection);
+	}
 }

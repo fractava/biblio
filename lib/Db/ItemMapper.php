@@ -78,28 +78,16 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 		}
 
 		if (isset($sort)) {
-			$sortDirection = $this->getSortDirection($sortReverse);
-
 			if($sort === "title") {
 				$this->handleSortByColumn($qb, 'i.title', $sortReverse);
 			} else if ($this->isFieldReference($sort)) {
-				$sortFieldId = $this->parseFieldReference($sort);
-
-				$qb->leftJoin('i', self::FIELDS_VALUES_TABLENAME, 'sort', $qb->expr()->andX(
-					$qb->expr()->eq('i.id', 'sort.item_id'),
-					$qb->expr()->eq('sort.field_id', $qb->createNamedParameter($sortFieldId), IQueryBuilder::PARAM_INT),
-				));
-
-				$qb->orderBy('sort.value', $sortDirection);
+				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'i', self::FIELDS_VALUES_TABLENAME, 'item_id');
 			}
 		}
 
 		$this->handleOffset($qb, $offset);
 
 		$this->handleLimit($qb, $limit);
-
-		//echo $qb->getSql();
-		//exit(0);
 
 		return $this->findEntitiesAndSeperateColumns($qb, ["totalResultCount"]);
 	}
