@@ -14,12 +14,12 @@ trait Errors {
 		try {
 			return new DataResponse($callback());
 		} catch (NotFoundException $e) {
-			$this->notFoundResponse($e);
+			return $this->notFoundResponse($e);
 		}
 	}
 
-	private function notFoundResponse(\Exception $e) {
-		$message = ['message' => $e->getMessage()];
-		return new DataResponse($message, Http::STATUS_NOT_FOUND);
+	private function notFoundResponse(NotFoundException $e) {
+		$response = ['error' => get_class($e), 'message' => $e->getMessage()];
+		return new DataResponse($response, Http::STATUS_NOT_FOUND);
 	}
 }
