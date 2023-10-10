@@ -7,7 +7,8 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\Biblio\Db\Collection;
+use OCA\Biblio\Errors\ItemFieldNotFound;
+
 use OCA\Biblio\Db\ItemField;
 use OCA\Biblio\Db\ItemFieldMapper;
 
@@ -27,7 +28,7 @@ class ItemFieldService {
 	private function handleException(Exception $e): void {
 		if ($e instanceof DoesNotExistException ||
 			$e instanceof MultipleObjectsReturnedException) {
-			throw new ItemNotFound($e->getMessage());
+			throw new ItemFieldNotFound($e->getMessage());
 		} else {
 			throw $e;
 		}

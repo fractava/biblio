@@ -2,5 +2,5 @@
 
 namespace OCA\Biblio\Errors;
 
-class CustomerNotFound extends \Exception {
+class CustomerNotFound extends NotFoundException {
 }

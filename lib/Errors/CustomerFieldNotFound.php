@@ -2,5 +2,5 @@
 
 namespace OCA\Biblio\Errors;
 
-class CustomerFieldNotFound extends \Exception {
+class CustomerFieldNotFound extends NotFoundException {
 }

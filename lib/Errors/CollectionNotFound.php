@@ -2,5 +2,5 @@
 
 namespace OCA\Biblio\Errors;
 
-class CollectionNotFound extends \Exception {
+class CollectionNotFound extends NotFoundException {
 }

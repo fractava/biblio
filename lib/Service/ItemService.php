@@ -7,6 +7,8 @@ use Exception;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
+use OCA\Biblio\Errors\ItemNotFound;
+
 use OCA\Biblio\Db\Item;
 use OCA\Biblio\Db\ItemMapper;
 use OCA\Biblio\Service\ItemFieldValueService;
