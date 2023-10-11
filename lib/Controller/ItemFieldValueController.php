@@ -18,21 +18,15 @@ class ItemFieldValueController extends Controller {
 	/** @var ItemFieldValueService */
 	private $service;
 
-	/** @var string */
-	private $userId;
-
 	use Errors;
 
-	public function __construct(IRequest $request,
-                                ItemFieldValueService $service,
-								$userId) {
+	public function __construct(IRequest $request, ItemFieldValueService $service) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
-		$this->userId = $userId;
 	}
 
 	/**
-	 * Get all fields of collection
+	 * Get all item fields of collection
 	 * @NoAdminRequired
      * @NoCSRFRequired
 	 */
@@ -44,7 +38,7 @@ class ItemFieldValueController extends Controller {
 	}
 
 	/**
-	 * Get specific field
+	 * Get specific item field
 	 * @NoAdminRequired
      * @NoCSRFRequired
 	 */
