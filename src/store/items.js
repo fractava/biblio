@@ -163,7 +163,7 @@ export const useItemsStore = defineStore("items", {
 	},
 	getters: {
 		getItemById: (state) => (id) => {
-			return state.items.find(item => item.id === id);
+			return state.searchResults.find(item => item.id === id);
 		},
 		sortedFields: (state) => {
 			const biblioStore = useBiblioStore();

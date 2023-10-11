@@ -11,17 +11,20 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   id: number
  *   name: string | undefined
  *   itemFieldsOrder: string
+ *   customerFieldsOrder: string
  * }} CollectionResponse
  *
  * @typedef {{
  *   id: number
  *   name: string | undefined
  *   itemFieldsOrder: Array<number>
+ *   customerFieldsOrder: Array<number>
  * }} Collection
  *
  * @typedef {{
  *   name: string | undefined
  *   itemFieldsOrder: Array<number> | undefined
+ *   customerFieldsOrder: Array<number> | undefined
  * }} updateCollectionParameters
  *
  * @typedef {{
@@ -123,6 +126,7 @@ const transforms = {
 		 */
 		transformCollection(collection) {
 			collection.itemFieldsOrder = JSON.parse(collection.itemFieldsOrder) || [];
+			collection.customerFieldsOrder = JSON.parse(collection.customerFieldsOrder) || [];
 			return collection;
 		},
 		/**
@@ -202,6 +206,7 @@ const transforms = {
 		 */
 		transformCollection(collection) {
 			collection.itemFieldsOrder = JSON.stringify(collection.itemFieldsOrder);
+			collection.customerFieldsOrder = JSON.stringify(collection.customerFieldsOrder);
 			return collection;
 		},
 		/**

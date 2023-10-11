@@ -117,7 +117,7 @@ export default {
 			this.refreshItemSearch();
 		},
 		onSortReverseUpdate(newSortReverse) {
-			this.itemsStore.reverse = newSortReverse;
+			this.itemsStore.sortReverse = newSortReverse;
 			this.refreshItemSearch();
 		},
 		onRowLimitFilterUpdate(newLimit) {
