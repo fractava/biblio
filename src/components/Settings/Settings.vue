@@ -22,6 +22,11 @@
 			title="Item Fields">
 			<CollectionItemFields />
 		</NcAppSettingsSection>
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection-customer-fields"
+			title="Customer Fields">
+			<CollectionCustomerFields />
+		</NcAppSettingsSection>
 	</NcAppSettingsDialog>
 </template>
 
@@ -35,6 +40,7 @@ import { useSettingsStore } from "../../store/settings.js";
 import CollectionsList from "./CollectionsList.vue";
 import CollectionProperties from "./CollectionProperties.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
+import CollectionCustomerFields from "./CollectionCustomerFields.vue";
 
 export default {
 	components: {
@@ -43,6 +49,7 @@ export default {
 		CollectionsList,
 		CollectionProperties,
 		CollectionItemFields,
+		CollectionCustomerFields,
 	},
 	props: {
 		open: {
