@@ -79,7 +79,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   id: number
  *   collectionId: number
  *   title: string
- *   fieldValues: Array<ItemFieldValueResponse>
+ *   fieldValues: Array<FieldValueResponse>
  * }} ItemResponse
  *
  * @typedef {{
@@ -88,6 +88,14 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   title: string
  *   fieldValues: Array<FieldValue>
  * }} Item
+ *
+ *
+ * @typedef {{
+ *   id: number
+ *   collectionId: number
+ *   title: string
+ *   fieldValues: Array<FieldValueResponse>
+ * }} CustomerResponse
  *
  * @typedef {{
  *   id: number
@@ -136,7 +144,7 @@ const transforms = {
 		 * @return {FieldValue}
 		 */
 		transformFieldValue(fieldValue) {
-			fieldValue = transforms.fromAPI.transformItemField(fieldValue);
+			fieldValue = transforms.fromAPI.transformField(fieldValue);
 
 			let defaultValue = "";
 
@@ -167,6 +175,18 @@ const transforms = {
 				item.fieldValues = item.fieldValues.map(transforms.fromAPI.transformItemFieldValue);
 			}
 			return item;
+		},
+
+		/**
+		 *
+		 * @param {CustomerResponse} customer Customer API Result
+		 * @return {Customer}
+		 */
+		transformCustomer(customer) {
+			if (customer.fieldValues) {
+				customer.fieldValues = customer.fieldValues.map(transforms.fromAPI.transformItemFieldValue);
+			}
+			return customer;
 		},
 	},
 	toAPI: {
@@ -269,7 +289,7 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			axios.get(`/collections/${collectionId}/item_fields`)
 				.then((response) => {
-					const itemFields = response.data.map(transforms.fromAPI.transformItemField);
+					const itemFields = response.data.map(transforms.fromAPI.transformField);
 					resolve(itemFields);
 				})
 				.catch(function(error) {
@@ -287,7 +307,7 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			axios.post(`/collections/${collectionId}/item_fields`, parameters)
 				.then(function(response) {
-					resolve(transforms.fromAPI.transformItemField(response.data));
+					resolve(transforms.fromAPI.transformField(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
@@ -305,7 +325,7 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			axios.put(`/collections/${collectionId}/item_fields/${itemFieldId}`, parameters)
 				.then(function(response) {
-					resolve(transforms.fromAPI.transformItemField(response.data));
+					resolve(transforms.fromAPI.transformField(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
@@ -322,7 +342,76 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			return axios.delete(`/collections/${collectionId}/item_fields/${itemFieldId}`)
 				.then(function(response) {
-					resolve(transforms.fromAPI.transformItemField(response.data));
+					resolve(transforms.fromAPI.transformField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection whose items to fetch
+	 * @return {Promise<Array<Field>>}
+	 */
+	getCustomerFields: (collectionId) => {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/customer_fields`)
+				.then((response) => {
+					const itemFields = response.data.map(transforms.fromAPI.transformField);
+					resolve(itemFields);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	 /**
+	  * @param {number} collectionId Id of the collection to create the item field in
+	  * @param {updateFieldParameters} parameters attributes of new item field
+	  * @return {Promise<Field>}
+	  */
+	createCustomerField(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/customer_fields`, parameters)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	 /**
+	  * @param {number} collectionId Id of the collection the item field is in
+	  * @param {number} customerFieldId id of the customer field to update
+	  * @param {updateFieldParameters} parameters attributes of the item field to update
+	  * @return {Promise<Field>}
+	  */
+	updateCustomerField(collectionId, customerFieldId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.put(`/collections/${collectionId}/customer_fields/${customerFieldId}`, parameters)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	 /**
+	  * @param {number} collectionId Id of the collection the item field is in
+	  * @param {number} customerFieldId id of the item field to delete
+	  * @return {Promise<Field>}
+	  */
+	deleteCustomerField(collectionId, customerFieldId) {
+		return new Promise((resolve, reject) => {
+			return axios.delete(`/collections/${collectionId}/customer_fields/${customerFieldId}`)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformField(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
