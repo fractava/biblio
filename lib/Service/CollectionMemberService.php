@@ -38,9 +38,9 @@ class CollectionMemberService {
 		}
 	}
 
-	public function find(int $id) {
+	public function find(int $collectionId, int $id) {
 		try {
-			return $this->mapper->find($id);
+			return $this->mapper->find($collectionId, $id);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
@@ -54,9 +54,9 @@ class CollectionMemberService {
         return $this->mapper->insert($member);
 	}
 
-	public function update(int $id) {
+	public function update(int $collectionId, int $id) {
 		try {
-			$member = $this->mapper->find($id);
+			$member = $this->mapper->find($collectionId, $id);
 			
 			// TODO: implement permissions management
 
@@ -66,9 +66,9 @@ class CollectionMemberService {
 		}
 	}
 
-	public function delete(int $id) {
+	public function delete(int $collectionId, int $id) {
 		try {
-			$member = $this->mapper->find($id);
+			$member = $this->mapper->find($collectionId, $id);
 			$this->mapper->delete($member);
 			return $member;
 		} catch (Exception $e) {

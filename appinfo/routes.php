@@ -14,11 +14,11 @@ return [
         ['name' => 'collection#destroy', 'url' => '/collections/{collectionId}', 'verb' => 'DELETE'],
 
 		// Collection Members
-		['name' => 'collection_members#index', 'url' => '/collections/{collectionId}/members', 'verb' => 'GET'],
-		['name' => 'collection_members#show', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'GET'],
-		['name' => 'collection_members#create', 'url' => '/collections/{collectionId}/members', 'verb' => 'POST'],
-		['name' => 'collection_members#update', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'PUT'],
-		['name' => 'collection_members#destroy', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'DELETE'],
+		['name' => 'collection_member#index', 'url' => '/collections/{collectionId}/members', 'verb' => 'GET'],
+		['name' => 'collection_member#show', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'GET'],
+		['name' => 'collection_member#create', 'url' => '/collections/{collectionId}/members', 'verb' => 'POST'],
+		['name' => 'collection_member#update', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'PUT'],
+		['name' => 'collection_member#destroy', 'url' => '/collections/{collectionId}/members/{id}', 'verb' => 'DELETE'],
 
 		// Items
 		['name' => 'item#index', 'url' => '/collections/{collectionId}/items', 'verb' => 'GET'],

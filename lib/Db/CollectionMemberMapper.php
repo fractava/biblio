@@ -21,13 +21,14 @@ class CollectionMemberMapper extends QBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id): CollectionMember {
+	public function find(int $collectionId, int $id): CollectionMember {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
 		$qb->select('*')
 			->from(self::TABLENAME)
-			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
+			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
         
 		return $this->findEntity($qb);
 	}
