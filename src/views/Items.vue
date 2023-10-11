@@ -15,8 +15,8 @@
 				:create-row-label="t('biblio', 'Create Item')"
 				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
 				@create-row="modalOpen = true"
-				@set-search-string="onItemSearchUpdate"
-				@update:currentFilters="onItemFieltersUpdate"
+				@set-search-string="onSearchUpdate"
+				@update:currentFilters="onFieltersUpdate"
 				@update:currentSort="onSortUpdate"
 				@update:currentSortReverse="onSortReverseUpdate"
 				@update:rowLimitFilter="onRowLimitFilterUpdate"
@@ -57,7 +57,7 @@ export default {
 			return Math.ceil(Math.max(this.itemsStore.searchMeta.totalResultCount, 1) / this.itemsStore.limit) || 1;
 		},
 		columns() {
-			const itemFieldColumns = this.itemsStore.includedSortedFields.map((field) => {
+			const fieldColumns = this.itemsStore.includedSortedFields.map((field) => {
 				const type = FieldTypes[field.type];
 				return {
 					id: field.id,
@@ -86,7 +86,7 @@ export default {
 					filterOperators: FieldTypes?.short?.filterOperators,
 					cellComponent: TextCell,
 				},
-				...itemFieldColumns,
+				...fieldColumns,
 			];
 		},
 	},
@@ -104,32 +104,32 @@ export default {
 				path: "/item/" + itemId,
 			});
 		},
-		onItemSearchUpdate(newSearch) {
+		onSearchUpdate(newSearch) {
 			this.itemsStore.search = newSearch;
-			this.refreshItemSearch();
+			this.refreshSearch();
 		},
-		onItemFieltersUpdate(newFilters) {
+		onFieltersUpdate(newFilters) {
 			this.itemsStore.filters = newFilters;
-			this.refreshItemSearch();
+			this.refreshSearch();
 		},
 		onSortUpdate(newSort) {
 			this.itemsStore.sort = newSort;
-			this.refreshItemSearch();
+			this.refreshSearch();
 		},
 		onSortReverseUpdate(newSortReverse) {
 			this.itemsStore.sortReverse = newSortReverse;
-			this.refreshItemSearch();
+			this.refreshSearch();
 		},
 		onRowLimitFilterUpdate(newLimit) {
 			this.itemsStore.limit = newLimit;
 			this.ensurePageIsNotExceedingMax();
-			this.refreshItemSearch();
+			this.refreshSearch();
 		},
 		onPageUpdate(newPage) {
 			this.itemsStore.page = newPage;
-			this.refreshItemSearch();
+			this.refreshSearch();
 		},
-		refreshItemSearch: debounceFn(() => {
+		refreshSearch: debounceFn(() => {
 			const itemsStore = useItemsStore();
 
 			const refreshPromise = itemsStore.refreshSearchResults();

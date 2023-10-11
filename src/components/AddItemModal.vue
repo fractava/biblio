@@ -6,7 +6,7 @@
 			<div class="modal__content">
 				<h2>{{ t('biblio', 'Add new Item') }}</h2>
 
-				<NcTextField label="Title" :value.sync="title" />
+				<NcTextField label="Title" :value.sync="title" @keydown.enter.prevent="submit" />
 
 				<NcButton :disabled="!title"
 					type="primary"
@@ -66,17 +66,19 @@ export default {
 			this.$emit("update:open", false);
 		},
 		async submit() {
-			this.loading = true;
-			try {
-				await this.itemsStore.createItem({
-					title: this.title,
-				});
-			} catch {
+			if (this.title) {
+				this.loading = true;
+				try {
+					await this.itemsStore.createItem({
+						title: this.title,
+					});
+				} catch {
 
-			} finally {
-				this.loading = false;
-				this.closeModal();
-				this.title = "";
+				} finally {
+					this.loading = false;
+					this.closeModal();
+					this.title = "";
+				}
 			}
 		},
 	},
