@@ -177,7 +177,7 @@ const transforms = {
 		 */
 		transformItem(item) {
 			if (item.fieldValues) {
-				item.fieldValues = item.fieldValues.map(transforms.fromAPI.transformItemFieldValue);
+				item.fieldValues = item.fieldValues.map(transforms.fromAPI.transformFieldValue);
 			}
 			return item;
 		},
@@ -189,7 +189,7 @@ const transforms = {
 		 */
 		transformCustomer(customer) {
 			if (customer.fieldValues) {
-				customer.fieldValues = customer.fieldValues.map(transforms.fromAPI.transformItemFieldValue);
+				customer.fieldValues = customer.fieldValues.map(transforms.fromAPI.transformFieldValue);
 			}
 			return customer;
 		},
@@ -669,11 +669,32 @@ export const api = {
 	  */
 	updateItemFieldValue(collectionId, itemId, fieldId, parameters) {
 		return new Promise((resolve, reject) => {
-			parameters = transforms.toAPI.transformItemFieldValue(parameters);
+			parameters = transforms.toAPI.transformFieldValue(parameters);
 
 			axios.put(`/collections/${collectionId}/items/${itemId}/field_values/${fieldId}`, parameters)
 				.then(function(response) {
-					resolve(transforms.fromAPI.transformItemFieldValue(response.data));
+					resolve(transforms.fromAPI.transformFieldValue(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	  * @param {number} collectionId Id of the collection the item is in
+	  * @param {number} customerId Id of the customer the field value is for
+	  * @param {number} fieldId Id of the field the item field value is for
+	  * @param {updateFieldValueParameters} parameters attributes of item field value to update
+	  * @return {Promise<FieldValue>}
+	  */
+	updateCustomerFieldValue(collectionId, customerId, fieldId, parameters) {
+		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformFieldValue(parameters);
+
+			axios.put(`/collections/${collectionId}/customers/${customerId}/field_values/${fieldId}`, parameters)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformFieldValue(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
