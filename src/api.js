@@ -31,7 +31,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   name: string
  *   settings: string
  *   includeInList: boolean | number
- * }} ItemFieldResponse
+ * }} FieldResponse
  *
  * @typedef {{
  *   id: number
@@ -40,14 +40,14 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   name: string
  *   settings: object
  *   includeInList: boolean
- * }} ItemField
+ * }} Field
  *
  * @typedef {{
  *   type: string | undefined
  *   name: string | undefined
  *   settings: object | undefined
  *   includeInList: boolean | undefined
- * }} updateItemFieldParameters
+ * }} updateFieldParameters
  *
  * @typedef {{
  *   collectionId: number
@@ -58,7 +58,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   settings: object
  *   includeInList: boolean
  *   value: string
- * }} ItemFieldValueResponse
+ * }} FieldValueResponse
  *
  * @typedef {{
  *   collectionId: number
@@ -69,11 +69,11 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   settings: object
  *   includeInList: boolean
  *   value: object
- * }} ItemFieldValue
+ * }} FieldValue
  *
  * @typedef {{
  *   value: object
- * }} updateItemFieldValueParameters
+ * }} updateFieldValueParameters
  *
  * @typedef {{
  *   id: number
@@ -86,8 +86,15 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   id: number
  *   collectionId: number
  *   title: string
- *   fieldValues: Array<ItemFieldValue>
+ *   fieldValues: Array<FieldValue>
  * }} Item
+ *
+ * @typedef {{
+ *   id: number
+ *   collectionId: number
+ *   name: string
+ *   fieldValues: Array<FieldValue>
+ * }} Customer
  *
  * @typedef {{
  *   title: string
@@ -98,7 +105,7 @@ const transforms = {
 	fromAPI: {
 		/**
 		 *
-		 * @param {CollectionResponse} collection Collection API Item
+		 * @param {CollectionResponse} collection Collection API Response
 		 * @return {Collection}
 		 */
 		transformCollection(collection) {
@@ -107,10 +114,10 @@ const transforms = {
 		},
 		/**
 		 *
-		 * @param {ItemFieldResponse} itemField Item Field API Item
-		 * @return {ItemField}
+		 * @param {FieldResponse} itemField (Item|Customer) Field API Result
+		 * @return {Field}
 		 */
-		transformItemField(itemField) {
+		transformField(itemField) {
 			if (itemField.settings && itemField.settings !== "") {
 				itemField.settings = JSON.parse(itemField.settings);
 			} else if (FieldTypes[itemField.type]) {
@@ -125,34 +132,34 @@ const transforms = {
 
 		/**
 		 *
-		 * @param {ItemFieldValueResponse} itemFieldValue Item Field API Item
-		 * @return {ItemFieldValue}
+		 * @param {FieldValueResponse} fieldValue (Item|Customer) Field API Result
+		 * @return {FieldValue}
 		 */
-		transformItemFieldValue(itemFieldValue) {
-			itemFieldValue = transforms.fromAPI.transformItemField(itemFieldValue);
+		transformFieldValue(fieldValue) {
+			fieldValue = transforms.fromAPI.transformItemField(fieldValue);
 
 			let defaultValue = "";
 
-			if (FieldTypes[itemFieldValue.type]) {
-				defaultValue = FieldTypes[itemFieldValue.type].defaultValue;
+			if (FieldTypes[fieldValue.type]) {
+				defaultValue = FieldTypes[fieldValue.type].defaultValue;
 			}
 
-			if (itemFieldValue.value && itemFieldValue.value !== "") {
+			if (fieldValue.value && fieldValue.value !== "") {
 				try {
-					itemFieldValue.value = JSON.parse(itemFieldValue.value);
+					fieldValue.value = JSON.parse(fieldValue.value);
 				} catch (e) {
-					itemFieldValue.value = defaultValue;
+					fieldValue.value = defaultValue;
 				}
 			} else {
-				itemFieldValue.value = defaultValue;
+				fieldValue.value = defaultValue;
 			}
 
-			return itemFieldValue;
+			return fieldValue;
 		},
 
 		/**
 		 *
-		 * @param {ItemResponse} item Item API Item
+		 * @param {ItemResponse} item Item API Result
 		 * @return {Item}
 		 */
 		transformItem(item) {
@@ -165,7 +172,7 @@ const transforms = {
 	toAPI: {
 		/**
 		 *
-		 * @param {Collection} collection Collection API Item
+		 * @param {Collection} collection Collection
 		 * @return {CollectionResponse}
 		 */
 		transformCollection(collection) {
@@ -174,13 +181,13 @@ const transforms = {
 		},
 		/**
 		 *
-		 * @param {ItemFieldValue} itemFieldValue Item Field API Item
-		 * @return {ItemFieldValueResponse}
+		 * @param {FieldValue} fieldValue (Item|Customer) Field Value
+		 * @return {FieldValueResponse}
 		 */
-		transformItemFieldValue(itemFieldValue) {
-			itemFieldValue.value = JSON.stringify(itemFieldValue.value);
+		transformFieldValue(fieldValue) {
+			fieldValue.value = JSON.stringify(fieldValue.value);
 
-			return itemFieldValue;
+			return fieldValue;
 		},
 	},
 };
@@ -256,7 +263,7 @@ export const api = {
 
 	/**
 	 * @param {number} collectionId Id of the collection whose items to fetch
-	 * @return {Promise<Array<ItemField>>}
+	 * @return {Promise<Array<Field>>}
 	 */
 	getItemFields: (collectionId) => {
 		return new Promise((resolve, reject) => {
@@ -273,8 +280,8 @@ export const api = {
 
 	 /**
 	  * @param {number} collectionId Id of the collection to create the item field in
-	  * @param {updateItemFieldParameters} parameters attributes of new item field
-	  * @return {Promise<ItemField>}
+	  * @param {updateFieldParameters} parameters attributes of new item field
+	  * @return {Promise<Field>}
 	  */
 	createItemField(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
@@ -291,8 +298,8 @@ export const api = {
 	 /**
 	  * @param {number} collectionId Id of the collection the item field is in
 	  * @param {number} itemFieldId id of the item field to update
-	  * @param {updateItemFieldParameters} parameters attributes of the item field to update
-	  * @return {Promise<ItemField>}
+	  * @param {updateFieldParameters} parameters attributes of the item field to update
+	  * @return {Promise<Field>}
 	  */
 	updateItemField(collectionId, itemFieldId, parameters) {
 		return new Promise((resolve, reject) => {
@@ -309,7 +316,7 @@ export const api = {
 	 /**
 	  * @param {number} collectionId Id of the collection the item field is in
 	  * @param {number} itemFieldId id of the item field to delete
-	  * @return {Promise<ItemField>}
+	  * @return {Promise<Field>}
 	  */
 	deleteItemField(collectionId, itemFieldId) {
 		return new Promise((resolve, reject) => {
@@ -326,7 +333,11 @@ export const api = {
 	 /**
 	  * @param {number} collectionId Id of the collection to get the items of
 	  * @param {string} include information the server should include in the returned API object
-	  * @param {object} filter filters result on server side
+	  * @param {object} filters filters result on server side
+	  * @param {string} sort column the result will be sorted by
+	  * @param {boolean} sortReverse wether to reverse the sort direction
+	  * @param {Number} limit limit the number of results returned
+	  * @param {Number} offset the offset of the results returned
 	  * @return {PCancelable<Array<Item>>}
 	  */
 	getItems(collectionId, include = "model+fields", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
@@ -338,7 +349,7 @@ export const api = {
 			});
 
 			axios.get(`/collections/${collectionId}/items`, {
-   				signal: controller.signal,
+				signal: controller.signal,
 				params: {
 					include,
 					filter: JSON.stringify(filters),
@@ -438,29 +449,11 @@ export const api = {
 	},
 
 	 /**
-	  * @param {number} collectionId Id of the collection to create the item field in
-	  * @param {number} itemId Id of the item to create the field value with
-	  * @param {updateItemFieldValueParameters} parameters attributes of new item field value
-	  * @return {Promise<ItemFieldValue>}
-	  */
-	createItemFieldValue(collectionId, itemId, parameters) {
-		return new Promise((resolve, reject) => {
-			axios.post(`/collections/${collectionId}/items/${itemId}/field_values`, parameters)
-				.then(function(response) {
-					resolve(transforms.fromAPI.transformItemFieldValue(response.data));
-				})
-				.catch(function(error) {
-					reject(error);
-				});
-		});
-	},
-
-	 /**
 	  * @param {number} collectionId Id of the collection the item is in
 	  * @param {number} itemId Id of the item the field value is for
-	  * @param {number} fieldId Id of the field the field value is for
-	  * @param {updateItemFieldValueParameters} parameters attributes of item field value to update
-	  * @return {Promise<ItemFieldValue>}
+	  * @param {number} fieldId Id of the field the item field value is for
+	  * @param {updateFieldValueParameters} parameters attributes of item field value to update
+	  * @return {Promise<FieldValue>}
 	  */
 	updateItemFieldValue(collectionId, itemId, fieldId, parameters) {
 		return new Promise((resolve, reject) => {
