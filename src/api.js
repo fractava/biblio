@@ -89,6 +89,10 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   fieldValues: Array<FieldValue>
  * }} Item
  *
+ * @typedef {{
+ *   title: string
+ * }} updateItemParameters
+ *
  *
  * @typedef {{
  *   id: number
@@ -105,8 +109,9 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * }} Customer
  *
  * @typedef {{
- *   title: string
- * }} updateItemParameters
+ *   name: string
+ * }} updateCustomerParameters
+ *
  */
 
 const transforms = {
@@ -425,8 +430,8 @@ export const api = {
 	  * @param {object} filters filters result on server side
 	  * @param {string} sort column the result will be sorted by
 	  * @param {boolean} sortReverse wether to reverse the sort direction
-	  * @param {Number} limit limit the number of results returned
-	  * @param {Number} offset the offset of the results returned
+	  * @param {number} limit limit the number of results returned
+	  * @param {number} offset the offset of the results returned
 	  * @return {PCancelable<Array<Item>>}
 	  */
 	getItems(collectionId, include = "model+fields", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
@@ -523,13 +528,131 @@ export const api = {
 	/**
 	  * @param {number} collectionId Id of the collection the item is in
 	  * @param {number} itemId Id of the item to delete
-	  * @return {Promise<Collection>}
+	  * @return {Promise<Item>}
 	  */
 	deleteItem(collectionId, itemId) {
 		return new Promise((resolve, reject) => {
 			axios.delete(`/collections/${collectionId}/items/${itemId}`)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformItem(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	 /**
+	  * @param {number} collectionId Id of the collection to get the customers of
+	  * @param {string} include information the server should include in the returned API object
+	  * @param {object} filters filters result on server side
+	  * @param {string} sort column the result will be sorted by
+	  * @param {boolean} sortReverse wether to reverse the sort direction
+	  * @param {number} limit limit the number of results returned
+	  * @param {number} offset the offset of the results returned
+	  * @return {PCancelable<Array<Customer>>}
+	  */
+	getCustomers(collectionId, include = "model+fields", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
+		return new PCancelable((resolve, reject, onCancel) => {
+			const controller = new AbortController();
+
+			onCancel(() => {
+				controller.abort();
+			});
+
+			axios.get(`/collections/${collectionId}/customers`, {
+				signal: controller.signal,
+				params: {
+					include,
+					filter: JSON.stringify(filters),
+					sort,
+					sortReverse,
+					limit,
+					offset,
+				},
+			})
+				.then((response) => {
+					const customers = response.data.result.map(transforms.fromAPI.transformCustomer);
+					resolve({
+						meta: response.data.meta,
+						customers,
+					});
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection the customer is in
+	 * @param {number} customerId Id of the customer
+	 * @param {string} include information the server should include in the returned API object
+	 * @return {Promise<Customer>}
+	 */
+	getCustomer(collectionId, customerId, include = "model+fields") {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/customers/${customerId}`, {
+				params: {
+					include,
+				},
+			})
+				.then((response) => {
+					resolve(transforms.fromAPI.transformCustomer(response.data));
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection to create the customer in
+	 * @param {updateCustomerParameters} parameters attributes of new customer
+	 * @return {Promise<Customer>}
+	 */
+	createCustomer(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/customers`, parameters)
+				.then(function(response) {
+					const customer = transforms.fromAPI.transformCustomer(response.data);
+					resolve(customer);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection the customer is in
+	 * @param {number} customerId Id of the customer
+	 * @param {updateCustomerParameters} parameters attributes of the customer to update
+	 * @return {Promise<Customer>}
+	 */
+	updateCustomer(collectionId, customerId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.put(`/collections/${collectionId}/customers/${customerId}`, parameters)
+				.then(function(response) {
+					const customer = transforms.fromAPI.transformCustomer(response.data);
+					resolve(customer);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection the customer is in
+	 * @param {number} customerId Id of the customer to delete
+	 * @return {Promise<Customer>}
+	 */
+	deleteCustomer(collectionId, customerId) {
+		return new Promise((resolve, reject) => {
+			axios.delete(`/collections/${collectionId}/customers/${customerId}`)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformCustomer(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
