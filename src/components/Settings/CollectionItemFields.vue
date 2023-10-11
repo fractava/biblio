@@ -21,6 +21,7 @@ import FieldsTable from "../Fields/FieldsTable.vue";
 import AddFieldButton from "../Fields/AddFieldButton.vue";
 
 import { useBiblioStore } from "../../store/biblio.js";
+import { useItemsStore } from "../../store/items.js";
 import { useSettingsStore } from "../../store/settings.js";
 
 export default {
@@ -34,7 +35,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useBiblioStore, useSettingsStore),
+		...mapStores(useSettingsStore),
 	},
 	mounted() {
 		api.getItemFields(this.settingsStore.context?.collectionId)
@@ -111,13 +112,14 @@ export default {
 
 		refreshItemFieldsInBiblioStoreIfNeeded: debounce(() => {
 			const biblioStore = useBiblioStore();
+			const itemsStore = useItemsStore();
 			const settingsStore = useSettingsStore();
 
 			// the settings made changes to the item fields of the collection currently selected in the main application
 			// refresh the data, so the changes take effect in the main application without a manual refresh
 
 			if (biblioStore.selectedCollectionId === settingsStore.context?.collectionId) {
-				biblioStore.fetchItemFields();
+				itemsStore.fetchFields();
 			}
 		}, 2000),
 	},

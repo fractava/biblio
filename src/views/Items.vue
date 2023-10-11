@@ -4,21 +4,21 @@
 			<AddItemModal :open.sync="modalOpen" />
 			<DataTable class="itemsDataTable"
 				:columns="columns"
-				:rows="biblioStore.itemSearchResults"
-				:page="biblioStore.itemPage"
+				:rows="itemsStore.searchResults"
+				:page="itemsStore.page"
 				:max-page="maxPage"
 				:can-create-rows="true"
-				:current-sort="biblioStore.itemSort"
-				:current-sort-reverse="biblioStore.itemSortReverse"
-				:current-filters="biblioStore.itemFilters"
-				:row-limit-filter="biblioStore.itemLimit"
+				:current-sort="itemsStore.sort"
+				:current-sort-reverse="itemsStore.sortReverse"
+				:current-filters="itemsStore.filters"
+				:row-limit-filter="itemsStore.limit"
 				:create-row-label="t('biblio', 'Create Item')"
 				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
 				@create-row="modalOpen = true"
 				@set-search-string="onItemSearchUpdate"
 				@update:currentFilters="onItemFieltersUpdate"
-				@update:currentSort="onItemSortUpdate"
-				@update:currentSortReverse="onItemSortReverseUpdate"
+				@update:currentSort="onSortUpdate"
+				@update:currentSortReverse="onSortReverseUpdate"
 				@update:rowLimitFilter="onRowLimitFilterUpdate"
 				@update:page="onPageUpdate"
 				@click-row="openItem"
@@ -32,7 +32,8 @@ import { mapStores } from "pinia";
 import debounceFn from "debounce-fn";
 
 import DataTable from "../components/dataTable/DataTable.vue";
-import { useBiblioStore } from "../store/biblio.js";
+import { useItemsStore } from "../store/items.js";
+
 import AddItemModal from "../components/AddItemModal.vue";
 import NoCollectionSelected from "../components/NoCollectionSelected.vue";
 
@@ -51,12 +52,12 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useBiblioStore),
+		...mapStores(useItemsStore),
 		maxPage() {
-			return Math.ceil(Math.max(this.biblioStore.itemSearchMeta.totalResultCount, 1) / this.biblioStore.itemLimit) || 1;
+			return Math.ceil(Math.max(this.itemsStore.searchMeta.totalResultCount, 1) / this.itemsStore.limit) || 1;
 		},
 		columns() {
-			const itemFieldColumns = this.biblioStore.includedSortedItemFields.map((field) => {
+			const itemFieldColumns = this.itemsStore.includedSortedFields.map((field) => {
 				const type = FieldTypes[field.type];
 				return {
 					id: field.id,
@@ -95,7 +96,7 @@ export default {
 		},
 	},
 	mounted() {
-		this.biblioStore.refreshItemSearchResults();
+		this.itemsStore.refreshSearchResults();
 	},
 	methods: {
 		openItem(itemId) {
@@ -104,34 +105,34 @@ export default {
 			});
 		},
 		onItemSearchUpdate(newSearch) {
-			this.biblioStore.itemSearch = newSearch;
+			this.itemsStore.search = newSearch;
 			this.refreshItemSearch();
 		},
 		onItemFieltersUpdate(newFilters) {
-			this.biblioStore.itemFilters = newFilters;
+			this.itemsStore.filters = newFilters;
 			this.refreshItemSearch();
 		},
-		onItemSortUpdate(newSort) {
-			this.biblioStore.itemSort = newSort;
+		onSortUpdate(newSort) {
+			this.itemsStore.sort = newSort;
 			this.refreshItemSearch();
 		},
-		onItemSortReverseUpdate(newSortReverse) {
-			this.biblioStore.itemSortReverse = newSortReverse;
+		onSortReverseUpdate(newSortReverse) {
+			this.itemsStore.reverse = newSortReverse;
 			this.refreshItemSearch();
 		},
 		onRowLimitFilterUpdate(newLimit) {
-			this.biblioStore.itemLimit = newLimit;
+			this.itemsStore.limit = newLimit;
 			this.ensurePageIsNotExceedingMax();
 			this.refreshItemSearch();
 		},
 		onPageUpdate(newPage) {
-			this.biblioStore.itemPage = newPage;
+			this.itemsStore.page = newPage;
 			this.refreshItemSearch();
 		},
 		refreshItemSearch: debounceFn(() => {
-			const biblioStore = useBiblioStore();
+			const itemsStore = useItemsStore();
 
-			const refreshPromise = biblioStore.refreshItemSearchResults();
+			const refreshPromise = itemsStore.refreshSearchResults();
 
 			refreshPromise.catch((error) => {
 				if (!refreshPromise.isCanceled) {
@@ -140,13 +141,13 @@ export default {
 			});
 		}, { wait: 100 }),
 		ensurePageIsNotExceedingMax() {
-			if (this.biblioStore.itemPage > this.maxPage) {
-				this.biblioStore.itemPage = this.maxPage;
+			if (this.itemsStore.page > this.maxPage) {
+				this.itemsStore.page = this.maxPage;
 			}
 		},
 		deleteItems(itemIds) {
 			for (const itemId of itemIds) {
-				this.biblioStore.deleteItem(itemId);
+				this.itemsStore.deleteItem(itemId);
 			}
 		},
 	},

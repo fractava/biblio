@@ -33,7 +33,7 @@ import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 
 import Plus from "vue-material-design-icons/Plus";
 
-import { useBiblioStore } from "../store/biblio.js";
+import { useItemsStore } from "../store/items.js";
 
 export default {
 	components: {
@@ -56,7 +56,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useBiblioStore),
+		...mapStores(useItemsStore),
 	},
 	methods: {
 		showModal() {
@@ -68,7 +68,7 @@ export default {
 		async submit() {
 			this.loading = true;
 			try {
-				await this.biblioStore.createItem({
+				await this.itemsStore.createItem({
 					title: this.title,
 				});
 			} catch {
