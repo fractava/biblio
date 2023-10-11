@@ -81,7 +81,7 @@ class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 			if($sort === "name") {
 				$this->handleSortByColumn($qb, 'c.name', $sortReverse);
 			} else if ($this->isFieldReference($sort)) {
-				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'c', self::FIELDS_VALUES_TABLENAME, 'item_id');
+				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'c', self::FIELDS_VALUES_TABLENAME, 'customer_id');
 			}
 		}
 
