@@ -34,7 +34,7 @@ return [
         ['name' => 'item_field#update', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'PUT'],
         ['name' => 'item_field#destroy', 'url' => '/collections/{collectionId}/item_fields/{id}', 'verb' => 'DELETE'],
 
-		// Items Field Value
+		// Item Field Values
 		['name' => 'item_field_value#index', 'url' => '/collections/{collectionId}/items/{itemId}/field_values', 'verb' => 'GET'],
 		['name' => 'item_field_value#show', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'GET'],
 		['name' => 'item_field_value#update', 'url' => '/collections/{collectionId}/items/{itemId}/field_values/{fieldId}', 'verb' => 'PUT'],
@@ -51,5 +51,25 @@ return [
 		['name' => 'item_instance#showByBarcode', 'url' => '/collections/{collectionId}/itemsInstancesByBarcode/{barcode}', 'verb' => 'GET'],
 		['name' => 'item_instance#updateByBarcode', 'url' => '/collections/{collectionId}/itemsInstancesByBarcode/{barcode}', 'verb' => 'PUT'],
 		['name' => 'item_instance#destroyByBarcode', 'url' => '/collections/{collectionId}/itemsInstancesByBarcode/{barcode}', 'verb' => 'DELETE'],
+
+		// Customers
+		['name' => 'customer#index', 'url' => '/collections/{collectionId}/customers', 'verb' => 'GET'],
+		['name' => 'customer#show', 'url' => '/collections/{collectionId}/customers/{id}', 'verb' => 'GET'],
+		['name' => 'customer#create', 'url' => '/collections/{collectionId}/customers', 'verb' => 'POST'],
+		['name' => 'customer#update', 'url' => '/collections/{collectionId}/customers/{id}', 'verb' => 'PUT'],
+		['name' => 'customer#destroy', 'url' => '/collections/{collectionId}/customers/{id}', 'verb' => 'DELETE'],
+
+		// Customer Fields
+		['name' => 'customer_field#index', 'url' => '/collections/{collectionId}/customer_fields', 'verb' => 'GET'],
+		['name' => 'customer_field#show', 'url' => '/collections/{collectionId}/customer_fields/{id}', 'verb' => 'GET'],
+		['name' => 'customer_field#create', 'url' => '/collections/{collectionId}/customer_fields', 'verb' => 'POST'],
+		['name' => 'customer_field#update', 'url' => '/collections/{collectionId}/customer_fields/{id}', 'verb' => 'PUT'],
+		['name' => 'customer_field#destroy', 'url' => '/collections/{collectionId}/customer_fields/{id}', 'verb' => 'DELETE'],
+
+		// Customer Field Values
+		['name' => 'customer_field_value#index', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values', 'verb' => 'GET'],
+		['name' => 'customer_field_value#show', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'GET'],
+		['name' => 'customer_field_value#update', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'PUT'],
+		['name' => 'customer_field_value#destroy', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'DELETE'],
 	]
 ];
