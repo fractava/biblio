@@ -18,6 +18,11 @@
 			<CollectionProperties />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection-members"
+			title="Members">
+			<CollectionMembers />
+		</NcAppSettingsSection>
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-item-fields"
 			title="Item Fields">
 			<CollectionItemFields />
@@ -39,6 +44,7 @@ import { useBiblioStore } from "../../store/biblio.js";
 import { useSettingsStore } from "../../store/settings.js";
 import CollectionsList from "./CollectionsList.vue";
 import CollectionProperties from "./CollectionProperties.vue";
+import CollectionMembers from "./CollectionMembers.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
 import CollectionCustomerFields from "./CollectionCustomerFields.vue";
 
@@ -48,6 +54,7 @@ export default {
 		NcAppSettingsSection,
 		CollectionsList,
 		CollectionProperties,
+		CollectionMembers,
 		CollectionItemFields,
 		CollectionCustomerFields,
 	},
