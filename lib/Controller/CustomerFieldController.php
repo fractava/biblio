@@ -3,24 +3,24 @@
 namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\ItemFieldService;
+use OCA\Biblio\Service\CustomerFieldService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
-class ItemFieldController extends Controller {
-	/** @var ItemFieldService */
+class CustomerFieldController extends Controller {
+	/** @var CustomerFieldService */
 	private $service;
 
 	use Errors;
 
-	public function __construct(IRequest $request, ItemFieldService $service) {
+	public function __construct(IRequest $request, CustomerFieldService $service) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 	}
 
 	/**
-	 * Get all item fields of collection
+	 * Get all customer fields of collection
 	 * @NoAdminRequired
 	 */
 	public function index(int $collectionId): DataResponse {
@@ -28,7 +28,7 @@ class ItemFieldController extends Controller {
 	}
 
 	/**
-	 * Get specific item field
+	 * Get specific customer field
 	 * @NoAdminRequired
 	 */
 	public function show(int $collectionId, int $id): DataResponse {
