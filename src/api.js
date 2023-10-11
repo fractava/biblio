@@ -30,6 +30,12 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * @typedef {{
  *   id: number
  *   collectionId: number
+ *   userId: string
+ * }} CollectionMember
+ *
+ * @typedef {{
+ *   id: number
+ *   collectionId: number
  *   type: string
  *   name: string
  *   settings: string
@@ -286,6 +292,22 @@ export const api = {
 					resolve(transforms.fromAPI.transformCollection(response.data));
 				})
 				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	  * @param {number} collectionId Id of collection
+	  * @return {Promise<Array<CollectionMember>>}
+	  */
+	getCollectionMembers(collectionId) {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/members`, {})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
 					reject(error);
 				});
 		});
