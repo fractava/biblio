@@ -39,7 +39,7 @@ import moment from "@nextcloud/moment";
 
 import NcDatetimePicker from "@nextcloud/vue/dist/Components/NcDatetimePicker";
 
-import FieldValue from "../mixins/FieldValue.js";
+import FieldValue from "../../mixins/FieldValue.js";
 
 export default {
 	components: {

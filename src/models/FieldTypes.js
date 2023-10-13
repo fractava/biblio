@@ -21,17 +21,17 @@
  */
 
 // Values
-import ListFieldValue from "../components/Fields/ListFieldValue.vue";
-import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
-import LongTextFieldValue from "../components/Fields/LongTextFieldValue.vue";
-import DateFieldValue from "../components/Fields/DateFieldValue.vue";
+import ListFieldValue from "../components/Fields/Values/ListFieldValue.vue";
+import ShortTextFieldValue from "../components/Fields/Values/ShortTextFieldValue.vue";
+import LongTextFieldValue from "../components/Fields/Values/LongTextFieldValue.vue";
+import DateFieldValue from "../components/Fields/Values/DateFieldValue.vue";
 
 // Cells
 import ListFieldCell from "../components/Fields/Cells/ListFieldCell.vue";
 import TextCell from "../components/Fields/Cells/TextCell.vue";
 
 // Settings
-import NoSettings from "../components/Fields/NoSettings.vue";
+import NoSettings from "../components/Fields/Settings/NoSettings.vue";
 
 import FormatListNumbered from "vue-material-design-icons/FormatListNumbered";
 import TextShort from "vue-material-design-icons/TextShort";

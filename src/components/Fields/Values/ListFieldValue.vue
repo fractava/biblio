@@ -70,10 +70,10 @@ import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 
-import FieldError from "./FieldError.vue";
+import FieldError from "../FieldError.vue";
 
-import GenRandomId from "../../utils/GenRandomId";
-import FieldValue from "../mixins/FieldValue.js";
+import GenRandomId from "../../../utils/GenRandomId";
+import FieldValue from "../../mixins/FieldValue.js";
 
 import Plus from "vue-material-design-icons/Plus";
 import Delete from "vue-material-design-icons/Delete";

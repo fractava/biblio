@@ -48,9 +48,9 @@ import Vue from "vue";
 import { mapStores } from "pinia";
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 
-import { api } from "../api";
+import { api } from "../api.js";
 import Pencil from "vue-material-design-icons/Pencil.vue";
-import ShortTextFieldValue from "../components/Fields/ShortTextFieldValue.vue";
+import ShortTextFieldValue from "../components/Fields/Values/ShortTextFieldValue.vue";
 import FieldsValueTable from "../components/FieldsValueTable.vue";
 
 import { useBiblioStore } from "../store/biblio.js";

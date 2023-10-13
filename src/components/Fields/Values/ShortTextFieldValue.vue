@@ -22,8 +22,8 @@
 <script>
 import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js";
 
-import FieldValue from "../mixins/FieldValue.js";
-import FieldError from "./FieldError.vue";
+import FieldValue from "../../mixins/FieldValue.js";
+import FieldError from "../FieldError.vue";
 
 export default {
 	components: {

@@ -25,8 +25,8 @@ import debounceFn from "debounce-fn";
 import NcRichContenteditable from "@nextcloud/vue/dist/Components/NcRichContenteditable.js";
 import NcRichText from "@nextcloud/vue/dist/Components/NcRichText.js";
 
-import FieldValue from "../mixins/FieldValue.js";
-import FieldError from "./FieldError.vue";
+import FieldValue from "../../mixins/FieldValue.js";
+import FieldError from "../FieldError.vue";
 
 export default {
 	components: {
