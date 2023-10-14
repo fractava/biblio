@@ -215,6 +215,17 @@ const transforms = {
 			collection.customerFieldsOrder = JSON.stringify(collection.customerFieldsOrder);
 			return collection;
 		},
+
+		/**
+		 *
+		 * @param {Field} itemField (Item|Customer) Field
+		 * @return {FieldResponse}
+		 */
+		transformField(itemField) {
+			itemField.settings = JSON.stringify(itemField.settings);
+			return itemField;
+		},
+
 		/**
 		 *
 		 * @param {FieldValue} fieldValue (Item|Customer) Field Value
@@ -337,6 +348,7 @@ export const api = {
 	  */
 	createItemField(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformField(parameters);
 			axios.post(`/collections/${collectionId}/item_fields`, parameters)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformField(response.data));
@@ -355,6 +367,7 @@ export const api = {
 	  */
 	updateItemField(collectionId, itemFieldId, parameters) {
 		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformField(parameters);
 			axios.put(`/collections/${collectionId}/item_fields/${itemFieldId}`, parameters)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformField(response.data));
@@ -406,6 +419,7 @@ export const api = {
 	  */
 	createCustomerField(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformField(parameters);
 			axios.post(`/collections/${collectionId}/customer_fields`, parameters)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformField(response.data));
@@ -424,6 +438,7 @@ export const api = {
 	  */
 	updateCustomerField(collectionId, customerFieldId, parameters) {
 		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformField(parameters);
 			axios.put(`/collections/${collectionId}/customer_fields/${customerFieldId}`, parameters)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformField(response.data));
