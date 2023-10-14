@@ -32,12 +32,14 @@ import TextCell from "../components/Fields/Cells/TextCell.vue";
 
 // Settings
 import NoSettings from "../components/Fields/Settings/NoSettings.vue";
+import SelectSettings from "../components/Fields/Settings/SelectSettings.vue";
 
 import FormatListNumbered from "vue-material-design-icons/FormatListNumbered";
 import TextShort from "vue-material-design-icons/TextShort";
 import TextLong from "vue-material-design-icons/TextLong";
 import CalendarMonth from "vue-material-design-icons/CalendarMonth";
 import CalendarClock from "vue-material-design-icons/CalendarClock";
+import FormDropdown from "vue-material-design-icons/FormDropdown";
 
 /**
  * @typedef {object} FieldTypes
@@ -79,6 +81,7 @@ export default {
 				label: t("biblio", "Contains"),
 			},
 		],
+		filterOperandType: "string",
 	},
 
 	short: {
@@ -110,6 +113,7 @@ export default {
 				label: t("biblio", "Ends with"),
 			},
 		],
+		filterOperandType: "string",
 	},
 
 	long: {
@@ -141,6 +145,7 @@ export default {
 				label: t("biblio", "Ends with"),
 			},
 		],
+		filterOperandType: "string",
 	},
 
 	date: {
@@ -168,6 +173,7 @@ export default {
 				label: t("biblio", "After"),
 			},
 		],
+		filterOperandType: "string",
 	},
 
 	datetime: {
@@ -195,10 +201,29 @@ export default {
 				label: t("biblio", "After"),
 			},
 		],
+		filterOperandType: "string",
 
 		// Using the same vue-component as date, this specifies that the component renders as datetime.
 		includeTime: true,
 	},
 
-	// TODO: Select
+	select: {
+		valueEditComponent: DateFieldValue,
+		valueCellComponent: TextCell,
+		settingsComponent: SelectSettings,
+		iconComponent: FormDropdown,
+		label: t("biblio", "Select"),
+
+		valuePlaceholder: t("biblio", "Pick one of the options"),
+		defaultSettings: { options: [] },
+		defaultValue: "",
+		canSort: true,
+		filterOperators: [
+			{
+				id: "=",
+				label: t("biblio", "Equals"),
+			},
+		],
+		filterOperandType: "options",
+	},
 };
