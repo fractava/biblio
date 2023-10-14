@@ -72,11 +72,10 @@ import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 
 import FieldError from "../FieldError.vue";
 
-import GenRandomId from "../../../utils/GenRandomId";
 import FieldValue from "../../mixins/FieldValue.js";
 
-import Plus from "vue-material-design-icons/Plus";
-import Delete from "vue-material-design-icons/Delete";
+import Plus from "vue-material-design-icons/Plus.vue";
+import Delete from "vue-material-design-icons/Delete.vue";
 
 export default {
 	components: {

@@ -43,10 +43,10 @@ import NcListItem from "@nextcloud/vue/dist/Components/NcListItem.js";
 import NcAppNavigationNewItem from "@nextcloud/vue/dist/Components/NcAppNavigationNewItem.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 
-import Plus from "vue-material-design-icons/Plus";
-import LibraryShelves from "vue-material-design-icons/LibraryShelves";
-import Pencil from "vue-material-design-icons/Pencil";
-import Delete from "vue-material-design-icons/Delete";
+import Plus from "vue-material-design-icons/Plus.vue";
+import LibraryShelves from "vue-material-design-icons/LibraryShelves.vue";
+import Pencil from "vue-material-design-icons/Pencil.vue";
+import Delete from "vue-material-design-icons/Delete.vue";
 
 import { useBiblioStore } from "../../store/biblio.js";
 import { useSettingsStore } from "../../store/settings.js";

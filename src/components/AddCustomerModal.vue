@@ -31,7 +31,7 @@ import NcModal from "@nextcloud/vue/dist/Components/NcModal.js";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 
-import Plus from "vue-material-design-icons/Plus";
+import Plus from "vue-material-design-icons/Plus.vue";
 
 import { useCustomersStore } from "../store/customers.js";
 
