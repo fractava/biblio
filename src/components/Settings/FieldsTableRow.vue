@@ -1,38 +1,38 @@
 <template>
-    <tr class="tableRow">
-        <!-- Drag handle -->
-	    <td class="drag-handle"
-            :class="{'drag-handle-active': enableDragHandle}"
-            :style="{'opacity': enableDragHandle ? .5 : 0}"
-            :aria-label="t('biblio', 'Drag to reorder the fields')">
-            <Drag :size="24" />
-        </td>
+	<tr class="tableRow">
+		<!-- Drag handle -->
+		<td class="drag-handle"
+			:class="{'drag-handle-active': enableDragHandle}"
+			:style="{'opacity': enableDragHandle ? .5 : 0}"
+			:aria-label="t('biblio', 'Drag to reorder the fields')">
+			<Drag :size="24" />
+		</td>
 
-        <!-- Icon -->
-        <td>
-            <slot name="icon"></slot>
-        </td>
+		<!-- Icon -->
+		<td>
+			<slot name="icon" />
+		</td>
 
-        <!-- Include In List -->
-        <td>
-            <slot name="includeInList"></slot>
-        </td>
-        
-        <!-- Name -->
-        <td>
-            <slot name="name"></slot>
-        </td>
+		<!-- Include In List -->
+		<td>
+			<slot name="includeInList" />
+		</td>
 
-        <!-- Settings -->
-        <td>
-            <slot name="settings"></slot>
-        </td>
+		<!-- Name -->
+		<td>
+			<slot name="name" />
+		</td>
+
+		<!-- Settings -->
+		<td>
+			<slot name="settings" />
+		</td>
 
 		<!-- Actions -->
-        <td>
-            <slot name="actions"></slot>
-        </td>
-    </tr>
+		<td>
+			<slot name="actions" />
+		</td>
+	</tr>
 </template>
 
 <script>

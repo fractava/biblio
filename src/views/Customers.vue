@@ -67,9 +67,12 @@ export default {
 					canSort: type.canSort,
 					sortIdentifier: `field:${field.id}`,
 					canFilter: true,
+					filterOperandType: type.filterOperandType,
+					filterOperandOptions: field?.settings?.options,
 					filterOperators: type.filterOperators,
 					cellComponent: type.valueCellComponent,
 					defaultValue: type.defaultValue,
+					defaultSettings: type.defaultSettings,
 				};
 			});
 

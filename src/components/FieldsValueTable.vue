@@ -16,6 +16,7 @@
 						:field-type="FieldTypes[field.type]"
 						:allow-value-edit="editMode"
 						:value="field.value"
+						:settings="field.settings"
 						@update:value="(newValue) => { updateValue(newValue, field) }" />
 				</td>
 			</tr>

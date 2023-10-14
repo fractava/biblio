@@ -9,7 +9,8 @@
 			<component :is="col.cellComponent"
 				:column="col"
 				:row-id="row.id"
-				:value="getCellValue(col)" />
+				:value="getCellValue(col)"
+				:settings="getCellSettings(col)" />
 		</td>
 	</tr>
 </template>
@@ -67,6 +68,23 @@ export default {
 				} else {
 					// if no value is given, try to get the default value from the field definition
 					return column.defaultValue;
+				}
+			}
+		},
+		getCellSettings(column) {
+			if (!this.row) {
+				return null;
+			}
+
+			if (column.isProperty) {
+				return {};
+			} else {
+				const field = this.row.fieldValues.find(item => item.fieldId === column.id) || null;
+
+				if (field) {
+					return field.settings;
+				} else {
+					return column.defaultSettings;
 				}
 			}
 		},

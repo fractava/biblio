@@ -68,8 +68,11 @@ export default {
 					sortIdentifier: `field:${field.id}`,
 					canFilter: true,
 					filterOperators: type.filterOperators,
+					filterOperandType: type.filterOperandType,
+					filterOperandOptions: field?.settings?.options,
 					cellComponent: type.valueCellComponent,
 					defaultValue: type.defaultValue,
+					defaultSettings: type.defaultSettings,
 				};
 			});
 
@@ -83,7 +86,6 @@ export default {
 					sortIdentifier: "title",
 					canFilter: false,
 					property: "title",
-					filterOperators: FieldTypes?.short?.filterOperators,
 					cellComponent: TextCell,
 				},
 				...fieldColumns,

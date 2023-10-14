@@ -25,21 +25,23 @@ import ListFieldValue from "../components/Fields/Values/ListFieldValue.vue";
 import ShortTextFieldValue from "../components/Fields/Values/ShortTextFieldValue.vue";
 import LongTextFieldValue from "../components/Fields/Values/LongTextFieldValue.vue";
 import DateFieldValue from "../components/Fields/Values/DateFieldValue.vue";
+import SelectValue from "../components/Fields/Values/SelectValue.vue";
 
 // Cells
 import ListFieldCell from "../components/Fields/Cells/ListFieldCell.vue";
 import TextCell from "../components/Fields/Cells/TextCell.vue";
+import SelectCell from "../components/Fields/Cells/SelectCell.vue";
 
 // Settings
 import NoSettings from "../components/Fields/Settings/NoSettings.vue";
 import SelectSettings from "../components/Fields/Settings/SelectSettings.vue";
 
-import FormatListNumbered from "vue-material-design-icons/FormatListNumbered";
-import TextShort from "vue-material-design-icons/TextShort";
-import TextLong from "vue-material-design-icons/TextLong";
-import CalendarMonth from "vue-material-design-icons/CalendarMonth";
-import CalendarClock from "vue-material-design-icons/CalendarClock";
-import FormDropdown from "vue-material-design-icons/FormDropdown";
+import FormatListNumbered from "vue-material-design-icons/FormatListNumbered.vue";
+import TextShort from "vue-material-design-icons/TextShort.vue";
+import TextLong from "vue-material-design-icons/TextLong.vue";
+import CalendarMonth from "vue-material-design-icons/CalendarMonth.vue";
+import CalendarClock from "vue-material-design-icons/CalendarClock.vue";
+import FormDropdown from "vue-material-design-icons/FormDropdown.vue";
 
 /**
  * @typedef {object} FieldTypes
@@ -208,8 +210,8 @@ export default {
 	},
 
 	select: {
-		valueEditComponent: DateFieldValue,
-		valueCellComponent: TextCell,
+		valueEditComponent: SelectValue,
+		valueCellComponent: SelectCell,
 		settingsComponent: SelectSettings,
 		iconComponent: FormDropdown,
 		label: t("biblio", "Select"),
@@ -217,7 +219,7 @@ export default {
 		valuePlaceholder: t("biblio", "Pick one of the options"),
 		defaultSettings: { options: [] },
 		defaultValue: "",
-		canSort: true,
+		canSort: false,
 		filterOperators: [
 			{
 				id: "=",

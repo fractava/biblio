@@ -36,6 +36,11 @@ export default {
 			default: "",
 		},
 	},
+	data() {
+		return {
+			defaultValue: "",
+		};
+	},
 	computed: {
 		valueError() {
 			return !(typeof this.value === "string" || this.value instanceof String);

@@ -30,13 +30,23 @@
 					{{ t('biblio', 'Back') }}
 				</NcActionButton>
 				<NcActionCaption :title="t('biblio', 'Select operand')" />
-				<NcActionInput :label-visible="false"
+				<NcActionInput v-if="column.filterOperandType === 'string'"
+					:label-visible="false"
 					:label="t('biblio', 'Keyword and submit')"
 					:value.sync="filterOperand">
 					<template #icon>
 						<Magnify :size="20" />
 					</template>
 				</NcActionInput>
+				<NcActionButton v-for="operand in column.filterOperandOptions"
+					v-else
+					:key="operand.id"
+					@click="filterOperand = operand.id">
+					<template #icon>
+						<FilterCog :size="25" />
+					</template>
+					{{ operand.label }}
+				</NcActionButton>
 			</template>
 			<template v-else>
 				<NcActionCaption v-if="canSort" :title="t('biblio', 'Sorting')" />
