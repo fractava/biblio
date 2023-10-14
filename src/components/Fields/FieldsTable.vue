@@ -10,6 +10,7 @@
 			drag-class="drag"
 			ghost-class="ghost"
 			:animation="200"
+			:force-fallback="true"
 			tag="tbody"
 			draggable=".draggableitem"
 			handle=".drag-handle-active"
@@ -27,6 +28,7 @@
 				<Icon :is="FieldTypes[field.type].iconComponent" slot="icon" v-tooltip="FieldTypes[field.type].label" />
 				<component :is="FieldTypes[field.type].settingsComponent"
 					slot="settings"
+					class="fieldSettings"
 					:settings="field.settings"
 					@update:settings="(newSettings) => onFieldUpdate(field.id, {settings: newSettings})" />
 			</Field>
