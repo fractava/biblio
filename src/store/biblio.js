@@ -47,6 +47,10 @@ export const useBiblioStore = defineStore("biblio", {
 		},
 		updateCollection(id, parameters) {
 			return new Promise((resolve, reject) => {
+				// optimistic update
+				const updatedCollection = this.collections.find(collection => collection.id === id);0
+				Object.assign(updatedCollection, parameters);
+
 				api.updateCollection(id, parameters)
 					.then((result) => {
 						const updatedIndex = this.collections.findIndex(collection => collection.id === id);
