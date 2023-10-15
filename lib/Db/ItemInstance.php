@@ -15,7 +15,6 @@ class ItemInstance extends Entity implements JsonSerializable {
 	public function __construct() {
         $this->addType('itemId','integer');
         $this->addType('loanedTo','integer');
-        //$this->addType('loanedUntil','integer');
     }
 
 	public function jsonSerialize(): array {

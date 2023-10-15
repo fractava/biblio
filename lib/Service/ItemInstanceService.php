@@ -50,7 +50,7 @@ class ItemInstanceService {
 		}
 	}
 
-	public function create(string $barcode, int $itemId, ?int $loanedTo, ?int $loanedUntil) {
+	public function create(string $barcode, int $itemId, ?int $loanedTo, ?string $loanedUntil) {
 		$itemInstance = new ItemInstance();
 		$itemInstance->setBarcode($barcode);
 		$itemInstance->setItemId($itemId);

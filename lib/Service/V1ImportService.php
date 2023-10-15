@@ -33,13 +33,17 @@ class V1ImportService {
 	/** @var ItemFieldValueService */
 	private $itemFieldValueService;
 
+	/** @var ItemInstanceService */
+	private $itemInstanceService;
+
 	public function __construct(CollectionService $collectionService,
 								CustomerService $customerService,
 								CustomerFieldService $customerFieldService,
 								CustomerFieldValueService $customerFieldValueService,
 								ItemService $itemService,
 								ItemFieldService $itemFieldService,
-								ItemFieldValueService $itemFieldValueService) {
+								ItemFieldValueService $itemFieldValueService,
+								ItemInstanceService $itemInstanceService) {
 		$this->collectionService = $collectionService;
 		$this->customerService = $customerService;
 		$this->customerFieldService = $customerFieldService;
@@ -47,6 +51,7 @@ class V1ImportService {
 		$this->itemService = $itemService;
 		$this->itemFieldService = $itemFieldService;
 		$this->itemFieldValueService = $itemFieldValueService;
+		$this->itemInstanceService = $itemInstanceService;
 	}
 
 	public function import(array $data, string $firstMember) {
@@ -58,12 +63,21 @@ class V1ImportService {
 
 		$importedItemsTable = $this->getTable($data, "medias");
 		$importedSubjectsTable = $this->getTable($data, "subjects");
+		$importedItemInstancesTable = $this->getTable($data, "media_instances");
 
 		$newClassesField = $this->convertToSelectField($this->customerFieldService, $collectionId, $importedClassesTable, "Class");
 
+		$customerIdMapping = [];
+
 		foreach($importedCustomersTable["data"] as $customer) {
 			$newCustomer = $this->customerService->create($collectionId, $customer["name"]);
-			$this->customerFieldValueService->updateByCustomerAndFieldId($newCustomer->getId(), $newClassesField->getId(), json_encode($customer["class_id"]));
+			$newCustomerId = $newCustomer->getId();
+
+			$customerIdMapping[(int) $customer["id"]] = $newCustomerId;
+
+			if(isset($customer["class_id"])) {
+				$this->customerFieldValueService->updateByCustomerAndFieldId($newCustomerId, $newClassesField->getId(), json_encode($customer["class_id"]));
+			}
 		}
 
 		$newSubjectsField = $this->convertToSelectField($this->itemFieldService, $collectionId, $importedSubjectsTable, "Subject");
@@ -71,16 +85,48 @@ class V1ImportService {
 		$newPublisherField = $this->itemFieldService->create($collectionId, "short", "Publisher", json_encode(""), true);
 		$newPriceField = $this->itemFieldService->create($collectionId, "short", "Price", json_encode(""), true);
 		$newIsbnField = $this->itemFieldService->create($collectionId, "short", "ISBN", json_encode(""), true);
-		
+
+		$itemIdMapping = [];
 
 		foreach($importedItemsTable["data"] as $item) {
 			$newItem = $this->itemService->create($collectionId, $item["title"]);
 			$newItemId = $newItem->getId();
-			$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newSubjectsField->getId(), json_encode($item["subject_id"]));
-			$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newAuthorField->getId(), json_encode($item["author"]));
-			$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newPublisherField->getId(), json_encode($item["publisher"]));
-			$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newPriceField->getId(), json_encode($item["price"]));
-			$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newIsbnField->getId(), json_encode($item["isbn"]));
+
+			$itemIdMapping[(int) $item["id"]] = $newItemId;
+
+			if(isset($item["subject_id"])) {
+				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newSubjectsField->getId(), json_encode($item["subject_id"]));
+			}
+			if(isset($item["author"])) {
+				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newAuthorField->getId(), json_encode($item["author"]));
+			}
+			if(isset($item["publisher"])) {
+				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newPublisherField->getId(), json_encode($item["publisher"]));
+			}
+			if(isset($item["price"])) {
+				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newPriceField->getId(), json_encode($item["price"]));
+			}
+			if(isset($item["isbn"])) {
+				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newIsbnField->getId(), json_encode($item["isbn"]));
+			}
+		}
+
+		foreach($importedItemInstancesTable["data"] as $itemInstance) {
+			$mappedItemId = $itemIdMapping[(int) $itemInstance["media_id"]];
+
+			if(isset($mappedItemId)) {
+				$mappedLoanedToCustomerId = null;
+				if(isset($itemInstance["loaned_to"]) && $itemInstance["loaned_to"] !== "") {
+					$mappedLoanedToCustomerId = $customerIdMapping[(int) $itemInstance["loaned_to"]];
+				}
+
+				$loanedUntilTime = null;
+				if(isset($itemInstance["loaned_until"]) && $itemInstance["loaned_until"] !== "") {
+					$loanedUntilTime = $itemInstance["loaned_until"] . " 00:00:00";
+				}
+
+				$this->itemInstanceService->create($itemInstance["barcode"], $mappedItemId, $mappedLoanedToCustomerId, $loanedUntilTime);
+			}
 		}
 
 		return $this->getTable($data, "customers");
