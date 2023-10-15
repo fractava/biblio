@@ -122,7 +122,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 			$table->addColumn('settings', 'string', [
 				'notnull' => true,
-				'length' => 500,
+				'length' => 5000,
 			]);
 			$table->addColumn('include_in_list', 'boolean', [
 				'notnull' => true,
@@ -218,7 +218,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 			$table->addColumn('settings', 'string', [
 				'notnull' => true,
-				'length' => 500,
+				'length' => 5000,
 			]);
 			$table->addColumn('include_in_list', 'boolean', [
 				'notnull' => true,

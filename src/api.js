@@ -767,4 +767,16 @@ export const api = {
 				});
 		});
 	},
+
+	importV1(data) {
+		return new Promise((resolve, reject) => {
+			axios.post("/import/v1", { data })
+				.then(function(response) {
+					resolve(response);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
 };

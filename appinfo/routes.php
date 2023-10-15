@@ -71,5 +71,8 @@ return [
 		['name' => 'customer_field_value#show', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'GET'],
 		['name' => 'customer_field_value#update', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'PUT'],
 		['name' => 'customer_field_value#destroy', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'DELETE'],
+
+		// Imports
+		['name' => 'v1_import#import', 'url' => '/import/v1', 'verb' => 'POST'],
 	]
 ];

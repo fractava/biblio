@@ -9,6 +9,7 @@
 			id="collections"
 			title="Collections">
 			<CollectionsList />
+			<V1Import />
 		</NcAppSettingsSection>
 
 		<!-- Collection -->
@@ -43,6 +44,7 @@ import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSe
 import { useBiblioStore } from "../../store/biblio.js";
 import { useSettingsStore } from "../../store/settings.js";
 import CollectionsList from "./CollectionsList.vue";
+import V1Import from "./V1Import.vue";
 import CollectionProperties from "./CollectionProperties.vue";
 import CollectionMembers from "./CollectionMembers.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
@@ -53,6 +55,7 @@ export default {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
 		CollectionsList,
+		V1Import,
 		CollectionProperties,
 		CollectionMembers,
 		CollectionItemFields,
