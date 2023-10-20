@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OCA\Biblio\Migration;
 
 use Closure;
+use OCP\DB\Types;
 use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
@@ -40,18 +41,18 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::COLLECTIONS_TABLE)) {
 			$table = $schema->createTable(self::COLLECTIONS_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('name', 'string', [
+			$table->addColumn('name', Types::STRING, [
 				'notnull' => true,
 				'length' => 200,
 			]);
-			$table->addColumn('item_fields_order', 'string', [
+			$table->addColumn('item_fields_order', Types::STRING, [
 				'notnull' => true,
 			]);
-			$table->addColumn('customer_fields_order', 'string', [
+			$table->addColumn('customer_fields_order', Types::STRING, [
 				'notnull' => true,
 			]);
 
@@ -60,14 +61,14 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if(!$schema->hasTable(self::COLLECTION_MEMBERS_TABLE)) {
 			$table = $schema->createTable(self::COLLECTION_MEMBERS_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('collection_id', 'integer', [
+			$table->addColumn('collection_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('user_id', 'string', [
+			$table->addColumn('user_id', Types::STRING, [
 				'notnull' => true,
 				'length' => 200,
 			]);
@@ -83,14 +84,14 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::ITEMS_TABLE)) {
 			$table = $schema->createTable(self::ITEMS_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('collection_id', 'integer', [
+			$table->addColumn('collection_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('title', 'string', [
+			$table->addColumn('title', Types::STRING, [
 				'notnull' => true,
 				'length' => 200,
 			]);
@@ -107,26 +108,26 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::ITEM_FIELDS_TABLE)) {
 			$table = $schema->createTable(self::ITEM_FIELDS_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('collection_id', 'integer', [
+			$table->addColumn('collection_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('name', 'string', [
+			$table->addColumn('name', Types::STRING, [
 				'notnull' => true,
 				'length' => 200,
 			]);
-			$table->addColumn('type', 'string', [
+			$table->addColumn('type', Types::STRING, [
 				'notnull' => true,
 				'length' => 50,
 			]);
-			$table->addColumn('settings', 'string', [
+			$table->addColumn('settings', Types::STRING, [
 				'notnull' => true,
 				'length' => 5000,
 			]);
-			$table->addColumn('include_in_list', 'boolean', [
+			$table->addColumn('include_in_list', Types::BOOLEAN, [
 				'notnull' => true,
 			]);
 			
@@ -144,17 +145,17 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::ITEM_FIELDS_VALUES_TABLE)) {
 			$table = $schema->createTable(self::ITEM_FIELDS_VALUES_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('item_id', 'integer', [
+			$table->addColumn('item_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('field_id', 'integer', [
+			$table->addColumn('field_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('value', 'text', [
+			$table->addColumn('value', Types::TEXT, [
 				'notnull' => true,
 			]);
 
@@ -179,14 +180,14 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::CUSTOMERS_TABLE)) {
 			$table = $schema->createTable(self::CUSTOMERS_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('collection_id', 'integer', [
+			$table->addColumn('collection_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('name', 'string', [
+			$table->addColumn('name', Types::STRING, [
 				'notnull' => true,
 				'length' => 100,
 			]);
@@ -203,26 +204,26 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::CUSTOMER_FIELDS_TABLE)) {
 			$table = $schema->createTable(self::CUSTOMER_FIELDS_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('collection_id', 'integer', [
+			$table->addColumn('collection_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('name', 'string', [
+			$table->addColumn('name', Types::STRING, [
 				'notnull' => true,
 				'length' => 200,
 			]);
-			$table->addColumn('type', 'string', [
+			$table->addColumn('type', Types::STRING, [
 				'notnull' => true,
 				'length' => 50,
 			]);
-			$table->addColumn('settings', 'string', [
+			$table->addColumn('settings', Types::STRING, [
 				'notnull' => true,
 				'length' => 5000,
 			]);
-			$table->addColumn('include_in_list', 'boolean', [
+			$table->addColumn('include_in_list', Types::BOOLEAN, [
 				'notnull' => true,
 			]);
 			
@@ -240,17 +241,17 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::CUSTOMER_FIELDS_VALUES_TABLE)) {
 			$table = $schema->createTable(self::CUSTOMER_FIELDS_VALUES_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('customer_id', 'integer', [
+			$table->addColumn('customer_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('field_id', 'integer', [
+			$table->addColumn('field_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
-			$table->addColumn('value', 'text', [
+			$table->addColumn('value', Types::TEXT, [
 				'notnull' => true,
 			]);
 
@@ -275,15 +276,15 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 
 		if (!$schema->hasTable(self::ITEM_INSTANCES_TABLE)) {
 			$table = $schema->createTable(self::ITEM_INSTANCES_TABLE);
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('barcode', 'string', [
+			$table->addColumn('barcode', Types::STRING, [
 				'notnull' => true,
 				'length' => 100,
 			]);
-			$table->addColumn('item_id', 'integer', [
+			$table->addColumn('item_id', Types::INTEGER, [
 				'notnull' => true,
 			]);
 
@@ -302,17 +303,17 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 		if (!$schema->hasTable(self::LOANS_TABLE)) {
 			$table = $schema->createTable(self::LOANS_TABLE);
 
-			$table->addColumn('id', 'integer', [
+			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,
 				'notnull' => true,
 			]);
-			$table->addColumn('item_instance_id', 'integer', [
+			$table->addColumn('item_instance_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
-			$table->addColumn('customer_id', 'integer', [
+			$table->addColumn('customer_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
-			$table->addColumn('until', 'integer', [
+			$table->addColumn('until', Types::BIGINT, [
 				'notnull' => false,
 			]);
 
