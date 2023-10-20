@@ -9,12 +9,9 @@ use OCP\AppFramework\Db\Entity;
 class ItemInstance extends Entity implements JsonSerializable {
 	protected $barcode;
 	protected $itemId;
-    protected $loanedTo;
-    protected $loanedUntil;
 
 	public function __construct() {
         $this->addType('itemId','integer');
-        $this->addType('loanedTo','integer');
     }
 
 	public function jsonSerialize(): array {
@@ -22,8 +19,6 @@ class ItemInstance extends Entity implements JsonSerializable {
 			'id' => $this->id,
 			'barcode' => $this->barcode,
 			'itemId' => $this->itemId,
-            'loanedTo' => $this->loanedTo,
-            'loanedUntil' => $this->loanedUntil,
 		];
 	}
 }
