@@ -33,7 +33,7 @@
 		"@nextcloud/moment": "^1.2.1",
 		"@nextcloud/router": "^2.1.2",
 		"@nextcloud/vue": "^7.12.1",
-		"@nextcloud/webpack-vue-config": "^5.5.1",
+		"@nextcloud/webpack-vue-config": "^6.0.0",
 		"babel-loader": "^9.1.2",
 		"caniuse-lite": "^1.0.30001541",
 		"debounce": "^1.2.1",
