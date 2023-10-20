@@ -26,6 +26,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 	const CUSTOMER_FIELDS_TABLE = "biblio_customer_fields";
 	const CUSTOMER_FIELDS_VALUES_TABLE = "biblio_customer_fields_values";
 
+	const LOANS_TABLE = "biblio_loans";
+
 	/**
 	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
@@ -284,31 +286,52 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			$table->addColumn('item_id', 'integer', [
 				'notnull' => true,
 			]);
-			$table->addColumn('loaned_to', 'integer', [
-				'notnull' => false,
-			]);
-			$table->addColumn('loaned_until', 'datetime', [
-				'notnull' => false,
-			]);
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['barcode'], 'barcodeIndex');
 			$table->addUniqueConstraint(['barcode'], "barcode_unique");
 			$table->addIndex(['item_id'], 'itemIdIndex');
-			$table->addIndex(['loaned_to'], 'loanedToIndex');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::ITEMS_TABLE),
 				['item_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
 				'item_id_fk');
+		}
 
+		if (!$schema->hasTable(self::LOANS_TABLE)) {
+			$table = $schema->createTable(self::LOANS_TABLE);
+
+			$table->addColumn('id', 'integer', [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('item_instance_id', 'integer', [
+				'notnull' => false,
+			]);
+			$table->addColumn('customer_id', 'integer', [
+				'notnull' => false,
+			]);
+			$table->addColumn('until', 'integer', [
+				'notnull' => false,
+			]);
+
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['item_instance_id'], 'item_instance_id_index');
+			$table->addUniqueConstraint(['item_instance_id'], "item_instance_id_unique");
 			$table->addForeignKeyConstraint(
-				$schema->getTable(self::CUSTOMERS_TABLE),
-				['loaned_to'],
+				$schema->getTable(self::ITEM_INSTANCES_TABLE),
+				['item_instance_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'loaned_to_fk');
+				'loaned_instance_id_fk');
+			$table->addIndex(['customer_id'], 'customer_id_index');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::CUSTOMERS_TABLE),
+				['customer_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'loaned_customer_id_fk');
 		}
 
 		return $schema;
