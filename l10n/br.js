@@ -2,7 +2,6 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Titl",
-    "Save" : "Enrollañ",
     "List" : "Roll",
     "Date" : "Deiz"
 },

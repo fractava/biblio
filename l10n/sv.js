@@ -1,16 +1,27 @@
 OC.L10N.register(
     "biblio",
     {
-    "Delete entry" : "Radera inlägg",
-    "Title" : "Titel",
+    "Name" : "Namn",
     "Value" : "Värde",
-    "Save" : "Spara",
+    "Download" : "Ladda ner",
+    "Search" : "Sök",
+    "Back" : "Tillbaka",
+    "Sort asc" : "Sortera stigande",
+    "Sort desc" : "Sortera fallande",
+    "Filtering" : "Filtrera",
+    "Export CSV" : "Exportera CSV",
+    "_%n selected row_::_%n selected rows_" : ["%n vald rad","%n valda rader"],
+    "Title" : "Titel",
     "List" : "Lista",
+    "Contains" : "Innehåller",
     "Long text" : "Lång text",
     "Enter a long text" : "Skriv in en lång text",
     "Date" : "Datum",
     "Pick a date" : "Välj ett datum",
     "Date and time" : "Datum och tid",
-    "Pick a date and time" : "Välj datum och tid"
+    "Pick a date and time" : "Välj datum och tid",
+    "Select" : "Välj",
+    "Request is not authorized. Are you logged in?" : "Begäran är inte godkänd. Är du inloggad?",
+    "Request not allowed." : "Begäran är inte tillåten."
 },
 "nplurals=2; plural=(n != 1);");

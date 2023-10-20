@@ -1,5 +1,8 @@
 { "translations": {
+    "Name" : "Nom",
+    "Download" : "Sider",
+    "Back" : "Retour",
     "Title" : "Azwel",
-    "Save" : "Sekles"
+    "Select" : "Fren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

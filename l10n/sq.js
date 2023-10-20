@@ -1,10 +1,14 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "Titulli",
+    "Name" : "Emër",
     "Value" : "Vlerë",
-    "Save" : "Ruaj",
+    "Download" : "Shkarko",
+    "Search" : "Kërko",
+    "Back" : "Mbrapsht",
+    "Title" : "Titulli",
     "List" : "List",
-    "Date" : "Data"
+    "Date" : "Data",
+    "Select" : "Përzgjidh"
 },
 "nplurals=2; plural=(n != 1);");

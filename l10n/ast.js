@@ -1,8 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "Títulu",
-    "Save" : "Guardar",
-    "Date" : "Date"
+    "Value" : "Valor",
+    "Date" : "Data"
 },
 "nplurals=2; plural=(n != 1);");

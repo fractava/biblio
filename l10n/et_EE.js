@@ -1,8 +1,10 @@
 OC.L10N.register(
     "biblio",
     {
+    "Name" : "Nimi",
+    "Download" : "Laadi alla",
     "Title" : "Pealkiri",
-    "Save" : "Salvesta",
-    "Date" : "Kuupäev"
+    "Date" : "Kuupäev",
+    "Select" : "Vali"
 },
 "nplurals=2; plural=(n != 1);");

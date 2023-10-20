@@ -1,6 +1,5 @@
 { "translations": {
-    "Title" : "Títulu",
-    "Save" : "Guardar",
-    "Date" : "Date"
+    "Value" : "Valor",
+    "Date" : "Data"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -1,8 +1,11 @@
 OC.L10N.register(
     "biblio",
     {
+    "Name" : "නම",
     "Value" : "අගය",
-    "Save" : "සුරකින්න",
+    "Download" : "බාගන්න",
+    "Search" : "සොයන්න",
+    "Back" : "ආපසු",
     "List" : "ලැයිස්තුව",
     "Date" : "දිනය"
 },

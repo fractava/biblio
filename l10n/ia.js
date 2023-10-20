@@ -1,8 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
+    "Download" : "Discargar",
     "Title" : "Titulo",
-    "Save" : "Salveguardar",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Select" : "Selectionar"
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,7 +2,6 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Teitl",
-    "Save" : "Cadw",
     "List" : "Rhestr",
     "Date" : "Date",
     "Pick a date" : "Dewiswch ddyddiad"

@@ -1,9 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "Título",
+    "Name" : "Nombre",
     "Value" : "Valor",
-    "Save" : "Guardar",
+    "Title" : "Título",
     "List" : "Lista",
     "Date" : "Fecha"
 },

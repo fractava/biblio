@@ -1,6 +1,7 @@
 { "translations": {
+    "Download" : "Discargar",
     "Title" : "Titulo",
-    "Save" : "Salveguardar",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Select" : "Selectionar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

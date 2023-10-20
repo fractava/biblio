@@ -1,9 +1,11 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "Tittel",
+    "Name" : "Namn",
     "Value" : "Verdi",
-    "Save" : "Lagre",
+    "Download" : "Last ned",
+    "Search" : "Søk",
+    "Title" : "Tittel",
     "Date" : "Dato"
 },
 "nplurals=2; plural=(n != 1);");

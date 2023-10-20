@@ -1,10 +1,12 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "Amats",
+    "Name" : "Vārds",
     "Value" : "Vērtība",
-    "Save" : "Saglabāt",
+    "Download" : "Lejupielādēt",
+    "Title" : "Amats",
     "List" : "Saraksts",
-    "Date" : "Datums"
+    "Date" : "Datums",
+    "Select" : "Atzīmēt"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

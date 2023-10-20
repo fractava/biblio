@@ -1,10 +1,12 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "Judul",
+    "Name" : "Nama",
     "Value" : "Nilari",
-    "Save" : "Simpan",
+    "Download" : "Unduh",
+    "Title" : "Judul",
     "Date" : "Date",
-    "Pick a date" : "Pilih tanggal"
+    "Pick a date" : "Pilih tanggal",
+    "Select" : "Pilih"
 },
 "nplurals=1; plural=0;");

@@ -1,8 +1,29 @@
 { "translations": {
-    "Title" : "عنوان",
+    "Biblio" : "Biblio",
+    "A library management system" : "A library management system",
+    "This can be used to manage a book library, Sheet music archive, Textbook library" : "This can be used to manage a book library, Sheet music archive, Textbook library",
+    "Add a field" : "Add a field",
+    "Name" : "نام",
+    "Delete Field" : "Delete Field",
     "Value" : "ارزش",
-    "Save" : "ذخیره",
+    "Drag to reorder the fields" : "Drag to reorder the fields",
+    "Lend/Return" : "Lend/Return",
+    "Customers" : "Customers",
+    "Download" : "بارگیری",
+    "Create Row" : "Create Row",
+    "Select operator" : "Select operator",
+    "Sort desc" : "Sort desc",
+    "Title" : "عنوان",
     "List" : "لیست",
-    "Date" : "تاریخ"
+    "Contains" : "Contains",
+    "Short text" : "Short text",
+    "Enter a short text" : "Enter a short text",
+    "Long text" : "متن طولانی",
+    "Enter a long text" : "Enter a long text",
+    "Date" : "تاریخ",
+    "Pick a date" : "Pick a date",
+    "Date and time" : "Date and time",
+    "Pick a date and time" : "Pick a date and time",
+    "Select" : "گزینش<br>"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -1,7 +1,8 @@
 { "translations": {
-    "Title" : "სათაური",
+    "Name" : "სახელი",
     "Value" : "მნიშვნელობა",
-    "Save" : "შენახვა",
+    "Download" : "ჩამოტვირთვა",
+    "Title" : "სათაური",
     "List" : "ჩამონათვალი",
     "Date" : "თარიღი"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

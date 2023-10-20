@@ -1,7 +1,8 @@
 OC.L10N.register(
     "biblio",
     {
-    "Save" : "ບັນທຶກ",
+    "Name" : "ຊື່",
+    "Download" : "ດາວໂຫລດ",
     "Date" : "ວັນທີ"
 },
 "nplurals=1; plural=0;");

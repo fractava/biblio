@@ -1,8 +1,11 @@
 { "translations": {
-    "Title" : "Цол/Албан тушаал",
+    "Name" : "Нэр",
     "Value" : "Үнийн дүн",
-    "Save" : "Хадгалах",
+    "Download" : "Татах",
+    "Back" : "Буцах",
+    "Title" : "Цол/Албан тушаал",
     "List" : "Жагсаалт",
-    "Date" : "Он сар өдөр"
+    "Date" : "Он сар өдөр",
+    "Select" : "Сонгох"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

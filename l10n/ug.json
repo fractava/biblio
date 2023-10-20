@@ -1,6 +1,8 @@
 { "translations": {
+    "Name" : "ئاتى",
+    "Download" : "چۈشۈر",
+    "Search" : "Search",
     "Title" : "ماۋزۇ",
-    "Save" : "ساقلا",
     "Date" : "Date"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

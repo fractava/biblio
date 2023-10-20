@@ -1,9 +1,29 @@
 { "translations": {
-    "Title" : "Назва",
+    "Name" : "Назва",
+    "Reset" : "Відхилити зміни",
     "Value" : "Значення",
-    "Save" : "Зберегти",
+    "Customers" : "Клієнти",
+    "Download" : "Завантажити",
+    "Create Row" : "Додати рядок",
+    "Search" : "Пошук",
+    "Back" : "Назад",
+    "Select operator" : "Виберіть оператор",
+    "Sort asc" : "За зростанням",
+    "Sort desc" : "За спаданням",
+    "Filtering" : "Фільтрування",
+    "Select Operator" : "Виберіть оператор",
+    "Export CSV" : "Експорт у CSV",
+    "_%n selected row_::_%n selected rows_" : ["Вибрано %n рядок","Вибрано %n рядки","Вибрано %n рядків","Вибрано %n рядків"],
+    "Title" : "Назва",
     "List" : "Список",
+    "Contains" : "Містить",
+    "Long text" : "Довгий текст",
     "Date" : "Дата",
-    "Pick a date" : "Вибрати дату"
+    "Pick a date" : "Вибрати дату",
+    "Date and time" : "Дата та час",
+    "Pick a date and time" : "Вибрати дату і час",
+    "Select" : "Вибрати",
+    "Request is not authorized. Are you logged in?" : "Запит без авторизації. Чи ви увійшли до системи?",
+    "Request not allowed." : "Запит не дозволено."
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);"
 }

@@ -1,6 +1,9 @@
 { "translations": {
+    "Name" : "اسم",
+    "Reset" : "ری سیٹ",
+    "Download" : "ڈاؤن لوڈ",
+    "Search" : "Search",
     "Title" : "عنوان",
-    "Save" : "حفظ",
     "Date" : "Date"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -1,6 +1,8 @@
 { "translations": {
+    "Name" : "Numm",
+    "Download" : "Eroflueden",
     "Title" : "Titel",
-    "Save" : "Späicheren",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Select" : "Auswielen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -1,12 +1,16 @@
 OC.L10N.register(
     "biblio",
     {
-    "Delete entry" : "Xoá mục",
-    "Title" : "Tiêu đề",
+    "Name" : "Tên",
+    "Reset" : "Đặt lại",
     "Value" : "Giá trị",
-    "Save" : "Lưu",
+    "Download" : "Tải xuống",
+    "Search" : "Tìm kiếm",
+    "Back" : "Trở lại",
+    "Title" : "Tiêu đề",
     "List" : "Danh sách",
     "Date" : "Date",
-    "Pick a date" : "Chọn ngày"
+    "Pick a date" : "Chọn ngày",
+    "Select" : "Chọn"
 },
 "nplurals=1; plural=0;");

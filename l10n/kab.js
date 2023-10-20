@@ -1,7 +1,10 @@
 OC.L10N.register(
     "biblio",
     {
+    "Name" : "Nom",
+    "Download" : "Sider",
+    "Back" : "Retour",
     "Title" : "Azwel",
-    "Save" : "Sekles"
+    "Select" : "Fren"
 },
 "nplurals=2; plural=(n != 1);");

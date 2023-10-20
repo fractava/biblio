@@ -1,9 +1,10 @@
 OC.L10N.register(
     "biblio",
     {
-    "Title" : "ចំណងជើង",
+    "Name" : "ឈ្មោះ",
     "Value" : "តម្លៃ",
-    "Save" : "រក្សាទុក",
+    "Download" : "ទាញយក",
+    "Title" : "ចំណងជើង",
     "Date" : "Date"
 },
 "nplurals=1; plural=0;");

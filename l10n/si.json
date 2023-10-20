@@ -1,6 +1,9 @@
 { "translations": {
+    "Name" : "නම",
     "Value" : "අගය",
-    "Save" : "සුරකින්න",
+    "Download" : "බාගන්න",
+    "Search" : "සොයන්න",
+    "Back" : "ආපසු",
     "List" : "ලැයිස්තුව",
     "Date" : "දිනය"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

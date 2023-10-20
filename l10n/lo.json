@@ -1,5 +1,6 @@
 { "translations": {
-    "Save" : "ບັນທຶກ",
+    "Name" : "ຊື່",
+    "Download" : "ດາວໂຫລດ",
     "Date" : "ວັນທີ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -1,8 +1,24 @@
 { "translations": {
-    "Title" : "Título",
+    "Biblio" : "Biblio",
+    "A library management system" : "Un sistema de gestión de bibliotecas",
+    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Esto se puede utilizar para gestionar una biblioteca de libros, un archivo de partituras, una biblioteca de libros de texto",
+    "Add a field" : "Agregar un campo",
+    "Name" : "Nombre",
+    "Delete Field" : "Eliminar campo",
     "Value" : "Valor",
-    "Save" : "Guardar",
+    "Drag to reorder the fields" : "Arrastra para reordenar los campos",
+    "Lend/Return" : "Prestar/Devolver",
+    "Customers" : "Clientes",
+    "Sort desc" : "Ordenar desc",
+    "Title" : "Título",
     "List" : "Lista",
-    "Date" : "Fecha"
+    "Short text" : "Texto corto",
+    "Enter a short text" : "Ingresa un texto corto",
+    "Long text" : "Texto largo",
+    "Enter a long text" : "Ingresa un texto largo",
+    "Date" : "Fecha",
+    "Pick a date" : "Selecciona una fecha",
+    "Date and time" : "Fecha y hora",
+    "Pick a date and time" : "Selecciona una fecha y hora"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

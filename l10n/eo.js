@@ -2,7 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Titolo",
-    "Save" : "Konservi",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Select" : "Elekti"
 },
 "nplurals=2; plural=(n != 1);");

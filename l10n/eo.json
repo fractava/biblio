@@ -1,6 +1,6 @@
 { "translations": {
     "Title" : "Titolo",
-    "Save" : "Konservi",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Select" : "Elekti"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
