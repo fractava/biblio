@@ -59,7 +59,15 @@ export default {
 			}
 
 			if (column.isProperty) {
-				return this.row?.[column.property];
+				if (Array.isArray(column.property)) {
+					let subProperty = this.row;
+					for (const subPropertyPath of column.property) {
+						subProperty = subProperty?.[subPropertyPath];
+					}
+					return subProperty;
+				} else {
+					return this.row?.[column.property];
+				}
 			} else {
 				const field = this.row.fieldValues.find(item => item.fieldId === column.id) || null;
 
