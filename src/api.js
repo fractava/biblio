@@ -744,13 +744,43 @@ export const api = {
 		});
 	},
 
-	getItemInstances(collectionId, itemId) {
-		return new Promise((resolve, reject) => {
-			axios.get(`/collections/${collectionId}/items/${itemId}/instances`)
-				.then(function(response) {
-					resolve(response.data);
+		 /**
+	  * @param {number} collectionId Id of the collection to get the customers of
+	  * @param {string} include information the server should include in the returned API object
+	  * @param {object} filters filters result on server side
+	  * @param {string} sort column the result will be sorted by
+	  * @param {boolean} sortReverse wether to reverse the sort direction
+	  * @param {number} limit limit the number of results returned
+	  * @param {number} offset the offset of the results returned
+	  * @return {PCancelable<Array<Customer>>}
+	  */
+	getItemInstances(collectionId, include = "model+item+loan+fields", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
+		return new PCancelable((resolve, reject, onCancel) => {
+			const controller = new AbortController();
+
+			onCancel(() => {
+				controller.abort();
+			});
+
+			axios.get(`/collections/${collectionId}/itemInstances`, {
+				signal: controller.signal,
+				params: {
+					include,
+					filter: JSON.stringify(filters),
+					sort,
+					sortReverse,
+					limit,
+					offset,
+				},
+			})
+				.then((response) => {
+					const instances = response.data.result; // .map(transforms.fromAPI.transformItemInstance);
+					resolve({
+						meta: response.data.meta,
+						instances,
+					});
 				})
-				.catch(function(error) {
+				.catch((error) => {
 					reject(error);
 				});
 		});
