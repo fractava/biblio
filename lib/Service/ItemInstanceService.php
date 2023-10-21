@@ -12,7 +12,10 @@ use OCA\Biblio\Errors\ItemInstanceNotFound;
 use OCA\Biblio\Db\ItemInstance;
 use OCA\Biblio\Db\ItemInstanceMapper;
 
+use OCA\Biblio\Traits\ApiObjectService;
+
 class ItemInstanceService {
+	use ApiObjectService;
 
 	/** @var ItemInstanceMapper */
 	private $mapper;
@@ -21,8 +24,21 @@ class ItemInstanceService {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(int $itemId): array {
-		return $this->mapper->findAll($itemId);
+	public function findAll(int $collectionId, array $includes, ?array $filters, ?string $sort = null, bool $sortReverse = null, ?int $limit = null, ?int $offset = null): array {
+		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
+		//$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
+
+		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
+
+		//$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
+
+		/*$results = [];
+
+		foreach ($entities as $item) {
+			$results[] = $this->getApiObjectFromEntity($collectionId, $item, $includeModel, $includeFields, $fieldFilters);
+		}*/
+
+		return array($entities, $meta);
 	}
 
 	private function handleException(Exception $e): void {
@@ -50,53 +66,14 @@ class ItemInstanceService {
 		}
 	}
 
-	public function create(string $barcode, int $itemId, ?int $loanedTo, ?string $loanedUntil) {
+	public function create(string $barcode, int $itemId) {
 		$itemInstance = new ItemInstance();
 		$itemInstance->setBarcode($barcode);
 		$itemInstance->setItemId($itemId);
 
-		if(!is_null($loanedTo) && !is_null($loanedUntil)) {
-			$itemInstance->setLoanedTo($loanedTo);
-			$itemInstance->setLoanedUntil($loanedUntil);
-		}
-
 		$itemInstance = $this->mapper->insert($itemInstance);
 
 		return $itemInstance;
-	}
-
-	public function update(int $id, ?string $barcode, ?int $loanedTo, ?int $loanedUntil) {
-		try {
-			$itemInstance = $this->mapper->find($id);
-			
-			if (!is_null($barcode)) {
-				$itemInstance->setBarcode($barcode);
-			}
-
-			if(!is_null($loanedTo) && !is_null($loanedUntil)) {
-				$itemInstance->setLoanedTo($loanedTo);
-				$itemInstance->setLoanedUntil($loanedUntil);
-			}
-
-			return $this->mapper->update($itemInstance);
-		} catch (Exception $e) {
-			$this->handleException($e);
-		}
-	}
-
-	public function updateByBarcode(string $barcode, ?int $loanedTo, ?int $loanedUntil) {
-		try {
-			$itemInstance = $this->mapper->findByBarcode($barcode);
-
-			if(!is_null($loanedTo) && !is_null($loanedUntil)) {
-				$itemInstance->setLoanedTo($loanedTo);
-				$itemInstance->setLoanedUntil($loanedUntil);
-			}
-
-			return $this->mapper->update($itemInstance);
-		} catch (Exception $e) {
-			$this->handleException($e);
-		}
 	}
 
 	public function delete(int $id) {

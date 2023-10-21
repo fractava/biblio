@@ -22,12 +22,12 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 	const ITEM_FIELDS_TABLE = "biblio_item_fields";
 	const ITEM_FIELDS_VALUES_TABLE = "biblio_item_fields_values";
 
+	const LOANS_TABLE = "biblio_loans";
+
 	// Customers
 	const CUSTOMERS_TABLE = "biblio_customers";
 	const CUSTOMER_FIELDS_TABLE = "biblio_customer_fields";
 	const CUSTOMER_FIELDS_VALUES_TABLE = "biblio_customer_fields_values";
-
-	const LOANS_TABLE = "biblio_loans";
 
 	/**
 	 * @param IOutput $output

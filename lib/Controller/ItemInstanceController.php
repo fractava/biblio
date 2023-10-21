@@ -10,7 +10,11 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
+use OCA\Biblio\Traits\ApiObjectController;
+
 class ItemInstanceController extends Controller {
+	use ApiObjectController;
+
 	/** @var ItemInstanceService */
 	private $service;
 
@@ -20,13 +24,28 @@ class ItemInstanceController extends Controller {
                                 ItemInstanceService $service) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
-		$this->objectHelper = $objectHelper;
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function index(int $collectionId, ?string $include, ?string $filter, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): JSONResponse {
+		$includes = $this->parseIncludesString($include);
+		$filters = $this->parseFilterString($filter);
+
+		list($entities, $meta) = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
+
+		return new JSONResponse([
+			"meta" => $meta,
+			"result" => $entities,
+		], Http::STATUS_OK);
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function index(int $collectionId, int $itemId): JSONResponse {
+	public function getAllOfItem(int $collectionId, int $itemId): JSONResponse {
 		$result = $this->service->findAll($itemId);
 
 		return new JSONResponse($result, Http::STATUS_OK);
@@ -55,28 +74,9 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, int $itemId, string $barcode, ?int $loanedTo, ?int $loanedUntil): JSONResponse {
-		$result = $this->service->create($barcode, $itemId, $loanedTo, $loanedUntil);
+	public function create(int $collectionId, int $itemId, string $barcode): JSONResponse {
+		$result = $this->service->create($barcode, $itemId);
 		return new JSONResponse($result, Http::STATUS_OK);
-	}
-
-	/**
-	 * @NoAdminRequired
-	 */
-	public function update(int $collectionId, int $itemId, int $instanceId, ?string $barcode, ?int $loanedTo, ?int $loanedUntil): DataResponse {
-		return $this->handleNotFound(function () use ($collectionId, $itemId, $instanceId, $barcode, $loanedTo, $loanedUntil) {
-			return $this->service->update($instanceId, $barcode, $loanedTo, $loanedUntil);
-		});
-	}
-
-	/**
-	 * @NoAdminRequired
-	 */
-	public function updateByBarcode(int $collectionId, int $itemId, string $barcode, ?int $loanedTo, ?int $loanedUntil): DataResponse {
-		// this endpoint does not allow the modification of the barcode, since it is used as the reference
-		return $this->handleNotFound(function () use ($collectionId, $itemId, $barcode, $loanedTo, $loanedUntil) {
-			return $this->service->updateByBarcode($barcode, $loanedTo, $loanedUntil);
-		});
 	}
 
 	/**
