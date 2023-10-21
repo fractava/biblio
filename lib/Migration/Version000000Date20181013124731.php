@@ -308,10 +308,10 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 			]);
 			$table->addColumn('item_instance_id', Types::INTEGER, [
-				'notnull' => false,
+				'notnull' => true,
 			]);
 			$table->addColumn('customer_id', Types::INTEGER, [
-				'notnull' => false,
+				'notnull' => true,
 			]);
 			$table->addColumn('until', Types::BIGINT, [
 				'notnull' => false,
