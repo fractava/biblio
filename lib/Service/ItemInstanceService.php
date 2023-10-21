@@ -17,6 +17,10 @@ use OCA\Biblio\Traits\ApiObjectService;
 class ItemInstanceService {
 	use ApiObjectService;
 
+	const ITEM_INCLUDE = "item";
+	const LOAN_INCLUDE = "loan";
+	const FIELDS_INCLUDE = "fields";
+
 	/** @var ItemInstanceMapper */
 	private $mapper;
 
@@ -24,21 +28,47 @@ class ItemInstanceService {
 		$this->mapper = $mapper;
 	}
 
+	public function getApiObjectFromEntities(int $collectionId, $entities, bool $includeModel, bool $includeItem, bool $includeLoan, bool $includeFields, ?array $fieldFilters = null) {
+		$result = [];
+
+		if($includeModel) {
+			$result = $entities["instance"]->jsonSerialize();
+		}
+
+		if($includeItem) {
+			$result["item"] = $entities["item"]->jsonSerialize();
+		}
+
+		if($includeLoan) {
+			$result["loan"] = $entities["loan"]->jsonSerialize();
+		}
+
+		if($includeFields) {
+			$result = array_merge($result, [
+				"fieldValues" => $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters),
+			]);
+		}
+
+		return $result;
+	}
+
 	public function findAll(int $collectionId, array $includes, ?array $filters, ?string $sort = null, bool $sortReverse = null, ?int $limit = null, ?int $offset = null): array {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
-		//$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
+		$includeItem = $this->shouldInclude(self::ITEM_INCLUDE, $includes);
+		$includeLoan = $this->shouldInclude(self::LOAN_INCLUDE, $includes);
+		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
 		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
 		//$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
 
-		/*$results = [];
+		$results = [];
 
-		foreach ($entities as $item) {
-			$results[] = $this->getApiObjectFromEntity($collectionId, $item, $includeModel, $includeFields, $fieldFilters);
-		}*/
+		foreach ($entities as $entity) {
+			$results[] = $this->getApiObjectFromEntities($collectionId, $entity, $includeModel, $includeItem, $includeLoan, $includeFields, $fieldFilters);
+		}
 
-		return array($entities, $meta);
+		return array($results, $meta);
 	}
 
 	private function handleException(Exception $e): void {

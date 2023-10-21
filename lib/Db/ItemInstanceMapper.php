@@ -54,6 +54,65 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	}
 
 	/**
+	 * Runs a sql query and returns an array of entities
+	 *
+	 * @param IQueryBuilder $query
+     * @param array $ignoredColumns
+	 * @return array all fetched entities and all seperate columns
+	 * @psalm-return T[] all fetched entities and all seperate columns
+	 * @throws Exception
+	 * @since 14.0.0
+	 */
+	protected function findEntitiesAndSeperateColumns(IQueryBuilder $query, array $seperateColumns): array {
+		$result = $query->executeQuery();
+
+        $seperateColumnResults = [];
+
+		try {
+			$entities = [];
+            $firstIteration = true;
+			while ($row = $result->fetch()) {
+                if($firstIteration) {
+                    $firstIteration = false;
+                    foreach ($seperateColumns as $column) {
+                        $seperateColumnResults[$column] = $row[$column];
+                    }
+                }
+
+                $filteredRow = array_diff_key($row, array_flip($seperateColumns));
+
+				$itemInstanceColumns = [
+					"id" => $filteredRow["id"],
+					"barcode" => $filteredRow["barcode"],
+					"item_id" => $filteredRow["item_id"],
+				];
+
+				$itemColumns = [
+					"id" => $filteredRow["itemJoin_id"],
+					"collection_id" => $filteredRow["itemJoin_collection_id"],
+					"title" => $filteredRow["itemJoin_title"],
+				];
+
+				$loanColumns = [
+					"id" => $filteredRow["loanJoin_id"],
+					"item_instance_id" => $filteredRow["loanJoin_item_instance_id"],
+					"customer_id" => $filteredRow["loanJoin_customer_id"],
+					"until" => $filteredRow["loanJoin_until"],
+				];
+
+				$entities[] =  [
+					"instance" => \call_user_func(ItemInstance::class .'::fromRow', $itemInstanceColumns),
+					"item" => \call_user_func(Item::class .'::fromRow', $itemColumns),
+					"loan" => \call_user_func(Loan::class .'::fromRow', $loanColumns),
+				];
+			}
+			return [$entities, $seperateColumnResults];
+		} finally {
+			$result->closeCursor();
+		}
+	}
+
+	/**
 	 * @param string $collectionId
 	 * @return array
 	 */
@@ -71,6 +130,13 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('instance.*')
 			->addSelect($qb->createFunction('COUNT(*) OVER () AS totalResultCount'))
+			->addSelect($qb->createFunction('item.id AS itemJoin_id'))
+			->addSelect($qb->createFunction('item.collection_id AS itemJoin_collection_id'))
+			->addSelect($qb->createFunction('item.title AS itemJoin_title'))
+			->addSelect($qb->createFunction('loan.id AS loanJoin_id'))
+			->addSelect($qb->createFunction('loan.item_instance_id AS loanJoin_item_instance_id'))
+			->addSelect($qb->createFunction('loan.customer_id AS loanJoin_customer_id'))
+			->addSelect($qb->createFunction('loan.until AS loanJoin_until'))
 			->from(self::TABLENAME, 'instance');
 
 		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
