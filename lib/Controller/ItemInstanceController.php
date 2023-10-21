@@ -45,16 +45,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function getAllOfItem(int $collectionId, int $itemId): JSONResponse {
-		$result = $this->service->findAll($itemId);
-
-		return new JSONResponse($result, Http::STATUS_OK);
-	}
-
-	/**
-	 * @NoAdminRequired
-	 */
-	public function show(int $collectionId, int $itemId, int $instanceId): JSONResponse {
+	public function show(int $collectionId, int $instanceId): JSONResponse {
 		return $this->handleNotFound(function () use ($instanceId) {
 			$result = $this->service->find($instanceId);
             return new JSONResponse($result, Http::STATUS_OK);
@@ -64,7 +55,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function showByBarcode(int $collectionId, int $itemId, string $barcode): JSONResponse {
+	public function showByBarcode(int $collectionId, string $barcode): JSONResponse {
 		return $this->handleNotFound(function () use ($barcode) {
 			$result = $this->service->findByBarcode($barcode);
             return new JSONResponse($result, Http::STATUS_OK);
@@ -74,7 +65,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, int $itemId, string $barcode): JSONResponse {
+	public function create(int $collectionId, string $barcode, int $itemId): JSONResponse {
 		$result = $this->service->create($barcode, $itemId);
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
@@ -82,7 +73,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId, int $itemId, int $instanceId): DataResponse {
+	public function destroy(int $collectionId, int $instanceId): DataResponse {
 		return $this->handleNotFound(function () use ($instanceId) {
 			return $this->service->delete($instanceId);
 		});
@@ -91,7 +82,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroyByBarcode(int $collectionId, int $itemId, string $barcode): DataResponse {
+	public function destroyByBarcode(int $collectionId, string $barcode): DataResponse {
 		return $this->handleNotFound(function () use ($barcode) {
 			return $this->service->deleteByBarcode($barcode);
 		});

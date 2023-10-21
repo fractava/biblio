@@ -147,7 +147,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb->leftJoin('instance', self::LOANS_TABLE, 'loan', $qb->expr()->andX(
 			$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
 		));
-		
+				
 		/*$qb->leftJoin('instance', self::CUSTOMERS_TABLENAME, 'customer', $qb->expr()->andX(
 			$qb->expr()->eq('instance.id', 'instance.item_id'),
 		));*/
@@ -166,6 +166,8 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		//}
 
 		$this->handleStringFilter($this->db, $qb, $filters["barcode"], 'instance.barcode');
+
+		$this->handleIdFilter($qb, $filters["item_id"], 'instance.item_id');
 
 		/*if($includesFieldValueFilters) {
 			$qb->groupBy('instance.id')

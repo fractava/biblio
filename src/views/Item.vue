@@ -86,8 +86,8 @@ export default {
 		api.getItem(this.biblioStore.selectedCollectionId, this.itemId).then((result) => {
 			this.item = result;
 		});
-		api.getItemInstances(this.biblioStore.selectedCollectionId, this.itemId).then((result) => {
-			this.instances = result;
+		api.getItemInstances(this.biblioStore.selectedCollectionId, "model+loan", { item_id: { operator: "=", operand: this.itemId } }).then((result) => {
+			this.instances = result.instances;
 		});
 	},
 	methods: {

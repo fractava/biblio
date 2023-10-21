@@ -798,6 +798,24 @@ export const api = {
 		});
 	},
 
+	/**
+	 * @param {number} collectionId Id of the collection the item instance is in
+	 * @param {number} itemInstanceId Id of the item instance to delete
+	 * @return {Promise<ItemInstance>}
+	 */
+	deleteItemInstance(collectionId, itemInstanceId) {
+		return new Promise((resolve, reject) => {
+			axios.delete(`/collections/${collectionId}/itemInstances/${itemInstanceId}`)
+				.then(function(response) {
+					// resolve(transforms.fromAPI.transformItemInstance(response.data));
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
 	importV1(data) {
 		return new Promise((resolve, reject) => {
 			axios.post("/import/v1", { data })

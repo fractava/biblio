@@ -55,6 +55,26 @@ trait ApiObjectMapper {
         }
     }
 
+	/**
+     * @param IQueryBuilder $qb
+     * @param array $filter
+     * @param string $column
+     * @param bool $and
+     */
+    public function handleIdFilter(IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
+        if(isset($filter) && is_int($filter["operand"])) {
+			if($filter["operator"] === "=") {
+				$expression = $qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_INT));
+			}
+
+            if($and) {
+                $qb->andWhere($expression);
+            } else {
+                $qb->where($expression);
+            }
+		}
+    }
+
 	public function handleSortByColumn(IQueryBuilder $qb, string $column, bool $reverse) {
 		$sortDirection = $this->getSortDirection($reverse);
 		$qb->orderBy($column, $sortDirection);

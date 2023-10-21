@@ -24,11 +24,12 @@ import Vue from "vue";
 import Router from "vue-router";
 import { getRootUrl, generateUrl } from "@nextcloud/router";
 
-import LendReturn from "./views/LendReturn";
-import Items from "./views/Items";
-import Item from "./views/Item";
-import Customers from "./views/Customers";
-import Customer from "./views/Customer";
+import LendReturn from "./views/LendReturn.vue";
+import Items from "./views/Items.vue";
+import Item from "./views/Item.vue";
+import Customers from "./views/Customers.vue";
+import Customer from "./views/Customer.vue";
+import ItemInstances from "./views/ItemInstances.vue";
 
 Vue.use(Router);
 
@@ -57,6 +58,10 @@ const router = new Router({
 		{
 			path: "/item/:id",
 			component: Item,
+		},
+		{
+			path: "/iteminstances",
+			component: ItemInstances,
 		},
 		{
 			path: "/customers",

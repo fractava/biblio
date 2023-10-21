@@ -22,6 +22,11 @@
 				<Bookshelf :size="20" />
 			</template>
 		</NcAppNavigationItem>
+		<NcAppNavigationItem :name="t('biblio', 'Item Instances')" to="/iteminstances">
+			<template #icon>
+				<Bookshelf :size="20" />
+			</template>
+		</NcAppNavigationItem>
 		<NcAppNavigationItem :name="t('biblio', 'Customers')" to="/customers">
 			<template #icon>
 				<AccountMultiple :size="20" />
