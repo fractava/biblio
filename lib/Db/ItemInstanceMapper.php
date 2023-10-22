@@ -178,6 +178,8 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$this->handleStringFilter($this->db, $qb, $filters["barcode"], 'instance.barcode');
 
 		$this->handleStringFilter($this->db, $qb, $filters["item_title"], 'item.title');
+		
+		$this->handleStringFilter($this->db, $qb, $filters["loan_customer_name"], 'loanCustomer.name');
 
 		$this->handleIdFilter($qb, $filters["item_id"], 'instance.item_id');
 
@@ -189,6 +191,10 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		if (isset($sort)) {
 			if($sort === "barcode") {
 				$this->handleSortByColumn($qb, 'instance.barcode', $sortReverse);
+			} else if($sort === "item_title") {
+				$this->handleSortByColumn($qb, 'item.title', $sortReverse);
+			} else if($sort === "loan_customer_name") {
+				$this->handleSortByColumn($qb, 'loanCustomer.name', $sortReverse);
 			} else if ($this->isFieldReference($sort)) {
 				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'i', self::FIELDS_VALUES_TABLENAME, 'item_id');
 			}
