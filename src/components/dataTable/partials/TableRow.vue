@@ -5,7 +5,8 @@
 		</td>
 		<td v-for="col in columns"
 			:key="col.id"
-			@click="$emit('click-row', row.id, col.id)">
+			:class="{ clickable: col.clickable }"
+			@click="col.clickable && ($emit('click-row', row.id, col.id))">
 			<component :is="col.cellComponent"
 				:column="col"
 				:row-id="row.id"
@@ -115,6 +116,10 @@ tr.selected {
 
 :deep(.checkbox-radio-switch__icon) {
 	margin: 0;
+}
+
+td.clickable, td.clickable * {
+	cursor: pointer;
 }
 
 </style>
