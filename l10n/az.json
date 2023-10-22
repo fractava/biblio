@@ -1,0 +1,12 @@
+{ "translations": {
+    "Name" : "Ad",
+    "Error" : "Səhv",
+    "Reset" : "Sıfırla",
+    "Download" : "Yüklə",
+    "Search" : "Axtarış",
+    "Delete" : "Sil",
+    "Title" : "Başlıq",
+    "Date" : "Date",
+    "Select" : "Seç"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

@@ -1,6 +1,10 @@
 { "translations": {
     "Name" : "Numm",
+    "Error" : "Fehler",
+    "Reset" : "Zeréck setzen",
     "Download" : "Eroflueden",
+    "Search" : "Search",
+    "Delete" : "Läschen",
     "Title" : "Titel",
     "Date" : "Date",
     "Select" : "Auswielen"

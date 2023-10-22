@@ -1,6 +1,11 @@
 OC.L10N.register(
     "biblio",
     {
+    "Name" : "Anv",
+    "Error" : "Fazi",
+    "Download" : "Pellgargañ",
+    "Search" : "Klask",
+    "Delete" : "Lemel",
     "Title" : "Titl",
     "List" : "Roll",
     "Date" : "Deiz"

@@ -2,7 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Name" : "Nombre",
+    "Reset" : "Restaurar",
     "Value" : "Valor",
+    "Download" : "Descargar",
+    "Search" : "Buscar",
+    "Delete" : "Borrar",
     "Title" : "Título",
     "List" : "Lista",
     "Date" : "Fecha",
