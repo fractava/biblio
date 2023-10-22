@@ -177,6 +177,8 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		$this->handleStringFilter($this->db, $qb, $filters["barcode"], 'instance.barcode');
 
+		$this->handleStringFilter($this->db, $qb, $filters["item_title"], 'item.title');
+
 		$this->handleIdFilter($qb, $filters["item_id"], 'instance.item_id');
 
 		/*if($includesFieldValueFilters) {

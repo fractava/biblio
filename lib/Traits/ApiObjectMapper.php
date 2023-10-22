@@ -27,7 +27,7 @@ trait ApiObjectMapper {
 		}
     }
 
-    public function handleStringFilterExpr(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column) {
+    public function handleJsonStringFilterExpr(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column) {
         if(isset($filter) && is_string($filter["operand"]) && $filter["operand"] !== '') {
             if($filter["operator"] === "=") {
 				return $qb->expr()->eq($column, $qb->createNamedParameter("\"" . $filter["operand"] . "\"", IQueryBuilder::PARAM_STR));
@@ -43,10 +43,31 @@ trait ApiObjectMapper {
         }
     }
 
-    public function handleStringFilter(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
+    public function handleJsonStringFilter(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
         if(isset($filter) && is_string($filter["operand"]) && $filter["operand"] !== '') {
-			$expression = $this->handleStringFilterExpr($db, $qb, $filter, $column);
+			$expression = $this->handleJsonStringFilterExpr($db, $qb, $filter, $column);
 
+            if($and) {
+                $qb->andWhere($expression);
+            } else {
+                $qb->where($expression);
+            }
+        }
+    }
+
+	public function handleStringFilter(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
+        if(isset($filter) && is_string($filter["operand"]) && $filter["operand"] !== '') {
+			if($filter["operator"] === "=") {
+				$expression = $qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_STR));
+			} else if($filter["operator"] === "contains") {
+                $expression = $qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"]) . '%'));
+            } else if($filter["operator"] === "startsWith") {
+                $expression = $qb->expr()->iLike($column, $qb->createNamedParameter($db->escapeLikeParameter($filter["operand"]) . '%'));
+            } else if($filter["operator"] === "endsWith") {
+                $expression = $qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"])));
+            } else {
+                throw new \Error("unknown operator");
+            }
             if($and) {
                 $qb->andWhere($expression);
             } else {
@@ -125,7 +146,7 @@ trait ApiObjectMapper {
 		foreach ($fieldValueFilters as $fieldId => $filter) {
 			$validCombinations[] = $qb->expr()->andX(
 				$qb->expr()->eq($fieldIdColumn, $qb->createNamedParameter($fieldId), IQueryBuilder::PARAM_INT),
-				$this->handleStringFilterExpr($this->db, $qb, $filter, $valueColumn),
+				$this->handleJsonStringFilterExpr($this->db, $qb, $filter, $valueColumn),
 			);
 		}
 
