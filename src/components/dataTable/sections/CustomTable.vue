@@ -28,7 +28,7 @@
 					:columns="columns"
 					:selected="isRowSelected(row.id)"
 					@update-row-selection="updateRowSelection"
-					@click-row="rowId => $emit('click-row', rowId)" />
+					@click-row="(rowId, columnId)=> $emit('click-row', rowId, columnId)" />
 			</tbody>
 		</table>
 	</div>

@@ -5,7 +5,7 @@
 		</td>
 		<td v-for="col in columns"
 			:key="col.id"
-			@click="$emit('click-row', row.id)">
+			@click="$emit('click-row', row.id, col.id)">
 			<component :is="col.cellComponent"
 				:column="col"
 				:row-id="row.id"

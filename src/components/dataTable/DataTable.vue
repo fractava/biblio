@@ -28,7 +28,7 @@
 				@update:currentSortReverse="(newSortReverse) => $emit('update:currentSortReverse', newSortReverse)"
 				@update:currentFilters="(newFilters) => $emit('update:currentFilters', newFilters)"
 				@create-row="$emit('create-row')"
-				@click-row="rowId => $emit('click-row', rowId)"
+				@click-row="(rowId, columnId)=> $emit('click-row', rowId, columnId)"
 				@update:selectedRows="rowIds => localSelectedRows = rowIds"
 				@download-csv="data => downloadCsv(data, columns, table)">
 				<template #actions>

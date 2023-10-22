@@ -121,7 +121,20 @@ export default {
 		this.itemInstancesStore.refreshSearchResults();
 	},
 	methods: {
-		openItemInstance(itemId) {
+		openItemInstance(itemInstanceId, columnId) {
+			const itemInstance = this.itemInstancesStore.getItemInstanceById(itemInstanceId);
+			if (columnId === -2) {
+				this.$router.push({
+					path: "/item/" + itemInstance.itemId,
+				});
+			} else if (columnId === -3) {
+				if (itemInstance.loan.customerId) {
+					this.$router.push({
+						path: "/customer/" + itemInstance.loan.customerId,
+					});
+				}
+			}
+			console.log(itemInstanceId, columnId);
 		},
 		onSearchUpdate(newSearch) {
 			this.itemInstancesStore.search = newSearch;
