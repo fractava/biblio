@@ -100,10 +100,17 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 					"until" => $filteredRow["loanJoin_until"],
 				];
 
+				$loanCustomerColumns = [
+					"id" => $filteredRow["loanCustomerJoin_id"],
+					"collection_id" => $filteredRow["loanCustomerJoin_collection_id"],
+					"name" => $filteredRow["loanCustomerJoin_name"],
+				];
+
 				$entities[] =  [
 					"instance" => \call_user_func(ItemInstance::class .'::fromRow', $itemInstanceColumns),
 					"item" => \call_user_func(Item::class .'::fromRow', $itemColumns),
 					"loan" => \call_user_func(Loan::class .'::fromRow', $loanColumns),
+					"loanCustomer" => \call_user_func(Customer::class .'::fromRow', $loanCustomerColumns),
 				];
 			}
 			return [$entities, $seperateColumnResults];
@@ -137,6 +144,9 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 			->addSelect($qb->createFunction('loan.item_instance_id AS loanJoin_item_instance_id'))
 			->addSelect($qb->createFunction('loan.customer_id AS loanJoin_customer_id'))
 			->addSelect($qb->createFunction('loan.until AS loanJoin_until'))
+			->addSelect($qb->createFunction('loanCustomer.id AS loanCustomerJoin_id'))
+			->addSelect($qb->createFunction('loanCustomer.collection_id AS loanCustomerJoin_collection_id'))
+			->addSelect($qb->createFunction('loanCustomer.name AS loanCustomerJoin_name'))
 			->from(self::TABLENAME, 'instance');
 
 		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
@@ -147,10 +157,10 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb->leftJoin('instance', self::LOANS_TABLE, 'loan', $qb->expr()->andX(
 			$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
 		));
-				
-		/*$qb->leftJoin('instance', self::CUSTOMERS_TABLENAME, 'customer', $qb->expr()->andX(
-			$qb->expr()->eq('instance.id', 'instance.item_id'),
-		));*/
+
+		$qb->leftJoin('instance', self::CUSTOMERS_TABLENAME, 'loanCustomer', $qb->expr()->andX(
+			$qb->expr()->eq('loanCustomer.id', 'loan.customer_id'),
+		));
 
 		/*if($includesFieldValueFilters) {
 			$qb->innerJoin('instance', self::FIELDS_VALUES_TABLENAME, 'v', $qb->expr()->andX(

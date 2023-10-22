@@ -29,13 +29,13 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 				return;
 			}
 
-			api.getItemFields(biblioStore.selectedCollectionId)
+			/* api.getItemFields(biblioStore.selectedCollectionId)
 				.then((fields) => {
 					this.fields = fields;
 				})
 				.catch(() => {
 					showError(t("biblio", "Could not fetch item fields"));
-				});
+				}); */
 		},
 
 		/* Item Instances */
@@ -69,7 +69,7 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getItemInstances(biblioStore.selectedCollectionId, "model+item+loan", filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getItemInstances(biblioStore.selectedCollectionId, "model+item+loan+loan_customer", filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.instances;

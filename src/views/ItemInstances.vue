@@ -97,6 +97,17 @@ export default {
 					property: ["item", "title"],
 					cellComponent: TextCell,
 				},
+				{
+					id: -3,
+					name: "Loaned to Customer",
+					type: "short",
+					isProperty: true,
+					canSort: true,
+					sortIdentifier: "loan_customer_name",
+					canFilter: false,
+					property: ["loan", "customer", "name"],
+					cellComponent: TextCell,
+				},
 				...fieldColumns,
 			];
 		},

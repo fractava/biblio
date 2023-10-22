@@ -5,6 +5,7 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 import { api } from "../api.js";
 
 import { useItemsStore } from "./items.js";
+import { useItemInstancesStore } from "./itemInstances.js";
 import { useCustomersStore } from "./customers.js";
 
 export const useBiblioStore = defineStore("biblio", {
@@ -18,10 +19,13 @@ export const useBiblioStore = defineStore("biblio", {
 			this.selectedCollectionId = id;
 
 			const itemsStore = useItemsStore();
+			const itemInstancesStore = useItemInstancesStore();
 			const customersStore = useCustomersStore();
 
 			itemsStore.fetchFields();
 			itemsStore.refreshSearchResults().catch(() => {});
+			itemInstancesStore.fetchFields();
+			itemInstancesStore.refreshSearchResults().catch(() => {});
 			customersStore.fetchFields();
 			customersStore.refreshSearchResults().catch(() => {});
 		},

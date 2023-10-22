@@ -19,6 +19,7 @@ class ItemInstanceService {
 
 	const ITEM_INCLUDE = "item";
 	const LOAN_INCLUDE = "loan";
+	const LOAN_CUSTOMER_INCLUDE = "loan_customer";
 	const FIELDS_INCLUDE = "fields";
 
 	/** @var ItemInstanceMapper */
@@ -28,7 +29,7 @@ class ItemInstanceService {
 		$this->mapper = $mapper;
 	}
 
-	public function getApiObjectFromEntities(int $collectionId, $entities, bool $includeModel, bool $includeItem, bool $includeLoan, bool $includeFields, ?array $fieldFilters = null) {
+	public function getApiObjectFromEntities(int $collectionId, $entities, bool $includeModel, bool $includeItem, bool $includeLoan, bool $includeLoanCustomer, bool $includeFields, ?array $fieldFilters = null) {
 		$result = [];
 
 		if($includeModel) {
@@ -41,6 +42,10 @@ class ItemInstanceService {
 
 		if($includeLoan) {
 			$result["loan"] = $entities["loan"]->jsonSerialize();
+
+			if($includeLoanCustomer) {
+				$result["loan"]["customer"] = $entities["loanCustomer"]->jsonSerialize();
+			}
 		}
 
 		if($includeFields) {
@@ -56,6 +61,7 @@ class ItemInstanceService {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeItem = $this->shouldInclude(self::ITEM_INCLUDE, $includes);
 		$includeLoan = $this->shouldInclude(self::LOAN_INCLUDE, $includes);
+		$includeLoanCustomer = $includeLoan && $this->shouldInclude(self::LOAN_CUSTOMER_INCLUDE, $includes);
 		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
 		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
@@ -65,7 +71,7 @@ class ItemInstanceService {
 		$results = [];
 
 		foreach ($entities as $entity) {
-			$results[] = $this->getApiObjectFromEntities($collectionId, $entity, $includeModel, $includeItem, $includeLoan, $includeFields, $fieldFilters);
+			$results[] = $this->getApiObjectFromEntities($collectionId, $entity, $includeModel, $includeItem, $includeLoan, $includeLoanCustomer, $includeFields, $fieldFilters);
 		}
 
 		return array($results, $meta);
