@@ -10,6 +10,7 @@ use OCA\Biblio\Service\CustomerFieldService;
 use OCA\Biblio\Service\CustomerFieldValueService;
 use OCA\Biblio\Service\ItemService;
 use OCA\Biblio\Service\ItemFieldService;
+use OCA\Biblio\Service\LoanService;
 
 class V1ImportService {
 	/** @var CollectionService */
@@ -36,6 +37,9 @@ class V1ImportService {
 	/** @var ItemInstanceService */
 	private $itemInstanceService;
 
+	/** @var LoanService */
+	private $loanService;
+
 	public function __construct(CollectionService $collectionService,
 								CustomerService $customerService,
 								CustomerFieldService $customerFieldService,
@@ -43,7 +47,8 @@ class V1ImportService {
 								ItemService $itemService,
 								ItemFieldService $itemFieldService,
 								ItemFieldValueService $itemFieldValueService,
-								ItemInstanceService $itemInstanceService) {
+								ItemInstanceService $itemInstanceService,
+								LoanService $loanService) {
 		$this->collectionService = $collectionService;
 		$this->customerService = $customerService;
 		$this->customerFieldService = $customerFieldService;
@@ -52,6 +57,7 @@ class V1ImportService {
 		$this->itemFieldService = $itemFieldService;
 		$this->itemFieldValueService = $itemFieldValueService;
 		$this->itemInstanceService = $itemInstanceService;
+		$this->loanService = $loanService;
 	}
 
 	public function import(array $data, string $firstMember) {
@@ -122,10 +128,17 @@ class V1ImportService {
 
 				$loanedUntilTime = null;
 				if(isset($itemInstance["loaned_until"]) && $itemInstance["loaned_until"] !== "") {
-					$loanedUntilTime = $itemInstance["loaned_until"] . " 00:00:00";
+					$datetime = \DateTime::createFromFormat("Y-m-d H:i:s", $itemInstance["loaned_until"] . " 00:00:00");
+					$loanedUntilTime = $datetime->getTimestamp();
 				}
 
-				$this->itemInstanceService->create($itemInstance["barcode"], $mappedItemId, $mappedLoanedToCustomerId, $loanedUntilTime);
+				$newItemInstance = $this->itemInstanceService->create($itemInstance["barcode"], $mappedItemId);
+
+				if(isset($mappedLoanedToCustomerId)) {
+					$newItemInstanceId = $newItemInstance->getId();
+
+					$this->loanService->create($newItemInstanceId, $mappedLoanedToCustomerId, $loanedUntilTime);
+				}
 			}
 		}
 
