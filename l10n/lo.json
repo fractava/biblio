@@ -1,6 +1,8 @@
 { "translations": {
     "Name" : "ຊື່",
     "Download" : "ດາວໂຫລດ",
+    "Search" : "ຄົ້ນຫາ",
+    "Delete" : "ລຶບ",
     "Date" : "ວັນທີ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

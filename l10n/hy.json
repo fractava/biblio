@@ -1,6 +1,9 @@
 { "translations": {
     "Name" : "Անուն",
+    "Error" : "Սխալ",
     "Download" : "Ներբեռնել",
+    "Search" : "Search",
+    "Delete" : "հեռացնել",
     "Title" : "Վերնագիր",
     "Date" : "Date",
     "Select" : "Նշել"

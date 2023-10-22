@@ -2,7 +2,9 @@ OC.L10N.register(
     "biblio",
     {
     "Name" : "Ime",
+    "Error" : "Greška",
     "Search" : "Traži",
+    "Delete" : "Obriši",
     "Title" : "Naslov",
     "Date" : "Date",
     "Select" : "Obeleži"

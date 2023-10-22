@@ -1,7 +1,14 @@
 OC.L10N.register(
     "biblio",
     {
+    "Name" : "নাম",
+    "Error" : "সমস্যা",
+    "Reset" : "পূণঃনির্ধানণ",
+    "Download" : "ডাউনলোড",
+    "Search" : "Search",
+    "Delete" : "মুছে",
     "Title" : "শিরোনাম",
-    "Date" : "Date"
+    "Date" : "Date",
+    "Select" : "সিলেক্ট"
 },
 "nplurals=2; plural=(n != 1);");

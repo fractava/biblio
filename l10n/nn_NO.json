@@ -1,8 +1,10 @@
 { "translations": {
     "Name" : "Namn",
+    "Error" : "Feil",
     "Value" : "Verdi",
     "Download" : "Last ned",
     "Search" : "Søk",
+    "Delete" : "Slett",
     "Title" : "Tittel",
     "Date" : "Dato"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

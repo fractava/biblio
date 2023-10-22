@@ -1,7 +1,10 @@
 { "translations": {
     "Name" : "Nom",
+    "Error" : "Erreur",
     "Download" : "Sider",
+    "Search" : "Nadi",
     "Back" : "Retour",
+    "Delete" : "Kkes",
     "Title" : "Azwel",
     "Select" : "Fren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

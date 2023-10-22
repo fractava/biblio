@@ -1,6 +1,10 @@
 { "translations": {
     "Name" : "Nombre",
+    "Reset" : "Restaurar",
     "Value" : "Valor",
+    "Download" : "Descargar",
+    "Search" : "Buscar",
+    "Delete" : "Borrar",
     "Title" : "Título",
     "List" : "Lista",
     "Date" : "Fecha",

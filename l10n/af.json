@@ -1,0 +1,11 @@
+{ "translations": {
+    "Reset" : "Herstel",
+    "Value" : "Waarde",
+    "Download" : "Laai af",
+    "Search" : "Soek",
+    "Delete" : "Skrap",
+    "Title" : "Titel",
+    "List" : "Lys",
+    "Date" : "Datum"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

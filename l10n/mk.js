@@ -2,9 +2,13 @@ OC.L10N.register(
     "biblio",
     {
     "Name" : "Име",
+    "Error" : "Грешка",
+    "Reset" : "Ресетирање",
     "Value" : "Вредност",
     "Download" : "Преземи",
+    "Search" : "Барај",
     "Back" : "Назад",
+    "Delete" : "Избриши",
     "Title" : "Наслов",
     "List" : "Лист",
     "Long text" : "Долг текст",

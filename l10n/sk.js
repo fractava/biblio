@@ -6,7 +6,10 @@ OC.L10N.register(
     "This can be used to manage a book library, Sheet music archive, Textbook library" : "Toto môžete použiť pre správu kníh, archív nôt, knižnice učebníc",
     "Add a field" : "Pridať pole",
     "Name" : "Názov",
+    "Invalid name" : "Neplatné meno",
     "Delete Field" : "Odstrániť Pole",
+    "Error" : "Chyba",
+    "Reset" : "Resetovať",
     "Add Option" : "Pridať možnosť",
     "Value" : "Hodnota",
     "Drag to reorder the fields" : "Potiahnutím zmeníte poradie polí",
@@ -16,8 +19,10 @@ OC.L10N.register(
     "Search" : "Hľadať",
     "Back" : "Späť",
     "Select operator" : "Vyberte funkciu",
+    "Sorting" : "Triedenie",
     "Filtering" : "Filtrovanie",
     "Select Operator" : "Vyberte funkciu",
+    "Delete" : "Vymazať",
     "_%n selected row_::_%n selected rows_" : ["%n vybraný riadok","%n vybrané riadky","%n vybraných riadkov","%n vybraných riadkov"],
     "Title" : "Názov",
     "List" : "Zoznam",
@@ -31,6 +36,7 @@ OC.L10N.register(
     "After" : "Po",
     "Date and time" : "Dátum a čas",
     "Pick a date and time" : "Vyberte dátum a čas",
-    "Select" : "Vybrať"
+    "Select" : "Vybrať",
+    "Unknown error." : "Neznáma chyba."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

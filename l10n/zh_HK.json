@@ -4,7 +4,9 @@
     "This can be used to manage a book library, Sheet music archive, Textbook library" : "這可用於管理書庫、樂譜檔案、教科書庫",
     "Add a field" : "添加字段",
     "Name" : "名字",
+    "Invalid name" : "姓名無效",
     "Delete Field" : "刪除字段",
+    "Error" : "錯誤",
     "Reset" : "重設",
     "Value" : "值",
     "Drag to reorder the fields" : "拖曳以重新排序字段",
@@ -15,12 +17,14 @@
     "Search" : "搜尋",
     "Back" : "上星期",
     "Select operator" : "選擇操作",
+    "Keyword and submit" : "關鍵字與遞交",
     "Sorting" : "排序",
     "Sort asc" : "遞增排序",
     "Sort desc" : "遞減排序",
     "Filtering" : "過濾",
     "Select Operator" : "選擇操作",
     "Export CSV" : "匯出為 CSV",
+    "Delete" : "刪除",
     "Uncheck all" : "取消全選",
     "_%n selected row_::_%n selected rows_" : ["%n 已選擇的列"],
     "Title" : "標題",
@@ -28,6 +32,7 @@
     "Contains" : "包含",
     "Short text" : "短文本",
     "Enter a short text" : "輸入短文本",
+    "Ends with" : "結束於",
     "Long text" : "長文本",
     "Enter a long text" : "輸入長文本",
     "Date" : "日期",
@@ -37,6 +42,8 @@
     "Pick a date and time" : "挑選日期與時間",
     "Select" : "選擇",
     "Request is not authorized. Are you logged in?" : "請求未經授權。您登入了嗎？",
-    "Request not allowed." : "不允許請求。"
+    "Request not allowed." : "不允許請求。",
+    "Resource not found." : "找不到資源。",
+    "Unknown error." : "錯誤不詳。"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

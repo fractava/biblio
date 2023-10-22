@@ -1,6 +1,11 @@
 OC.L10N.register(
     "biblio",
     {
+    "Name" : "Enw",
+    "Error" : "Gwall",
+    "Download" : "Llwytho i lawr",
+    "Search" : "Chwilio",
+    "Delete" : "Dileu",
     "Title" : "Teitl",
     "List" : "Rhestr",
     "Date" : "Date",

@@ -2,6 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Name" : "නම",
+    "Error" : "දෝෂය",
     "Value" : "අගය",
     "Download" : "බාගන්න",
     "Search" : "සොයන්න",
