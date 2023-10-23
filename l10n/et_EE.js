@@ -9,6 +9,7 @@ OC.L10N.register(
     "Delete" : "Kustuta",
     "Title" : "Pealkiri",
     "Date" : "Kuupäev",
-    "Select" : "Vali"
+    "Select" : "Vali",
+    "Checkbox" : "Märkeruut"
 },
 "nplurals=2; plural=(n != 1);");

@@ -8,6 +8,7 @@
     "Delete" : "წაშლა",
     "Title" : "სათაური",
     "List" : "ჩამონათვალი",
-    "Date" : "თარიღი"
+    "Date" : "თარიღი",
+    "Checkbox" : "ჩექბოქსი"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

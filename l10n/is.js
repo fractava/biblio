@@ -15,6 +15,7 @@ OC.L10N.register(
     "Enter a long text" : "Settu inn langan texta",
     "Date" : "Dagsetning",
     "Pick a date" : "Veldu dagsetningu",
-    "Select" : "Velja"
+    "Select" : "Velja",
+    "Checkbox" : "Gátreitur"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

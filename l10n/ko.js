@@ -14,6 +14,7 @@ OC.L10N.register(
     "List" : "목록",
     "Date" : "날짜",
     "Pick a date" : "날짜 선택",
-    "Select" : "선택"
+    "Select" : "선택",
+    "Checkbox" : "체크 상자"
 },
 "nplurals=1; plural=0;");

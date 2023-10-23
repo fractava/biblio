@@ -41,6 +41,8 @@ OC.L10N.register(
     "Date and time" : "Date et heure",
     "Pick a date and time" : "Choisissez une date et une heure",
     "Select" : "Sélectionner",
+    "Checkbox" : "Case à cocher",
+    "Checked" : "Vérifié",
     "Request is not authorized. Are you logged in?" : "Requête n'est pas autorisée. Êtes-vous connecté ?",
     "Request not allowed." : "Requête non autorisée.",
     "Resource not found." : "Ressource non trouvée.",

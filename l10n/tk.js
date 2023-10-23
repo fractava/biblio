@@ -6,6 +6,7 @@ OC.L10N.register(
     "Download" : "Göçürip almak",
     "Search" : "Gözlemek",
     "Back" : "Yzyna",
-    "Delete" : "Pozmak"
+    "Delete" : "Pozmak",
+    "Checkbox" : "Bellik gutusy"
 },
 "nplurals=2; plural=(n != 1);");

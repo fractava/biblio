@@ -28,6 +28,7 @@ OC.L10N.register(
     "Pick a date" : "挑选日期",
     "Date and time" : "日期和时间",
     "Pick a date and time" : "挑一个日期和时间",
-    "Select" : "选择"
+    "Select" : "选择",
+    "Checkbox" : "复选框"
 },
 "nplurals=1; plural=0;");

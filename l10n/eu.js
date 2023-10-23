@@ -33,6 +33,7 @@ OC.L10N.register(
     "Date and time" : "Data eta ordua",
     "Pick a date and time" : "Aukeratu data eta ordua",
     "Select" : "Hautatu",
+    "Checkbox" : "Kontrol laukia",
     "Request is not authorized. Are you logged in?" : "Eskaerak egiteko baimenik ez. Saioa hasi al duzu?",
     "Request not allowed." : "Ez da eskaera onartu."
 },

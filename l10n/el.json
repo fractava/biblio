@@ -34,6 +34,7 @@
     "Pick a date" : "Επιλογή ημερομηνίας",
     "Date and time" : "Ημερομηνία και ώρα",
     "Pick a date and time" : "Επιλογή ημερομηνίας και ώρας",
-    "Select" : "Επιλογή"
+    "Select" : "Επιλογή",
+    "Checkbox" : "Πλαίσιο ελέγχου"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

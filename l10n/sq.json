@@ -10,6 +10,7 @@
     "Title" : "Titulli",
     "List" : "List",
     "Date" : "Data",
-    "Select" : "Përzgjidh"
+    "Select" : "Përzgjidh",
+    "Checkbox" : "Checkbox"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

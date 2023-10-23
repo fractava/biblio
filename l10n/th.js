@@ -12,6 +12,7 @@ OC.L10N.register(
     "Date" : "วันที่",
     "Pick a date" : "เลือกวันที่",
     "Pick a date and time" : "เลือกวันที่และเวลา",
-    "Select" : "เลือก"
+    "Select" : "เลือก",
+    "Checkbox" : "กล่องกาเครื่องหมาย"
 },
 "nplurals=1; plural=0;");

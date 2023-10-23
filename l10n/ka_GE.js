@@ -10,6 +10,7 @@ OC.L10N.register(
     "Delete" : "წაშლა",
     "Title" : "სათაური",
     "List" : "ჩამონათვალი",
-    "Date" : "თარიღი"
+    "Date" : "თარიღი",
+    "Checkbox" : "ჩექბოქსი"
 },
 "nplurals=2; plural=(n!=1);");

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Title" : "Judul",
     "Date" : "Date",
     "Pick a date" : "Pilih tanggal",
-    "Select" : "Pilih"
+    "Select" : "Pilih",
+    "Checkbox" : "Kotak check"
 },
 "nplurals=1; plural=0;");

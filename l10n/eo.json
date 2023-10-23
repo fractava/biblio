@@ -7,6 +7,7 @@
     "Delete" : "Forigi",
     "Title" : "Titolo",
     "Date" : "Date",
-    "Select" : "Elekti"
+    "Select" : "Elekti",
+    "Checkbox" : "Markobutono"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

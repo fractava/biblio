@@ -42,6 +42,8 @@
     "Date and time" : "Tarih ve saat",
     "Pick a date and time" : "Bir tarih ve saat seçin",
     "Select" : "Seç",
+    "Checkbox" : "İşaret kutusu",
+    "Checked" : "İşaretlenmiş",
     "Request is not authorized. Are you logged in?" : "İstek yerine getirilemedi. Oturumunuz açık mı?",
     "Request not allowed." : "İsteğe izin verilmiyor.",
     "Resource not found." : "Kaynak bulunamadı",

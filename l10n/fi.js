@@ -26,6 +26,7 @@ OC.L10N.register(
     "Pick a date" : "Valitse päivänmäärä",
     "Date and time" : "Päivänmäärä ja aika",
     "Pick a date and time" : "Valitse päivänmäärä ja aika",
-    "Select" : "Valitse"
+    "Select" : "Valitse",
+    "Checkbox" : "Valintaruutu"
 },
 "nplurals=2; plural=(n != 1);");

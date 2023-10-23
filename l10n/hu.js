@@ -84,6 +84,8 @@ OC.L10N.register(
     "Pick a date and time" : "Válasszon dátumot és időt",
     "Select" : "Kiválasztás",
     "Pick one of the options" : "Válasszon egy opciót",
+    "Checkbox" : "Jelölőmező",
+    "Checked" : "Bejelölt",
     "Could not fetch collections" : "Nem sikerült lekérni a gyűjteményeket",
     "Could not create collection" : "Nem sikerült létrehozni a gyűjteményt",
     "Could not update collection" : "Nem sikerült frissíteni a gyűjteményt",

@@ -41,6 +41,8 @@
     "Date and time" : "Датум и време",
     "Pick a date and time" : "Изаберите датум и време",
     "Select" : "Обележи",
+    "Checkbox" : "Кућица",
+    "Checked" : "Проверено",
     "Request is not authorized. Are you logged in?" : "Неовлашћен захтев. Да ли сте пријављени?",
     "Request not allowed." : "Захтев није одобрен.",
     "Resource not found." : "Није пронађен ресурс.",

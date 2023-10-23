@@ -36,6 +36,7 @@ OC.L10N.register(
     "Pick a date" : "Επιλογή ημερομηνίας",
     "Date and time" : "Ημερομηνία και ώρα",
     "Pick a date and time" : "Επιλογή ημερομηνίας και ώρας",
-    "Select" : "Επιλογή"
+    "Select" : "Επιλογή",
+    "Checkbox" : "Πλαίσιο ελέγχου"
 },
 "nplurals=2; plural=(n != 1);");

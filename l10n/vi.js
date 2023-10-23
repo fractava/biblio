@@ -13,6 +13,7 @@ OC.L10N.register(
     "List" : "Danh sách",
     "Date" : "Date",
     "Pick a date" : "Chọn ngày",
-    "Select" : "Chọn"
+    "Select" : "Chọn",
+    "Checkbox" : "Hộp chọn"
 },
 "nplurals=1; plural=0;");

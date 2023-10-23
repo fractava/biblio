@@ -31,6 +31,8 @@ OC.L10N.register(
     "Date and time" : "Дата та час",
     "Pick a date and time" : "Вибрати дату і час",
     "Select" : "Вибрати",
+    "Checkbox" : "Прапорець",
+    "Checked" : "Вибрано",
     "Request is not authorized. Are you logged in?" : "Запит без авторизації. Чи ви увійшли до системи?",
     "Request not allowed." : "Запит не дозволено.",
     "Resource not found." : "Ресурс не знайдено.",

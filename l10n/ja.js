@@ -18,6 +18,7 @@ OC.L10N.register(
     "After" : "後",
     "Date and time" : "日時",
     "Pick a date and time" : "日時を選択",
-    "Select" : "選択"
+    "Select" : "選択",
+    "Checkbox" : "チェックボックス"
 },
 "nplurals=1; plural=0;");
