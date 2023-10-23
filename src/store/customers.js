@@ -167,7 +167,7 @@ export const useCustomersStore = defineStore("customers", {
 		},
 		sortedFields: (state) => {
 			const biblioStore = useBiblioStore();
-			return state.fields.toSorted((a, b) => biblioStore.selectedCollection.customerFieldsOrder.indexOf(a.id) - biblioStore.selectedCollection.customerFieldsOrder.indexOf(b.id));
+			return state.fields.toSorted((a, b) => biblioStore.selectedCollection?.customerFieldsOrder?.indexOf(a.id) - biblioStore.selectedCollection?.customerFieldsOrder?.indexOf(b.id));
 		},
 		includedSortedFields: (state) => {
 			return state.sortedFields.filter((customerField) => (customerField.includeInList));

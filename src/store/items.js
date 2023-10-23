@@ -167,7 +167,7 @@ export const useItemsStore = defineStore("items", {
 		},
 		sortedFields: (state) => {
 			const biblioStore = useBiblioStore();
-			return state.fields.toSorted((a, b) => biblioStore.selectedCollection.itemFieldsOrder.indexOf(a.id) - biblioStore.selectedCollection.itemFieldsOrder.indexOf(b.id));
+			return state.fields.toSorted((a, b) => biblioStore.selectedCollection?.itemFieldsOrder?.indexOf(a.id) - biblioStore.selectedCollection?.itemFieldsOrder?.indexOf(b.id));
 		},
 		includedSortedFields: (state) => {
 			return state.sortedFields.filter((itemField) => (itemField.includeInList));

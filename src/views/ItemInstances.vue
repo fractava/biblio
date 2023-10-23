@@ -43,7 +43,7 @@ export default {
 			return Math.ceil(Math.max(this.itemInstancesStore.searchMeta.totalResultCount, 1) / this.itemInstancesStore.limit) || 1;
 		},
 		columns() {
-			const fieldColumns = this.itemInstancesStore.includedSortedFields.map((field) => {
+			const fieldColumns = this.itemInstancesStore.sortedFields.map((field) => {
 				const type = FieldTypes[field.type];
 				return {
 					id: field.id,

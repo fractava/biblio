@@ -21,6 +21,7 @@
 				<Field v-for="field in sortedFields"
 					:key="field.id"
 					:name="field.name"
+					:include-in-list="!!field.includeInList"
 					:enable-include-in-list="enableIncludeInList"
 					class="draggableitem"
 					@update:name="(newName) => onFieldUpdate(field.id, { name: newName })"

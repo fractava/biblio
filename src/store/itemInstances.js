@@ -124,10 +124,7 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 		},
 		sortedFields: (state) => {
 			const biblioStore = useBiblioStore();
-			return state.fields.toSorted((a, b) => biblioStore.selectedCollection.itemFieldsOrder.indexOf(a.id) - biblioStore.selectedCollection.itemFieldsOrder.indexOf(b.id));
-		},
-		includedSortedFields: (state) => {
-			return state.sortedFields.filter((itemField) => (itemField.includeInList));
+			return state.fields.toSorted((a, b) => biblioStore.selectedCollection?.loanFieldsOrder?.indexOf(a.id) - biblioStore.selectedCollection?.loanFieldsOrder?.indexOf(b.id));
 		},
 	},
 });

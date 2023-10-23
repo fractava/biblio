@@ -65,7 +65,9 @@ export const useBiblioStore = defineStore("biblio", {
 			return state.collections.find(collection => collection.id === id);
 		},
 		selectedCollection: (state) => {
-			return state.getCollectionById(state.selectedCollectionId);
+			const route = window.biblioRouter.currentRoute;
+
+			return state.getCollectionById(route.params.collectionId);
 		},
 	},
 });

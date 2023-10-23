@@ -70,7 +70,7 @@ export default {
 					return this.row?.[column.property];
 				}
 			} else {
-				const field = this.row.fieldValues.find(item => item.fieldId === column.id) || null;
+				const field = this?.row?.fieldValues?.find(item => item.fieldId === column.id) || null;
 
 				if (field) {
 					return field.value;
@@ -88,7 +88,7 @@ export default {
 			if (column.isProperty) {
 				return {};
 			} else {
-				const field = this.row.fieldValues.find(item => item.fieldId === column.id) || null;
+				const field = this?.row?.fieldValues?.find(item => item.fieldId === column.id) || null;
 
 				if (field) {
 					return field.settings;

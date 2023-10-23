@@ -34,18 +34,25 @@ export default {
 
 		window.biblioRouter.afterEach((to, from) => {
 			if (from.params.collectionId !== to.params.collectionId) {
-				const itemsStore = useItemsStore();
-				const itemInstancesStore = useItemInstancesStore();
-				const customersStore = useCustomersStore();
-
-				itemsStore.fetchFields();
-				itemsStore.refreshSearchResults().catch(() => {});
-				itemInstancesStore.fetchFields();
-				itemInstancesStore.refreshSearchResults().catch(() => {});
-				customersStore.fetchFields();
-				customersStore.refreshSearchResults().catch(() => {});
+				this.refreshStores();
 			}
 		});
+
+		this.refreshStores();
+	},
+	methods: {
+		refreshStores() {
+			const itemsStore = useItemsStore();
+			const itemInstancesStore = useItemInstancesStore();
+			const customersStore = useCustomersStore();
+
+			itemsStore.fetchFields();
+			itemsStore.refreshSearchResults().catch(() => {});
+			itemInstancesStore.fetchFields();
+			itemInstancesStore.refreshSearchResults().catch(() => {});
+			customersStore.fetchFields();
+			customersStore.refreshSearchResults().catch(() => {});
+		},
 	},
 };
 </script>
