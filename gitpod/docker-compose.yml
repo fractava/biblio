@@ -22,9 +22,11 @@ services:
 
   phpmyadmin:
     image: phpmyadmin
-    container_name: pma
+    container_name: phpmyadmin
     links:
       - db
+    volumes:
+      - /phpmyadminapache2logs/:/var/log/apache2/
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
