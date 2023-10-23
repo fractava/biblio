@@ -51,7 +51,7 @@ class V1ImportService {
 	}
 
 	public function import(array $data, string $firstMember) {
-		$collection = $this->collectionService->create("V1 Import", "[]", "[]", $firstMember);
+		$collection = $this->collectionService->create("V1 Import", "[]", "[]", "[]", $firstMember);
 		$collectionId = $collection->getId();
 
 		$importedCustomersTable = $this->getTable($data, "customers");
