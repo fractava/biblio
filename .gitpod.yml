@@ -13,7 +13,7 @@ tasks:
   - name: Nextcloud Server
     init: |
       cd gitpod
-      git clone https://github.com/nextcloud/server.git server
+      git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/nextcloud/server.git server
       docker-compose up --no-start
     command: |
       git config core.fileMode false
