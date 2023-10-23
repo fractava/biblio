@@ -49,9 +49,11 @@ jobs:
 
       - name: Install dependencies
         run: composer i
+        working-directory: tools/php-cs-fixer
 
       - name: Run coding standards check
-        run: composer run cs:check || ( echo 'Please run `composer run cs:fix` to format your code' && exit 1 )
+        run: ./vendor/bin/php-cs-fixer check
+        working-directory: tools/php-cs-fixer
 
   node:
     runs-on: ubuntu-latest
