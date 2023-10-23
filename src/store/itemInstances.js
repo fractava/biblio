@@ -54,12 +54,6 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 
 				const filters = Object.assign({}, this.filters);
 
-				// only fetch item field values, that will be shown in the item table
-				filters.fieldValues_includeInList = {
-					operator: "=",
-					operand: true,
-				};
-
 				if (this.search) {
 					filters.barcode = {
 						operator: "contains",
@@ -69,7 +63,7 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getItemInstances(route.params.collectionId, "model+item+loan+loan_customer", filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getItemInstances(route.params.collectionId, "model+item+loan+loan_customer+fields", filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.instances;
