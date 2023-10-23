@@ -13,8 +13,7 @@ use OCA\Biblio\Db\CollectionMember;
 use OCA\Biblio\Db\CollectionMemberMapper;
 
 class CollectionMemberService {
-
-    /** @var CollectionMemberMapper */
+	/** @var CollectionMemberMapper */
 	private $mapper;
 
 	public function __construct(CollectionMemberMapper $mapper) {
@@ -47,11 +46,11 @@ class CollectionMemberService {
 	}
 
 	public function create(int $collectionId, string $userId) {
-        $member = new CollectionMember();
-        $member->setCollectionId($collectionId);
-        $member->setUserId($userId);
+		$member = new CollectionMember();
+		$member->setCollectionId($collectionId);
+		$member->setUserId($userId);
 
-        return $this->mapper->insert($member);
+		return $this->mapper->insert($member);
 	}
 
 	public function update(int $collectionId, int $id) {

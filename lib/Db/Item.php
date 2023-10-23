@@ -11,8 +11,8 @@ class Item extends Entity implements JsonSerializable {
 	protected $title;
 
 	public function __construct() {
-        $this->addType('collectionId','integer');
-    }
+		$this->addType('collectionId','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [

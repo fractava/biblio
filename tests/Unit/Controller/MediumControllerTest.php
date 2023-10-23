@@ -30,9 +30,9 @@ class ItemControllerTest extends TestCase {
 		$this->service->expects($this->once())
 			->method('update')
 			->with($this->equalTo(3),
-					$this->equalTo('title'),
-					$this->equalTo('fields'),
-				   $this->equalTo($this->userId))
+				$this->equalTo('title'),
+				$this->equalTo('fields'),
+				$this->equalTo($this->userId))
 			->will($this->returnValue($item));
 
 		$result = $this->controller->update(3, 'title', 'fields');

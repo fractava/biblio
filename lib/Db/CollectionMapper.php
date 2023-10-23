@@ -9,7 +9,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 class CollectionMapper extends QBMapper {
-    const TABLENAME = 'biblio_collections';
+	public const TABLENAME = 'biblio_collections';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, Collection::class);
@@ -27,7 +27,7 @@ class CollectionMapper extends QBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
-        
+		
 		return $this->findEntity($qb);
 	}
 
@@ -39,13 +39,13 @@ class CollectionMapper extends QBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
-        $qb->select('l.*')
-            ->from(self::TABLENAME, 'l')
-            ->innerJoin('l', 'biblio_collection_members', 'm', $qb->expr()->andX(
-                $qb->expr()->eq('m.collection_id', 'l.id'),
-                $qb->expr()->eq('m.user_id', $qb->createNamedParameter($userId))
-            ));
-        
+		$qb->select('l.*')
+			->from(self::TABLENAME, 'l')
+			->innerJoin('l', 'biblio_collection_members', 'm', $qb->expr()->andX(
+				$qb->expr()->eq('m.collection_id', 'l.id'),
+				$qb->expr()->eq('m.user_id', $qb->createNamedParameter($userId))
+			));
+		
 		return $this->findEntities($qb);
 	}
 }

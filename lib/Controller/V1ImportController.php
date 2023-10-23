@@ -18,8 +18,8 @@ class V1ImportController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								V1ImportService $service,
-								$userId) {
+		V1ImportService $service,
+		$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 		$this->userId = $userId;
@@ -27,7 +27,7 @@ class V1ImportController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-     * @NoCSRFRequired
+	 * @NoCSRFRequired
 	 */
 	public function import(array $data): DataResponse {
 		return new DataResponse($this->service->import($data, $this->userId));

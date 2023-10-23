@@ -9,7 +9,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 class CollectionMemberMapper extends QBMapper {
-    const TABLENAME = 'biblio_collection_members';
+	public const TABLENAME = 'biblio_collection_members';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, CollectionMember::class);
@@ -29,7 +29,7 @@ class CollectionMemberMapper extends QBMapper {
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)))
 			->andWhere($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
-        
+		
 		return $this->findEntity($qb);
 	}
 
@@ -44,11 +44,11 @@ class CollectionMemberMapper extends QBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
-        
+		
 		return $this->findEntities($qb);
 	}
 
-    /**
+	/**
 	 * @param string $userId
 	 * @return array
 	 */
@@ -59,7 +59,7 @@ class CollectionMemberMapper extends QBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('user_id', $qb->createNamedParameter($userId)));
-        
+		
 		return $this->findEntities($qb);
 	}
 }

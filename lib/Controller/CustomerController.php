@@ -38,7 +38,7 @@ class CustomerController extends Controller {
 		$includes = $this->parseIncludesString($include);
 		$filters = $this->parseFilterString($filter);
 
-		list($entities, $meta) = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
+		[$entities, $meta] = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
 
 		return new JSONResponse([
 			"meta" => $meta,
@@ -62,7 +62,7 @@ class CustomerController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $collectionId, string $name): JSONResponse {
-		if(strlen($name) < 3) {
+		if (strlen($name) < 3) {
 			return new JSONResponse([
 				"error" => "Name must be longer than 3 characters"
 			], Http::STATUS_BAD_REQUEST);

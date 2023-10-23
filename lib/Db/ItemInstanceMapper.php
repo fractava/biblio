@@ -12,10 +12,10 @@ use OCA\Biblio\Traits\ApiObjectMapper;
 class ItemInstanceMapper extends AdvancedQBMapper {
 	use ApiObjectMapper;
 
-	const TABLENAME = 'biblio_item_instances';
-	const ITEMS_TABLENAME = 'biblio_items';
-	const LOANS_TABLE = "biblio_loans";
-	const CUSTOMERS_TABLENAME = "biblio_customers";
+	public const TABLENAME = 'biblio_item_instances';
+	public const ITEMS_TABLENAME = 'biblio_items';
+	public const LOANS_TABLE = "biblio_loans";
+	public const CUSTOMERS_TABLENAME = "biblio_customers";
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, ItemInstance::class);
@@ -33,7 +33,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
-        
+		
 		return $this->findEntity($qb);
 	}
 
@@ -49,7 +49,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb->select('*')
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('barcode', $qb->createNamedParameter($barcode)));
-        
+		
 		return $this->findEntity($qb);
 	}
 
@@ -57,7 +57,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	 * Runs a sql query and returns an array of entities
 	 *
 	 * @param IQueryBuilder $query
-     * @param array $ignoredColumns
+	 * @param array $ignoredColumns
 	 * @return array all fetched entities and all seperate columns
 	 * @psalm-return T[] all fetched entities and all seperate columns
 	 * @throws Exception
@@ -66,20 +66,20 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	protected function findEntitiesAndSeperateColumns(IQueryBuilder $query, array $seperateColumns): array {
 		$result = $query->executeQuery();
 
-        $seperateColumnResults = [];
+		$seperateColumnResults = [];
 
 		try {
 			$entities = [];
-            $firstIteration = true;
+			$firstIteration = true;
 			while ($row = $result->fetch()) {
-                if($firstIteration) {
-                    $firstIteration = false;
-                    foreach ($seperateColumns as $column) {
-                        $seperateColumnResults[$column] = $row[$column];
-                    }
-                }
+				if ($firstIteration) {
+					$firstIteration = false;
+					foreach ($seperateColumns as $column) {
+						$seperateColumnResults[$column] = $row[$column];
+					}
+				}
 
-                $filteredRow = array_diff_key($row, array_flip($seperateColumns));
+				$filteredRow = array_diff_key($row, array_flip($seperateColumns));
 
 				$itemInstanceColumns = [
 					"id" => $filteredRow["id"],
@@ -106,7 +106,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 					"name" => $filteredRow["loanCustomerJoin_name"],
 				];
 
-				$entities[] =  [
+				$entities[] = [
 					"instance" => \call_user_func(ItemInstance::class .'::fromRow', $itemInstanceColumns),
 					"item" => \call_user_func(Item::class .'::fromRow', $itemColumns),
 					"loan" => \call_user_func(Loan::class .'::fromRow', $loanColumns),
@@ -126,7 +126,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	public function findAll(string $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
-		if(isset($filters)) {
+		if (isset($filters)) {
 			//$fieldValueFilters = $this->getFieldValueFilters($filters);
 			//$includesFieldValueFilters = (count($fieldValueFilters) !== 0);
 		} else {
@@ -185,17 +185,17 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		/*if($includesFieldValueFilters) {
 			$qb->groupBy('instance.id')
-    			->having($qb->expr()->eq($qb->createFunction('COUNT(`instance`.`id`)'), $qb->createNamedParameter(count($validCombinations)), IQueryBuilder::PARAM_INT));
+				->having($qb->expr()->eq($qb->createFunction('COUNT(`instance`.`id`)'), $qb->createNamedParameter(count($validCombinations)), IQueryBuilder::PARAM_INT));
 		}*/
 
 		if (isset($sort)) {
-			if($sort === "barcode") {
+			if ($sort === "barcode") {
 				$this->handleSortByColumn($qb, 'instance.barcode', $sortReverse);
-			} else if($sort === "item_title") {
+			} elseif ($sort === "item_title") {
 				$this->handleSortByColumn($qb, 'item.title', $sortReverse);
-			} else if($sort === "loan_customer_name") {
+			} elseif ($sort === "loan_customer_name") {
 				$this->handleSortByColumn($qb, 'loanCustomer.name', $sortReverse);
-			} else if ($this->isFieldReference($sort)) {
+			} elseif ($this->isFieldReference($sort)) {
 				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'i', self::FIELDS_VALUES_TABLENAME, 'item_id');
 			}
 		}

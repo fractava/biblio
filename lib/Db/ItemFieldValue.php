@@ -12,14 +12,14 @@ class ItemFieldValue extends Entity implements JsonSerializable {
 	protected $value;
 
 	public function __construct() {
-        $this->addType('itemId','integer');
-        $this->addType('fieldId','integer');
-    }
+		$this->addType('itemId','integer');
+		$this->addType('fieldId','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-            'itemId' => $this->itemId,
+			'itemId' => $this->itemId,
 			'fieldId' => $this->fieldId,
 			'value' => $this->value
 		];

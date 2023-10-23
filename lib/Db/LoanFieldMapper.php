@@ -9,7 +9,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
 class LoanFieldMapper extends QBMapper {
-	const TABLENAME = 'biblio_loan_fields';
+	public const TABLENAME = 'biblio_loan_fields';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, LoanField::class);

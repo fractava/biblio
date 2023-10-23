@@ -12,8 +12,8 @@ use OCA\Biblio\Traits\ApiObjectMapper;
 class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	use ApiObjectMapper;
 	
-	const TABLENAME = 'biblio_customers';
-	const FIELDS_VALUES_TABLENAME = 'biblio_customer_fields_values';
+	public const TABLENAME = 'biblio_customers';
+	public const FIELDS_VALUES_TABLENAME = 'biblio_customer_fields_values';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, Customer::class);
@@ -43,7 +43,7 @@ class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	public function findAll(string $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
-		if(isset($filters)) {
+		if (isset($filters)) {
 			$fieldValueFilters = $this->getFieldValueFilters($filters);
 			$includesFieldValueFilters = (count($fieldValueFilters) !== 0);
 		} else {
@@ -56,11 +56,11 @@ class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 			->addSelect($qb->createFunction('COUNT(*) OVER () AS totalResultCount'))
 			->from(self::TABLENAME, 'c');
 
-		if($includesFieldValueFilters) {
+		if ($includesFieldValueFilters) {
 			$qb->innerJoin('c', self::FIELDS_VALUES_TABLENAME, 'v', $qb->expr()->andX(
-					$qb->expr()->eq('c.id', 'v.customer_id'),
-					$qb->expr()->in('v.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
-				))
+				$qb->expr()->eq('c.id', 'v.customer_id'),
+				$qb->expr()->in('v.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
+			))
 				->where($qb->expr()->eq('c.collection_id', $qb->createNamedParameter($collectionId)));
 
 			$validCombinations = $this->getValidFieldValueCombinations($this->db, $qb, $fieldValueFilters, 'v.field_id', 'v.value');
@@ -72,15 +72,15 @@ class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 
 		$this->handleStringFilter($this->db, $qb, $filters["name"], 'c.name');
 
-		if($includesFieldValueFilters) {
+		if ($includesFieldValueFilters) {
 			$qb->groupBy('c.id')
-    			->having($qb->expr()->eq($qb->createFunction('COUNT(`c`.`id`)'), $qb->createNamedParameter(count($validCombinations)), IQueryBuilder::PARAM_INT));
+				->having($qb->expr()->eq($qb->createFunction('COUNT(`c`.`id`)'), $qb->createNamedParameter(count($validCombinations)), IQueryBuilder::PARAM_INT));
 		}
 
 		if (isset($sort)) {
-			if($sort === "name") {
+			if ($sort === "name") {
 				$this->handleSortByColumn($qb, 'c.name', $sortReverse);
-			} else if ($this->isFieldReference($sort)) {
+			} elseif ($this->isFieldReference($sort)) {
 				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'c', self::FIELDS_VALUES_TABLENAME, 'customer_id');
 			}
 		}

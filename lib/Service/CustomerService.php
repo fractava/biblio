@@ -11,13 +11,12 @@ use OCA\Biblio\Errors\CustomerNotFound;
 
 use OCA\Biblio\Db\Customer;
 use OCA\Biblio\Db\CustomerMapper;
-use OCA\Biblio\Service\CustomerFieldValueService;
 use OCA\Biblio\Traits\ApiObjectService;
 
 class CustomerService {
 	use ApiObjectService;
 
-	const FIELDS_INCLUDE = 'fields';
+	public const FIELDS_INCLUDE = 'fields';
 
 	/** @var CustomerMapper */
 	private $mapper;
@@ -33,11 +32,11 @@ class CustomerService {
 	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = null) {
 		$result = [];
 
-		if($includeModel) {
+		if ($includeModel) {
 			$result = $entity->jsonSerialize();
 		}
 
-		if($includeFields) {
+		if ($includeFields) {
 			$result = array_merge($result, [
 				"fieldValues" => $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters),
 			]);
@@ -50,7 +49,7 @@ class CustomerService {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
-		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
+		[$entities, $meta] = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
 		$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
 
@@ -60,7 +59,7 @@ class CustomerService {
 			$results[] = $this->getApiObjectFromEntity($collectionId, $customer, $includeModel, $includeFields, $fieldFilters);
 		}
 
-		return array($results, $meta);
+		return [$results, $meta];
 	}
 
 	private function handleException(Exception $e): void {

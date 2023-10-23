@@ -17,10 +17,10 @@ use OCA\Biblio\Traits\ApiObjectService;
 class ItemInstanceService {
 	use ApiObjectService;
 
-	const ITEM_INCLUDE = "item";
-	const LOAN_INCLUDE = "loan";
-	const LOAN_CUSTOMER_INCLUDE = "loan_customer";
-	const FIELDS_INCLUDE = "fields";
+	public const ITEM_INCLUDE = "item";
+	public const LOAN_INCLUDE = "loan";
+	public const LOAN_CUSTOMER_INCLUDE = "loan_customer";
+	public const FIELDS_INCLUDE = "fields";
 
 	/** @var ItemInstanceMapper */
 	private $mapper;
@@ -32,23 +32,23 @@ class ItemInstanceService {
 	public function getApiObjectFromEntities(int $collectionId, $entities, bool $includeModel, bool $includeItem, bool $includeLoan, bool $includeLoanCustomer, bool $includeFields, ?array $fieldFilters = null) {
 		$result = [];
 
-		if($includeModel) {
+		if ($includeModel) {
 			$result = $entities["instance"]->jsonSerialize();
 		}
 
-		if($includeItem) {
+		if ($includeItem) {
 			$result["item"] = $entities["item"]->jsonSerialize();
 		}
 
-		if($includeLoan) {
+		if ($includeLoan) {
 			$result["loan"] = $entities["loan"]->jsonSerialize();
 
-			if($includeLoanCustomer) {
+			if ($includeLoanCustomer) {
 				$result["loan"]["customer"] = $entities["loanCustomer"]->jsonSerialize();
 			}
 		}
 
-		if($includeFields) {
+		if ($includeFields) {
 			$result = array_merge($result, [
 				"fieldValues" => $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters),
 			]);
@@ -64,7 +64,7 @@ class ItemInstanceService {
 		$includeLoanCustomer = $includeLoan && $this->shouldInclude(self::LOAN_CUSTOMER_INCLUDE, $includes);
 		$includeFields = $this->shouldInclude(self::FIELDS_INCLUDE, $includes);
 
-		list($entities, $meta) = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
+		[$entities, $meta] = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
 		//$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
 
@@ -74,7 +74,7 @@ class ItemInstanceService {
 			$results[] = $this->getApiObjectFromEntities($collectionId, $entity, $includeModel, $includeItem, $includeLoan, $includeLoanCustomer, $includeFields, $fieldFilters);
 		}
 
-		return array($results, $meta);
+		return [$results, $meta];
 	}
 
 	private function handleException(Exception $e): void {
@@ -94,7 +94,7 @@ class ItemInstanceService {
 		}
 	}
 
-    public function findByBarcode(string $barcode) {
+	public function findByBarcode(string $barcode) {
 		try {
 			return $this->mapper->findByBarcode($barcode);
 		} catch (Exception $e) {

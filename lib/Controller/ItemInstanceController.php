@@ -21,7 +21,7 @@ class ItemInstanceController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-                                ItemInstanceService $service) {
+		ItemInstanceService $service) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 	}
@@ -34,7 +34,7 @@ class ItemInstanceController extends Controller {
 		$includes = $this->parseIncludesString($include);
 		$filters = $this->parseFilterString($filter);
 
-		list($entities, $meta) = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
+		[$entities, $meta] = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
 
 		return new JSONResponse([
 			"meta" => $meta,
@@ -48,7 +48,7 @@ class ItemInstanceController extends Controller {
 	public function show(int $collectionId, int $instanceId): JSONResponse {
 		return $this->handleNotFound(function () use ($instanceId) {
 			$result = $this->service->find($instanceId);
-            return new JSONResponse($result, Http::STATUS_OK);
+			return new JSONResponse($result, Http::STATUS_OK);
 		});
 	}
 
@@ -58,7 +58,7 @@ class ItemInstanceController extends Controller {
 	public function showByBarcode(int $collectionId, string $barcode): JSONResponse {
 		return $this->handleNotFound(function () use ($barcode) {
 			$result = $this->service->findByBarcode($barcode);
-            return new JSONResponse($result, Http::STATUS_OK);
+			return new JSONResponse($result, Http::STATUS_OK);
 		});
 	}
 

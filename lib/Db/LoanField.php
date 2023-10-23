@@ -13,13 +13,13 @@ class ItemField extends Entity implements JsonSerializable {
 	protected $settings;
 
 	public function __construct() {
-        $this->addType('collectionId','integer');
-    }
+		$this->addType('collectionId','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-            'collectionId' => $this->collectionId,
+			'collectionId' => $this->collectionId,
 			'name' => $this->name,
 			'type' => $this->type,
 			'settings' => $this->settings,

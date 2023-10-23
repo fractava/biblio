@@ -11,25 +11,24 @@ use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
 class Version000000Date20181013124731 extends SimpleMigrationStep {
-
 	// Collections
-    const COLLECTIONS_TABLE = "biblio_collections";
-	const COLLECTION_MEMBERS_TABLE = "biblio_collection_members";
+	public const COLLECTIONS_TABLE = "biblio_collections";
+	public const COLLECTION_MEMBERS_TABLE = "biblio_collection_members";
 
 	// Items
-    const ITEMS_TABLE = "biblio_items";
-	const ITEM_INSTANCES_TABLE = "biblio_item_instances";
-	const ITEM_FIELDS_TABLE = "biblio_item_fields";
-	const ITEM_FIELDS_VALUES_TABLE = "biblio_item_fields_values";
+	public const ITEMS_TABLE = "biblio_items";
+	public const ITEM_INSTANCES_TABLE = "biblio_item_instances";
+	public const ITEM_FIELDS_TABLE = "biblio_item_fields";
+	public const ITEM_FIELDS_VALUES_TABLE = "biblio_item_fields_values";
 
-	const LOANS_TABLE = "biblio_loans";
-	const LOAN_FIELDS_TABLE = "biblio_loan_fields";
-	const LOAN_FIELDS_VALUES_TABLE = "biblio_loan_fields_values";
+	public const LOANS_TABLE = "biblio_loans";
+	public const LOAN_FIELDS_TABLE = "biblio_loan_fields";
+	public const LOAN_FIELDS_VALUES_TABLE = "biblio_loan_fields_values";
 
 	// Customers
-	const CUSTOMERS_TABLE = "biblio_customers";
-	const CUSTOMER_FIELDS_TABLE = "biblio_customer_fields";
-	const CUSTOMER_FIELDS_VALUES_TABLE = "biblio_customer_fields_values";
+	public const CUSTOMERS_TABLE = "biblio_customers";
+	public const CUSTOMER_FIELDS_TABLE = "biblio_customer_fields";
+	public const CUSTOMER_FIELDS_VALUES_TABLE = "biblio_customer_fields_values";
 
 	/**
 	 * @param IOutput $output
@@ -61,7 +60,7 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			$table->setPrimaryKey(['id']);
 		}
 
-		if(!$schema->hasTable(self::COLLECTION_MEMBERS_TABLE)) {
+		if (!$schema->hasTable(self::COLLECTION_MEMBERS_TABLE)) {
 			$table = $schema->createTable(self::COLLECTION_MEMBERS_TABLE);
 			$table->addColumn('id', Types::INTEGER, [
 				'autoincrement' => true,

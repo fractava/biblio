@@ -12,19 +12,16 @@ use OCA\Biblio\Errors\CollectionNotFound;
 use OCA\Biblio\Db\Collection;
 use OCA\Biblio\Db\CollectionMapper;
 
-use OCA\Biblio\Service\CollectionMemberService;
-
 class CollectionService {
-
 	/** @var CollectionMapper */
 	private $mapper;
 
-    /** @var CollectionMemberService */
+	/** @var CollectionMemberService */
 	private $memberService;
 
 	public function __construct(CollectionMapper $mapper, CollectionMemberService $memberService) {
 		$this->mapper = $mapper;
-        $this->memberService = $memberService;
+		$this->memberService = $memberService;
 	}
 
 	public function findAll(string $userId): array {
@@ -56,9 +53,9 @@ class CollectionService {
 
 		$collection = $this->mapper->insert($collection);
 
-        $collectionId = $collection->getId();
+		$collectionId = $collection->getId();
 
-        $this->memberService->create($collectionId, $firstMember);
+		$this->memberService->create($collectionId, $firstMember);
 
 		return $collection;
 	}
@@ -71,11 +68,11 @@ class CollectionService {
 				$collection->setName($name);
 			}
 
-			if(!is_null($itemFieldsOrder)) {
+			if (!is_null($itemFieldsOrder)) {
 				$collection->setItemFieldsOrder($itemFieldsOrder);
 			}
 
-			if(!is_null($customerFieldsOrder)) {
+			if (!is_null($customerFieldsOrder)) {
 				$collection->setCustomerFieldsOrder($customerFieldsOrder);
 			}
 

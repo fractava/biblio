@@ -13,9 +13,9 @@ use OCA\Biblio\Traits\ApiObjectMapper;
 class CustomerFieldValueMapper extends QBMapper {
 	use ApiObjectMapper;
 
-	const TABLENAME = 'biblio_customer_fields_values';
+	public const TABLENAME = 'biblio_customer_fields_values';
 
-	const FIELDS_TABLENAME = 'biblio_customer_fields';
+	public const FIELDS_TABLENAME = 'biblio_customer_fields';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, CustomerFieldValue::class);
@@ -39,9 +39,9 @@ class CustomerFieldValueMapper extends QBMapper {
 
 		if ($findById) {
 			$qb->where($qb->expr()->eq('id', $qb->createNamedParameter($parameters["id"], IQueryBuilder::PARAM_INT)));
-		} else if ($findByCustomerIdFieldId) {
+		} elseif ($findByCustomerIdFieldId) {
 			$qb->where($qb->expr()->eq('customer_id', $qb->createNamedParameter($parameters["customerId"], IQueryBuilder::PARAM_INT)))
-            	->andWhere($qb->expr()->eq('field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
+				->andWhere($qb->expr()->eq('field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
 		} else {
 			throw new Exception("Invalid parameters supplied to CustomerFieldValueMapper->find");
 		}
@@ -70,7 +70,7 @@ class CustomerFieldValueMapper extends QBMapper {
 					$qb->expr()->eq('v.id', $qb->createNamedParameter($parameters["id"], IQueryBuilder::PARAM_INT)),
 					$qb->expr()->eq('v.field_id', 'f.id'),
 				];
-			} else if ($findByCustomerIdFieldId) {
+			} elseif ($findByCustomerIdFieldId) {
 				$joinON = [
 					$qb->expr()->eq('v.customer_id', $qb->createNamedParameter($parameters["customerId"], IQueryBuilder::PARAM_INT)),
 					$qb->expr()->eq('v.field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)),
@@ -85,7 +85,7 @@ class CustomerFieldValueMapper extends QBMapper {
 
 			if ($findById) {
 				$qb->where($collectionExpr);
-			} else if ($findByCustomerIdFieldId) {
+			} elseif ($findByCustomerIdFieldId) {
 				$qb->where($qb->expr()->eq('f.id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
 				$qb->andWhere($collectionExpr);
 			}
@@ -112,20 +112,20 @@ class CustomerFieldValueMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-    /**
+	/**
 	 * @param int $customerId
 	 * @return array
 	 */
 	public function findAllIncludingFields(int $collectionId, int $customerId, ?array $filters, ?int $limit = null, ?int $offset = null): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-        $qb->select('*')
+		$qb->select('*')
 			->addSelect("f.id AS field_id")
-            ->from(self::TABLENAME, 'v')
-            ->rightJoin('v', self::FIELDS_TABLENAME, 'f', $qb->expr()->andX(
-                $qb->expr()->eq('v.field_id', 'f.id'),
-                $qb->expr()->eq('v.customer_id', $qb->createNamedParameter($customerId, IQueryBuilder::PARAM_INT))
-            ))
+			->from(self::TABLENAME, 'v')
+			->rightJoin('v', self::FIELDS_TABLENAME, 'f', $qb->expr()->andX(
+				$qb->expr()->eq('v.field_id', 'f.id'),
+				$qb->expr()->eq('v.customer_id', $qb->createNamedParameter($customerId, IQueryBuilder::PARAM_INT))
+			))
 			->where($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
 		$this->handleBooleanFilter($qb, $filters["includeInList"], 'f.include_in_list');
@@ -149,7 +149,7 @@ class CustomerFieldValueMapper extends QBMapper {
 		} finally {
 			$result->closeCursor();
 		}
-        
+		
 		return $entities;
 	}
 }

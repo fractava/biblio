@@ -12,14 +12,14 @@ class CustomerFieldValue extends Entity implements JsonSerializable {
 	protected $value;
 
 	public function __construct() {
-        $this->addType('customerId','integer');
-        $this->addType('fieldId','integer');
-    }
+		$this->addType('customerId','integer');
+		$this->addType('fieldId','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-            'customerId' => $this->itemId,
+			'customerId' => $this->itemId,
 			'fieldId' => $this->fieldId,
 			'value' => $this->value
 		];

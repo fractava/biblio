@@ -13,9 +13,9 @@ use OCA\Biblio\Traits\ApiObjectMapper;
 class LoanFieldValueMapper extends QBMapper {
 	use ApiObjectMapper;
 
-	const TABLENAME = 'biblio_loan_fields_values';
+	public const TABLENAME = 'biblio_loan_fields_values';
 
-	const FIELDS_TABLENAME = 'biblio_loan_fields';
+	public const FIELDS_TABLENAME = 'biblio_loan_fields';
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, LoanFieldValue::class);
@@ -39,9 +39,9 @@ class LoanFieldValueMapper extends QBMapper {
 
 		if ($findById) {
 			$qb->where($qb->expr()->eq('id', $qb->createNamedParameter($parameters["id"], IQueryBuilder::PARAM_INT)));
-		} else if ($findByLoanIdFieldId) {
+		} elseif ($findByLoanIdFieldId) {
 			$qb->where($qb->expr()->eq('loan_id', $qb->createNamedParameter($parameters["loanId"], IQueryBuilder::PARAM_INT)))
-            	->andWhere($qb->expr()->eq('field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
+				->andWhere($qb->expr()->eq('field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
 		} else {
 			throw new Exception("Invalid parameters supplied to LoanFieldValueMapper->find");
 		}
@@ -70,7 +70,7 @@ class LoanFieldValueMapper extends QBMapper {
 					$qb->expr()->eq('v.id', $qb->createNamedParameter($parameters["id"], IQueryBuilder::PARAM_INT)),
 					$qb->expr()->eq('v.field_id', 'f.id'),
 				];
-			} else if ($findByLoanIdFieldId) {
+			} elseif ($findByLoanIdFieldId) {
 				$joinON = [
 					$qb->expr()->eq('v.loan_id', $qb->createNamedParameter($parameters["loanId"], IQueryBuilder::PARAM_INT)),
 					$qb->expr()->eq('v.field_id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)),
@@ -85,7 +85,7 @@ class LoanFieldValueMapper extends QBMapper {
 
 			if ($findById) {
 				$qb->where($collectionExpr);
-			} else if ($findByLoanIdFieldId) {
+			} elseif ($findByLoanIdFieldId) {
 				$qb->where($qb->expr()->eq('f.id', $qb->createNamedParameter($parameters["fieldId"], IQueryBuilder::PARAM_INT)));
 				$qb->andWhere($collectionExpr);
 			}
@@ -112,20 +112,20 @@ class LoanFieldValueMapper extends QBMapper {
 		return $this->findEntities($qb);
 	}
 
-    /**
+	/**
 	 * @param int $loanId
 	 * @return array
 	 */
 	public function findAllIncludingFields(int $collectionId, int $loanId, ?array $filters, ?int $limit = null, ?int $offset = null): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-        $qb->select('*')
+		$qb->select('*')
 			->addSelect("f.id AS field_id")
-            ->from(self::TABLENAME, 'v')
-            ->rightJoin('v', self::FIELDS_TABLENAME, 'f', $qb->expr()->andX(
-                $qb->expr()->eq('v.field_id', 'f.id'),
-                $qb->expr()->eq('v.loan_id', $qb->createNamedParameter($loanId, IQueryBuilder::PARAM_INT))
-            ))
+			->from(self::TABLENAME, 'v')
+			->rightJoin('v', self::FIELDS_TABLENAME, 'f', $qb->expr()->andX(
+				$qb->expr()->eq('v.field_id', 'f.id'),
+				$qb->expr()->eq('v.loan_id', $qb->createNamedParameter($loanId, IQueryBuilder::PARAM_INT))
+			))
 			->where($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
 		$this->handleJsonStringFilter($this->db, $qb, $filters["value"], 'v.value');
@@ -148,7 +148,7 @@ class LoanFieldValueMapper extends QBMapper {
 		} finally {
 			$result->closeCursor();
 		}
-        
+		
 		return $entities;
 	}
 }

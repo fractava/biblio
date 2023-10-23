@@ -11,8 +11,8 @@ class Customer extends Entity implements JsonSerializable {
 	protected $name;
 
 	public function __construct() {
-        $this->addType('collectionId','integer');
-    }
+		$this->addType('collectionId','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [

@@ -9,20 +9,20 @@ use OCP\AppFramework\Db\Entity;
 class Loan extends Entity implements JsonSerializable {
 	protected $itemInstanceId;
 	protected $customerId;
-    protected $until;
+	protected $until;
 
 	public function __construct() {
-        $this->addType('itemInstanceId','integer');
-        $this->addType('customerId','integer');
-        $this->addType('until','integer');
-    }
+		$this->addType('itemInstanceId','integer');
+		$this->addType('customerId','integer');
+		$this->addType('until','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
 			'itemInstanceId' => $this->itemInstanceId,
 			'customerId' => $this->customerId,
-            'until' => $this->until,
+			'until' => $this->until,
 		];
 	}
 }

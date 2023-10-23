@@ -2,16 +2,6 @@
 
 namespace OCA\Biblio\Service;
 
-use Exception;
-
-use OCA\Biblio\Service\CollectionService;
-use OCA\Biblio\Service\CustomerService;
-use OCA\Biblio\Service\CustomerFieldService;
-use OCA\Biblio\Service\CustomerFieldValueService;
-use OCA\Biblio\Service\ItemService;
-use OCA\Biblio\Service\ItemFieldService;
-use OCA\Biblio\Service\LoanService;
-
 class V1ImportService {
 	/** @var CollectionService */
 	private $collectionService;
@@ -41,14 +31,14 @@ class V1ImportService {
 	private $loanService;
 
 	public function __construct(CollectionService $collectionService,
-								CustomerService $customerService,
-								CustomerFieldService $customerFieldService,
-								CustomerFieldValueService $customerFieldValueService,
-								ItemService $itemService,
-								ItemFieldService $itemFieldService,
-								ItemFieldValueService $itemFieldValueService,
-								ItemInstanceService $itemInstanceService,
-								LoanService $loanService) {
+		CustomerService $customerService,
+		CustomerFieldService $customerFieldService,
+		CustomerFieldValueService $customerFieldValueService,
+		ItemService $itemService,
+		ItemFieldService $itemFieldService,
+		ItemFieldValueService $itemFieldValueService,
+		ItemInstanceService $itemInstanceService,
+		LoanService $loanService) {
 		$this->collectionService = $collectionService;
 		$this->customerService = $customerService;
 		$this->customerFieldService = $customerFieldService;
@@ -75,13 +65,13 @@ class V1ImportService {
 
 		$customerIdMapping = [];
 
-		foreach($importedCustomersTable["data"] as $customer) {
+		foreach ($importedCustomersTable["data"] as $customer) {
 			$newCustomer = $this->customerService->create($collectionId, $customer["name"]);
 			$newCustomerId = $newCustomer->getId();
 
 			$customerIdMapping[(int) $customer["id"]] = $newCustomerId;
 
-			if(isset($customer["class_id"])) {
+			if (isset($customer["class_id"])) {
 				$this->customerFieldValueService->updateByCustomerAndFieldId($newCustomerId, $newClassesField->getId(), json_encode($customer["class_id"]));
 			}
 		}
@@ -94,47 +84,47 @@ class V1ImportService {
 
 		$itemIdMapping = [];
 
-		foreach($importedItemsTable["data"] as $item) {
+		foreach ($importedItemsTable["data"] as $item) {
 			$newItem = $this->itemService->create($collectionId, $item["title"]);
 			$newItemId = $newItem->getId();
 
 			$itemIdMapping[(int) $item["id"]] = $newItemId;
 
-			if(isset($item["subject_id"])) {
+			if (isset($item["subject_id"])) {
 				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newSubjectsField->getId(), json_encode($item["subject_id"]));
 			}
-			if(isset($item["author"])) {
+			if (isset($item["author"])) {
 				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newAuthorField->getId(), json_encode($item["author"]));
 			}
-			if(isset($item["publisher"])) {
+			if (isset($item["publisher"])) {
 				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newPublisherField->getId(), json_encode($item["publisher"]));
 			}
-			if(isset($item["price"])) {
+			if (isset($item["price"])) {
 				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newPriceField->getId(), json_encode($item["price"]));
 			}
-			if(isset($item["isbn"])) {
+			if (isset($item["isbn"])) {
 				$this->itemFieldValueService->updateByItemAndFieldId($newItemId, $newIsbnField->getId(), json_encode($item["isbn"]));
 			}
 		}
 
-		foreach($importedItemInstancesTable["data"] as $itemInstance) {
+		foreach ($importedItemInstancesTable["data"] as $itemInstance) {
 			$mappedItemId = $itemIdMapping[(int) $itemInstance["media_id"]];
 
-			if(isset($mappedItemId)) {
+			if (isset($mappedItemId)) {
 				$mappedLoanedToCustomerId = null;
-				if(isset($itemInstance["loaned_to"]) && $itemInstance["loaned_to"] !== "") {
+				if (isset($itemInstance["loaned_to"]) && $itemInstance["loaned_to"] !== "") {
 					$mappedLoanedToCustomerId = $customerIdMapping[(int) $itemInstance["loaned_to"]];
 				}
 
 				$loanedUntilTime = null;
-				if(isset($itemInstance["loaned_until"]) && $itemInstance["loaned_until"] !== "") {
+				if (isset($itemInstance["loaned_until"]) && $itemInstance["loaned_until"] !== "") {
 					$datetime = \DateTime::createFromFormat("Y-m-d H:i:s", $itemInstance["loaned_until"] . " 00:00:00");
 					$loanedUntilTime = $datetime->getTimestamp();
 				}
 
 				$newItemInstance = $this->itemInstanceService->create($itemInstance["barcode"], $mappedItemId);
 
-				if(isset($mappedLoanedToCustomerId)) {
+				if (isset($mappedLoanedToCustomerId)) {
 					$newItemInstanceId = $newItemInstance->getId();
 
 					$this->loanService->create($newItemInstanceId, $mappedLoanedToCustomerId, $loanedUntilTime);
@@ -147,7 +137,7 @@ class V1ImportService {
 
 	private function getTable(array $data, string $name) {
 		foreach ($data as $entry) {
-			if($entry["type"] === "table" && $entry["name"] === $name) {
+			if ($entry["type"] === "table" && $entry["name"] === $name) {
 				return $entry;
 			}
 		}
@@ -155,7 +145,7 @@ class V1ImportService {
 
 	private function convertToSelectField($fieldService, int $collectionId, array $table, string $name) {
 		$options = [];
-		foreach($table["data"] as $option) {
+		foreach ($table["data"] as $option) {
 			$options[] = [
 				"id" => $option["id"],
 				"label" => $option["name"],

@@ -16,14 +16,14 @@ class AdvancedQBMapper extends QBMapper {
 	 * @since 14.0.0
 	 */
 	public function __construct(IDBConnection $db, string $tableName, string $entityClass = null) {
-        parent::__construct($db, $tableName, $entityClass);
-    }
+		parent::__construct($db, $tableName, $entityClass);
+	}
 
 	/**
 	 * Runs a sql query and returns an array of entities
 	 *
 	 * @param IQueryBuilder $query
-     * @param array $ignoredColumns
+	 * @param array $ignoredColumns
 	 * @return array all fetched entities and all seperate columns
 	 * @psalm-return T[] all fetched entities and all seperate columns
 	 * @throws Exception
@@ -32,20 +32,20 @@ class AdvancedQBMapper extends QBMapper {
 	protected function findEntitiesAndSeperateColumns(IQueryBuilder $query, array $seperateColumns): array {
 		$result = $query->executeQuery();
 
-        $seperateColumnResults = [];
+		$seperateColumnResults = [];
 
 		try {
 			$entities = [];
-            $firstIteration = true;
+			$firstIteration = true;
 			while ($row = $result->fetch()) {
-                if($firstIteration) {
-                    $firstIteration = false;
-                    foreach ($seperateColumns as $column) {
-                        $seperateColumnResults[$column] = $row[$column];
-                    }
-                }
+				if ($firstIteration) {
+					$firstIteration = false;
+					foreach ($seperateColumns as $column) {
+						$seperateColumnResults[$column] = $row[$column];
+					}
+				}
 
-                $filteredRow = array_diff_key($row, array_flip($seperateColumns));
+				$filteredRow = array_diff_key($row, array_flip($seperateColumns));
 				$entities[] = $this->mapRowToEntity($filteredRow);
 			}
 			return [$entities, $seperateColumnResults];

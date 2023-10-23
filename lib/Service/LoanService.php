@@ -12,19 +12,16 @@ use OCA\Biblio\Errors\LoanNotFound;
 use OCA\Biblio\Db\Loan;
 use OCA\Biblio\Db\LoanMapper;
 
-use OCA\Biblio\Service\ItemInstanceService;
-
 class LoanService {
-
 	/** @var LoanMapper */
 	private $mapper;
-    
-    /** @var ItemInstanceService */
-    private $itemInstanceService;
+	
+	/** @var ItemInstanceService */
+	private $itemInstanceService;
 
 	public function __construct(LoanMapper $mapper, ItemInstanceService $itemInstanceService) {
 		$this->mapper = $mapper;
-        $this->itemInstanceService = $itemInstanceService;
+		$this->itemInstanceService = $itemInstanceService;
 	}
 
 	public function findAll(int $collectionId): array {
@@ -48,7 +45,7 @@ class LoanService {
 		}
 	}
 
-    public function findByItemInstanceBarcode(string $barcode) {
+	public function findByItemInstanceBarcode(string $barcode) {
 		try {
 			return $this->mapper->findByItemInstanceBarcode($barcode);
 		} catch (Exception $e) {
@@ -60,17 +57,17 @@ class LoanService {
 		$newLoan = new Loan();
 		$newLoan->setItemInstanceId($itemInstanceId);
 		$newLoan->setCustomerId($customerId);
-        $newLoan->setUntil($until);
+		$newLoan->setUntil($until);
 
 		$newLoan = $this->mapper->insert($newLoan);
 
 		return $newLoan;
 	}
 
-    public function createByItemInstanceBarcode(string $barcode, int $customerId, int $until) {
-        $itemInstanceId = $this->itemInstanceService->findByBarcode($barcode)->getId();
+	public function createByItemInstanceBarcode(string $barcode, int $customerId, int $until) {
+		$itemInstanceId = $this->itemInstanceService->findByBarcode($barcode)->getId();
 
-        return $this->create($itemInstanceId, $customerId, $until);
+		return $this->create($itemInstanceId, $customerId, $until);
 	}
 
 	public function update(int $id, ?int $until) {
@@ -91,7 +88,7 @@ class LoanService {
 		try {
 			$loan = $this->mapper->findByItemInstanceBarcode($barcode);
 
-			if(!is_null($until)) {
+			if (!is_null($until)) {
 				$loan->setUntil($until);
 			}
 

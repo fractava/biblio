@@ -13,7 +13,6 @@ use OCA\Biblio\Db\ItemField;
 use OCA\Biblio\Db\ItemFieldMapper;
 
 class ItemFieldService {
-
 	/** @var ItemFieldMapper */
 	private $mapper;
 
@@ -44,7 +43,7 @@ class ItemFieldService {
 
 	public function create(int $collectionId, string $type, string $name, string $settings, bool $includeInList = false): ItemField {
 		$field = new ItemField();
-        $field->setCollectionId($collectionId);
+		$field->setCollectionId($collectionId);
 		$field->setType($type);
 		$field->setName($name);
 		$field->setSettings($settings);

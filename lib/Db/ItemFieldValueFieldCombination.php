@@ -19,19 +19,19 @@ class ItemFieldValueFieldCombination extends Entity implements JsonSerializable 
 	public function __construct() {
 		$this->addType('collectionId','integer');
 		$this->addType('includeInList','bool');
-        $this->addType('itemId','integer');
-        $this->addType('fieldId','integer');
-    }
+		$this->addType('itemId','integer');
+		$this->addType('fieldId','integer');
+	}
 
 	public function jsonSerialize(): array {
 		return [
 			'id' => $this->id,
-            'collectionId' => $this->collectionId,
+			'collectionId' => $this->collectionId,
 			'name' => $this->name,
 			'type' => $this->type,
 			'settings' => $this->settings,
 			'includeInList' => $this->includeInList,
-            'itemId' => $this->itemId,
+			'itemId' => $this->itemId,
 			'fieldId' => $this->fieldId,
 			'value' => $this->value
 		];

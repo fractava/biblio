@@ -18,8 +18,8 @@ class CollectionController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-                                CollectionService $service,
-								$userId) {
+		CollectionService $service,
+		$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 		$this->userId = $userId;
@@ -46,8 +46,8 @@ class CollectionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $name, string $itemFieldsOrder="[]", string $customerFieldsOrder="[]"): DataResponse {
-		if(strlen($name) <= 3) {
+	public function create(string $name, string $itemFieldsOrder = "[]", string $customerFieldsOrder = "[]"): DataResponse {
+		if (strlen($name) <= 3) {
 			return new DataResponse([
 				"error" => "Name must be longer than 3 characters"
 			], Http::STATUS_BAD_REQUEST);

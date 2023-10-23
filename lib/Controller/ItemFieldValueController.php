@@ -28,7 +28,7 @@ class ItemFieldValueController extends Controller {
 	/**
 	 * Get all item fields of collection
 	 * @NoAdminRequired
-     * @NoCSRFRequired
+	 * @NoCSRFRequired
 	 */
 	public function index(int $collectionId, int $itemId, ?string $include, ?string $filter, ?int $limit, ?int $offset): JSONResponse {
 		$includes = $this->parseIncludesString($include);
@@ -40,17 +40,17 @@ class ItemFieldValueController extends Controller {
 	/**
 	 * Get specific item field
 	 * @NoAdminRequired
-     * @NoCSRFRequired
+	 * @NoCSRFRequired
 	 */
 	public function show(int $collectionId, int $itemId, int $fieldId, ?string $include): DataResponse {
 		$includes = $this->parseIncludesString($include);
 
 		return $this->handleNotFound(function () use ($collectionId, $itemId, $fieldId, $includes) {
-            return $this->service->find([
+			return $this->service->find([
 				"collectionId" => $collectionId,
-                "itemId" => $itemId,
-                "fieldId" => $fieldId,
-            ], $includes);
+				"itemId" => $itemId,
+				"fieldId" => $fieldId,
+			], $includes);
 		});
 	}
 
@@ -63,11 +63,11 @@ class ItemFieldValueController extends Controller {
 
 		// return API object including field
 		return $this->handleNotFound(function () use ($collectionId, $itemId, $fieldId) {
-            return $this->service->find([
+			return $this->service->find([
 				"collectionId" => $collectionId,
-                "itemId" => $itemId,
-                "fieldId" => $fieldId,
-            ], ["model", "field"]);
+				"itemId" => $itemId,
+				"fieldId" => $fieldId,
+			], ["model", "field"]);
 		});
 	}
 

@@ -25,8 +25,8 @@ class ItemController extends Controller {
 	use Errors;
 
 	public function __construct(IRequest $request,
-								ItemService $service,
-								$userId) {
+		ItemService $service,
+		$userId) {
 		parent::__construct(Application::APP_ID, $request);
 		$this->service = $service;
 		$this->userId = $userId;
@@ -40,7 +40,7 @@ class ItemController extends Controller {
 		$includes = $this->parseIncludesString($include);
 		$filters = $this->parseFilterString($filter);
 
-		list($entities, $meta) = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
+		[$entities, $meta] = $this->service->findAll($collectionId, $includes, $filters, $sort, $sortReverse, $limit, $offset);
 
 		return new JSONResponse([
 			"meta" => $meta,
@@ -64,7 +64,7 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $collectionId, string $title): JSONResponse {
-		if(strlen($title) < 3) {
+		if (strlen($title) < 3) {
 			return new JSONResponse([
 				"error" => "Title must be longer than 3 characters"
 			], Http::STATUS_BAD_REQUEST);
