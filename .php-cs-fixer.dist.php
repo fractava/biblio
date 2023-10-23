@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-require_once './vendor/autoload.php';
-
 $config = new PhpCsFixer\Config();
 $config->setRules(
 	[
@@ -53,7 +51,7 @@ $config->setRules(
 		],
 	])
 	->setIndent("\t")
-    ->setLineEnding("\n")
+	->setLineEnding("\n")
 	->getFinder()
 	->notPath('build')
 	->notPath('l10n')

@@ -1,0 +1,4 @@
+{
+    "php-cs-fixer.configFile": "/workspace/biblio/.php-cs-fixer.dist.php",
+    "php-cs-fixer.executable": "/workspace/biblio/tools/php-cs-fixer/vendor/bin/php-cs-fixer"
+}

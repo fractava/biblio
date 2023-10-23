@@ -42,3 +42,5 @@ ports:
 vscode:
   extensions:
     - zobo.php-intellisense
+    - higoka.php-cs-fixer
+    - Vue.volar
