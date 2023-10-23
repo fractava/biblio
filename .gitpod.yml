@@ -1,14 +1,4 @@
 
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: true
-    pullRequestsFromForks: true
-    addCheck: true
-    addComment: false
-    addBadge: true
-
 tasks:
   - name: Nextcloud Server
     init: |
@@ -33,7 +23,7 @@ tasks:
 
 ports:
   - port: 8080
-    onOpen: open-browser
+    onOpen: notify
     visibility: private
   - port: 8081
     visibility: private
