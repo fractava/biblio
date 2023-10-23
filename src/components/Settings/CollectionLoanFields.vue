@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<FieldsTable :fields="fields"
-			:fields-order="settingsStore.selectedCollection.itemFieldsOrder"
+			:fields-order="settingsStore.selectedCollection.loanFieldsOrder"
+            :enable-include-in-list="false"
 			@update:fieldsOrder="onFieldOrderUpdate"
 			@field-update="onFieldUpdate"
 			@delete="deleteField" />
@@ -11,7 +12,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { mapStores } from "pinia";
 import { showError } from "@nextcloud/dialogs";
 import { debounce } from "debounce";
@@ -20,8 +20,7 @@ import { api } from "../../api.js";
 import FieldsTable from "../Fields/FieldsTable.vue";
 import AddFieldButton from "../Fields/AddFieldButton.vue";
 
-import { useBiblioStore } from "../../store/biblio.js";
-import { useItemsStore } from "../../store/items.js";
+import { useItemInstancesStore } from "../../store/itemInstances.js";
 import { useSettingsStore } from "../../store/settings.js";
 
 export default {
@@ -38,19 +37,19 @@ export default {
 		...mapStores(useSettingsStore),
 	},
 	mounted() {
-		api.getItemFields(this.settingsStore.context?.collectionId)
+		api.getLoanFields(this.settingsStore.context?.collectionId)
 			.then((fields) => {
 				this.fields = fields;
 			})
 			.catch((error) => {
 				console.error(error);
-				showError(t("biblio", "Could not fetch item fields"));
+				showError(t("biblio", "Could not fetch loan fields"));
 			});
 	},
 	methods: {
-		onFieldOrderUpdate(itemFieldsOrder) {
+		onFieldOrderUpdate(loanFieldsOrder) {
 			this.settingsStore.updateSelectedCollection({
-				itemFieldsOrder,
+				loanFieldsOrder,
 			});
 		},
 		onFieldUpdate(id, parameters) {
@@ -58,20 +57,20 @@ export default {
 			const fieldIndex = this.fields.findIndex(field => field.id === id);
 			Object.assign(this.fields[fieldIndex], parameters);
 
-			api.updateItemField(this.settingsStore.context?.collectionId, id, parameters)
+			api.updateLoanField(this.settingsStore.context?.collectionId, id, parameters)
 				.then((updatedField) => {
 					// const fieldIndex = this.fields.findIndex(field => field.id === id);
 					// Vue.set(this.fields, fieldIndex, updatedField);
 
-					this.refreshItemFieldsInBiblioStoreIfNeeded();
+					this.refreshLoanFieldsInBiblioStoreIfNeeded();
 				}).catch((error) => {
 					console.error(error);
-					showError(t("biblio", "Could not update item field"));
+					showError(t("biblio", "Could not update loan field"));
 				});
 		},
 
 		addField(type, field) {
-			api.createItemField(this.settingsStore.context?.collectionId, {
+			api.createLoanField(this.settingsStore.context?.collectionId, {
 				type,
 				name: "",
 				settings: field.defaultSettings,
@@ -81,44 +80,44 @@ export default {
 					this.fields.push(newField);
 
 					this.settingsStore.updateSelectedCollection({
-						itemFieldsOrder: [...this.settingsStore.selectedCollection.itemFieldsOrder, newField.id],
+						loanFieldsOrder: [...this.settingsStore.selectedCollection.loanFieldsOrder, newField.id],
 					});
 
-					this.refreshItemFieldsInBiblioStoreIfNeeded();
+					this.refreshLoanFieldsInBiblioStoreIfNeeded();
 				})
 				.catch((error) => {
 					console.error(error);
-					showError(t("biblio", "Could not create item field"));
+					showError(t("biblio", "Could not create loan field"));
 				});
 		},
 
-		deleteField(itemFieldId) {
+		deleteField(loanFieldId) {
 			return new Promise((resolve, reject) => {
-				api.deleteItemField(this.settingsStore.context?.collectionId, itemFieldId)
+				api.deleteLoanField(this.settingsStore.context?.collectionId, loanFieldId)
 					.then(() => {
-						this.fields = this.fields.filter(itemField => itemField.id !== itemFieldId);
+						this.fields = this.fields.filter(loanField => loanField.id !== loanFieldId);
 
-						this.refreshItemFieldsInBiblioStoreIfNeeded();
+						this.refreshLoanFieldsInBiblioStoreIfNeeded();
 
 						resolve();
 					})
 					.catch((error) => {
 						console.error(error);
-						showError(t("biblio", "Could not delete item field"));
+						showError(t("biblio", "Could not delete loan field"));
 						resolve();
 					});
 			});
 		},
 
-		refreshItemFieldsInBiblioStoreIfNeeded: debounce(() => {
-			const itemsStore = useItemsStore();
+		refreshLoanFieldsInBiblioStoreIfNeeded: debounce(() => {
+			const itemInstancesStore = useItemInstancesStore();
 			const settingsStore = useSettingsStore();
 
-			// the settings made changes to the item fields of the collection currently selected in the main application
+			// the settings made changes to the loan fields of the collection currently selected in the main application
 			// refresh the data, so the changes take effect in the main application without a manual refresh
 
 			if (window.biblioRouter.currentRoute.params.collectionId === settingsStore.context?.collectionId) {
-				itemsStore.fetchFields();
+				itemInstancesStore.fetchFields();
 			}
 		}, 2000),
 	},

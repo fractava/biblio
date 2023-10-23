@@ -29,13 +29,13 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 				return;
 			}
 
-			/* api.getItemFields(route.params.collectionId)
+			api.getLoanFields(route.params.collectionId)
 				.then((fields) => {
 					this.fields = fields;
 				})
 				.catch(() => {
-					showError(t("biblio", "Could not fetch item fields"));
-				}); */
+					showError(t("biblio", "Could not fetch loan fields"));
+				});
 		},
 
 		/* Item Instances */

@@ -14,7 +14,7 @@
 		</td>
 
 		<!-- Include In List -->
-		<td>
+		<td v-if="enableIncludeInList">
 			<slot name="includeInList" />
 		</td>
 
@@ -45,6 +45,10 @@ export default {
 	},
 	props: {
 		enableDragHandle: {
+			type: Boolean,
+			default: true,
+		},
+		enableIncludeInList: {
 			type: Boolean,
 			default: true,
 		},

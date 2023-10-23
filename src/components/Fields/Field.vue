@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<FieldsTableRow :enable-drag-handle="enableDragHandle">
+	<FieldsTableRow :enable-drag-handle="enableDragHandle" :enable-include-in-list="enableIncludeInList">
 		<template #icon>
 			<slot name="icon" />
 		</template>
@@ -106,6 +106,10 @@ export default {
 		shiftDragHandle: {
 			type: Boolean,
 			default: false,
+		},
+		enableIncludeInList: {
+			type: Boolean,
+			default: true,
 		},
 		contentValid: {
 			type: Boolean,

@@ -29,6 +29,11 @@
 			<CollectionItemFields />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection-loan-fields"
+			title="Item Instance Loan Fields">
+			<CollectionLoanFields />
+		</NcAppSettingsSection>
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-customer-fields"
 			title="Customer Fields">
 			<CollectionCustomerFields />
@@ -48,6 +53,7 @@ import V1Import from "./V1Import.vue";
 import CollectionProperties from "./CollectionProperties.vue";
 import CollectionMembers from "./CollectionMembers.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
+import CollectionLoanFields from "./CollectionLoanFields.vue";
 import CollectionCustomerFields from "./CollectionCustomerFields.vue";
 
 export default {
@@ -59,6 +65,7 @@ export default {
 		CollectionProperties,
 		CollectionMembers,
 		CollectionItemFields,
+		CollectionLoanFields,
 		CollectionCustomerFields,
 	},
 	props: {

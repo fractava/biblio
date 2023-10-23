@@ -111,14 +111,13 @@ export default {
 		},
 
 		refreshCustomerFieldsInBiblioStoreIfNeeded: debounce(() => {
-			const biblioStore = useBiblioStore();
 			const customersStore = useCustomersStore();
 			const settingsStore = useSettingsStore();
 
 			// the settings made changes to the customer fields of the collection currently selected in the main application
 			// refresh the data, so the changes take effect in the main application without a manual refresh
 
-			if ($route.params.collectionId === settingsStore.context?.collectionId) {
+			if (window.biblioRouter.currentRoute.params.collectionId === settingsStore.context?.collectionId) {
 				customersStore.fetchFields();
 			}
 		}, 2000),
