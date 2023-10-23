@@ -2,32 +2,33 @@
 	<NcAppNavigation>
 		<AppNavigationSelect style="margin-bottom: 12px;"
 			:options="biblioStore.collections"
+			:value="selectValue"
 			options-label="name"
 			button-aria-label="Open Collection Settings"
 			placeholder="Select Collection"
 			@button-clicked="settingsOpen = !settingsOpen"
-			@input="(selection) => { biblioStore.selectCollection(selection.id) }">
+			@input="collectionSelected">
 			<template #button-icon>
 				<Cog :size="20" />
 			</template>
 		</AppNavigationSelect>
 		<Settings :open.sync="settingsOpen" />
-		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" to="/lend-return">
+		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" :to="linkIfCollectionIdSelected('/lend-return')">
 			<template #icon>
 				<SwapVertical :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Items')" to="/items">
+		<NcAppNavigationItem :name="t('biblio', 'Items')" :to="linkIfCollectionIdSelected('/items')">
 			<template #icon>
 				<Bookshelf :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Item Instances')" to="/iteminstances">
+		<NcAppNavigationItem :name="t('biblio', 'Item Instances')" :to="linkIfCollectionIdSelected('/iteminstances')">
 			<template #icon>
 				<Bookshelf :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Customers')" to="/customers">
+		<NcAppNavigationItem :name="t('biblio', 'Customers')" :to="linkIfCollectionIdSelected('/customers')">
 			<template #icon>
 				<AccountMultiple :size="20" />
 			</template>
@@ -67,6 +68,44 @@ export default {
 	},
 	computed: {
 		...mapStores(useBiblioStore),
+		selectValue() {
+			if (this.$route.params.collectionId) {
+				return parseInt(this.$route.params.collectionId);
+			} else {
+				return null;
+			}
+		},
+	},
+	methods: {
+		linkIfCollectionIdSelected(subpath) {
+			if (this.$route.params.collectionId) {
+				return "/" + this.$route.params.collectionId + subpath;
+			} else {
+				return undefined;
+			}
+		},
+		collectionSelected(selectedId) {
+			if (selectedId) {
+				if (this.$route.params.collectionId && Object.keys(this.$route.params).length === 1) {
+					this.$router.push({
+						params: {
+							collectionId: selectedId,
+						},
+					});
+				} else {
+					this.$router.push({
+						name: "lend-return",
+						params: {
+							collectionId: selectedId,
+						},
+					});
+				}
+			} else {
+				this.$router.push({
+					name: "home",
+				});
+			}
+		},
 	},
 };
 </script>

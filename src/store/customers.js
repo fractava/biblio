@@ -23,13 +23,13 @@ export const useCustomersStore = defineStore("customers", {
 	actions: {
 		/* Customer Fields */
 		fetchFields() {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
-			api.getCustomerFields(biblioStore.selectedCollectionId)
+			api.getCustomerFields(route.params.collectionId)
 				.then((fields) => {
 					this.fields = fields;
 				})
@@ -40,14 +40,14 @@ export const useCustomersStore = defineStore("customers", {
 
 		/* Customers */
 		createCustomer(parameters) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.createCustomer(biblioStore.selectedCollectionId, parameters)
+				api.createCustomer(route.params.collectionId, parameters)
 					.then((result) => {
 						this.searchResults.push(result);
 						resolve();
@@ -60,14 +60,14 @@ export const useCustomersStore = defineStore("customers", {
 			});
 		},
 		refreshSearchResults() {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
 			if (this.currentlyRunningFetch) {
 				this.currentlyRunningFetch.cancel();
 			}
 
 			const newCustomerFetch = new PCancelable((resolve, reject, onCancel) => {
-				if (!biblioStore.selectedCollectionId) {
+				if (!route.params.collectionId) {
 					this.searchResults = [];
 					return resolve();
 				}
@@ -89,7 +89,7 @@ export const useCustomersStore = defineStore("customers", {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getCustomers(biblioStore.selectedCollectionId, "model+fields", filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getCustomers(route.params.collectionId, "model+fields", filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.customers;
@@ -115,14 +115,14 @@ export const useCustomersStore = defineStore("customers", {
 			return newCustomerFetch;
 		},
 		updateCustomer(customerId, parameters) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.updateCustomer(biblioStore.selectedCollectionId, customerId, parameters)
+				api.updateCustomer(route.params.collectionId, customerId, parameters)
 					.then((result) => {
 						const updatedIndex = this.searchResults.findIndex(customer => customer.id === customerId);
 						Vue.set(this.searchResults, updatedIndex, result);
@@ -138,14 +138,14 @@ export const useCustomersStore = defineStore("customers", {
 			});
 		},
 		deleteCustomer(customerId) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.deleteCustomer(biblioStore.selectedCollectionId, customerId)
+				api.deleteCustomer(route.params.collectionId, customerId)
 					.then((result) => {
 						const deletedIndex = this.searchResults.findIndex(customer => customer.id === customerId);
 						this.searchResults.splice(deletedIndex, 1);

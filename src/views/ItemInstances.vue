@@ -1,5 +1,5 @@
 <template>
-	<NoCollectionSelected>
+	<div>
 		<ul>
 			<DataTable class="itemInstancesDataTable"
 				:columns="columns"
@@ -20,7 +20,7 @@
 				@click-row="openItemInstance"
 				@delete-selected-rows="deleteItemInstances" />
 		</ul>
-	</NoCollectionSelected>
+	</div>
 </template>
 
 <script>
@@ -30,17 +30,12 @@ import debounceFn from "debounce-fn";
 import DataTable from "../components/dataTable/DataTable.vue";
 import { useItemInstancesStore } from "../store/itemInstances.js";
 
-import AddItemModal from "../components/AddItemModal.vue";
-import NoCollectionSelected from "../components/NoCollectionSelected.vue";
-
 import FieldTypes from "../models/FieldTypes.js";
 import TextCell from "../components/Fields/Cells/TextCell.vue";
 
 export default {
 	components: {
 		DataTable,
-		AddItemModal,
-		NoCollectionSelected,
 	},
 	computed: {
 		...mapStores(useItemInstancesStore),
@@ -125,16 +120,23 @@ export default {
 			const itemInstance = this.itemInstancesStore.getItemInstanceById(itemInstanceId);
 			if (columnId === -2) {
 				this.$router.push({
-					path: "/item/" + itemInstance.itemId,
+					name: "item",
+					params: {
+						...this.$route.params,
+						id: itemInstance.itemId,
+					},
 				});
 			} else if (columnId === -3) {
 				if (itemInstance.loan.customerId) {
 					this.$router.push({
-						path: "/customer/" + itemInstance.loan.customerId,
+						name: "customer",
+						params: {
+							...this.$route.params,
+							id: itemInstance.loan.customerId,
+						},
 					});
 				}
 			}
-			console.log(itemInstanceId, columnId);
 		},
 		onSearchUpdate(newSearch) {
 			this.itemInstancesStore.search = newSearch;

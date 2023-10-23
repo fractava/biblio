@@ -1,5 +1,5 @@
 <template>
-	<NoCollectionSelected>
+	<div>
 		<ul>
 			<AddCustomerModal :open.sync="modalOpen" />
 			<DataTable class="customersDataTable"
@@ -24,7 +24,7 @@
 				@click-row="openCustomer"
 				@delete-selected-rows="deleteCustomers" />
 		</ul>
-	</NoCollectionSelected>
+	</div>
 </template>
 
 <script>
@@ -35,7 +35,6 @@ import DataTable from "../components/dataTable/DataTable.vue";
 import { useCustomersStore } from "../store/customers.js";
 
 import AddCustomerModal from "../components/AddCustomerModal.vue";
-import NoCollectionSelected from "../components/NoCollectionSelected.vue";
 
 import FieldTypes from "../models/FieldTypes";
 import TextCell from '../components/Fields/Cells/TextCell.vue';
@@ -44,7 +43,6 @@ export default {
 	components: {
 		DataTable,
 		AddCustomerModal,
-		NoCollectionSelected,
 	},
 	data() {
 		return {
@@ -106,7 +104,11 @@ export default {
 	methods: {
 		openCustomer(customerId) {
 			this.$router.push({
-				path: "/customer/" + customerId,
+				name: "customer",
+				params: {
+					...this.$route.params,
+					id: customerId,
+				},
 			});
 		},
 		onSearchUpdate(newSearch) {

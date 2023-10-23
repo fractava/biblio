@@ -23,13 +23,13 @@ export const useItemsStore = defineStore("items", {
 	actions: {
 		/* Item Fields */
 		fetchFields() {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
-			api.getItemFields(biblioStore.selectedCollectionId)
+			api.getItemFields(route.params.collectionId)
 				.then((fields) => {
 					this.fields = fields;
 				})
@@ -40,14 +40,14 @@ export const useItemsStore = defineStore("items", {
 
 		/* Items */
 		createItem(parameters) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.createItem(biblioStore.selectedCollectionId, parameters)
+				api.createItem(route.params.collectionId, parameters)
 					.then((result) => {
 						this.searchResults.push(result);
 						resolve();
@@ -60,14 +60,14 @@ export const useItemsStore = defineStore("items", {
 			});
 		},
 		refreshSearchResults() {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
 			if (this.currentlyRunningFetch) {
 				this.currentlyRunningFetch.cancel();
 			}
 
 			const newItemFetch = new PCancelable((resolve, reject, onCancel) => {
-				if (!biblioStore.selectedCollectionId) {
+				if (!route.params.collectionId) {
 					this.searchResults = [];
 					return resolve();
 				}
@@ -89,7 +89,7 @@ export const useItemsStore = defineStore("items", {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getItems(biblioStore.selectedCollectionId, "model+fields", filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getItems(route.params.collectionId, "model+fields", filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.items;
@@ -115,14 +115,14 @@ export const useItemsStore = defineStore("items", {
 			return newItemFetch;
 		},
 		updateItem(itemId, parameters) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.updateItem(biblioStore.selectedCollectionId, itemId, parameters)
+				api.updateItem(route.params.collectionId, itemId, parameters)
 					.then((result) => {
 						const updatedIndex = this.searchResults.findIndex(item => item.id === itemId);
 						Vue.set(this.searchResults, updatedIndex, result);
@@ -138,14 +138,14 @@ export const useItemsStore = defineStore("items", {
 			});
 		},
 		deleteItem(itemId) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.deleteItem(biblioStore.selectedCollectionId, itemId)
+				api.deleteItem(route.params.collectionId, itemId)
 					.then((result) => {
 						const deletedIndex = this.searchResults.findIndex(item => item.id === itemId);
 						this.searchResults.splice(deletedIndex, 1);

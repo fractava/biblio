@@ -24,6 +24,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import { getRootUrl, generateUrl } from "@nextcloud/router";
 
+import Home from "./views/Home.vue";
 import LendReturn from "./views/LendReturn.vue";
 import Items from "./views/Items.vue";
 import Item from "./views/Item.vue";
@@ -45,30 +46,37 @@ const router = new Router({
 	routes: [
 		{
 			path: "/",
-			redirect: "/lend-return",
+			name: "home",
+			component: Home,
 		},
 		{
-			path: "/lend-return",
+			path: "/:collectionId/lend-return",
+			name: "lend-return",
 			component: LendReturn,
 		},
 		{
-			path: "/items",
+			path: "/:collectionId/items",
+			name: "items",
 			component: Items,
 		},
 		{
-			path: "/item/:id",
+			path: "/:collectionId/item/:id",
+			name: "item",
 			component: Item,
 		},
 		{
-			path: "/iteminstances",
+			path: "/:collectionId/iteminstances",
+			name: "iteminstances",
 			component: ItemInstances,
 		},
 		{
-			path: "/customers",
+			path: "/:collectionId/customers",
+			name: "customers",
 			component: Customers,
 		},
 		{
-			path: "/customer/:id",
+			path: "/:collectionId/customer/:id",
+			name: "customer",
 			component: Customer,
 		},
 	],

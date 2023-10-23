@@ -2,8 +2,10 @@
 	<div class="navigationSelectContainer">
 		<vueSelect class="navigationSelectSelect"
 			:options="options"
+			:value="value"
 			:label="optionsLabel"
 			:placeholder="placeholder"
+			:reduce="reduce"
 			@input="handleInput">
 			<template #open-indicator="{ attributes }">
 				<OpenIndicator v-bind="attributes" />
@@ -61,6 +63,10 @@ export default {
 			default: () => [],
 		},
 
+		value: {
+			default: undefined,
+		},
+
 		optionsLabel: {
 			type: String,
 			default: "label",
@@ -69,6 +75,11 @@ export default {
 		placeholder: {
 			type: String,
 			default: "",
+		},
+
+		reduce: {
+			type: Function,
+			default: (option) => option.id,
 		},
 	},
 	methods: {

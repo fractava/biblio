@@ -16,6 +16,9 @@ import { mapStores } from "pinia";
 
 import Sidebar from "./components/Sidebar.vue";
 import { useBiblioStore } from "./store/biblio.js";
+import { useItemsStore } from "./store/items.js";
+import { useItemInstancesStore } from "./store/itemInstances.js";
+import { useCustomersStore } from "./store/customers.js";
 
 export default {
 	name: "App",
@@ -28,6 +31,21 @@ export default {
 	},
 	mounted() {
 		this.biblioStore.fetchCollections();
+
+		window.biblioRouter.afterEach((to, from) => {
+			if (from.params.collectionId !== to.params.collectionId) {
+				const itemsStore = useItemsStore();
+				const itemInstancesStore = useItemInstancesStore();
+				const customersStore = useCustomersStore();
+
+				itemsStore.fetchFields();
+				itemsStore.refreshSearchResults().catch(() => {});
+				itemInstancesStore.fetchFields();
+				itemInstancesStore.refreshSearchResults().catch(() => {});
+				customersStore.fetchFields();
+				customersStore.refreshSearchResults().catch(() => {});
+			}
+		});
 	},
 };
 </script>

@@ -20,20 +20,23 @@
  *
  */
 import Vue from "vue";
-import { createPinia, PiniaVuePlugin } from 'pinia'
+import { createPinia, PiniaVuePlugin } from "pinia";
 
-import App from "./App";
+import App from "./App.vue";
 
-import router from "./router";
+import router from "./router.js";
 
 import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip";
+
+Vue.use(PiniaVuePlugin);
 
 Vue.directive("tooltip", Tooltip);
 
 Vue.mixin({ methods: { t, n } });
 
-Vue.use(PiniaVuePlugin);
 const pinia = createPinia();
+
+window.biblioRouter = router;
 
 export default new Vue({
 	router,

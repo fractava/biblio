@@ -23,13 +23,13 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 	actions: {
 		/* Item Fields */
 		fetchFields() {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
-			/* api.getItemFields(biblioStore.selectedCollectionId)
+			/* api.getItemFields(route.params.collectionId)
 				.then((fields) => {
 					this.fields = fields;
 				})
@@ -40,14 +40,14 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 
 		/* Item Instances */
 		refreshSearchResults() {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
 			if (this.currentlyRunningFetch) {
 				this.currentlyRunningFetch.cancel();
 			}
 
 			const newItemInstancesFetch = new PCancelable((resolve, reject, onCancel) => {
-				if (!biblioStore.selectedCollectionId) {
+				if (!route.params.collectionId) {
 					this.searchResults = [];
 					return resolve();
 				}
@@ -69,7 +69,7 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getItemInstances(biblioStore.selectedCollectionId, "model+item+loan+loan_customer", filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getItemInstances(route.params.collectionId, "model+item+loan+loan_customer", filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.instances;
@@ -95,14 +95,14 @@ export const useItemInstancesStore = defineStore("itemInstances", {
 			return newItemInstancesFetch;
 		},
 		deleteItemInstance(itemId) {
-			const biblioStore = useBiblioStore();
+			const route = window.biblioRouter.currentRoute;
 
-			if (!biblioStore.selectedCollectionId) {
+			if (!route.params.collectionId) {
 				return;
 			}
 
 			return new Promise((resolve, reject) => {
-				api.deleteItemInstance(biblioStore.selectedCollectionId, itemId)
+				api.deleteItemInstance(route.params.collectionId, itemId)
 					.then((result) => {
 						const deletedIndex = this.searchResults.findIndex(item => item.id === itemId);
 						this.searchResults.splice(deletedIndex, 1);

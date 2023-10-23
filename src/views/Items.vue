@@ -1,5 +1,5 @@
 <template>
-	<NoCollectionSelected>
+	<div>
 		<ul>
 			<AddItemModal :open.sync="modalOpen" />
 			<DataTable class="itemsDataTable"
@@ -24,7 +24,7 @@
 				@click-row="openItem"
 				@delete-selected-rows="deleteItems" />
 		</ul>
-	</NoCollectionSelected>
+	</div>
 </template>
 
 <script>
@@ -35,7 +35,6 @@ import DataTable from "../components/dataTable/DataTable.vue";
 import { useItemsStore } from "../store/items.js";
 
 import AddItemModal from "../components/AddItemModal.vue";
-import NoCollectionSelected from "../components/NoCollectionSelected.vue";
 
 import FieldTypes from "../models/FieldTypes";
 import TextCell from '../components/Fields/Cells/TextCell.vue';
@@ -44,7 +43,6 @@ export default {
 	components: {
 		DataTable,
 		AddItemModal,
-		NoCollectionSelected,
 	},
 	data() {
 		return {
@@ -105,7 +103,11 @@ export default {
 	methods: {
 		openItem(itemId) {
 			this.$router.push({
-				path: "/item/" + itemId,
+				name: "item",
+				params: {
+					...this.$route.params,
+					id: itemId,
+				},
 			});
 		},
 		onSearchUpdate(newSearch) {

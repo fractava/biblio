@@ -83,10 +83,10 @@ export default {
 		},
 	},
 	mounted() {
-		api.getItem(this.biblioStore.selectedCollectionId, this.itemId).then((result) => {
+		api.getItem(this.$route.params.collectionId, this.itemId).then((result) => {
 			this.item = result;
 		});
-		api.getItemInstances(this.biblioStore.selectedCollectionId, "model+loan", { item_id: { operator: "=", operand: this.itemId } }).then((result) => {
+		api.getItemInstances(this.$route.params.collectionId, "model+loan", { item_id: { operator: "=", operand: this.itemId } }).then((result) => {
 			this.instances = result.instances;
 		});
 	},
@@ -95,12 +95,12 @@ export default {
 			// optimistic update
 			this.item.title = title;
 
-			api.updateItem(this.biblioStore.selectedCollectionId, this.itemId, {
+			api.updateItem(this.$route.params.collectionId, this.itemId, {
 				title,
 			});
 		},
 		updateValue(newValue, field) {
-			api.updateItemFieldValue(this.biblioStore.selectedCollectionId, this.itemId, field.fieldId, {
+			api.updateItemFieldValue(this.$route.params.collectionId, this.itemId, field.fieldId, {
 				value: newValue,
 			}).then((result) => {
 				const updatedIndex = this.item.fieldValues.findIndex(fieldValue => fieldValue.fieldId === field.fieldId);

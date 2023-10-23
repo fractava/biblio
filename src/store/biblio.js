@@ -4,31 +4,12 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 import { api } from "../api.js";
 
-import { useItemsStore } from "./items.js";
-import { useItemInstancesStore } from "./itemInstances.js";
-import { useCustomersStore } from "./customers.js";
-
 export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
-		selectedCollectionId: false,
 	}),
 	actions: {
 		/* Collections */
-		selectCollection(id) {
-			this.selectedCollectionId = id;
-
-			const itemsStore = useItemsStore();
-			const itemInstancesStore = useItemInstancesStore();
-			const customersStore = useCustomersStore();
-
-			itemsStore.fetchFields();
-			itemsStore.refreshSearchResults().catch(() => {});
-			itemInstancesStore.fetchFields();
-			itemInstancesStore.refreshSearchResults().catch(() => {});
-			customersStore.fetchFields();
-			customersStore.refreshSearchResults().catch(() => {});
-		},
 		fetchCollections() {
 			api.getCollections()
 				.then((result) => {

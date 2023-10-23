@@ -1,5 +1,5 @@
 <template>
-	<NcEmptyContent v-if="!biblioStore.selectedCollectionId"
+	<NcEmptyContent v-if="!$route.params.collectionId"
 		:title="t('biblio', 'No collection selected')">
 		<template #icon>
 			<Magnify />

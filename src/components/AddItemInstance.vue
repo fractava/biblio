@@ -78,7 +78,8 @@ export default {
 		async submit() {
 			this.loading = true;
 			try {
-				let newInstance = await api.createItemInstance(this.biblioStore.selectedCollectionId, this.itemId, {
+				let newInstance = await api.createItemInstance(this.$route.params.collectionId, {
+					itemId: this.itemId,
 					barcode: this.barcode,
 				});
 

@@ -786,9 +786,9 @@ export const api = {
 		});
 	},
 
-	createItemInstance(collectionId, itemId, parameters) {
+	createItemInstance(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
-			axios.post(`/collections/${collectionId}/items/${itemId}/instances`, parameters)
+			axios.post(`/collections/${collectionId}/itemInstances`, parameters)
 				.then(function(response) {
 					resolve(response.data);
 				})

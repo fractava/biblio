@@ -118,7 +118,7 @@ export default {
 			// the settings made changes to the customer fields of the collection currently selected in the main application
 			// refresh the data, so the changes take effect in the main application without a manual refresh
 
-			if (biblioStore.selectedCollectionId === settingsStore.context?.collectionId) {
+			if ($route.params.collectionId === settingsStore.context?.collectionId) {
 				customersStore.fetchFields();
 			}
 		}, 2000),
