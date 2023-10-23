@@ -23,8 +23,8 @@ ifeq (, $(composer))
 else
 	composer install --prefer-dist
 	composer update --prefer-dist
-	cd tools/php-cs-fixer
-	composer install --prefer-dist
+	cd tools/php-cs-fixer; \
+	composer install --prefer-dist; \
 	composer update --prefer-dist
 endif
 
