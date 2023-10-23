@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import cellMixin from "./cellMixin";
+import cellMixin from "./cellMixin.js";
 
 export default {
 	mixins: [cellMixin],

@@ -26,11 +26,13 @@ import ShortTextFieldValue from "../components/Fields/Values/ShortTextFieldValue
 import LongTextFieldValue from "../components/Fields/Values/LongTextFieldValue.vue";
 import DateFieldValue from "../components/Fields/Values/DateFieldValue.vue";
 import SelectValue from "../components/Fields/Values/SelectValue.vue";
+import CheckboxValue from "../components/Fields/Values/CheckboxValue.vue";
 
 // Cells
 import ListFieldCell from "../components/Fields/Cells/ListFieldCell.vue";
 import TextCell from "../components/Fields/Cells/TextCell.vue";
 import SelectCell from "../components/Fields/Cells/SelectCell.vue";
+import CheckboxCell from "../components/Fields/Cells/CheckboxCell.vue";
 
 // Settings
 import NoSettings from "../components/Fields/Settings/NoSettings.vue";
@@ -42,6 +44,7 @@ import TextLong from "vue-material-design-icons/TextLong.vue";
 import CalendarMonth from "vue-material-design-icons/CalendarMonth.vue";
 import CalendarClock from "vue-material-design-icons/CalendarClock.vue";
 import FormDropdown from "vue-material-design-icons/FormDropdown.vue";
+import CheckboxMarkedOutline from "vue-material-design-icons/CheckboxMarkedOutline.vue";
 
 /**
  * @typedef {object} FieldTypes
@@ -227,5 +230,34 @@ export default {
 			},
 		],
 		filterOperandType: "options",
+	},
+
+	checkbox: {
+		valueEditComponent: CheckboxValue,
+		valueCellComponent: CheckboxCell,
+		settingsComponent: NoSettings,
+		iconComponent: CheckboxMarkedOutline,
+		label: t("biblio", "Checkbox"),
+
+		defaultSettings: "",
+		defaultValue: false,
+		canSort: true,
+		filterOperators: [
+			{
+				id: "=",
+				label: t("biblio", "Equals"),
+			},
+		],
+		filterOperandType: "options",
+		filterOperandOptions: [
+			{
+				id: "true",
+				label: t("biblio", "Checked"),
+			},
+			{
+				id: "false",
+				label: t("biblio", "Not Checked"),
+			},
+		],
 	},
 };

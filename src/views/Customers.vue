@@ -69,7 +69,7 @@ export default {
 					canFilter: true,
 					clickable: true,
 					filterOperandType: type.filterOperandType,
-					filterOperandOptions: field?.settings?.options,
+					filterOperandOptions: type.filterOperandOptions || field?.settings?.options,
 					filterOperators: type.filterOperators,
 					cellComponent: type.valueCellComponent,
 					defaultValue: type.defaultValue,
