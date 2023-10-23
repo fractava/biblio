@@ -50,6 +50,21 @@ return [
 		['name' => 'item_instance#showByBarcode', 'url' => '/collections/{collectionId}/itemInstances/byBarcode/{barcode}', 'verb' => 'GET'],
 		['name' => 'item_instance#destroyByBarcode', 'url' => '/collections/{collectionId}/itemInstances/byBarcode/{barcode}', 'verb' => 'DELETE'],
 
+		// Loans
+
+		// Loan Fields
+		['name' => 'loan_field#index', 'url' => '/collections/{collectionId}/loan_fields', 'verb' => 'GET'],
+		['name' => 'loan_field#show', 'url' => '/collections/{collectionId}/loan_fields/{id}', 'verb' => 'GET'],
+		['name' => 'loan_field#create', 'url' => '/collections/{collectionId}/loan_fields', 'verb' => 'POST'],
+		['name' => 'loan_field#update', 'url' => '/collections/{collectionId}/loan_fields/{id}', 'verb' => 'PUT'],
+		['name' => 'loan_field#destroy', 'url' => '/collections/{collectionId}/loan_fields/{id}', 'verb' => 'DELETE'],
+		
+		// Loan Field Values
+		['name' => 'loan_field_value#index', 'url' => '/collections/{collectionId}/loans/{loanId}/field_values', 'verb' => 'GET'],
+		['name' => 'loan_field_value#show', 'url' => '/collections/{collectionId}/loans/{loanId}/field_values/{fieldId}', 'verb' => 'GET'],
+		['name' => 'loan_field_value#update', 'url' => '/collections/{collectionId}/loans/{loanId}/field_values/{fieldId}', 'verb' => 'PUT'],
+		['name' => 'loan_field_value#destroy', 'url' => '/collections/{collectionId}/loans/{loanId}/field_values/{fieldId}', 'verb' => 'DELETE'],
+
 		// Customers
 		['name' => 'customer#index', 'url' => '/collections/{collectionId}/customers', 'verb' => 'GET'],
 		['name' => 'customer#show', 'url' => '/collections/{collectionId}/customers/{id}', 'verb' => 'GET'],

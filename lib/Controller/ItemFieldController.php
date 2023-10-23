@@ -2,11 +2,12 @@
 
 namespace OCA\Biblio\Controller;
 
-use OCA\Biblio\AppInfo\Application;
-use OCA\Biblio\Service\ItemFieldService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
+
+use OCA\Biblio\AppInfo\Application;
+use OCA\Biblio\Service\ItemFieldService;
 
 class ItemFieldController extends Controller {
 	/** @var ItemFieldService */
