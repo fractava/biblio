@@ -30,6 +30,12 @@ class V1ImportService {
 	/** @var LoanService */
 	private $loanService;
 
+	/** @var LoanFieldService */
+	private $loanFieldService;
+
+	/** @var LoanFieldValueService */
+	private $loanFieldValueService;
+
 	public function __construct(CollectionService $collectionService,
 		CustomerService $customerService,
 		CustomerFieldService $customerFieldService,
@@ -38,7 +44,9 @@ class V1ImportService {
 		ItemFieldService $itemFieldService,
 		ItemFieldValueService $itemFieldValueService,
 		ItemInstanceService $itemInstanceService,
-		LoanService $loanService) {
+		LoanService $loanService,
+		LoanFieldService $loanFieldService,
+		LoanFieldValueService $loanFieldValueService) {
 		$this->collectionService = $collectionService;
 		$this->customerService = $customerService;
 		$this->customerFieldService = $customerFieldService;
@@ -48,6 +56,8 @@ class V1ImportService {
 		$this->itemFieldValueService = $itemFieldValueService;
 		$this->itemInstanceService = $itemInstanceService;
 		$this->loanService = $loanService;
+		$this->loanFieldService = $loanFieldService;
+		$this->loanFieldValueService = $loanFieldValueService;
 	}
 
 	public function import(array $data, string $firstMember) {
@@ -107,6 +117,8 @@ class V1ImportService {
 			}
 		}
 
+		$newHolidayField = $this->loanFieldService->create($collectionId, "checkbox", "holiday", json_encode(""), true);
+
 		foreach ($importedItemInstancesTable["data"] as $itemInstance) {
 			$mappedItemId = $itemIdMapping[(int) $itemInstance["media_id"]];
 
@@ -127,7 +139,15 @@ class V1ImportService {
 				if (isset($mappedLoanedToCustomerId)) {
 					$newItemInstanceId = $newItemInstance->getId();
 
-					$this->loanService->create($newItemInstanceId, $mappedLoanedToCustomerId, $loanedUntilTime);
+					$holiday = false;
+					if (isset($itemInstance["holiday"])) {
+						$holidayInt = (int) $itemInstance["holiday"];
+						$holiday = (bool) $holidayInt;
+					}
+
+					$newLoan = $this->loanService->create($newItemInstanceId, $mappedLoanedToCustomerId, $loanedUntilTime);
+
+					$this->loanFieldValueService->updateByLoanAndFieldId($newLoan->getId(), $newHolidayField->getId(), json_encode($holiday));
 				}
 			}
 		}
