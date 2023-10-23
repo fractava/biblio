@@ -137,25 +137,25 @@ const transforms = {
 		},
 		/**
 		 *
-		 * @param {FieldResponse} itemField (Item|Customer) Field API Result
+		 * @param {FieldResponse} field (Item|Customer|Loan) Field API Result
 		 * @return {Field}
 		 */
-		transformField(itemField) {
-			if (itemField.settings && itemField.settings !== "") {
-				itemField.settings = JSON.parse(itemField.settings);
-			} else if (FieldTypes[itemField.type]) {
-				itemField.settings = FieldTypes[itemField.type].defaultSettings;
+		transformField(field) {
+			if (field.settings && field.settings !== "") {
+				field.settings = JSON.parse(field.settings);
+			} else if (FieldTypes[field.type]) {
+				field.settings = FieldTypes[field.type].defaultSettings;
 			} else {
-				itemField.settings = "";
+				field.settings = "";
 			}
 
-			itemField.includeInList = !!itemField.includeInList;
-			return itemField;
+			field.includeInList = !!field.includeInList;
+			return field;
 		},
 
 		/**
 		 *
-		 * @param {FieldValueResponse} fieldValue (Item|Customer) Field API Result
+		 * @param {FieldValueResponse} fieldValue (Item|Customer|Loan) Field API Result
 		 * @return {FieldValue}
 		 */
 		transformFieldValue(fieldValue) {
@@ -218,17 +218,17 @@ const transforms = {
 
 		/**
 		 *
-		 * @param {Field} itemField (Item|Customer) Field
+		 * @param {Field} field (Item|Customer|Loan) Field
 		 * @return {FieldResponse}
 		 */
-		transformField(itemField) {
-			itemField.settings = JSON.stringify(itemField.settings);
-			return itemField;
+		transformField(field) {
+			field.settings = JSON.stringify(field.settings);
+			return field;
 		},
 
 		/**
 		 *
-		 * @param {FieldValue} fieldValue (Item|Customer) Field Value
+		 * @param {FieldValue} fieldValue (Item|Customer|Loan) Field Value
 		 * @return {FieldValueResponse}
 		 */
 		transformFieldValue(fieldValue) {
@@ -457,6 +457,77 @@ export const api = {
 	deleteCustomerField(collectionId, customerFieldId) {
 		return new Promise((resolve, reject) => {
 			return axios.delete(`/collections/${collectionId}/customer_fields/${customerFieldId}`)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection whose loan fields to fetch
+	 * @return {Promise<Array<Field>>}
+	 */
+	getLoanFields: (collectionId) => {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/loan_fields`)
+				.then((response) => {
+					const loanFields = response.data.map(transforms.fromAPI.transformField);
+					resolve(loanFields);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection to create the loan field in
+	 * @param {updateFieldParameters} parameters attributes of new loan field
+	 * @return {Promise<Field>}
+	 */
+	createLoanField(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformField(parameters);
+			axios.post(`/collections/${collectionId}/loan_fields`, parameters)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection the loan field is in
+	 * @param {number} loanFieldId id of the loan field to update
+	 * @param {updateFieldParameters} parameters attributes of the loan field to update
+	 * @return {Promise<Field>}
+	 */
+	updateLoanField(collectionId, loanFieldId, parameters) {
+		return new Promise((resolve, reject) => {
+			parameters = transforms.toAPI.transformField(parameters);
+			axios.put(`/collections/${collectionId}/loan_fields/${loanFieldId}`, parameters)
+				.then(function(response) {
+					resolve(transforms.fromAPI.transformField(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection the loan field is in
+	 * @param {number} loanFieldId id of the loan field to delete
+	 * @return {Promise<Field>}
+	 */
+	deleteLoanField(collectionId, loanFieldId) {
+		return new Promise((resolve, reject) => {
+			return axios.delete(`/collections/${collectionId}/loan_fields/${loanFieldId}`)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformField(response.data));
 				})
