@@ -6,7 +6,7 @@ use JsonSerializable;
 
 use OCP\AppFramework\Db\Entity;
 
-class ItemField extends Entity implements JsonSerializable {
+class LoanField extends Entity implements JsonSerializable {
 	protected $collectionId;
 	protected $name;
 	protected $type;
