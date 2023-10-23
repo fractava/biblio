@@ -52,6 +52,8 @@ $config->setRules(
 			'elements' => ['property', 'method', 'const']
 		],
 	])
+	->setIndent("\t")
+    ->setLineEnding("\n")
 	->getFinder()
 	->notPath('build')
 	->notPath('l10n')
