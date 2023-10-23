@@ -33,4 +33,6 @@ vscode:
   extensions:
     - higoka.php-cs-fixer
     - Vue.volar
+    - dbaeumer.vscode-eslint
+    - ms-azuretools.vscode-docker
     - zobo.php-intellisense
