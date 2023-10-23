@@ -22,6 +22,10 @@ $config->setRules(
 			'position_after_control_structures' => 'same',
 			'position_after_functions_and_oop_constructs' => 'same',
 		],
+		'braces_position' => [
+			'functions_opening_brace' => 'same_line',
+			'classes_opening_brace' => 'same_line'
+		],
 		'elseif' => true,
 		'encoding' => true,
 		'full_opening_tag' => true,
