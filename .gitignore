@@ -5,4 +5,6 @@
 node_modules/
 /.php_cs.cache
 /js/
+.php-cs-fixer.cache
 gitpod/server/
+tools/php-cs-fixer/vendor/
