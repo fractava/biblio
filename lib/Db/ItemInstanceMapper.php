@@ -16,6 +16,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	public const ITEMS_TABLENAME = 'biblio_items';
 	public const LOANS_TABLE = "biblio_loans";
 	public const CUSTOMERS_TABLENAME = "biblio_customers";
+	public const FIELDS_VALUES_TABLENAME = "biblio_loan_fields_values";
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, ItemInstance::class);
@@ -127,8 +128,8 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
 		if (isset($filters)) {
-			//$fieldValueFilters = $this->getFieldValueFilters($filters);
-			//$includesFieldValueFilters = (count($fieldValueFilters) !== 0);
+			$fieldValueFilters = $this->getFieldValueFilters($filters);
+			$includesFieldValueFilters = (count($fieldValueFilters) !== 0);
 		} else {
 			$includesFieldValueFilters = false;
 		}
@@ -162,18 +163,17 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 			$qb->expr()->eq('loanCustomer.id', 'loan.customer_id'),
 		));
 
-		/*if($includesFieldValueFilters) {
-			$qb->innerJoin('instance', self::FIELDS_VALUES_TABLENAME, 'v', $qb->expr()->andX(
-					$qb->expr()->eq('instance.id', 'v.item_id'),
-					$qb->expr()->in('v.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
-				))
-				->where($qb->expr()->eq('instance.collection_id', $qb->createNamedParameter($collectionId)));
+		if ($includesFieldValueFilters) {
+			$qb->innerJoin('loan', self::FIELDS_VALUES_TABLENAME, 'loanFieldValue', $qb->expr()->andX(
+				$qb->expr()->eq('loan.id', 'loanFieldValue.loan_id'),
+				$qb->expr()->in('loanFieldValue.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
+			));
 
-			$validCombinations = $this->getValidFieldValueCombinations($this->db, $qb, $fieldValueFilters, 'v.field_id', 'v.value');
+			$validCombinations = $this->getValidFieldValueCombinations($this->db, $qb, $fieldValueFilters, 'loanFieldValue.field_id', 'loanFieldValue.value');
 
 			$qb->andWhere($qb->expr()->orX(...$validCombinations));
-		} else {*/
-		//}
+		} else {
+		}
 
 		$this->handleStringFilter($this->db, $qb, $filters["barcode"], 'instance.barcode');
 
@@ -183,10 +183,10 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		$this->handleIdFilter($qb, $filters["item_id"], 'instance.item_id');
 
-		/*if($includesFieldValueFilters) {
+		if ($includesFieldValueFilters) {
 			$qb->groupBy('instance.id')
 				->having($qb->expr()->eq($qb->createFunction('COUNT(`instance`.`id`)'), $qb->createNamedParameter(count($validCombinations)), IQueryBuilder::PARAM_INT));
-		}*/
+		}
 
 		if (isset($sort)) {
 			if ($sort === "barcode") {
@@ -196,7 +196,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 			} elseif ($sort === "loan_customer_name") {
 				$this->handleSortByColumn($qb, 'loanCustomer.name', $sortReverse);
 			} elseif ($this->isFieldReference($sort)) {
-				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'i', self::FIELDS_VALUES_TABLENAME, 'item_id');
+				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'loan', self::FIELDS_VALUES_TABLENAME, 'loan_id');
 			}
 		}
 

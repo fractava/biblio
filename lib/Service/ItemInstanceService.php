@@ -25,8 +25,12 @@ class ItemInstanceService {
 	/** @var ItemInstanceMapper */
 	private $mapper;
 
-	public function __construct(ItemInstanceMapper $mapper) {
+	/** @var LoanFieldValueService */
+	private $fieldValueService;
+
+	public function __construct(ItemInstanceMapper $mapper, LoanFieldValueService $fieldValueService) {
 		$this->mapper = $mapper;
+		$this->fieldValueService = $fieldValueService;
 	}
 
 	public function getApiObjectFromEntities(int $collectionId, $entities, bool $includeModel, bool $includeItem, bool $includeLoan, bool $includeLoanCustomer, bool $includeFields, ?array $fieldFilters = null) {
@@ -46,12 +50,15 @@ class ItemInstanceService {
 			if ($includeLoanCustomer) {
 				$result["loan"]["customer"] = $entities["loanCustomer"]->jsonSerialize();
 			}
-		}
 
-		if ($includeFields) {
-			$result = array_merge($result, [
-				"fieldValues" => $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters),
-			]);
+			if ($includeFields) {
+				$loanId = $entities["loan"]->getId();
+				if (isset($loanId)) {
+					$result = array_merge($result, [
+						"fieldValues" => $this->fieldValueService->findAll($collectionId, $loanId, ["model", "field"], $fieldFilters),
+					]);
+				}
+			}
 		}
 
 		return $result;
@@ -66,7 +73,7 @@ class ItemInstanceService {
 
 		[$entities, $meta] = $this->mapper->findAll($collectionId, $filters, $sort, $sortReverse, $limit, $offset);
 
-		//$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
+		$fieldFilters = $this->getFieldFiltersOutOfFilters($filters);
 
 		$results = [];
 
