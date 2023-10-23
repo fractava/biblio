@@ -15,7 +15,7 @@
 
 <script>
 import { mapStores } from "pinia";
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
+import NcEmptyContent from "@nextcloud/vue/dist/Components/NcEmptyContent.js"
 
 import Magnify from "vue-material-design-icons/Magnify";
 
