@@ -8,6 +8,7 @@
 			:class="{ clickable: col.clickable }"
 			@click="col.clickable && ($emit('click-row', row.id, col.id))">
 			<component :is="col.cellComponent"
+				v-if="col.isProperty || row?.fieldValues"
 				:column="col"
 				:row-id="row.id"
 				:value="getCellValue(col)"
