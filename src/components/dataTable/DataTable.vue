@@ -35,7 +35,7 @@
 					<slot name="actions" />
 				</template>
 			</CustomTable>
-			<NcEmptyContent v-if="rows.length === 0"
+			<NcEmptyContent v-if="rows.length === 0 && canCreateRows"
 				:title="createRowLabel"
 				:description="createRowDescription">
 				<template #icon>
@@ -50,25 +50,39 @@
 					</NcButton>
 				</template>
 			</NcEmptyContent>
+			<NcEmptyContent v-if="rows.length === 0 && !canCreateRows"
+				:title="t('biblio', 'No Rows')">
+				<template #icon>
+					<GridOff :size="25" />
+				</template>
+			</NcEmptyContent>
 		</div>
 	</div>
 </template>
 
 <script>
+import NcEmptyContent from "@nextcloud/vue/dist/Components/NcEmptyContent.js";
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
+import { subscribe, unsubscribe } from "@nextcloud/event-bus";
 
 import Options from "./sections/Options.vue";
 import CustomTable from "./sections/CustomTable.vue";
 import exportTableMixin from "./mixins/exportTableMixin.js";
-import NcEmptyContent from "@nextcloud/vue/dist/Components/NcEmptyContent.js";
-import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
+
 import Plus from "vue-material-design-icons/Plus.vue";
-import Cancel from "vue-material-design-icons/Cancel.vue";
-import { subscribe, unsubscribe } from "@nextcloud/event-bus";
+import GridOff from "vue-material-design-icons/GridOff.vue";
 
 export default {
 	name: "DataTable",
 
-	components: { CustomTable, Options, NcButton, NcEmptyContent, Plus, Cancel },
+	components: {
+		CustomTable,
+		Options,
+		NcButton,
+		NcEmptyContent,
+		Plus,
+		GridOff,
+	},
 
 	mixins: [exportTableMixin],
 

@@ -1,7 +1,6 @@
 <template>
 	<NoCollectionSelected>
 		<ul>
-			<AddItemModal :open.sync="modalOpen" />
 			<DataTable class="itemInstancesDataTable"
 				:columns="columns"
 				:rows="itemInstancesStore.searchResults"
@@ -12,7 +11,6 @@
 				:current-sort-reverse="itemInstancesStore.sortReverse"
 				:current-filters="itemInstancesStore.filters"
 				:row-limit-filter="itemInstancesStore.limit"
-				@create-row="modalOpen = true"
 				@set-search-string="onSearchUpdate"
 				@update:currentFilters="onFieltersUpdate"
 				@update:currentSort="onSortUpdate"
@@ -43,11 +41,6 @@ export default {
 		DataTable,
 		AddItemModal,
 		NoCollectionSelected,
-	},
-	data() {
-		return {
-			modalOpen: false,
-		};
 	},
 	computed: {
 		...mapStores(useItemInstancesStore),
