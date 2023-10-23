@@ -196,6 +196,13 @@ const transforms = {
 			return item;
 		},
 
+		transformItemInstance(itemInstance) {
+			if (itemInstance.fieldValues) {
+				itemInstance.fieldValues = itemInstance.fieldValues.map(transforms.fromAPI.transformFieldValue);
+			}
+			return itemInstance;
+		},
+
 		/**
 		 *
 		 * @param {CustomerResponse} customer Customer API Result
@@ -850,7 +857,7 @@ export const api = {
 				},
 			})
 				.then((response) => {
-					const instances = response.data.result; // .map(transforms.fromAPI.transformItemInstance);
+					const instances = response.data.result.map(transforms.fromAPI.transformItemInstance);
 					resolve({
 						meta: response.data.meta,
 						instances,
@@ -883,8 +890,7 @@ export const api = {
 		return new Promise((resolve, reject) => {
 			axios.delete(`/collections/${collectionId}/itemInstances/${itemInstanceId}`)
 				.then(function(response) {
-					// resolve(transforms.fromAPI.transformItemInstance(response.data));
-					resolve(response.data);
+					resolve(transforms.fromAPI.transformItemInstance(response.data));
 				})
 				.catch(function(error) {
 					reject(error);
