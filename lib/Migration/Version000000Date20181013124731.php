@@ -23,6 +23,8 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 	const ITEM_FIELDS_VALUES_TABLE = "biblio_item_fields_values";
 
 	const LOANS_TABLE = "biblio_loans";
+	const LOAN_FIELDS_TABLE = "biblio_loan_fields";
+	const LOAN_FIELDS_VALUES_TABLE = "biblio_loan_fields_values";
 
 	// Customers
 	const CUSTOMERS_TABLE = "biblio_customers";
@@ -333,6 +335,75 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				['id'],
 				['onDelete' => 'CASCADE'],
 				'loaned_customer_id_fk');
+		}
+
+		if (!$schema->hasTable(self::LOAN_FIELDS_TABLE)) {
+			$table = $schema->createTable(self::LOAN_FIELDS_TABLE);
+			$table->addColumn('id', Types::INTEGER, [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('collection_id', Types::INTEGER, [
+				'notnull' => true,
+			]);
+			$table->addColumn('name', Types::STRING, [
+				'notnull' => true,
+				'length' => 200,
+			]);
+			$table->addColumn('type', Types::STRING, [
+				'notnull' => true,
+				'length' => 50,
+			]);
+			$table->addColumn('settings', Types::STRING, [
+				'notnull' => true,
+				'length' => 5000,
+			]);
+			
+
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::COLLECTIONS_TABLE),
+				['collection_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'loan_fields_collection_id_fk');
+			$table->addUniqueConstraint(['collection_id', 'name'], "collection_id_name_unique");
+		}
+
+		if (!$schema->hasTable(self::LOAN_FIELDS_VALUES_TABLE)) {
+			$table = $schema->createTable(self::LOAN_FIELDS_VALUES_TABLE);
+			$table->addColumn('id', Types::INTEGER, [
+				'autoincrement' => true,
+				'notnull' => true,
+			]);
+			$table->addColumn('loan_id', Types::INTEGER, [
+				'notnull' => true,
+			]);
+			$table->addColumn('field_id', Types::INTEGER, [
+				'notnull' => true,
+			]);
+			$table->addColumn('value', Types::TEXT, [
+				'notnull' => true,
+			]);
+
+			$table->setPrimaryKey(['id']);
+			$table->addIndex(['loan_id'], 'loan_id_index');
+			$table->addIndex(['field_id'], 'field_id_index');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::LOANS_TABLE),
+				['loan_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'loan_fields_loan_id_fk');
+
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::LOAN_FIELDS_TABLE),
+				['field_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'loan_fields_field_id_fk');
+			$table->addUniqueConstraint(['loan_id', 'field_id'], "loan_id_field_id_unique");
 		}
 
 		return $schema;
