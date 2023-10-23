@@ -52,8 +52,7 @@ jobs:
         working-directory: tools/php-cs-fixer
 
       - name: Run coding standards check
-        run: ./vendor/bin/php-cs-fixer check
-        working-directory: tools/php-cs-fixer
+        run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer check
 
   node:
     runs-on: ubuntu-latest
