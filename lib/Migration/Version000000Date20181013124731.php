@@ -52,9 +52,15 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 			]);
 			$table->addColumn('item_fields_order', Types::STRING, [
 				'notnull' => true,
+				'length' => 200,
+			]);
+			$table->addColumn('loan_fields_order', Types::STRING, [
+				'notnull' => true,
+				'length' => 200,
 			]);
 			$table->addColumn('customer_fields_order', Types::STRING, [
 				'notnull' => true,
+				'length' => 200,
 			]);
 
 			$table->setPrimaryKey(['id']);

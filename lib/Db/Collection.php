@@ -9,6 +9,7 @@ use OCP\AppFramework\Db\Entity;
 class Collection extends Entity implements JsonSerializable {
 	protected $name;
 	protected $itemFieldsOrder;
+	protected $loanFieldsOrder;
 	protected $customerFieldsOrder;
 
 	public function jsonSerialize(): array {
@@ -16,6 +17,7 @@ class Collection extends Entity implements JsonSerializable {
 			'id' => $this->id,
 			'name' => $this->name,
 			'itemFieldsOrder' => $this->itemFieldsOrder,
+			'loanFieldsOrder' => $this->loanFieldsOrder,
 			'customerFieldsOrder' => $this->customerFieldsOrder,
 		];
 	}

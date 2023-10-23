@@ -45,10 +45,11 @@ class CollectionService {
 		}
 	}
 
-	public function create(string $name, string $itemFieldsOrder, string $customerFieldsOrder, string $firstMember) {
+	public function create(string $name, string $itemFieldsOrder, string $loanFieldsOrder, string $customerFieldsOrder, string $firstMember) {
 		$collection = new Collection();
 		$collection->setName($name);
 		$collection->setItemFieldsOrder($itemFieldsOrder);
+		$collection->setLoanFieldsOrder($loanFieldsOrder);
 		$collection->setCustomerFieldsOrder($customerFieldsOrder);
 
 		$collection = $this->mapper->insert($collection);
@@ -60,7 +61,7 @@ class CollectionService {
 		return $collection;
 	}
 
-	public function update(int $id, ?string $name, ?string $itemFieldsOrder, ?string $customerFieldsOrder) {
+	public function update(int $id, ?string $name, ?string $itemFieldsOrder, ?string $loanFieldsOrder, ?string $customerFieldsOrder) {
 		try {
 			$collection = $this->mapper->find($id);
 			
@@ -70,6 +71,10 @@ class CollectionService {
 
 			if (!is_null($itemFieldsOrder)) {
 				$collection->setItemFieldsOrder($itemFieldsOrder);
+			}
+
+			if (!is_null($loanFieldsOrder)) {
+				$collection->setLoanFieldsOrder($loanFieldsOrder);
 			}
 
 			if (!is_null($customerFieldsOrder)) {
