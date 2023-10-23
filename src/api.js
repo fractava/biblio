@@ -11,6 +11,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   id: number
  *   name: string | undefined
  *   itemFieldsOrder: string
+ *   loanFieldsOrder: string
  *   customerFieldsOrder: string
  * }} CollectionResponse
  *
@@ -18,12 +19,14 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   id: number
  *   name: string | undefined
  *   itemFieldsOrder: Array<number>
+ *   loanFieldsOrder: Array<number>
  *   customerFieldsOrder: Array<number>
  * }} Collection
  *
  * @typedef {{
  *   name: string | undefined
  *   itemFieldsOrder: Array<number> | undefined
+ *   loanFieldsOrder: Array<number> | undefined
  *   customerFieldsOrder: Array<number> | undefined
  * }} updateCollectionParameters
  *
@@ -132,6 +135,7 @@ const transforms = {
 		 */
 		transformCollection(collection) {
 			collection.itemFieldsOrder = JSON.parse(collection.itemFieldsOrder) || [];
+			collection.loanFieldsOrder = JSON.parse(collection.loanFieldsOrder) || [];
 			collection.customerFieldsOrder = JSON.parse(collection.customerFieldsOrder) || [];
 			return collection;
 		},
@@ -212,6 +216,7 @@ const transforms = {
 		 */
 		transformCollection(collection) {
 			collection.itemFieldsOrder = JSON.stringify(collection.itemFieldsOrder);
+			collection.loanFieldsOrder = JSON.stringify(collection.loanFieldsOrder);
 			collection.customerFieldsOrder = JSON.stringify(collection.customerFieldsOrder);
 			return collection;
 		},
