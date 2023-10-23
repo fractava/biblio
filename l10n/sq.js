@@ -12,6 +12,7 @@ OC.L10N.register(
     "Title" : "Titulli",
     "List" : "List",
     "Date" : "Data",
-    "Select" : "Përzgjidh"
+    "Select" : "Përzgjidh",
+    "Checkbox" : "Checkbox"
 },
 "nplurals=2; plural=(n != 1);");

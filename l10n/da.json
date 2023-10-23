@@ -35,6 +35,8 @@
     "Date and time" : "Dato og tid",
     "Pick a date and time" : "Vælg en dato og et tidspunkt",
     "Select" : "Vælg",
+    "Checkbox" : "Afkrydsningsfelt",
+    "Checked" : "Tjekket",
     "Request is not authorized. Are you logged in?" : "Anmodningen er ikke godkendt. Er du logget ind?",
     "Request not allowed." : "Anmodning er ikke tilladt.",
     "Resource not found." : "Ressource ikke fundet.",

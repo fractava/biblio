@@ -41,6 +41,8 @@ OC.L10N.register(
     "Date and time" : "Datum und Zeit",
     "Pick a date and time" : "Datum und Zeit auswählen",
     "Select" : "Auswählen",
+    "Checkbox" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Checked" : "Geprüft",
     "Request is not authorized. Are you logged in?" : "Anfrage ist nicht autorisiert. Bist du angemeldet?",
     "Request not allowed." : "Anfrage nicht erlaubt.",
     "Resource not found." : "Ressource nicht gefunden.",

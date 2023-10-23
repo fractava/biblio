@@ -7,6 +7,7 @@
     "Delete" : "Kustuta",
     "Title" : "Pealkiri",
     "Date" : "Kuupäev",
-    "Select" : "Vali"
+    "Select" : "Vali",
+    "Checkbox" : "Märkeruut"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

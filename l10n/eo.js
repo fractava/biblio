@@ -9,6 +9,7 @@ OC.L10N.register(
     "Delete" : "Forigi",
     "Title" : "Titolo",
     "Date" : "Date",
-    "Select" : "Elekti"
+    "Select" : "Elekti",
+    "Checkbox" : "Markobutono"
 },
 "nplurals=2; plural=(n != 1);");

@@ -41,6 +41,8 @@ OC.L10N.register(
     "Date and time" : "Date and time",
     "Pick a date and time" : "Pick a date and time",
     "Select" : "گزینش<br>",
+    "Checkbox" : "جعبه علامت",
+    "Checked" : "Checked",
     "Request is not authorized. Are you logged in?" : "Request is not authorized. Are you logged in?",
     "Request not allowed." : "Request not allowed.",
     "Resource not found." : "Resource not found.",

@@ -90,6 +90,8 @@
     "Could not fetch customers" : "تعذّر جلب الزبائن",
     "Could not update customer" : "تعذّر تعديل الزبون",
     "Could not delete customer" : "تعذّر حذف الزبون",
+    "Could not fetch item instances" : "تعذّر جلب كوائن العنصر item instances",
+    "Could not delete item instance" : "تعذّر حذف كوائن العنصر item instances",
     "Could not create item" : "تعذّر استحداث العنصر",
     "Could not fetch items" : "تعذّر جلب العناصر",
     "Could not update item" : "تعذّر تعديل العنصر",

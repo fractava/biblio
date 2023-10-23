@@ -26,6 +26,8 @@
     "Date and time" : "Datum och tid",
     "Pick a date and time" : "Välj datum och tid",
     "Select" : "Välj",
+    "Checkbox" : "Kryssruta",
+    "Checked" : "Kontrollerad",
     "Request is not authorized. Are you logged in?" : "Begäran är inte godkänd. Är du inloggad?",
     "Request not allowed." : "Begäran är inte tillåten.",
     "Resource not found." : "Resursen hittades inte.",

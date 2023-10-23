@@ -16,6 +16,7 @@ OC.L10N.register(
     "Date" : "Data",
     "Pick a date" : "Escolha uma data",
     "Pick a date and time" : "Escolha uma data e hora",
-    "Select" : "Selecionar"
+    "Select" : "Selecionar",
+    "Checkbox" : "Caixa de selecção"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -6,6 +6,7 @@
     "Search" : "Søk",
     "Delete" : "Slett",
     "Title" : "Tittel",
-    "Date" : "Dato"
+    "Date" : "Dato",
+    "Checkbox" : "Avkryssingsfelt"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

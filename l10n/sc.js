@@ -29,6 +29,7 @@ OC.L10N.register(
     "Pick a date" : "Sèbera una data",
     "Date and time" : "Data e ora",
     "Pick a date and time" : "Sèbera data e ora",
-    "Select" : "Seletziona"
+    "Select" : "Seletziona",
+    "Checkbox" : "Casella de seletzione"
 },
 "nplurals=2; plural=(n != 1);");

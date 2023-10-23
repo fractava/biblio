@@ -37,6 +37,7 @@ OC.L10N.register(
     "Date and time" : "Dátum a čas",
     "Pick a date and time" : "Vyberte dátum a čas",
     "Select" : "Vybrať",
+    "Checkbox" : "Zaškrtávacie políčko",
     "Unknown error." : "Neznáma chyba."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

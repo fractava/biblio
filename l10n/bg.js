@@ -32,6 +32,7 @@ OC.L10N.register(
     "After" : "След",
     "Date and time" : "Дата и час",
     "Pick a date and time" : "Избор на дата и час",
-    "Select" : "Избери"
+    "Select" : "Избери",
+    "Checked" : "Проверено"
 },
 "nplurals=2; plural=(n != 1);");

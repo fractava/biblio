@@ -8,6 +8,7 @@ OC.L10N.register(
     "Search" : "Søk",
     "Delete" : "Slett",
     "Title" : "Tittel",
-    "Date" : "Dato"
+    "Date" : "Dato",
+    "Checkbox" : "Avkryssingsfelt"
 },
 "nplurals=2; plural=(n != 1);");

@@ -13,6 +13,7 @@
     "Enter a long text" : "Settu inn langan texta",
     "Date" : "Dagsetning",
     "Pick a date" : "Veldu dagsetningu",
-    "Select" : "Velja"
+    "Select" : "Velja",
+    "Checkbox" : "Gátreitur"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
 }

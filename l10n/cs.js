@@ -74,6 +74,8 @@ OC.L10N.register(
     "Pick a date and time" : "Vyberte datum a čas",
     "Select" : "Vybrat",
     "Pick one of the options" : "Vyberte jednu z voleb",
+    "Checkbox" : "Zatržítko",
+    "Checked" : "Zkontrolováno",
     "Could not fetch collections" : "Nepodařilo se získat sady",
     "Could not create collection" : "Sadu se nepodařilo vytvořit",
     "Could not update collection" : "Sadu se nepodařilo zaktualizovat",

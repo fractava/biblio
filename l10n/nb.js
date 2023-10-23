@@ -28,6 +28,7 @@ OC.L10N.register(
     "Pick a date" : "Velg dato",
     "Date and time" : "Dato og tid",
     "Pick a date and time" : "Velg dato og tid",
-    "Select" : "Velg"
+    "Select" : "Velg",
+    "Checkbox" : "Avkryssningsboks"
 },
 "nplurals=2; plural=(n != 1);");

@@ -30,6 +30,7 @@ OC.L10N.register(
     "After" : "Na",
     "Date and time" : "Datum en Tijd",
     "Pick a date and time" : "Kies een datum en tijd",
-    "Select" : "Selecteer"
+    "Select" : "Selecteer",
+    "Checkbox" : "Aanvinkvakje"
 },
 "nplurals=2; plural=(n != 1);");

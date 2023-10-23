@@ -16,6 +16,7 @@ OC.L10N.register(
     "Date" : "Датум",
     "Pick a date" : "Избери датум",
     "Pick a date and time" : "Изберете датум и време",
-    "Select" : "Избери"
+    "Select" : "Избери",
+    "Checkbox" : "Поле за избирање"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
