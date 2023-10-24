@@ -190,7 +190,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		if (isset($sort)) {
 			if ($sort === "barcode") {
-				$this->handleSortByColumn($qb, 'instance.barcode', $sortReverse);
+				$this->handleSortByColumnHandleNumerical($qb, 'instance.barcode', $sortReverse);
 			} elseif ($sort === "item_title") {
 				$this->handleSortByColumn($qb, 'item.title', $sortReverse);
 			} elseif ($sort === "loan_customer_name") {
@@ -205,5 +205,36 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$this->handleLimit($qb, $limit);
 
 		return $this->findEntitiesAndSeperateColumns($qb, ["totalResultCount"]);
+	}
+
+	private function getFirstBarcode(int $itemId, bool $reverse) {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('barcode')
+			->from(self::TABLENAME)
+			->where($qb->expr()->eq('item_id', $qb->createNamedParameter($itemId, IQueryBuilder::PARAM_INT)));
+		
+		$this->handleSortByColumn($qb, 'barcode', $reverse);
+		
+		$qb->setMaxResults(1);
+		
+		return $qb->executeQuery()->fetch()["barcode"];
+	}
+
+	public function getBarcodePrefix(int $collectionId, int $itemId) {
+		$first = $this->getFirstBarcode($itemId, false);
+		$last = $this->getFirstBarcode($itemId, true);
+
+		$maxPrefixLen = min(strlen($first), strlen($last));
+
+		for ($i = 0; $i < $maxPrefixLen && $first[$i] == $last[$i]; $i++);
+
+		if ($i > 1) {
+			$prefix = substr($first, 0, $i);
+		} else {
+			$prefix = "";
+		}
+
+		return ["prefix" => $prefix];
 	}
 }

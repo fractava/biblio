@@ -138,4 +138,8 @@ class ItemInstanceService {
 			$this->handleException($e);
 		}
 	}
+
+	public function getBarcodePrefix(int $collectionId, int $itemId) {
+		return $this->mapper->getBarcodePrefix($collectionId, $itemId);
+	}
 }

@@ -87,4 +87,12 @@ class ItemInstanceController extends Controller {
 			return $this->service->deleteByBarcode($barcode);
 		});
 	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function barcodePrefix(int $collectionId, int $itemId): DataResponse {
+		return new DataResponse($this->service->getBarcodePrefix($collectionId, $itemId));
+	}
 }

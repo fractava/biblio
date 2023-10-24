@@ -50,6 +50,8 @@ return [
 		['name' => 'item_instance#showByBarcode', 'url' => '/collections/{collectionId}/itemInstances/byBarcode/{barcode}', 'verb' => 'GET'],
 		['name' => 'item_instance#destroyByBarcode', 'url' => '/collections/{collectionId}/itemInstances/byBarcode/{barcode}', 'verb' => 'DELETE'],
 
+		['name' => 'item_instance#barcodePrefix', 'url' => '/collections/{collectionId}/itemInstances/barcodePrefix/{itemId}', 'verb' => 'GET'],
+
 		// Loans
 
 		// Loan Fields

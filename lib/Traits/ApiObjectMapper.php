@@ -109,6 +109,20 @@ trait ApiObjectMapper {
 		$qb->orderBy($column, $sortDirection);
 	}
 
+	public function handleSortByColumnHandleNumerical(IQueryBuilder $qb, string $column, bool $reverse) {
+		$sortDirection = $this->getSortDirection($reverse);
+		
+		$quotedColumn = $qb->getColumnName($column);
+
+		$sortFunction = 'LENGTH(' . $quotedColumn . '), ' .  $quotedColumn;
+
+		if ($reverse) {
+			$sortFunction = '-' . $sortFunction;
+		}
+
+		$qb->orderBy($qb->createFunction($sortFunction), $sortDirection);
+	}
+
 	public function handleOffset(IQueryBuilder $qb, int $offset) {
 		if (isset($offset) && $offset > 0) {
 			$qb->setFirstResult($offset);
