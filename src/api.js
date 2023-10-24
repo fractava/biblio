@@ -869,6 +869,18 @@ export const api = {
 		});
 	},
 
+	getItemInstancesBarcodePrefix(collectionId, itemId) {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/itemInstances/barcodePrefix/${itemId}`)
+				.then(function(response) {
+					resolve(response.data?.prefix || "");
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
 	createItemInstance(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
 			axios.post(`/collections/${collectionId}/itemInstances`, parameters)

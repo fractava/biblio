@@ -53,6 +53,10 @@ export default {
 			type: Number,
 			required: true,
 		},
+		prefix: {
+			type: String,
+			default: "",
+		},
 	},
 	data() {
 		return {
@@ -63,9 +67,21 @@ export default {
 	computed: {
 		...mapStores(useBiblioStore),
 	},
+	watch: {
+		prefix() {
+			this.resetBarcode();
+		},
+	},
+	mounted() {
+		this.resetBarcode();
+	},
 	methods: {
 		closeModal() {
 			this.$emit("update:open", false);
+			this.resetBarcode();
+		},
+		resetBarcode() {
+			this.barcode = this.prefix;
 		},
 		async submit() {
 			this.loading = true;
@@ -81,7 +97,7 @@ export default {
 			} finally {
 				this.loading = false;
 				this.closeModal();
-				this.barcode = "";
+				this.resetBarcode();
 			}
 		},
 	},

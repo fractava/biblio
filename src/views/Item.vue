@@ -33,7 +33,10 @@
 			<h1 class="sectionHeader">
 				{{ t("biblio", "Item Instances") }}
 			</h1>
-			<AddItemInstanceModal :open.sync="modalOpen" :item-id="itemId" @added-instance="onAddedInstance" />
+			<AddItemInstanceModal :open.sync="modalOpen"
+				:item-id="itemId"
+				:prefix="barcodePrefix"
+				@added-instance="onAddedInstance" />
 			<DataTable :columns="columns"
 				:rows="searchResults"
 				:page="page"
@@ -106,6 +109,7 @@ export default {
 			limit: 100,
 			page: 1,
 			currentlyRunningFetch: false,
+			barcodePrefix: "",
 		};
 	},
 	computed: {
@@ -176,6 +180,7 @@ export default {
 		api.getItem(this.$route.params.collectionId, this.itemId).then((result) => {
 			this.item = result;
 		});
+		this.refreshBarcodePrefix();
 		this.refreshSearchResults();
 	},
 	methods: {
@@ -250,8 +255,14 @@ export default {
 
 			return newItemInstancesFetch;
 		},
-		onAddedInstance(newInstance) {
+		refreshBarcodePrefix() {
+			api.getItemInstancesBarcodePrefix(this.$route.params.collectionId, this.itemId).then((result) => {
+				this.barcodePrefix = result;
+			});
+		},
+		onAddedInstance() {
 			this.refreshSearchResults();
+			this.refreshBarcodePrefix();
 		},
 		openItemInstance(itemInstanceId, columnId) {
 			const itemInstance = this.getItemInstanceById(itemInstanceId);
