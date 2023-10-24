@@ -1,25 +1,23 @@
 <template>
 	<div>
-		<ul>
-			<DataTable class="itemInstancesDataTable"
-				:columns="columns"
-				:rows="itemInstancesStore.searchResults"
-				:page="itemInstancesStore.page"
-				:max-page="maxPage"
-				:can-create-rows="false"
-				:current-sort="itemInstancesStore.sort"
-				:current-sort-reverse="itemInstancesStore.sortReverse"
-				:current-filters="itemInstancesStore.filters"
-				:row-limit-filter="itemInstancesStore.limit"
-				@set-search-string="onSearchUpdate"
-				@update:currentFilters="onFieltersUpdate"
-				@update:currentSort="onSortUpdate"
-				@update:currentSortReverse="onSortReverseUpdate"
-				@update:rowLimitFilter="onRowLimitFilterUpdate"
-				@update:page="onPageUpdate"
-				@click-row="openItemInstance"
-				@delete-selected-rows="deleteItemInstances" />
-		</ul>
+		<DataTable class="itemInstancesDataTable"
+			:columns="columns"
+			:rows="itemInstancesStore.searchResults"
+			:page="itemInstancesStore.page"
+			:max-page="maxPage"
+			:can-create-rows="false"
+			:current-sort="itemInstancesStore.sort"
+			:current-sort-reverse="itemInstancesStore.sortReverse"
+			:current-filters="itemInstancesStore.filters"
+			:row-limit-filter="itemInstancesStore.limit"
+			@set-search-string="onSearchUpdate"
+			@update:currentFilters="onFieltersUpdate"
+			@update:currentSort="onSortUpdate"
+			@update:currentSortReverse="onSortReverseUpdate"
+			@update:rowLimitFilter="onRowLimitFilterUpdate"
+			@update:page="onPageUpdate"
+			@click-row="openItemInstance"
+			@delete-selected-rows="deleteItemInstances" />
 	</div>
 </template>
 
@@ -163,7 +161,7 @@ export default {
 			this.itemInstancesStore.page = newPage;
 			this.refreshSearch();
 		},
-		refreshSearch: debounceFn(() => {
+		refreshSearch: debounceFn(function() {
 			const itemInstancesStore = useItemInstancesStore();
 
 			const refreshPromise = itemInstancesStore.refreshSearchResults();

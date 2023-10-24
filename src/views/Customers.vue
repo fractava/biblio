@@ -136,7 +136,7 @@ export default {
 			this.customersStore.page = newPage;
 			this.refreshSearch();
 		},
-		refreshSearch: debounceFn(() => {
+		refreshSearch: debounceFn(function() {
 			const customersStore = useCustomersStore();
 
 			const refreshPromise = customersStore.refreshSearchResults();

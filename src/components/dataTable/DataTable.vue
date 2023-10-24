@@ -186,7 +186,7 @@ export default {
 
 .options.row {
 	position: sticky;
-	top: 7px;
+	top: 0;
 	left: 0;
 	z-index: 15;
 	background-color: var(--color-main-background-translucent);

@@ -1,14 +1,6 @@
 <template>
 	<div>
-		<NcButton icon="add"
-			type="secondary"
-			@click="showModal">
-			{{ t('biblio', 'New Instance') }}
-			<template #icon>
-				<Plus :size="20" />
-			</template>
-		</NcButton>
-		<NcModal v-if="modalOpen"
+		<NcModal v-if="open"
 			:name="t('biblio', 'Add new Item Instance')"
 			@close="closeModal">
 			<div class="modal__content">
@@ -37,7 +29,7 @@ import { mapStores } from "pinia";
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import NcModal from "@nextcloud/vue/dist/Components/NcModal.js";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
-import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
+import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon.js";
 
 import Plus from "vue-material-design-icons/Plus.vue";
 
@@ -53,6 +45,10 @@ export default {
 		Plus,
 	},
 	props: {
+		open: {
+			type: Boolean,
+			default: false,
+		},
 		itemId: {
 			type: Number,
 			required: true,
@@ -61,7 +57,6 @@ export default {
 	data() {
 		return {
 			loading: false,
-			modalOpen: false,
 			barcode: "",
 		};
 	},
@@ -69,11 +64,8 @@ export default {
 		...mapStores(useBiblioStore),
 	},
 	methods: {
-		showModal() {
-			this.modalOpen = true;
-		},
 		closeModal() {
-			this.modalOpen = false;
+			this.$emit("update:open", false);
 		},
 		async submit() {
 			this.loading = true;

@@ -135,7 +135,7 @@ export default {
 			this.itemsStore.page = newPage;
 			this.refreshSearch();
 		},
-		refreshSearch: debounceFn(() => {
+		refreshSearch: debounceFn(function() {
 			const itemsStore = useItemsStore();
 
 			const refreshPromise = itemsStore.refreshSearchResults();

@@ -59,9 +59,6 @@ export default {
 		...mapStores(useItemsStore),
 	},
 	methods: {
-		showModal() {
-			this.$emit("update:open", true);
-		},
 		closeModal() {
 			this.$emit("update:open", false);
 		},

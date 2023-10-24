@@ -15,3 +15,8 @@ export default {
 	mixins: [cellMixin],
 };
 </script>
+<style>
+.checkbox-radio-switch__label:has(.checkbox-radio-switch__input:disabled), .checkbox-radio-switch__label:has(.checkbox-radio-switch__input:disabled) * {
+	cursor: initial;
+}
+</style>
