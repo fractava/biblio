@@ -84,6 +84,7 @@
     "Pick one of the options" : "Eine der Optionen auswählen",
     "Checkbox" : "Kontrollkästchen",
     "Checked" : "Geprüft",
+    "Not Checked" : "Nicht geprüft",
     "Could not fetch collections" : "Sammlungen konnten nicht abgerufen werden",
     "Could not create collection" : "Sammlung konnte nicht erstellt werden",
     "Could not update collection" : "Sammlung konnte nicht aktualisiert werden",

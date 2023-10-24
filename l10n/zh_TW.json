@@ -84,6 +84,7 @@
     "Pick one of the options" : "挑選其中一個選項",
     "Checkbox" : "核取方塊",
     "Checked" : "已檢查",
+    "Not Checked" : "未勾選",
     "Could not fetch collections" : "無法擷取收藏",
     "Could not create collection" : "無法建立收藏",
     "Could not update collection" : "無法更新收藏",

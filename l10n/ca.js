@@ -30,6 +30,7 @@ OC.L10N.register(
     "Pick a date" : "Escollir una data",
     "After" : "Després",
     "Date and time" : "Data i hora",
-    "Pick a date and time" : "Trieu una data i una hora"
+    "Pick a date and time" : "Trieu una data i una hora",
+    "Checkbox" : "Casella de selecció"
 },
 "nplurals=2; plural=(n != 1);");

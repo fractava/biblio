@@ -33,6 +33,7 @@ OC.L10N.register(
     "Date and time" : "Дата и час",
     "Pick a date and time" : "Избор на дата и час",
     "Select" : "Избери",
+    "Checkbox" : "Отметка",
     "Checked" : "Проверено"
 },
 "nplurals=2; plural=(n != 1);");
