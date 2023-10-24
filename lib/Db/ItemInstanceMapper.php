@@ -227,7 +227,9 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		$maxPrefixLen = min(strlen($first), strlen($last));
 
-		for ($i = 0; $i < $maxPrefixLen && $first[$i] == $last[$i]; $i++);
+		if ($first !== $last) {
+			for ($i = 0; $i < $maxPrefixLen && $first[$i] == $last[$i]; $i++);
+		}
 
 		if ($i > 1) {
 			$prefix = substr($first, 0, $i);
