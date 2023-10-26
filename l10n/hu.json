@@ -1,7 +1,6 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Könyvtárkezelő rendszer",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Az alkalmazás könyvgyűjtemény, kottaarchívum és tankönyvtár kezeléséhez használhat",
     "Add new Customer" : "Új vásárló hozzáadása",
     "Add new Item Instance" : "Új instansz elem hozzáadása",
     "Add new Item" : "Új elem hozzáadása",

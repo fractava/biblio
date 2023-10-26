@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Administrasjon av bibliotek",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Dette kan brukes til å administrere et bok bibliotek, notearkiv, lærebokbibliotek",
     "Add a field" : "Legg til felt",
     "Name" : "Navn",
     "Delete Field" : "Slett felt",

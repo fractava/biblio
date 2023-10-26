@@ -1,7 +1,6 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema de gestión de bibliotecas",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Esto se puede usar para administrar una biblioteca de libros, una colección de partituras, una biblioteca de libros de texto",
     "Add new Customer" : "Añadir nuevo cliente",
     "Add new Item Instance" : "Añadir nueva instancia de ítem",
     "Add new Item" : "Añadir nuevo ítem",

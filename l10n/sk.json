@@ -1,7 +1,6 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Systém pre správu knižnice",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Toto môžete použiť pre správu kníh, archív nôt, knižnice učebníc",
     "Add a field" : "Pridať pole",
     "Name" : "Názov",
     "Invalid name" : "Neplatné meno",

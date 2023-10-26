@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Sustav za upravljanje knjižnicom",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Može se upotrebljavati za upravljanje knjižnicom, arhivom notnih zapisa, knjižnicom udžbenika",
     "Add a field" : "Dodaj polje",
     "Name" : "Naziv",
     "Invalid name" : "Nevažeće ime",

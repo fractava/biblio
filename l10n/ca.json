@@ -1,7 +1,6 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema de gestió bibliotecària",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Això es pot utilitzar per administrar una biblioteca de llibres, un arxiu de partitures, una biblioteca de llibres de text",
     "Add a field" : "Afegeix un camp",
     "Name" : "Nom",
     "Delete Field" : "Suprimeix el camp",

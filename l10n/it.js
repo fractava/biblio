@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema di gestione bibliotecario",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "Questo può essere utilizzato per gestire una libreria, un archivio di spartiti, una libreria di libri di testo",
     "Add a field" : "Aggiungi un campo",
     "Name" : "Nome",
     "Invalid name" : "Nome non valido",

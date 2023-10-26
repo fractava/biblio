@@ -1,7 +1,6 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "一個圖書館管理系統",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "這可用於管理書庫、樂譜檔案、教科書庫",
     "Add new Customer" : "添加新顧客",
     "Add new Item Instance" : "添加新項目實例",
     "Add new Item" : "添加新項目",

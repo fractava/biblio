@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "A library management system",
-    "This can be used to manage a book library, Sheet music archive, Textbook library" : "This can be used to manage a book library, Sheet music archive, Textbook library",
     "Add new Customer" : "Add new Customer",
     "Add new Item Instance" : "Add new Item Instance",
     "Add new Item" : "Add new Item",
