@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "A library management system",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "This app can be used to manage a book library, sheet music archive or textbook library",
     "Add new Customer" : "Add new Customer",
     "Add new Item Instance" : "Add new Item Instance",
     "Add new Item" : "Add new Item",
@@ -65,6 +66,8 @@
     "_%n selected row_::_%n selected rows_" : ["%n selected row","%n selected rows"],
     "Create Customer" : "Create Customer",
     "There are currently no customers in this collection, that fit the search parameters" : "There are currently no customers in this collection, that fit the search parameters",
+    "Create Instance" : "Create Instance",
+    "This Item currently has no Instance, that fits the search parameters" : "This Item currently has no Instance, that fits the search parameters",
     "Item Properties" : "Item Properties",
     "Title" : "Title",
     "Could not fetch item instances" : "Could not fetch item instances",

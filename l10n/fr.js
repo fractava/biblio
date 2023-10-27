@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un système de gestion de bibliothèque",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "Cette application peut être utilisée pour gérer une bibliothèque de livres, de partitions ou de manuels",
     "Add new Customer" : "Ajouter un nouveau client",
     "Add new Item" : "Ajouter un nouvel objet",
     "Add a field" : "Ajouter un champ",
@@ -52,6 +53,7 @@ OC.L10N.register(
     "_%n selected row_::_%n selected rows_" : ["%n ligne sélectionnée","%n lignes sélectionnées","%n lignes sélectionnées"],
     "Create Customer" : "Créer un client",
     "There are currently no customers in this collection, that fit the search parameters" : "Il n'y a actuellement aucun client dans cette collection, qui correspond aux paramètres de la recherche",
+    "Create Instance" : "Créer une instance",
     "Item Properties" : "Propriétés de l'élément",
     "Title" : "Titre",
     "Create Item" : "Créer un élément",

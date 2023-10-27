@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "تطبيق إدارة المكتبات Biblio",
     "A library management system" : "نظامٌ لإدارة المكتبات",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "هذا التطبيق يمكن استعماله لإدارة مكتبة من الكتب أو أرشيف من النوتات الموسيقية أو مكتبة من الكتب المنهجية",
     "Add new Customer" : "إضافة زبون جديد",
     "Add new Item Instance" : "إضافة كائن جديد للعنصر",
     "Add new Item" : "إضافة عنصر جديد",
@@ -65,6 +66,8 @@
     "_%n selected row_::_%n selected rows_" : ["%n أعمدة محددة","%n عمود محدد","%n أعمدة محددة","%n أعمدة محددة","%n أعمدة محددة","%n أعمدة محددة"],
     "Create Customer" : "إستحداث زبون",
     "There are currently no customers in this collection, that fit the search parameters" : "لا يوجد حاليّاً أي زبون في المجموعة تنطبق عليه شروط البحث",
+    "Create Instance" : "إنشاء كائن من العنصر",
+    "This Item currently has no Instance, that fits the search parameters" : "لا يوجد كائن من هذا العنصر يتطابق مع فلاتر البحث",
     "Item Properties" : "خواصّ العنصر",
     "Title" : "العنوان",
     "Could not fetch item instances" : "تعذّر جلب كوائن العنصر item instances",

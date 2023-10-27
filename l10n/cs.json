@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Systém pro správy knihovny",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "Tuto aplikaci je možné použít ke správě knihovny, gramodesek nebo učebnic",
     "Add new Customer" : "Přidat nového zákazníka",
     "Add new Item Instance" : "Přidat novou instanci položky",
     "Add new Item" : "Přidat novou položku",

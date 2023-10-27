@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "一個圖書館管理系統",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "此應用程式可用於管理書庫、樂譜檔案或教科書庫",
     "Add new Customer" : "添加新顧客",
     "Add new Item Instance" : "添加新項目實例",
     "Add new Item" : "添加新項目",
@@ -67,6 +68,8 @@ OC.L10N.register(
     "_%n selected row_::_%n selected rows_" : ["%n 已選擇的列"],
     "Create Customer" : "創建顧客",
     "There are currently no customers in this collection, that fit the search parameters" : "目前此收藏品中沒有符合搜尋參數的顧客",
+    "Create Instance" : "創建實例",
+    "This Item currently has no Instance, that fits the search parameters" : "此項目目前沒有符合搜尋參數的實體",
     "Item Properties" : "項目屬性",
     "Title" : "標題",
     "Could not fetch item instances" : "無法擷取項目實例",
