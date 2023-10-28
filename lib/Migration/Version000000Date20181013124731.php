@@ -50,6 +50,25 @@ class Version000000Date20181013124731 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 200,
 			]);
+
+			$table->addColumn('nomenclature_item', Types::STRING, [
+				'notnull' => true,
+				'length' => 100,
+				'default' => 'ITEM',
+			]);
+
+			$table->addColumn('nomenclature_instance', Types::STRING, [
+				'notnull' => true,
+				'length' => 100,
+				'default' => 'INSTANCE',
+			]);
+
+			$table->addColumn('nomenclature_customer', Types::STRING, [
+				'notnull' => true,
+				'length' => 100,
+				'default' => 'CUSTOMER',
+			]);
+
 			$table->addColumn('item_fields_order', Types::STRING, [
 				'notnull' => true,
 				'length' => 200,
