@@ -7,7 +7,7 @@
 		<!-- Home -->
 		<NcAppSettingsSection v-if="settingsStore.site === 'home'"
 			id="collections"
-			title="Collections">
+			:title="t('biblio', 'Collections')">
 			<CollectionsList />
 			<V1Import />
 		</NcAppSettingsSection>
@@ -15,27 +15,27 @@
 		<!-- Collection -->
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection"
-			title="Properties">
+			:title="t('biblio', 'Properties')">
 			<CollectionProperties />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-members"
-			title="Members">
+			:title="t('biblio', 'Members')">
 			<CollectionMembers />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-item-fields"
-			title="Item Fields">
+			:title="t('biblio', 'Item Fields')">
 			<CollectionItemFields />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-loan-fields"
-			title="Item Instance Loan Fields">
+			:title="t('biblio', 'Item Instance Loan Fields')">
 			<CollectionLoanFields />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-customer-fields"
-			title="Customer Fields">
+			:title="t('biblio', 'Customer Fields')">
 			<CollectionCustomerFields />
 		</NcAppSettingsSection>
 	</NcAppSettingsDialog>
