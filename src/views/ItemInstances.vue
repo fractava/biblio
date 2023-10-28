@@ -63,7 +63,7 @@ export default {
 			return [
 				{
 					id: -1,
-					name: "Barcode",
+					name: t("biblio", "Barcode"),
 					type: "short",
 					isProperty: true,
 					canSort: true,
@@ -75,7 +75,7 @@ export default {
 				},
 				{
 					id: -2,
-					name: "Item Title",
+					name: t("biblio", "Item Title"),
 					type: "short",
 					isProperty: true,
 					canSort: true,
@@ -89,7 +89,7 @@ export default {
 				},
 				{
 					id: -3,
-					name: "Loaned to Customer",
+					name: t("biblio", "Loaned to Customer"),
 					type: "short",
 					isProperty: true,
 					canSort: true,

@@ -78,7 +78,7 @@ export default {
 			return [
 				{
 					id: -1,
-					name: "Title",
+					name: t("biblio", "Title"),
 					type: "short",
 					isProperty: true,
 					canSort: true,
