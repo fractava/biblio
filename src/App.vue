@@ -32,8 +32,17 @@ export default {
 	mounted() {
 		this.biblioStore.fetchCollections();
 
+		const route = window.biblioRouter.currentRoute;
+
+		if (route.params.collectionId) {
+			this.biblioStore.selectedCollectionId = parseInt(route.params.collectionId);
+		}
+
 		window.biblioRouter.afterEach((to, from) => {
 			if (from.params.collectionId !== to.params.collectionId) {
+				const biblioStore = useBiblioStore();
+
+				biblioStore.selectedCollectionId = parseInt(to.params.collectionId);
 				this.refreshStores();
 			}
 		});
