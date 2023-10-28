@@ -6,7 +6,7 @@
 			<div class="modal__content">
 				<h2>{{ nomenclatureStore.addNewItem }}</h2>
 
-				<NcTextField label="Title" :value.sync="title" @keydown.enter.prevent="submit" />
+				<NcTextField :label="t('biblio', 'Title')" :value.sync="title" @keydown.enter.prevent="submit" />
 
 				<NcButton :disabled="!title"
 					type="primary"

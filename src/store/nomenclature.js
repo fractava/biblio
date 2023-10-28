@@ -105,22 +105,34 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 			case "BOOK":
 				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
-					return t("biblio", "Book copy");
+					return t("biblio", "Book copies");
 				} else {
-					return t("biblio", "Book instance");
+					return t("biblio", "Book instances");
 				}
 			case "DEVICE":
 				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
-					return t("biblio", "Device copy");
+					return t("biblio", "Device copies");
 				} else {
-					return t("biblio", "Device instance");
+					return t("biblio", "Device instances");
 				}
 			default:
 				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
-					return t("biblio", "Item copy");
+					return t("biblio", "Item copies");
 				} else {
-					return t("biblio", "Item instance");
+					return t("biblio", "Item instances");
 				}
+			}
+		},
+		customers() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "Students");
+			case "EMPLOYEE":
+				return t("biblio", "Employees");
+			default:
+				return t("biblio", "Customers");
 			}
 		},
 		addNewCustomer() {

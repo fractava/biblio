@@ -4,8 +4,8 @@
 			:options="biblioStore.collections"
 			:value="selectValue"
 			options-label="name"
-			button-aria-label="Open Collection Settings"
-			placeholder="Select Collection"
+			:button-aria-label="t('biblio', 'Open Collection Settings')"
+			:placeholder="t('biblio', 'Select Collection')"
 			@button-clicked="settingsOpen = !settingsOpen"
 			@input="collectionSelected">
 			<template #button-icon>
@@ -28,7 +28,7 @@
 				<component :is="nomenclatureStore.instanceIcon" :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Customers')" :to="linkIfCollectionIdSelected('/customers')">
+		<NcAppNavigationItem :name="nomenclatureStore.customers" :to="linkIfCollectionIdSelected('/customers')">
 			<template #icon>
 				<component :is="nomenclatureStore.customerIcon" :size="20" />
 			</template>
