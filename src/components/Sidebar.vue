@@ -20,12 +20,12 @@
 		</NcAppNavigationItem>
 		<NcAppNavigationItem :name="t('biblio', 'Items')" :to="linkIfCollectionIdSelected('/items')">
 			<template #icon>
-				<Bookshelf :size="20" />
+				<component :is="nomenclatureStore.itemIcon" :size="20" />
 			</template>
 		</NcAppNavigationItem>
 		<NcAppNavigationItem :name="t('biblio', 'Item Instances')" :to="linkIfCollectionIdSelected('/iteminstances')">
 			<template #icon>
-				<Bookshelf :size="20" />
+				<component :is="nomenclatureStore.instanceIcon" :size="20" />
 			</template>
 		</NcAppNavigationItem>
 		<NcAppNavigationItem :name="t('biblio', 'Customers')" :to="linkIfCollectionIdSelected('/customers')">
@@ -49,6 +49,7 @@ import Bookshelf from "vue-material-design-icons/Bookshelf";
 import Cog from "vue-material-design-icons/Cog";
 
 import { useBiblioStore } from "../store/biblio.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 export default {
 	components: {
@@ -67,7 +68,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useBiblioStore),
+		...mapStores(useBiblioStore, useNomenclatureStore),
 		selectValue() {
 			if (this.$route.params.collectionId) {
 				return parseInt(this.$route.params.collectionId);

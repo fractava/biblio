@@ -29,13 +29,13 @@
 	</div>
 </template>
 <script>
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
-import vueSelect from 'vue-select';
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js"
+import vueSelect from "vue-select";
 
 import ChevronLeft from "vue-material-design-icons/ChevronLeft.vue";
 import ChevronRight from "vue-material-design-icons/ChevronRight.vue";
 
-import generalHelper from '../../mixins/generalHelper';
+import generalHelper from "../../mixins/generalHelper";
 
 export default {
 	components: {

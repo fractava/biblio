@@ -7,6 +7,7 @@ import { api } from "../api.js";
 export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
+		selectedCollectionId: undefined,
 	}),
 	actions: {
 		/* Collections */
@@ -65,9 +66,7 @@ export const useBiblioStore = defineStore("biblio", {
 			return state.collections.find(collection => collection.id === id);
 		},
 		selectedCollection: (state) => {
-			const route = window.biblioRouter.currentRoute;
-
-			return state.getCollectionById(parseInt(route.params.collectionId));
+			return state.getCollectionById(state.selectedCollectionId);
 		},
 	},
 });
