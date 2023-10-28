@@ -67,7 +67,7 @@ export const useBiblioStore = defineStore("biblio", {
 		selectedCollection: (state) => {
 			const route = window.biblioRouter.currentRoute;
 
-			return state.getCollectionById(route.params.collectionId);
+			return state.getCollectionById(parseInt(route.params.collectionId));
 		},
 	},
 });

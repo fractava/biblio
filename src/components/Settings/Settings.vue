@@ -19,6 +19,11 @@
 			<CollectionProperties />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection-nomenclature"
+			:title="t('biblio', 'Nomenclature')">
+			<CollectionNomenclature />
+		</NcAppSettingsSection>
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-members"
 			:title="t('biblio', 'Members')">
 			<CollectionMembers />
@@ -51,6 +56,7 @@ import { useSettingsStore } from "../../store/settings.js";
 import CollectionsList from "./CollectionsList.vue";
 import V1Import from "./V1Import.vue";
 import CollectionProperties from "./CollectionProperties.vue";
+import CollectionNomenclature from "./CollectionNomenclature.vue";
 import CollectionMembers from "./CollectionMembers.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
 import CollectionLoanFields from "./CollectionLoanFields.vue";
@@ -63,6 +69,7 @@ export default {
 		CollectionsList,
 		V1Import,
 		CollectionProperties,
+		CollectionNomenclature,
 		CollectionMembers,
 		CollectionItemFields,
 		CollectionLoanFields,

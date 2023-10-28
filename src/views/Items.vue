@@ -12,7 +12,7 @@
 				:current-sort-reverse="itemsStore.sortReverse"
 				:current-filters="itemsStore.filters"
 				:row-limit-filter="itemsStore.limit"
-				:create-row-label="t('biblio', 'Create Item')"
+				:create-row-label="nomenclatureStore.createItem"
 				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
 				@create-row="modalOpen = true"
 				@set-search-string="onSearchUpdate"
@@ -33,6 +33,7 @@ import debounceFn from "debounce-fn";
 
 import DataTable from "../components/dataTable/DataTable.vue";
 import { useItemsStore } from "../store/items.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 import AddItemModal from "../components/AddItemModal.vue";
 
@@ -50,7 +51,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useItemsStore),
+		...mapStores(useItemsStore, useNomenclatureStore),
 		maxPage() {
 			return Math.ceil(Math.max(this.itemsStore.searchMeta.totalResultCount, 1) / this.itemsStore.limit) || 1;
 		},
