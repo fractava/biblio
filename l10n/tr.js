@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Kitaplık yönetimi sistemi",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "Bu uygulama kitap, nota arşivi, ders kitabı gibi bilgileri arşivlemek için kullanılabilir",
     "Add new Customer" : "Yeni üye ekle",
     "Add new Item Instance" : "Yeni öge kopyası ekle",
     "Add new Item" : "Yeni öge ekle",

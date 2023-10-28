@@ -11,6 +11,7 @@ OC.L10N.register(
     "Reset" : "Resetovať",
     "Add Option" : "Pridať možnosť",
     "Value" : "Hodnota",
+    "Could not update customer field" : "Nepodarilo sa aktualizovať pole zákazníka",
     "Drag to reorder the fields" : "Potiahnutím zmeníte poradie polí",
     "Lend/Return" : "Požičať/Vrátiť",
     "Customers" : "Zákazníci",
@@ -37,6 +38,7 @@ OC.L10N.register(
     "Pick a date and time" : "Vyberte dátum a čas",
     "Select" : "Vybrať",
     "Checkbox" : "Zaškrtávacie políčko",
+    "Could not update customer" : "Nepodarilo sa aktualizovať zákazníka",
     "Unknown error." : "Neznáma chyba."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
