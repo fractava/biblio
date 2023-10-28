@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<NcModal v-if="open"
-			:name="t('biblio', 'Add new Item')"
+			:name="nomenclatureStore.addNewItem"
 			@close="closeModal">
 			<div class="modal__content">
-				<h2>{{ t('biblio', 'Add new Item') }}</h2>
+				<h2>{{ nomenclatureStore.addNewItem }}</h2>
 
 				<NcTextField label="Title" :value.sync="title" @keydown.enter.prevent="submit" />
 
@@ -34,6 +34,7 @@ import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 import Plus from "vue-material-design-icons/Plus.vue";
 
 import { useItemsStore } from "../store/items.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 export default {
 	components: {
@@ -56,7 +57,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useItemsStore),
+		...mapStores(useItemsStore, useNomenclatureStore),
 	},
 	methods: {
 		closeModal() {

@@ -18,12 +18,12 @@
 				<SwapVertical :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Items')" :to="linkIfCollectionIdSelected('/items')">
+		<NcAppNavigationItem :name="nomenclatureStore.items" :to="linkIfCollectionIdSelected('/items')">
 			<template #icon>
 				<component :is="nomenclatureStore.itemIcon" :size="20" />
 			</template>
 		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'Item Instances')" :to="linkIfCollectionIdSelected('/iteminstances')">
+		<NcAppNavigationItem :name="nomenclatureStore.instances" :to="linkIfCollectionIdSelected('/iteminstances')">
 			<template #icon>
 				<component :is="nomenclatureStore.instanceIcon" :size="20" />
 			</template>
