@@ -80,11 +80,11 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 			case "BOOK":
-				return t("biblio", "Create Book");
+				return t("biblio", "Create book");
 			case "DEVICE":
-				return t("biblio", "Create Device");
+				return t("biblio", "Create device");
 			default:
-				return t("biblio", "Create Item");
+				return t("biblio", "Create item");
 			}
 		},
 		addNewItem() {
@@ -92,11 +92,23 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 			case "BOOK":
-				return t("biblio", "Add new Book");
+				return t("biblio", "Add new book");
 			case "DEVICE":
-				return t("biblio", "Add new Device");
+				return t("biblio", "Add new device");
 			default:
-				return t("biblio", "Add new Item");
+				return t("biblio", "Add new item");
+			}
+		},
+		itemTitle() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				return t("biblio", "Book title");
+			case "DEVICE":
+				return t("biblio", "Device title");
+			default:
+				return t("biblio", "Item title");
 			}
 		},
 		instances() {
@@ -135,16 +147,52 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Customers");
 			}
 		},
+		createCustomer() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "Create student");
+			case "EMPLOYEE":
+				return t("biblio", "Create employee");
+			default:
+				return t("biblio", "Create customer");
+			}
+		},
 		addNewCustomer() {
 			const biblioStore = useBiblioStore();
 
 			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
 			case "STUDENT":
-				return t("biblio", "Add new Student");
+				return t("biblio", "Add new student");
 			case "EMPLOYEE":
-				return t("biblio", "Add new Employee");
+				return t("biblio", "Add new employee");
 			default:
-				return t("biblio", "Add new Customer");
+				return t("biblio", "Add new customer");
+			}
+		},
+		noCustomers() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "There are currently no students in this collection, that fit the search parameters");
+			case "EMPLOYEE":
+				return t("biblio", "There are currently no employees in this collection, that fit the search parameters");
+			default:
+				return t("biblio", "There are currently no customers in this collection, that fit the search parameters");
+			}
+		},
+		loanedToCustomer() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "Loaned to student");
+			case "EMPLOYEE":
+				return t("biblio", "Loaned to employee");
+			default:
+				return t("biblio", "Loaned to customer");
 			}
 		},
 		itemIcon() {

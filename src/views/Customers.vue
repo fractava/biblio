@@ -12,8 +12,8 @@
 				:current-sort-reverse="customersStore.sortReverse"
 				:current-filters="customersStore.filters"
 				:row-limit-filter="customersStore.limit"
-				:create-row-label="t('biblio', 'Create Customer')"
-				:create-row-description="t('biblio', 'There are currently no customers in this collection, that fit the search parameters')"
+				:create-row-label="nomenclatureStore.createCustomer"
+				:create-row-description="nomenclatureStore.noCustomers"
 				@create-row="modalOpen = true"
 				@set-search-string="onSearchUpdate"
 				@update:currentFilters="onFieltersUpdate"
@@ -33,11 +33,12 @@ import debounceFn from "debounce-fn";
 
 import DataTable from "../components/dataTable/DataTable.vue";
 import { useCustomersStore } from "../store/customers.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 import AddCustomerModal from "../components/AddCustomerModal.vue";
 
-import FieldTypes from "../models/FieldTypes";
-import TextCell from '../components/Fields/Cells/TextCell.vue';
+import FieldTypes from "../models/FieldTypes.js";
+import TextCell from "../components/Fields/Cells/TextCell.vue";
 
 export default {
 	components: {
@@ -50,7 +51,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useCustomersStore),
+		...mapStores(useCustomersStore, useNomenclatureStore),
 		maxPage() {
 			return Math.ceil(Math.max(this.customersStore.searchMeta.totalResultCount, 1) / this.customersStore.limit) || 1;
 		},

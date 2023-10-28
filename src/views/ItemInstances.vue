@@ -27,6 +27,7 @@ import debounceFn from "debounce-fn";
 
 import DataTable from "../components/dataTable/DataTable.vue";
 import { useItemInstancesStore } from "../store/itemInstances.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 import FieldTypes from "../models/FieldTypes.js";
 import TextCell from "../components/Fields/Cells/TextCell.vue";
@@ -36,7 +37,7 @@ export default {
 		DataTable,
 	},
 	computed: {
-		...mapStores(useItemInstancesStore),
+		...mapStores(useItemInstancesStore, useNomenclatureStore),
 		maxPage() {
 			return Math.ceil(Math.max(this.itemInstancesStore.searchMeta.totalResultCount, 1) / this.itemInstancesStore.limit) || 1;
 		},
@@ -75,7 +76,7 @@ export default {
 				},
 				{
 					id: -2,
-					name: t("biblio", "Item Title"),
+					name: this.nomenclatureStore.itemTitle,
 					type: "short",
 					isProperty: true,
 					canSort: true,
@@ -89,7 +90,7 @@ export default {
 				},
 				{
 					id: -3,
-					name: t("biblio", "Loaned to Customer"),
+					name: this.nomenclatureStore.loanedToCustomer,
 					type: "short",
 					isProperty: true,
 					canSort: true,

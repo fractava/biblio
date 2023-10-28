@@ -80,6 +80,7 @@ import AddItemInstanceModal from "../components/AddItemInstanceModal.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import { useItemInstancesStore } from "../store/itemInstances.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 import FieldTypes from "../models/FieldTypes.js";
 
@@ -113,7 +114,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapStores(useBiblioStore, useItemInstancesStore),
+		...mapStores(useBiblioStore, useItemInstancesStore, useNomenclatureStore),
 		itemId() {
 			return parseInt(this.$route.params.id);
 		},
@@ -155,7 +156,7 @@ export default {
 				},
 				{
 					id: -3,
-					name: t("biblio", "Loaned to Customer"),
+					name: this.nomenclatureStore.loanedToCustomer,
 					type: "short",
 					isProperty: true,
 					canSort: true,
