@@ -27,9 +27,10 @@
 				<SearchForm class="searchForm"
 					:search-string="getSearchString"
 					@set-search-string="str => $emit('set-search-string', str)" />
-				<NcSelect class="limitSelect"
+				<vueSelect class="limitSelect"
 					:options="[5, 20, 50, 100, 250, 1000]"
 					:value="rowLimitFilter"
+					:clearable="false"
 					@input="limit => $emit('update:rowLimitFilter', limit)" />
 			</div>
 		</div>
@@ -78,7 +79,7 @@
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
-import NcSelect from "@nextcloud/vue/dist/Components/NcSelect.js";
+import vueSelect from "vue-select";
 import { emit } from "@nextcloud/event-bus";
 import Plus from "vue-material-design-icons/Plus.vue";
 import Check from "vue-material-design-icons/CheckboxBlankOutline.vue";
@@ -94,7 +95,7 @@ export default {
 	components: {
 		NcActions,
 		NcActionButton,
-		NcSelect,
+		vueSelect,
 		SearchForm,
 		NcButton,
 		Plus,
@@ -261,6 +262,11 @@ export default {
 .searchAndFilter {
 	margin-left: calc(var(--default-grid-baseline) * 3);
 	width: auto;
+	min-width: 100px;
+}
+
+.limitSelect {
+	--vs-dropdown-min-width: 100px;
 	min-width: 100px;
 }
 

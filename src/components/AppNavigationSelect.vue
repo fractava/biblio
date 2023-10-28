@@ -29,12 +29,12 @@
 </template>
 
 <script>
-import vueSelect from 'vue-select';
-import OpenIndicator from 'vue-select/src/components/OpenIndicator.vue';
+import vueSelect from "vue-select";
+import OpenIndicator from "vue-select/src/components/OpenIndicator.vue";
 
-import 'vue-select/dist/vue-select.css';
-import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
+import "vue-select/dist/vue-select.css";
+import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 
 export default {
 	components: {
