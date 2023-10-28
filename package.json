@@ -40,7 +40,7 @@
 		"debounce-fn": "^5.1.2",
 		"node-polyfill-webpack-plugin": "^2.0.1",
 		"p-cancelable": "^4.0.1",
-		"p-queue": "^7.3.4",
+		"p-queue": "^7.4.1",
 		"pinia": "^2.1.7",
 		"sass": "^1.64.1",
 		"sass-loader": "^13.2.2",
