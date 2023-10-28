@@ -30,7 +30,7 @@
 		</NcAppNavigationItem>
 		<NcAppNavigationItem :name="t('biblio', 'Customers')" :to="linkIfCollectionIdSelected('/customers')">
 			<template #icon>
-				<AccountMultiple :size="20" />
+				<component :is="nomenclatureStore.customerIcon" :size="20" />
 			</template>
 		</NcAppNavigationItem>
 	</NcAppNavigation>

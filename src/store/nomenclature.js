@@ -78,19 +78,14 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 		itemIcon() {
 			const biblioStore = useBiblioStore();
 
-			if (biblioStore?.selectedCollection?.nomenclatureItem) {
-				switch (biblioStore.selectedCollection.nomenclatureItem) {
-				case "BOOK":
-					return Book;
-				case "DEVICE":
-					return Laptop;
-				default:
-					return RadioboxBlank;
-				}
-			} else {
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				return Book;
+			case "DEVICE":
+				return Laptop;
+			default:
 				return RadioboxBlank;
 			}
-
 		},
 		instanceIcon() {
 			const biblioStore = useBiblioStore();
@@ -100,6 +95,18 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return BookMultiple;
 			default:
 				return RadioboxBlank;
+			}
+		},
+		customerIcon() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return AccountSchool;
+			case "EMPLOYEE":
+				return AccountTie;
+			default:
+				return Account;
 			}
 		},
 	},
