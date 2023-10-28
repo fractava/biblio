@@ -61,12 +61,24 @@ class CollectionService {
 		return $collection;
 	}
 
-	public function update(int $id, ?string $name, ?string $itemFieldsOrder, ?string $loanFieldsOrder, ?string $customerFieldsOrder) {
+	public function update(int $id, ?string $name, ?string $nomenclatureItem, ?string $nomenclatureInstance, ?string $nomenclatureCustomer, ?string $itemFieldsOrder, ?string $loanFieldsOrder, ?string $customerFieldsOrder) {
 		try {
 			$collection = $this->mapper->find($id);
 			
 			if (!is_null($name)) {
 				$collection->setName($name);
+			}
+
+			if (!is_null($nomenclatureItem)) {
+				$collection->setNomenclatureItem($nomenclatureItem);
+			}
+
+			if (!is_null($nomenclatureInstance)) {
+				$collection->setNomenclatureInstance($nomenclatureInstance);
+			}
+
+			if (!is_null($nomenclatureCustomer)) {
+				$collection->setNomenclatureCustomer($nomenclatureCustomer);
 			}
 
 			if (!is_null($itemFieldsOrder)) {

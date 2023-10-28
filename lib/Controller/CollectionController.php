@@ -59,9 +59,17 @@ class CollectionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, ?string $name, ?string $itemFieldsOrder, ?string $loanFieldsOrder, ?string $customerFieldsOrder): DataResponse {
-		return $this->handleNotFound(function () use ($collectionId, $name, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder) {
-			return $this->service->update($collectionId, $name, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder);
+	public function update(
+		int $collectionId,
+		?string $name,
+		?string $nomenclatureItem,
+		?string $nomenclatureInstance,
+		?string $nomenclatureCustomer,
+		?string $itemFieldsOrder,
+		?string $loanFieldsOrder,
+		?string $customerFieldsOrder): DataResponse {
+		return $this->handleNotFound(function () use ($collectionId, $name, $nomenclatureItem, $nomenclatureInstance, $nomenclatureCustomer, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder) {
+			return $this->service->update($collectionId, $name, $nomenclatureItem, $nomenclatureInstance, $nomenclatureCustomer, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder);
 		});
 	}
 
