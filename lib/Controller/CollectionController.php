@@ -5,6 +5,7 @@ namespace OCA\Biblio\Controller;
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\CollectionService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 
