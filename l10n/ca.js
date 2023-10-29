@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema de gestió bibliotecària",
+    "Title" : "Title",
     "Add a field" : "Afegeix un camp",
     "Name" : "Nom",
     "Delete Field" : "Suprimeix el camp",
@@ -11,7 +12,6 @@ OC.L10N.register(
     "Value" : "Valor",
     "Drag to reorder the fields" : "Arrossegueu per reordenar els camps",
     "Lend/Return" : "Préstec/Retorn",
-    "Customers" : "Clients",
     "Download" : "Baixa",
     "Search" : "Cercar",
     "Back" : "Torna",
@@ -19,7 +19,6 @@ OC.L10N.register(
     "Export CSV" : "Exporta CSV",
     "Delete" : "Suprimir",
     "_%n selected row_::_%n selected rows_" : ["%n fila seleccionada","%n files seleccionades"],
-    "Title" : "Title",
     "List" : "Llista",
     "Short text" : "Text curt",
     "Enter a short text" : "Introduïu un text curt",
@@ -30,6 +29,7 @@ OC.L10N.register(
     "After" : "Després",
     "Date and time" : "Data i hora",
     "Pick a date and time" : "Trieu una data i una hora",
-    "Checkbox" : "Casella de selecció"
+    "Checkbox" : "Casella de selecció",
+    "Customers" : "Clients"
 },
 "nplurals=2; plural=(n != 1);");

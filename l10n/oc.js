@@ -3,18 +3,21 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistèma de gestion de biblotèca",
+    "Title" : "Títol",
     "Name" : "Nom",
     "Error" : "Error",
     "Reset" : "Reïnicializar",
     "Value" : "Valor",
+    "Members" : "Membres",
     "Lend/Return" : "Prestar/Tornar",
-    "Customers" : "Clients",
     "Download" : "Telecargar",
     "Search" : "Recercar",
     "Delete" : "Suprimir",
-    "Title" : "Títol",
     "List" : "Tièra",
     "Date" : "Data",
-    "Pick a date" : "Causir una data"
+    "Pick a date" : "Causir una data",
+    "Book" : "Libre",
+    "Device" : "Periferic",
+    "Customers" : "Clients"
 },
 "nplurals=2; plural=(n > 1);");

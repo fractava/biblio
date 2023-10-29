@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Een bibliotheekbeheersysteem",
+    "Title" : "Titel",
     "Add a field" : "Toevoegen veld",
     "Name" : "Naam",
     "Invalid name" : "Ongeldige naam",
@@ -12,13 +13,13 @@ OC.L10N.register(
     "Add Option" : "Toevoegen optie",
     "Value" : "Waarde",
     "Drag to reorder the fields" : "Sleep om de veldvolgorde te wijzigen",
+    "Collections" : "Verzamelingen",
+    "Members" : "Leden",
     "Lend/Return" : "Lenen/Inleveren",
-    "Customers" : "Klanten",
     "Download" : "Download",
     "Search" : "Zoeken",
     "Sorting" : "Sorteren",
     "Delete" : "Verwijder",
-    "Title" : "Titel",
     "List" : "Lijst",
     "Short text" : "Korte tekst",
     "Enter a short text" : "Voer een korte tekst in",
@@ -30,6 +31,13 @@ OC.L10N.register(
     "Date and time" : "Datum en Tijd",
     "Pick a date and time" : "Kies een datum en tijd",
     "Select" : "Selecteer",
-    "Checkbox" : "Aanvinkvakje"
+    "Checkbox" : "Aanvinkvakje",
+    "Item" : "Object",
+    "Book" : "Boek",
+    "Device" : "Apparaat",
+    "Copy" : "Kopiëren",
+    "Customer" : "Klant",
+    "Devices" : "Apparaten",
+    "Customers" : "Klanten"
 },
 "nplurals=2; plural=(n != 1);");

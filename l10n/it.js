@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema di gestione bibliotecario",
+    "Title" : "Titolo",
     "Add a field" : "Aggiungi un campo",
     "Name" : "Nome",
     "Invalid name" : "Nome non valido",
@@ -12,13 +13,13 @@ OC.L10N.register(
     "Add Option" : "Aggiungi opzione",
     "Value" : "Valore",
     "Drag to reorder the fields" : "Trascina per riordinare i campi",
+    "Collections" : "Raccolte",
+    "Members" : "Partecipanti",
     "Lend/Return" : "Prestare/Rendere",
-    "Customers" : "Clienti",
     "Download" : "Scarica",
     "Search" : "Cerca",
     "Sorting" : "Ordina",
     "Delete" : "Elimina",
-    "Title" : "Titolo",
     "List" : "Lista",
     "Short text" : "Testo breve",
     "Enter a short text" : "Inserisci un testo breve",
@@ -30,6 +31,10 @@ OC.L10N.register(
     "Date and time" : "Data e ora",
     "Pick a date and time" : "Scegli una data e ora",
     "Select" : "Seleziona",
-    "Checkbox" : "Casella di selezione"
+    "Checkbox" : "Casella di selezione",
+    "Device" : "Dispositivo",
+    "Copy" : "Copia",
+    "Devices" : "Dispositivi",
+    "Customers" : "Clienti"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

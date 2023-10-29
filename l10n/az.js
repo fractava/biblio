@@ -1,13 +1,13 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Başlıq",
     "Name" : "Ad",
     "Error" : "Səhv",
     "Reset" : "Sıfırla",
     "Download" : "Yüklə",
     "Search" : "Axtarış",
     "Delete" : "Sil",
-    "Title" : "Başlıq",
     "Date" : "Date",
     "Select" : "Seç"
 },

@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "System zarządzania biblioteką",
+    "Title" : "Tytuł",
     "Add a field" : "Dodaj pole",
     "Name" : "Nazwa",
     "Invalid name" : "Nieprawidłowa nazwa",
@@ -10,14 +11,14 @@
     "Add Option" : "Dodaj opcję",
     "Value" : "Wartość",
     "Drag to reorder the fields" : "Przeciągnij, aby zmienić kolejność pól",
+    "Collections" : "Kolekcje",
+    "Members" : "Członkowie",
     "Lend/Return" : "Wypożyczenie/zwrot",
-    "Customers" : "Klienci",
     "Download" : "Pobierz",
     "Search" : "Szukaj",
     "Back" : "Poprzednia",
     "Sorting" : "Sortuj",
     "Delete" : "Usuń",
-    "Title" : "Tytuł",
     "List" : "Lista",
     "Short text" : "Krótki tekst",
     "Enter a short text" : "Wpisz krótki tekst",
@@ -29,6 +30,13 @@
     "Date and time" : "Data i godzina",
     "Pick a date and time" : "Wybierz datę i godzinę",
     "Select" : "Wybierz",
-    "Checkbox" : "Pole checkbox"
+    "Checkbox" : "Pole checkbox",
+    "Item" : "Pozycja",
+    "Book" : "Książka",
+    "Device" : "Urządzenie",
+    "Copy" : "Skopiuj",
+    "Customer" : "Klient",
+    "Devices" : "Urządzenia",
+    "Customers" : "Klienci"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

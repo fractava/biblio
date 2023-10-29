@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Unu sistema de gestione de bibliotecas",
+    "Title" : "Tìtulu",
     "Add a field" : "Agiunghe unu campu",
     "Name" : "Nùmene",
     "Invalid name" : "Nùmene non bàlidu",
@@ -11,14 +12,13 @@ OC.L10N.register(
     "Reset" : "Torra a impostare",
     "Value" : "Balore",
     "Drag to reorder the fields" : "Traga pro ordinare is campos",
+    "Members" : "Membros",
     "Lend/Return" : "Prestare/Torrare",
-    "Customers" : "Clientes",
     "Download" : "Iscàrriga",
     "Search" : "Chirca",
     "Back" : "In segus",
     "Sorting" : "Assentende",
     "Delete" : "Cantzella",
-    "Title" : "Tìtulu",
     "List" : "Lista",
     "Short text" : "Testu breve",
     "Enter a short text" : "Inserta unu testu breve",
@@ -29,6 +29,12 @@ OC.L10N.register(
     "Date and time" : "Data e ora",
     "Pick a date and time" : "Sèbera data e ora",
     "Select" : "Seletziona",
-    "Checkbox" : "Casella de seletzione"
+    "Checkbox" : "Casella de seletzione",
+    "Item" : "Elementu",
+    "Device" : "Dispositivu",
+    "Copy" : "Còpia",
+    "Customer" : "Cliente",
+    "Devices" : "Dispositivos",
+    "Customers" : "Clientes"
 },
 "nplurals=2; plural=(n != 1);");

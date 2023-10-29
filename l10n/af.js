@@ -1,12 +1,12 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Titel",
     "Reset" : "Herstel",
     "Value" : "Waarde",
     "Download" : "Laai af",
     "Search" : "Soek",
     "Delete" : "Skrap",
-    "Title" : "Titel",
     "List" : "Lys",
     "Date" : "Datum"
 },

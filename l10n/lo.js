@@ -6,6 +6,7 @@ OC.L10N.register(
     "Search" : "ຄົ້ນຫາ",
     "Delete" : "ລຶບ",
     "Date" : "ວັນທີ",
-    "Checkbox" : "ເຄື່ອງໝາຍກ່ອງ"
+    "Checkbox" : "ເຄື່ອງໝາຍກ່ອງ",
+    "Copy" : "ສຳເນົາ"
 },
 "nplurals=1; plural=0;");

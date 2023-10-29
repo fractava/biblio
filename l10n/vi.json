@@ -1,17 +1,19 @@
 { "translations": {
+    "Title" : "Tiêu đề",
     "Name" : "Tên",
     "Error" : "Lỗi",
     "Reset" : "Đặt lại",
     "Value" : "Giá trị",
+    "Members" : "Thành viên",
     "Download" : "Tải xuống",
     "Search" : "Tìm kiếm",
     "Back" : "Trở lại",
     "Delete" : "Xóa",
-    "Title" : "Tiêu đề",
     "List" : "Danh sách",
     "Date" : "Date",
     "Pick a date" : "Chọn ngày",
     "Select" : "Chọn",
-    "Checkbox" : "Hộp chọn"
+    "Checkbox" : "Hộp chọn",
+    "Device" : "Thiết bị"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

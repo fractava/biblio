@@ -7,6 +7,7 @@ OC.L10N.register(
     "Search" : "Gözlemek",
     "Back" : "Yzyna",
     "Delete" : "Pozmak",
-    "Checkbox" : "Bellik gutusy"
+    "Checkbox" : "Bellik gutusy",
+    "Copy" : "Göçüriň"
 },
 "nplurals=2; plural=(n != 1);");

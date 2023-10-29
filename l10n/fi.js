@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Otsikko",
     "Add a field" : "Lisää kenttä",
     "Name" : "Nimi",
     "Invalid name" : "Virheellinen nimi",
@@ -8,7 +9,7 @@ OC.L10N.register(
     "Error" : "Virhe",
     "Reset" : "Palauta",
     "Value" : "Arvo",
-    "Customers" : "Asiakkaat",
+    "Members" : "Jäsenet",
     "Download" : "Lataa",
     "Search" : "Etsi",
     "Back" : "Takaisin",
@@ -16,7 +17,6 @@ OC.L10N.register(
     "Export CSV" : "Vie CSV",
     "Delete" : "Poista",
     "_%n selected row_::_%n selected rows_" : ["%n valittu rivi","%n valittua riviä"],
-    "Title" : "Otsikko",
     "List" : "Lista",
     "Contains" : "Sisältää",
     "Short text" : "Lyhyt teksti",
@@ -27,6 +27,10 @@ OC.L10N.register(
     "Date and time" : "Päivänmäärä ja aika",
     "Pick a date and time" : "Valitse päivänmäärä ja aika",
     "Select" : "Valitse",
-    "Checkbox" : "Valintaruutu"
+    "Checkbox" : "Valintaruutu",
+    "Device" : "Laite",
+    "Copy" : "Kopioi",
+    "Devices" : "Laitteet",
+    "Customers" : "Asiakkaat"
 },
 "nplurals=2; plural=(n != 1);");

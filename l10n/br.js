@@ -1,12 +1,12 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Titl",
     "Name" : "Anv",
     "Error" : "Fazi",
     "Download" : "Pellgargañ",
     "Search" : "Klask",
     "Delete" : "Lemel",
-    "Title" : "Titl",
     "List" : "Roll",
     "Date" : "Deiz",
     "Checkbox" : "Checkbox"

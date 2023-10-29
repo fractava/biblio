@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Sustav za upravljanje knjižnicom",
+    "Title" : "Naslov",
     "Add a field" : "Dodaj polje",
     "Name" : "Naziv",
     "Invalid name" : "Nevažeće ime",
@@ -12,13 +13,13 @@ OC.L10N.register(
     "Add Option" : "Dodaj mogućnost",
     "Value" : "Vrijednost",
     "Drag to reorder the fields" : "Promijenite redoslijed povlačenjem polja",
+    "Collections" : "Zbirke",
+    "Members" : "Članovi",
     "Lend/Return" : "Posudi/vrati",
-    "Customers" : "Korisnici",
     "Download" : "Preuzmi",
     "Search" : "Traži",
     "Sorting" : "Razvrstavanje",
     "Delete" : "Izbriši",
-    "Title" : "Naslov",
     "List" : "Popis",
     "Short text" : "Kratak tekst",
     "Enter a short text" : "Unesi kratak tekst",
@@ -29,6 +30,10 @@ OC.L10N.register(
     "Date and time" : "Datum i vrijeme",
     "Pick a date and time" : "Odaberite datum i vrijeme",
     "Select" : "Odaberi",
-    "Checkbox" : "Potvrdni okvir"
+    "Checkbox" : "Potvrdni okvir",
+    "Device" : "Uređaj",
+    "Copy" : "Kopirajte",
+    "Devices" : "Uređaji",
+    "Customers" : "Korisnici"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

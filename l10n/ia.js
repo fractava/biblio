@@ -1,13 +1,15 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Titulo",
     "Error" : "Error",
     "Reset" : "Re-fixar",
+    "Members" : "Membros",
     "Download" : "Discargar",
     "Search" : "Cercar",
     "Delete" : "Deler",
-    "Title" : "Titulo",
     "Date" : "Date",
-    "Select" : "Selectionar"
+    "Select" : "Selectionar",
+    "Device" : "Dispositivo"
 },
 "nplurals=2; plural=(n != 1);");

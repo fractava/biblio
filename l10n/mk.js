@@ -1,15 +1,16 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Наслов",
     "Name" : "Име",
     "Error" : "Грешка",
     "Reset" : "Ресетирање",
     "Value" : "Вредност",
+    "Members" : "Членови",
     "Download" : "Преземи",
     "Search" : "Барај",
     "Back" : "Назад",
     "Delete" : "Избриши",
-    "Title" : "Наслов",
     "List" : "Лист",
     "Long text" : "Долг текст",
     "Enter a long text" : "Внесете долг текст",
@@ -17,6 +18,10 @@ OC.L10N.register(
     "Pick a date" : "Избери датум",
     "Pick a date and time" : "Изберете датум и време",
     "Select" : "Избери",
-    "Checkbox" : "Поле за избирање"
+    "Checkbox" : "Поле за избирање",
+    "Book" : "Книга",
+    "Device" : "Уред",
+    "Customer" : "Потрошувач",
+    "Devices" : "Уреди"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

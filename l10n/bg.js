@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio /Библио/",
     "A library management system" : "Система за управление на библиотека",
+    "Title" : "Заглавие",
     "Add a field" : "Добавяне на поле",
     "Name" : "Име",
     "Invalid name" : "Невалидно име",
@@ -12,13 +13,11 @@ OC.L10N.register(
     "Value" : "Стойност",
     "Drag to reorder the fields" : "Плъзнете, за да пренаредите полетата",
     "Lend/Return" : "Даване на заем/Връщане",
-    "Customers" : "Клиенти",
     "Download" : "Изтегляне",
     "Search" : "Търсене",
     "Export CSV" : "Експортиране на CSV файл",
     "Delete" : "Изтриване",
     "_%n selected row_::_%n selected rows_" : ["%n избрани редове","%n избрани редове"],
-    "Title" : "Заглавие",
     "List" : "Списък",
     "Contains" : "Съдържа",
     "Short text" : "Кратък текст",
@@ -33,6 +32,7 @@ OC.L10N.register(
     "Pick a date and time" : "Избор на дата и час",
     "Select" : "Избери",
     "Checkbox" : "Отметка",
-    "Checked" : "Проверено"
+    "Checked" : "Проверено",
+    "Customers" : "Клиенти"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,14 +1,17 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Tittel",
     "Name" : "Namn",
     "Error" : "Feil",
     "Value" : "Verdi",
+    "Collections" : "Samlingar",
     "Download" : "Last ned",
     "Search" : "Søk",
     "Delete" : "Slett",
-    "Title" : "Tittel",
     "Date" : "Dato",
-    "Checkbox" : "Avkryssingsfelt"
+    "Checkbox" : "Avkryssingsfelt",
+    "Device" : "Eining",
+    "Copy" : "Kopier"
 },
 "nplurals=2; plural=(n != 1);");

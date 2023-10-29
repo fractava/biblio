@@ -8,6 +8,7 @@ OC.L10N.register(
     "Search" : "සොයන්න",
     "Back" : "ආපසු",
     "List" : "ලැයිස්තුව",
-    "Date" : "දිනය"
+    "Date" : "දිනය",
+    "Device" : "උපාංගය"
 },
 "nplurals=2; plural=(n != 1);");

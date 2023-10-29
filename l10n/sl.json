@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Sistem za upravljanje knjižnice",
+    "Title" : "Naslov",
     "Add a field" : "Dodaj polje",
     "Name" : "Ime",
     "Invalid name" : "Neveljavno ime",
@@ -9,15 +10,15 @@
     "Reset" : "Ponastavi",
     "Value" : "Vrednost",
     "Drag to reorder the fields" : "Potegnite vprašanja in jih preuredite",
+    "Collections" : "Zbirke",
+    "Members" : "Člani",
     "Lend/Return" : "Izposodi/Vrni",
-    "Customers" : "Stranke",
     "Download" : "Prejmi",
     "Search" : "Poišči",
     "Sorting" : "Razvrščanje",
     "Export CSV" : "Izvozi CSV",
     "Delete" : "Izbriši",
     "_%n selected row_::_%n selected rows_" : ["%n izbrana vrstica","%n izbrani vrstici","%n izbrane vrstice","%n izbranih vrstic"],
-    "Title" : "Naslov",
     "List" : "Seznam",
     "Contains" : "Vsebuje",
     "Short text" : "Kratek opis",
@@ -31,6 +32,13 @@
     "Date and time" : "Datum in čas",
     "Pick a date and time" : "Izbor datuma in časa",
     "Select" : "Izbor",
-    "Checkbox" : "Izbirno polje"
+    "Checkbox" : "Izbirno polje",
+    "Item" : "Predmet",
+    "Book" : "Knjiga",
+    "Device" : "Naprava",
+    "Copy" : "Kopiraj",
+    "Customer" : "Stranka",
+    "Devices" : "Naprave",
+    "Customers" : "Stranke"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

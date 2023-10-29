@@ -1,10 +1,10 @@
 { "translations": {
+    "Title" : "ماۋزۇ",
     "Name" : "ئاتى",
     "Error" : "خاتالىق",
     "Download" : "چۈشۈر",
     "Search" : "Search",
     "Delete" : "ئۆچۈر",
-    "Title" : "ماۋزۇ",
     "Date" : "Date"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

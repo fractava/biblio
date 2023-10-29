@@ -1,10 +1,10 @@
 { "translations": {
+    "Title" : "Judul",
     "Name" : "Nama",
     "Error" : "Ralat",
     "Download" : "Muat turun",
     "Search" : "Search",
     "Delete" : "Padam",
-    "Title" : "Judul",
     "Date" : "Date"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

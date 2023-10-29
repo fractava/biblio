@@ -1,12 +1,12 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Naslov",
     "Name" : "Ime",
     "Error" : "Greška",
     "Download" : "Preuzmi",
     "Search" : "Search",
     "Delete" : "Obriši",
-    "Title" : "Naslov",
     "Date" : "Date",
     "Select" : "Izaberi"
 },

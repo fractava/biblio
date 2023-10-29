@@ -1,21 +1,25 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Titill",
     "Name" : "Heiti",
     "Error" : "Villa",
     "Reset" : "Endurstilla",
     "Value" : "Gildi",
+    "Collections" : "Söfn",
+    "Members" : "Meðlimir",
     "Download" : "Sækja",
     "Search" : "Search",
     "Sorting" : "Röðun",
     "Delete" : "Eyða",
-    "Title" : "Titill",
     "List" : "Listi",
     "Long text" : "Langur texti",
     "Enter a long text" : "Settu inn langan texta",
     "Date" : "Dagsetning",
     "Pick a date" : "Veldu dagsetningu",
     "Select" : "Velja",
-    "Checkbox" : "Gátreitur"
+    "Checkbox" : "Gátreitur",
+    "Device" : "Tæki",
+    "Devices" : "Tæki"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Administrasjon av bibliotek",
+    "Title" : "Tittel",
     "Add a field" : "Legg til felt",
     "Name" : "Navn",
     "Delete Field" : "Slett felt",
@@ -10,14 +11,14 @@ OC.L10N.register(
     "Reset" : "Tilbakestill",
     "Value" : "Verdi",
     "Drag to reorder the fields" : "Trekk for å endre rekkefølge på felt",
+    "Collections" : "Samlinger",
+    "Members" : "Medlemmer",
     "Lend/Return" : "Lån/returner",
-    "Customers" : "Kunder",
     "Download" : "Last ned",
     "Search" : "Søk",
     "Back" : "Tilbake",
     "Sorting" : "Sorter",
     "Delete" : "Slett",
-    "Title" : "Tittel",
     "List" : "Liste",
     "Short text" : "Kort beskrivelse",
     "Enter a short text" : "Oppgi en kort beskrivelse",
@@ -28,6 +29,12 @@ OC.L10N.register(
     "Date and time" : "Dato og tid",
     "Pick a date and time" : "Velg dato og tid",
     "Select" : "Velg",
-    "Checkbox" : "Avkryssningsboks"
+    "Checkbox" : "Avkryssningsboks",
+    "Item" : "Punkt",
+    "Book" : "Bok",
+    "Device" : "Enhet",
+    "Copy" : "Kopi",
+    "Devices" : "Enheter",
+    "Customers" : "Kunder"
 },
 "nplurals=2; plural=(n != 1);");

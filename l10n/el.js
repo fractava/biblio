@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Σύστημα διαχείρισης βιβλιοθηκών",
+    "Title" : "Τίτλος",
     "Add a field" : "Προσθήκη πεδίου",
     "Name" : "Όνομα",
     "Invalid name" : "Μη έγκυρο όνομα",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Value" : "Τιμή",
     "Drag to reorder the fields" : "Σύρετε για αναδιάταξη των πεδίων",
     "Lend/Return" : "Δανεισμός/Επιστροφή",
-    "Customers" : "Πελάτες",
     "Download" : "Λήψη",
     "Search" : "Αναζήτηση",
     "Back" : "Επιστροφή",
@@ -23,7 +23,6 @@ OC.L10N.register(
     "Filtering" : "Φιλτράρισμα",
     "Export CSV" : "Εξαγωγή CSV",
     "Delete" : "Διαγραφή",
-    "Title" : "Τίτλος",
     "List" : "Λίστα",
     "Contains" : "Περιέχει",
     "Short text" : "Σύντομο κείμενο",
@@ -36,6 +35,7 @@ OC.L10N.register(
     "Date and time" : "Ημερομηνία και ώρα",
     "Pick a date and time" : "Επιλογή ημερομηνίας και ώρας",
     "Select" : "Επιλογή",
-    "Checkbox" : "Πλαίσιο ελέγχου"
+    "Checkbox" : "Πλαίσιο ελέγχου",
+    "Customers" : "Πελάτες"
 },
 "nplurals=2; plural=(n != 1);");
