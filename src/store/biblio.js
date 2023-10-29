@@ -25,8 +25,14 @@ export const useBiblioStore = defineStore("biblio", {
 					.then((result) => {
 						this.collections.push(result);
 						resolve();
-					}).catch(() => {
-						showError(t("biblio", "Could not create collection"));
+					}).catch((error) => {
+						let errorMessage = t("biblio", "Could not create collection");
+
+						if (error?.response?.data?.error) {
+							errorMessage += ": " + error?.response?.data?.error;
+						}
+
+						showError(errorMessage);
 						resolve();
 					});
 			});

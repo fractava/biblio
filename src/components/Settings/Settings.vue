@@ -9,7 +9,6 @@
 			id="collections"
 			:title="t('biblio', 'Collections')">
 			<CollectionsList />
-			<V1Import />
 		</NcAppSettingsSection>
 
 		<!-- Collection -->
@@ -43,6 +42,13 @@
 			:title="t('biblio', 'Customer Fields')">
 			<CollectionCustomerFields />
 		</NcAppSettingsSection>
+
+		<!-- Import Collection -->
+		<NcAppSettingsSection v-if="settingsStore.site === 'import_collection'"
+			id="import_collection"
+			:title="t('biblio', 'Import collection')">
+			<Imports />
+		</NcAppSettingsSection>
 	</NcAppSettingsDialog>
 </template>
 
@@ -54,26 +60,26 @@ import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSe
 import { useBiblioStore } from "../../store/biblio.js";
 import { useSettingsStore } from "../../store/settings.js";
 import CollectionsList from "./CollectionsList.vue";
-import V1Import from "./V1Import.vue";
 import CollectionProperties from "./CollectionProperties.vue";
 import CollectionNomenclature from "./CollectionNomenclature.vue";
 import CollectionMembers from "./CollectionMembers.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
 import CollectionLoanFields from "./CollectionLoanFields.vue";
 import CollectionCustomerFields from "./CollectionCustomerFields.vue";
+import Imports from "./Imports.vue";
 
 export default {
 	components: {
 		NcAppSettingsDialog,
 		NcAppSettingsSection,
 		CollectionsList,
-		V1Import,
 		CollectionProperties,
 		CollectionNomenclature,
 		CollectionMembers,
 		CollectionItemFields,
 		CollectionLoanFields,
 		CollectionCustomerFields,
+		Imports,
 	},
 	props: {
 		open: {
@@ -84,7 +90,7 @@ export default {
 	computed: {
 		...mapStores(useBiblioStore, useSettingsStore),
 		showNavigation() {
-			return this.settingsStore.site !== "home";
+			return this.settingsStore.site !== "home" && this.settingsStore.site !== "import_collection";
 		},
 		title() {
 			if (this.settingsStore.site === "home") {
