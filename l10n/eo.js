@@ -5,11 +5,15 @@ OC.L10N.register(
     "Name" : "Nomo",
     "Error" : "Eraro",
     "Reset" : "Restarigi",
+    "Edit" : "Modifi",
+    "Delete" : "Forigi",
+    "Members" : "Membroj",
     "Download" : "Elŝuti",
     "Search" : "Serĉi",
-    "Delete" : "Forigi",
     "Date" : "Date",
     "Select" : "Elekti",
-    "Checkbox" : "Markobutono"
+    "Checkbox" : "Markobutono",
+    "Device" : "Aparato",
+    "Devices" : "Aparatoj"
 },
 "nplurals=2; plural=(n != 1);");

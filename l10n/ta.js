@@ -5,10 +5,11 @@ OC.L10N.register(
     "Name" : "பெயர்",
     "Error" : "வழு",
     "Value" : "Value",
+    "Edit" : "தொகுக்க",
+    "Delete" : "நீக்குக",
     "Download" : "பதிவிறக்குக",
     "Search" : "தேடுதல்",
     "Back" : "பின்னுக்கு",
-    "Delete" : "நீக்குக",
     "List" : "List",
     "Date" : "Date",
     "Select" : "Select"

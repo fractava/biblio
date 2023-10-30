@@ -5,12 +5,17 @@ OC.L10N.register(
     "Name" : "Nombre",
     "Reset" : "Restaurar",
     "Value" : "Valor",
+    "Edit" : "Editar",
+    "Delete" : "Borrar",
+    "Collections" : "Colecciones",
+    "Members" : "Miembros",
     "Download" : "Descargar",
     "Search" : "Buscar",
-    "Delete" : "Borrar",
     "List" : "Lista",
     "Date" : "Fecha",
     "Select" : "Seleccionar",
-    "Checkbox" : "Casilla de verificación"
+    "Checkbox" : "Casilla de verificación",
+    "Device" : "Dispositivo",
+    "Devices" : "Dispositivos"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

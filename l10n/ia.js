@@ -4,10 +4,11 @@ OC.L10N.register(
     "Title" : "Titulo",
     "Error" : "Error",
     "Reset" : "Re-fixar",
+    "Edit" : "Modificar",
+    "Delete" : "Deler",
     "Members" : "Membros",
     "Download" : "Discargar",
     "Search" : "Cercar",
-    "Delete" : "Deler",
     "Date" : "Date",
     "Select" : "Selectionar",
     "Device" : "Dispositivo"

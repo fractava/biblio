@@ -6,9 +6,12 @@ OC.L10N.register(
     "Error" : "Error",
     "Reset" : "Reiniciar",
     "Value" : "Valor",
+    "Edit" : "Editar",
+    "Delete" : "Eliminar",
+    "Collections" : "Colecciones",
+    "Members" : "Miembros",
     "Download" : "Descargar",
     "Search" : "Buscar",
-    "Delete" : "Eliminar",
     "List" : "Lista",
     "Long text" : "Texto extenso",
     "Date" : "Fecha",
@@ -16,6 +19,8 @@ OC.L10N.register(
     "Pick a date and time" : "Escoge hora y fecha",
     "Select" : "Seleccionar",
     "Checkbox" : "Casilla de verificación",
-    "Device" : "Dispositivo"
+    "Item" : "Elemento",
+    "Device" : "Dispositivo",
+    "Devices" : "Dispositivos"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

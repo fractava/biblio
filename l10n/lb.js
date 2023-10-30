@@ -5,9 +5,10 @@ OC.L10N.register(
     "Name" : "Numm",
     "Error" : "Fehler",
     "Reset" : "Zeréck setzen",
+    "Edit" : "Änneren",
+    "Delete" : "Läschen",
     "Download" : "Eroflueden",
     "Search" : "Search",
-    "Delete" : "Läschen",
     "Date" : "Date",
     "Select" : "Auswielen"
 },

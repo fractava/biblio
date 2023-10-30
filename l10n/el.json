@@ -10,7 +10,11 @@
     "Reset" : "Επαναφορά",
     "Add Option" : "Προσθήκη Επιλογής",
     "Value" : "Τιμή",
+    "Edit" : "Επεξεργασία",
+    "Delete" : "Διαγραφή",
     "Drag to reorder the fields" : "Σύρετε για αναδιάταξη των πεδίων",
+    "Collections" : "Συλλογές",
+    "Members" : "Μέλη",
     "Lend/Return" : "Δανεισμός/Επιστροφή",
     "Download" : "Λήψη",
     "Search" : "Αναζήτηση",
@@ -20,7 +24,6 @@
     "Sort desc" : "Ταξινόμηση φθίνουσα",
     "Filtering" : "Φιλτράρισμα",
     "Export CSV" : "Εξαγωγή CSV",
-    "Delete" : "Διαγραφή",
     "List" : "Λίστα",
     "Contains" : "Περιέχει",
     "Short text" : "Σύντομο κείμενο",
@@ -34,6 +37,11 @@
     "Pick a date and time" : "Επιλογή ημερομηνίας και ώρας",
     "Select" : "Επιλογή",
     "Checkbox" : "Πλαίσιο ελέγχου",
+    "Item" : "Αντικείμενο",
+    "Device" : "Συσκευή",
+    "Copy" : "Αντιγραφή",
+    "Customer" : "Πελάτης",
+    "Devices" : "Συσκευές",
     "Customers" : "Πελάτες"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

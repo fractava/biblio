@@ -4,10 +4,11 @@ OC.L10N.register(
     "Title" : "Azwel",
     "Name" : "Nom",
     "Error" : "Erreur",
+    "Edit" : "Ẓreg",
+    "Delete" : "Kkes",
     "Download" : "Sider",
     "Search" : "Nadi",
     "Back" : "Retour",
-    "Delete" : "Kkes",
     "Select" : "Fren",
     "Copy" : "Nɣel"
 },

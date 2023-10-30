@@ -1,9 +1,0 @@
-{ "translations": {
-    "Name" : "Nombre",
-    "Error" : "Error",
-    "Download" : "Escargar",
-    "Search" : "Buscar",
-    "Back" : "Ta zaga",
-    "Delete" : "Borrar"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
-}

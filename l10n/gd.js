@@ -3,10 +3,11 @@ OC.L10N.register(
     {
     "Name" : "Ainm",
     "Error" : "Mearachd",
+    "Edit" : "Deasaich",
+    "Delete" : "Sguab às",
     "Download" : "Luchdaich a-nuas",
     "Search" : "Lorg",
     "Back" : "Air ais",
-    "Delete" : "Sguab às",
     "Checkbox" : "Bogsa-cromaige",
     "Copy" : "Dèan lethbhreac"
 },

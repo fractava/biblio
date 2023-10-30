@@ -5,10 +5,12 @@ OC.L10N.register(
     "Name" : "Ad",
     "Error" : "Səhv",
     "Reset" : "Sıfırla",
+    "Delete" : "Sil",
     "Download" : "Yüklə",
     "Search" : "Axtarış",
-    "Delete" : "Sil",
     "Date" : "Date",
-    "Select" : "Seç"
+    "Select" : "Seç",
+    "Device" : "Cihaz",
+    "Copy" : "Kopyala"
 },
 "nplurals=2; plural=(n != 1);");

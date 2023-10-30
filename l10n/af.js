@@ -4,10 +4,12 @@ OC.L10N.register(
     "Title" : "Titel",
     "Reset" : "Herstel",
     "Value" : "Waarde",
+    "Delete" : "Skrap",
     "Download" : "Laai af",
     "Search" : "Soek",
-    "Delete" : "Skrap",
     "List" : "Lys",
-    "Date" : "Datum"
+    "Date" : "Datum",
+    "Device" : "Toestel",
+    "Devices" : "Toestelle"
 },
 "nplurals=2; plural=(n != 1);");

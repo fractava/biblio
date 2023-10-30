@@ -3,10 +3,11 @@ OC.L10N.register(
     {
     "Name" : "Ady",
     "Error" : "ýalňyşlyk",
+    "Edit" : "Redaktirläň",
+    "Delete" : "Pozmak",
     "Download" : "Göçürip almak",
     "Search" : "Gözlemek",
     "Back" : "Yzyna",
-    "Delete" : "Pozmak",
     "Checkbox" : "Bellik gutusy",
     "Copy" : "Göçüriň"
 },

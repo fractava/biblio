@@ -4,9 +4,10 @@ OC.L10N.register(
     "Title" : "Վերնագիր",
     "Name" : "Անուն",
     "Error" : "Սխալ",
+    "Edit" : "մշակել",
+    "Delete" : "հեռացնել",
     "Download" : "Ներբեռնել",
     "Search" : "Search",
-    "Delete" : "հեռացնել",
     "Date" : "Date",
     "Select" : "Նշել",
     "Copy" : "Պատճենել"

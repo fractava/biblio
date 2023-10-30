@@ -4,10 +4,14 @@ OC.L10N.register(
     "Name" : "Nome",
     "Error" : "Error",
     "Value" : "Valor",
+    "Delete" : "Desaniciar",
+    "Collections" : "Coleiciones",
+    "Members" : "Miembros",
     "Download" : "Baxar",
     "Search" : "Guetar",
-    "Delete" : "Desaniciar",
     "Contains" : "Contién",
-    "Date" : "Data"
+    "Date" : "Data",
+    "Device" : "Preséu",
+    "Devices" : "Preseos"
 },
 "nplurals=2; plural=(n != 1);");

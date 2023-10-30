@@ -9,12 +9,13 @@
     "Error" : "Грешка",
     "Reset" : "Възстановяване",
     "Value" : "Стойност",
+    "Delete" : "Изтриване",
     "Drag to reorder the fields" : "Плъзнете, за да пренаредите полетата",
+    "Members" : "Членове",
     "Lend/Return" : "Даване на заем/Връщане",
     "Download" : "Изтегляне",
     "Search" : "Търсене",
     "Export CSV" : "Експортиране на CSV файл",
-    "Delete" : "Изтриване",
     "_%n selected row_::_%n selected rows_" : ["%n избрани редове","%n избрани редове"],
     "List" : "Списък",
     "Contains" : "Съдържа",
@@ -31,6 +32,12 @@
     "Select" : "Избери",
     "Checkbox" : "Отметка",
     "Checked" : "Проверено",
+    "Item" : "Елемент",
+    "Book" : "Книга",
+    "Device" : "Устройство",
+    "Copy" : "Копие",
+    "Customer" : "Клиент",
+    "Devices" : "Устройства",
     "Customers" : "Клиенти"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

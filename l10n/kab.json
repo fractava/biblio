@@ -2,10 +2,11 @@
     "Title" : "Azwel",
     "Name" : "Nom",
     "Error" : "Erreur",
+    "Edit" : "Ẓreg",
+    "Delete" : "Kkes",
     "Download" : "Sider",
     "Search" : "Nadi",
     "Back" : "Retour",
-    "Delete" : "Kkes",
     "Select" : "Fren",
     "Copy" : "Nɣel"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

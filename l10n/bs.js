@@ -4,9 +4,10 @@ OC.L10N.register(
     "Title" : "Naslov",
     "Name" : "Ime",
     "Error" : "Greška",
+    "Delete" : "Obriši",
+    "Members" : "Članovi",
     "Download" : "Preuzmi",
     "Search" : "Search",
-    "Delete" : "Obriši",
     "Date" : "Date",
     "Select" : "Izaberi"
 },
