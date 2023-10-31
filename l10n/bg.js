@@ -11,6 +11,7 @@ OC.L10N.register(
     "Error" : "Грешка",
     "Reset" : "Възстановяване",
     "Value" : "Стойност",
+    "Edit" : "Редактиране",
     "Delete" : "Изтриване",
     "Drag to reorder the fields" : "Плъзнете, за да пренаредите полетата",
     "Members" : "Членове",
