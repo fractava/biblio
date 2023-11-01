@@ -110,9 +110,9 @@ export const useItemsStore = defineStore("items", {
 				});
 			});
 
+			newItemFetch.catch(() => {});
+			
 			this.currentlyRunningFetch = newItemFetch;
-
-			return newItemFetch;
 		},
 		updateItem(itemId, parameters) {
 			const route = window.biblioRouter.currentRoute;

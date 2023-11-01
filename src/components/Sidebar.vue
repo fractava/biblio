@@ -13,7 +13,7 @@
 			</template>
 		</AppNavigationSelect>
 		<Settings :open.sync="settingsOpen" />
-		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" :to="linkIfCollectionIdSelected('/lend-return')">
+		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" :to="linkIfCollectionIdSelected('/loan-return')">
 			<template #icon>
 				<SwapVertical :size="20" />
 			</template>
@@ -95,7 +95,7 @@ export default {
 					});
 				} else {
 					this.$router.push({
-						name: "lend-return",
+						name: "loan-return",
 						params: {
 							collectionId: selectedId,
 						},

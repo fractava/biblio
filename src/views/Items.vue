@@ -139,13 +139,7 @@ export default {
 		refreshSearch: debounceFn(function() {
 			const itemsStore = useItemsStore();
 
-			const refreshPromise = itemsStore.refreshSearchResults();
-
-			refreshPromise.catch((error) => {
-				if (!refreshPromise.isCanceled) {
-					console.error(error);
-				}
-			});
+			itemsStore.refreshSearchResults();
 		}, { wait: 100 }),
 		ensurePageIsNotExceedingMax() {
 			if (this.itemsStore.page > this.maxPage) {

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { defineStore } from "pinia";
-import PCancelable from 'p-cancelable';
+import PCancelable from "p-cancelable";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 import { api } from "../api.js";
