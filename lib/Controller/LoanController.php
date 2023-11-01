@@ -37,23 +37,23 @@ class LoanController extends Controller {
 	 * Get specific loan
 	 * @NoAdminRequired
 	 */
-	public function show(int $id): DataResponse {
-		return $this->handleNotFound(function () use ($id) {
-			return $this->service->find($id);
+	public function show(int $collectionId, string $barcode): DataResponse {
+		return $this->handleNotFound(function () use ($barcode) {
+			return $this->service->findByItemInstanceBarcode($barcode);
 		});
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $barcode, int $customerId, int $until): DataResponse {
+	public function create(int $collectionId, string $barcode, int $customerId, int $until): DataResponse {
 		return new DataResponse($this->service->createByItemInstanceBarcode($barcode, $customerId, $until));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(string $barcode, ?int $until): DataResponse {
+	public function update(int $collectionId, string $barcode, ?int $until): DataResponse {
 		return $this->handleNotFound(function () use ($barcode, $until) {
 			return $this->service->updateByItemInstanceBarcode($barcode, $until);
 		});
@@ -62,7 +62,7 @@ class LoanController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(string $barcode): DataResponse {
+	public function destroy(int $collectionId, string $barcode): DataResponse {
 		return $this->handleNotFound(function () use ($barcode) {
 			return $this->service->deleteByItemInstanceBarcode($barcode);
 		});

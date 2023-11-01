@@ -53,6 +53,11 @@ return [
 		['name' => 'item_instance#barcodePrefix', 'url' => '/collections/{collectionId}/itemInstances/barcodePrefix/{itemId}', 'verb' => 'GET'],
 
 		// Loans
+		['name' => 'loan#index', 'url' => '/collections/{collectionId}/loans', 'verb' => 'GET'],
+		['name' => 'loan#show', 'url' => '/collections/{collectionId}/loans/byBarcode/{barcode}', 'verb' => 'GET'],
+		['name' => 'loan#create', 'url' => '/collections/{collectionId}/loans', 'verb' => 'POST'],
+		['name' => 'loan#update', 'url' => '/collections/{collectionId}/loans/byBarcode/{barcode}', 'verb' => 'PUT'],
+		['name' => 'loan#destroy', 'url' => '/collections/{collectionId}/loans/byBarcode/{barcode}', 'verb' => 'DELETE'],
 
 		// Loan Fields
 		['name' => 'loan_field#index', 'url' => '/collections/{collectionId}/loan_fields', 'verb' => 'GET'],
