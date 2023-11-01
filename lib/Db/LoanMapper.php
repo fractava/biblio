@@ -55,13 +55,30 @@ class LoanMapper extends QBMapper {
 	 * @param int $itemId
 	 * @return array
 	 */
-	public function findAllOfCustomer(string $customerId): array {
+	public function findAllOfCustomer(int $customerId): array {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->from(self::TABLENAME)
-			->where($qb->expr()->eq('customer_id', $qb->createNamedParameter($customerId)));
+			->where($qb->expr()->eq('customer_id', $qb->createNamedParameter($customerId, IQueryBuilder::PARAM_INT)));
 		
+		return $this->findEntities($qb);
+	}
+
+	/**
+	 * @param int $collectionId
+	 * @return array
+	 */
+	public function findAllOfCollection(int $collectionId): array {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('loan.*')
+			->from(self::TABLENAME, 'loan')
+			->innerJoin('loan', self::ITEM_INSTANCES_TABLENAME, 'instance', $qb->expr()->eq('loan.item_instance_id', 'instance.id'))
+			->innerJoin('instance', self::ITEM_INSTANCES_TABLENAME, 'item', $qb->expr()->andX(
+				$qb->expr()->eq('instance.itemId', 'item.id'),
+				$qb->expr()->eq('item.collectionId', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT))
+			));
 		return $this->findEntities($qb);
 	}
 }
