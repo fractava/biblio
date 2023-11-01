@@ -105,6 +105,22 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  *   title: string
  * }} updateItemParameters
  *
+ * @typedef {{
+ *   id: number
+ *   itemInstanceId: number
+ *   customerId: number
+ *   until: number
+ * }} Loan
+ *
+ * @typedef {{
+ *   until: number | undefined
+ * }} updateLoanParameters
+ *
+ * @typedef {{
+ *   barcode: string
+ *   customerId: number
+ *   until: number
+ * }} createLoanParameters
  *
  * @typedef {{
  *   id: number
@@ -903,6 +919,23 @@ export const api = {
 			axios.delete(`/collections/${collectionId}/itemInstances/${itemInstanceId}`)
 				.then(function(response) {
 					resolve(transforms.fromAPI.transformItemInstance(response.data));
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId  Id of the collection to create the loan in
+	 * @param {createLoanParameters} parameters attributes of loan
+	 * @return {Promise<Loan>}
+	 */
+	createLoan(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/loans`, parameters)
+				.then(function(response) {
+					resolve(response.data);
 				})
 				.catch(function(error) {
 					reject(error);
