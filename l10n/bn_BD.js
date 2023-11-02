@@ -5,6 +5,7 @@ OC.L10N.register(
     "Name" : "নাম",
     "Error" : "সমস্যা",
     "Reset" : "পূণঃনির্ধানণ",
+    "Edit" : "সম্পাদনা",
     "Delete" : "মুছে",
     "Download" : "ডাউনলোড",
     "Search" : "Search",

@@ -4,6 +4,7 @@ OC.L10N.register(
     "Title" : "Naslov",
     "Name" : "Ime",
     "Error" : "Greška",
+    "Edit" : "Izmjeni",
     "Delete" : "Obriši",
     "Members" : "Članovi",
     "Download" : "Preuzmi",

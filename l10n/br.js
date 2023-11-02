@@ -4,6 +4,7 @@ OC.L10N.register(
     "Title" : "Titl",
     "Name" : "Anv",
     "Error" : "Fazi",
+    "Edit" : "Cheñch",
     "Delete" : "Lemel",
     "Download" : "Pellgargañ",
     "Search" : "Klask",

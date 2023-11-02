@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error" : "Error",
     "Reset" : "Reinicialitza",
     "Value" : "Valor",
+    "Edit" : "Edició",
     "Delete" : "Suprimir",
     "Drag to reorder the fields" : "Arrossegueu per reordenar els camps",
     "Collections" : "Col·leccions",
