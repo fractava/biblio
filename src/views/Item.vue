@@ -262,8 +262,10 @@ export default {
 		},
 		deleteItemInstances(itemInstanceIds) {
 			for (const itemInstanceId of itemInstanceIds) {
-				this.deleteItemInstance(itemInstanceId);
+				api.deleteItemInstance(this.$route.params.collectionId, itemInstanceId);
 			}
+
+			this.refreshSearch();
 		},
 		getItemInstanceById(id) {
 			return this.searchResults.find(instance => instance.id === id);
