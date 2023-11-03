@@ -87,10 +87,10 @@ return [
 		['name' => 'customer_field#destroy', 'url' => '/collections/{collectionId}/customer_fields/{id}', 'verb' => 'DELETE'],
 
 		// Customer Field Values
-		['name' => 'customer_field_value#index', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values', 'verb' => 'GET'],
-		['name' => 'customer_field_value#show', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'GET'],
-		['name' => 'customer_field_value#update', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'PUT'],
-		['name' => 'customer_field_value#destroy', 'url' => '/collections/{collectionId}/customers/{itemId}/field_values/{fieldId}', 'verb' => 'DELETE'],
+		['name' => 'customer_field_value#index', 'url' => '/collections/{collectionId}/customers/{customerId}/field_values', 'verb' => 'GET'],
+		['name' => 'customer_field_value#show', 'url' => '/collections/{collectionId}/customers/{customerId}/field_values/{fieldId}', 'verb' => 'GET'],
+		['name' => 'customer_field_value#update', 'url' => '/collections/{collectionId}/customers/{customerId}/field_values/{fieldId}', 'verb' => 'PUT'],
+		['name' => 'customer_field_value#destroy', 'url' => '/collections/{collectionId}/customers/{customerId}/field_values/{fieldId}', 'verb' => 'DELETE'],
 
 		// Imports
 		['name' => 'v1_import#import', 'url' => '/import/v1', 'verb' => 'POST'],
