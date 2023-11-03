@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Biblio\Service;
+namespace OCA\Biblio\Errors;
 
 class ItemInstanceNotFound extends NotFoundException {
 }
