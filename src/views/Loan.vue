@@ -60,11 +60,11 @@ export default {
 					return resolve();
 				}
 
-				const filters = Object.assign({}, this.filters);
-
-				filters.name = {
-					operator: "contains",
-					operand: search,
+				const filters = {
+					name: {
+						operator: "contains",
+						operand: search,
+					},
 				};
 
 				loading(true);
