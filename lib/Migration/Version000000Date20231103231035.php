@@ -50,10 +50,7 @@ class Version000000Date20231103231035 extends SimpleMigrationStep {
 			$table->addColumn('item_field_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
-			$table->addColumn('item_fields_value_id', Types::INTEGER, [
-				'notnull' => false,
-			]);
-			$table->addColumn('item_fields_value_id', Types::INTEGER, [
+			$table->addColumn('item_field_value_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
 			$table->addColumn('loan_id', Types::INTEGER, [
@@ -62,7 +59,7 @@ class Version000000Date20231103231035 extends SimpleMigrationStep {
 			$table->addColumn('loan_field_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
-			$table->addColumn('loan_fields_value_id', Types::INTEGER, [
+			$table->addColumn('loan_field_value_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
 			$table->addColumn('customer_id', Types::INTEGER, [
@@ -71,8 +68,13 @@ class Version000000Date20231103231035 extends SimpleMigrationStep {
 			$table->addColumn('customer_field_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
-			$table->addColumn('customer_fields_value_id', Types::INTEGER, [
+			$table->addColumn('customer_field_value_id', Types::INTEGER, [
 				'notnull' => false,
+			]);
+
+			$table->addColumn('properties', Types::STRING, [
+				'notnull' => true,
+				'length' => 2000,
 			]);
 			
 			$table->setPrimaryKey(['id']);
