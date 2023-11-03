@@ -30,6 +30,9 @@ export default {
 	methods: {
 		returnItemInstance() {
 			api.deleteLoan(this.$route.params.collectionId, this.currentBarcode)
+				.then(() => {
+					this.currentBarcode = "";
+				})
 				.catch((error) => {
 					console.error(error);
 					showError(t("biblio", "Could not return item instance"));

@@ -102,6 +102,9 @@ export default {
 				customerId: this.currentCustomer,
 				until: 10000000,
 			})
+				.then(() => {
+					this.currentBarcode = "";
+				})
 				.catch((error) => {
 					console.error(error);
 					showError(t("biblio", "Could not loan item instance"));
