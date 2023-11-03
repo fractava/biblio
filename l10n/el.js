@@ -19,13 +19,17 @@ OC.L10N.register(
     "Members" : "Μέλη",
     "Lend/Return" : "Δανεισμός/Επιστροφή",
     "Download" : "Λήψη",
+    "Create Row" : "Δημιουργία Γραμμής",
     "Search" : "Αναζήτηση",
     "Back" : "Επιστροφή",
     "Sorting" : "Ταξινόμηση",
     "Sort asc" : "Ταξινόμηση αύξουσα",
     "Sort desc" : "Ταξινόμηση φθίνουσα",
     "Filtering" : "Φιλτράρισμα",
+    "Select Operator" : "Επιλέξτε Τελεστή",
     "Export CSV" : "Εξαγωγή CSV",
+    "Uncheck all" : "Αποεπιλογή όλων",
+    "_%n selected row_::_%n selected rows_" : ["%n επιλεγμένη γραμμή","%n επιλεγμένες γραμμές"],
     "List" : "Λίστα",
     "Contains" : "Περιέχει",
     "Short text" : "Σύντομο κείμενο",
@@ -44,6 +48,9 @@ OC.L10N.register(
     "Copy" : "Αντιγραφή",
     "Customer" : "Πελάτης",
     "Devices" : "Συσκευές",
-    "Customers" : "Πελάτες"
+    "Customers" : "Πελάτες",
+    "Request not allowed." : "Το αίτημα δεν επιτρέπεται.",
+    "Resource not found." : "Ο πόρος δε βρέθηκε.",
+    "Unknown error." : "Άγνωστο σφάλμα"
 },
 "nplurals=2; plural=(n != 1);");
