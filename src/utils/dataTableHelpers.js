@@ -89,4 +89,12 @@ function getItemInstanceColumns(includeBarcode = true, includeItemTitle = true, 
 	];
 }
 
-export { getMaxPage, getFieldColumns, getItemInstanceColumns };
+function firstItemIndex(page, limit) {
+	return ((page - 1) * limit) + 1;
+}
+
+function lastItemIndex(firstItemIndex, searchResultsLength) {
+	return firstItemIndex + searchResultsLength - 1;
+}
+
+export { getMaxPage, getFieldColumns, getItemInstanceColumns, firstItemIndex, lastItemIndex };

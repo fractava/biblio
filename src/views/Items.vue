@@ -22,7 +22,19 @@
 				@update:rowLimitFilter="onRowLimitFilterUpdate"
 				@update:page="onPageUpdate"
 				@click-row="openItem"
-				@delete-selected-rows="deleteItems" />
+				@delete-selected-rows="deleteItems">
+				<template #footer>
+					<PaginatedDataTableFooter>
+						<span>
+							{{ t("biblio", "Items {firstItemIndex} to {lastItemIndex} visible of {totalRows} items in total", {
+								firstItemIndex,
+								lastItemIndex,
+								totalRows: itemsStore.searchMeta.totalResultCount,
+							}) }}
+						</span>
+					</PaginatedDataTableFooter>
+				</template>
+			</DataTable>
 		</ul>
 	</div>
 </template>
@@ -36,14 +48,17 @@ import { useItemsStore } from "../store/items.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
 import AddItemModal from "../components/AddItemModal.vue";
+import PaginatedDataTableFooter from "../components/PaginatedDataTableFooter.vue";
+import TextCell from "../components/Fields/Cells/TextCell.vue";
 
-import FieldTypes from "../models/FieldTypes";
-import TextCell from '../components/Fields/Cells/TextCell.vue';
+import FieldTypes from "../models/FieldTypes.js";
+import { getMaxPage, firstItemIndex, lastItemIndex } from "../utils/dataTableHelpers.js";
 
 export default {
 	components: {
 		DataTable,
 		AddItemModal,
+		PaginatedDataTableFooter,
 	},
 	data() {
 		return {
@@ -53,7 +68,7 @@ export default {
 	computed: {
 		...mapStores(useItemsStore, useNomenclatureStore),
 		maxPage() {
-			return Math.ceil(Math.max(this.itemsStore.searchMeta.totalResultCount, 1) / this.itemsStore.limit) || 1;
+			return getMaxPage(this.itemsStore.searchMeta.totalResultCount, this.itemsStore.limit);
 		},
 		columns() {
 			const fieldColumns = this.itemsStore.includedSortedFields.map((field) => {
@@ -91,6 +106,12 @@ export default {
 				},
 				...fieldColumns,
 			];
+		},
+		firstItemIndex() {
+			return firstItemIndex(this.itemsStore.page, this.itemsStore.limit);
+		},
+		lastItemIndex() {
+			return lastItemIndex(this.firstItemIndex, this.itemsStore.searchResults.length);
 		},
 	},
 	watch: {

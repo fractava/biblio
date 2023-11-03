@@ -17,7 +17,19 @@
 			@update:rowLimitFilter="onRowLimitFilterUpdate"
 			@update:page="onPageUpdate"
 			@click-row="openItemInstance"
-			@delete-selected-rows="deleteItemInstances" />
+			@delete-selected-rows="deleteItemInstances">
+			<template #footer>
+				<PaginatedDataTableFooter>
+					<span>
+						{{ t("biblio", "Item instances {firstItemIndex} to {lastItemIndex} visible of {totalRows} item instances in total", {
+							firstItemIndex,
+							lastItemIndex,
+							totalRows: itemInstancesStore.searchMeta.totalResultCount,
+						}) }}
+					</span>
+				</PaginatedDataTableFooter>
+			</template>
+		</DataTable>
 	</div>
 </template>
 
@@ -26,15 +38,17 @@ import { mapStores } from "pinia";
 import debounceFn from "debounce-fn";
 
 import DataTable from "../components/dataTable/DataTable.vue";
+import PaginatedDataTableFooter from "../components/PaginatedDataTableFooter.vue";
 
 import { useItemInstancesStore } from "../store/itemInstances.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
-import { getMaxPage, getItemInstanceColumns } from "../utils/dataTableHelpers.js";
+import { getMaxPage, getItemInstanceColumns, firstItemIndex, lastItemIndex } from "../utils/dataTableHelpers.js";
 
 export default {
 	components: {
 		DataTable,
+		PaginatedDataTableFooter,
 	},
 	computed: {
 		...mapStores(useItemInstancesStore, useNomenclatureStore),
@@ -43,6 +57,12 @@ export default {
 		},
 		columns() {
 			return getItemInstanceColumns(true, true, true, this.itemInstancesStore.sortedFields);
+		},
+		firstItemIndex() {
+			return firstItemIndex(this.itemInstancesStore.page, this.itemInstancesStore.limit);
+		},
+		lastItemIndex() {
+			return lastItemIndex(this.firstItemIndex, this.itemInstancesStore.searchResults.length);
 		},
 	},
 	watch: {

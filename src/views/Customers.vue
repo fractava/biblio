@@ -22,7 +22,19 @@
 				@update:rowLimitFilter="onRowLimitFilterUpdate"
 				@update:page="onPageUpdate"
 				@click-row="openCustomer"
-				@delete-selected-rows="deleteCustomers" />
+				@delete-selected-rows="deleteCustomers">
+				<template #footer>
+					<PaginatedDataTableFooter>
+						<span>
+							{{ t("biblio", "Customers {firstItemIndex} to {lastItemIndex} visible of {totalRows} customers in total", {
+								firstItemIndex,
+								lastItemIndex,
+								totalRows: customersStore.searchMeta.totalResultCount,
+							}) }}
+						</span>
+					</PaginatedDataTableFooter>
+				</template>
+			</DataTable>
 		</ul>
 	</div>
 </template>
@@ -36,14 +48,17 @@ import { useCustomersStore } from "../store/customers.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
 import AddCustomerModal from "../components/AddCustomerModal.vue";
+import TextCell from "../components/Fields/Cells/TextCell.vue";
+import PaginatedDataTableFooter from "../components/PaginatedDataTableFooter.vue";
 
 import FieldTypes from "../models/FieldTypes.js";
-import TextCell from "../components/Fields/Cells/TextCell.vue";
+import { getMaxPage, firstItemIndex, lastItemIndex } from "../utils/dataTableHelpers.js";
 
 export default {
 	components: {
 		DataTable,
 		AddCustomerModal,
+		PaginatedDataTableFooter,
 	},
 	data() {
 		return {
@@ -53,7 +68,7 @@ export default {
 	computed: {
 		...mapStores(useCustomersStore, useNomenclatureStore),
 		maxPage() {
-			return Math.ceil(Math.max(this.customersStore.searchMeta.totalResultCount, 1) / this.customersStore.limit) || 1;
+			return getMaxPage(this.customersStore.searchMeta.totalResultCount, this.customersStore.limit);
 		},
 		columns() {
 			const fieldColumns = this.customersStore.includedSortedFields.map((field) => {
@@ -92,6 +107,12 @@ export default {
 				},
 				...fieldColumns,
 			];
+		},
+		firstItemIndex() {
+			return firstItemIndex(this.customersStore.page, this.customersStore.limit);
+		},
+		lastItemIndex() {
+			return lastItemIndex(this.firstItemIndex, this.customersStore.searchResults.length);
 		},
 	},
 	watch: {
