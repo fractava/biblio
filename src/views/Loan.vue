@@ -1,6 +1,17 @@
 <template>
 	<div>
-		<vueSelect style="width: 100%;" :options="searchResults" :label="'name'" @search="refreshSearchResults" />
+		<vueSelect v-model="currentCustomer"
+			style="width: 100%;"
+			:options="searchResults"
+			:label="'name'"
+			:reduce="reduce"
+			@search="refreshSearchResults" />
+		<NcTextField label="Barcode"
+			:value.sync="currentBarcode"
+			:show-trailing-button="true"
+			trailing-button-icon="arrowRight"
+			@trailing-button-click="loan"
+			@keydown.enter.prevent="loan" />
 	</div>
 </template>
 <script>
@@ -8,22 +19,30 @@ import vueSelect from "vue-select";
 import PCancelable from "p-cancelable";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
+import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
+
 import { api } from "../api.js";
 
 export default {
 	components: {
 		vueSelect,
+		NcTextField,
 	},
 	data() {
 		return {
 			currentlyRunningFetch: false,
 			searchResults: [],
+			currentBarcode: "",
+			currentCustomer: null,
 		};
 	},
 	mounted() {
 		this.refreshSearchResults("", () => {});
 	},
 	methods: {
+		reduce(option) {
+			return option.id;
+		},
 		refreshSearchResults(search, loading) {
 			const route = window.biblioRouter.currentRoute;
 
@@ -70,6 +89,19 @@ export default {
 			newCustomerFetch.catch(() => {});
 
 			this.currentlyRunningFetch = newCustomerFetch;
+		},
+		loan() {
+			const route = window.biblioRouter.currentRoute;
+
+			api.createLoan(route.params.collectionId, {
+				barcode: this.currentBarcode,
+				customerId: this.currentCustomer,
+				until: 10000000,
+			})
+				.catch((error) => {
+					console.error(error);
+					showError(t("biblio", "Could not loan item instance"));
+				});
 		},
 	},
 };
