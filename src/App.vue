@@ -56,11 +56,11 @@ export default {
 			const customersStore = useCustomersStore();
 
 			itemsStore.fetchFields();
-			itemsStore.refreshSearchResults().catch(() => {});
+			itemsStore.refreshSearchResults();
 			itemInstancesStore.fetchFields();
-			itemInstancesStore.refreshSearchResults().catch(() => {});
+			itemInstancesStore.refreshSearchResults();
 			customersStore.fetchFields();
-			customersStore.refreshSearchResults().catch(() => {});
+			customersStore.refreshSearchResults();
 		},
 	},
 };
