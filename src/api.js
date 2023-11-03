@@ -943,6 +943,23 @@ export const api = {
 		});
 	},
 
+	/**
+	 * @param {number} collectionId Id of the collection to delete the loan in
+	 * @param {string} barcode Barcode of the loan to delete
+	 * @return {Promise<Loan>}
+	 */
+	deleteLoan(collectionId, barcode) {
+		return new Promise((resolve, reject) => {
+			axios.delete(`/collections/${collectionId}/loans/byBarcode/${barcode}`)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
 	importV1(data) {
 		return new Promise((resolve, reject) => {
 			axios.post("/import/v1", { data })
