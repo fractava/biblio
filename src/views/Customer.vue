@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div class="section">
-			<h1 class="sectionHeader">
+			<SectionHeader>
 				{{ t("biblio", "Customer Properties") }}
-			</h1>
+			</SectionHeader>
 			<EditModeButton :edit-mode.sync="editMode" />
 			<FieldsValueTable :field-values="customer.fieldValues"
 				:edit-mode="editMode"
@@ -22,9 +22,9 @@
 			</FieldsValueTable>
 		</div>
 		<div class="section">
-			<h1 class="sectionHeader">
+			<SectionHeader>
 				{{ t("biblio", "Customer Loans") }}
-			</h1>
+			</SectionHeader>
 			<DataTable :columns="columns"
 				:rows="searchResults"
 				:page="page"
@@ -60,6 +60,7 @@ import ShortTextFieldValue from "../components/Fields/Values/ShortTextFieldValue
 import FieldsValueTable from "../components/FieldsValueTable.vue";
 import DataTable from "../components/dataTable/DataTable.vue";
 import EditModeButton from "../components/EditModeButton.vue";
+import SectionHeader from "../components/SectionHeader.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import { useItemInstancesStore } from "../store/itemInstances.js";
@@ -75,6 +76,7 @@ export default {
 		ShortTextFieldValue,
 		FieldsValueTable,
 		DataTable,
+		SectionHeader,
 	},
 	props: {
 	},
@@ -263,11 +265,5 @@ export default {
 
 .section {
 	margin-bottom: 1.34em;
-
-	.sectionHeader {
-		text-align:center;
-		font-size: 2em;
-		font-weight: bold;
-	}
 }
 </style>

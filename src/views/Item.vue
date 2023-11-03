@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div class="section">
-			<h1 class="sectionHeader">
+			<SectionHeader>
 				{{ t("biblio", "Item Properties") }}
-			</h1>
+			</SectionHeader>
 			<EditModeButton :edit-mode.sync="editMode" />
 			<FieldsValueTable :field-values="item.fieldValues"
 				:edit-mode="editMode"
@@ -22,9 +22,9 @@
 			</FieldsValueTable>
 		</div>
 		<div class="section">
-			<h1 class="sectionHeader">
+			<SectionHeader>
 				{{ t("biblio", "Item Instances") }}
-			</h1>
+			</SectionHeader>
 			<AddItemInstanceModal :open.sync="modalOpen"
 				:item-id="itemId"
 				:prefix="barcodePrefix"
@@ -66,6 +66,7 @@ import FieldsValueTable from "../components/FieldsValueTable.vue";
 import DataTable from "../components/dataTable/DataTable.vue";
 import AddItemInstanceModal from "../components/AddItemInstanceModal.vue";
 import EditModeButton from "../components/EditModeButton.vue";
+import SectionHeader from "../components/SectionHeader.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import { useItemInstancesStore } from "../store/itemInstances.js";
@@ -82,6 +83,7 @@ export default {
 		FieldsValueTable,
 		AddItemInstanceModal,
 		DataTable,
+		SectionHeader,
 	},
 	props: {
 	},
@@ -279,11 +281,5 @@ export default {
 
 .section {
 	margin-bottom: 1.34em;
-
-	.sectionHeader {
-		text-align:center;
-		font-size: 2em;
-		font-weight: bold;
-	}
 }
 </style>

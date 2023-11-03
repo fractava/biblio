@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<SectionHeader>{{ t("biblio", "Loan") }}</SectionHeader>
 		<vueSelect v-model="currentCustomer"
 			style="width: 100%;"
 			:options="searchResults"
@@ -21,12 +22,15 @@ import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
+import SectionHeader from "../components/SectionHeader.vue";
+
 import { api } from "../api.js";
 
 export default {
 	components: {
 		vueSelect,
 		NcTextField,
+		SectionHeader,
 	},
 	data() {
 		return {
