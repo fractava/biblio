@@ -82,6 +82,8 @@ import { useBiblioStore } from "../store/biblio.js";
 import { useItemInstancesStore } from "../store/itemInstances.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
+import { getMaxPage, getItemInstanceColumns } from "../utils/dataTableHelpers.js";
+
 import FieldTypes from "../models/FieldTypes.js";
 
 export default {
@@ -119,57 +121,10 @@ export default {
 			return parseInt(this.$route.params.id);
 		},
 		maxPage() {
-			return Math.ceil(Math.max(this.searchMeta.totalResultCount, 1) / this.limit) || 1;
+			return getMaxPage(this.itemInstancesStore.searchMeta.totalResultCount, this.itemInstancesStore.limit);
 		},
 		columns() {
-			const fieldColumns = this.itemInstancesStore.sortedFields.map((field) => {
-				const type = FieldTypes[field.type];
-				return {
-					id: field.id,
-					name: field.name,
-					type: field.type,
-					isProperty: false,
-					canSort: type.canSort,
-					sortIdentifier: `field:${field.id}`,
-					canFilter: true,
-					filterOperators: type.filterOperators,
-					filterOperandType: type.filterOperandType,
-					filterOperandOptions: type.filterOperandOptions || field?.settings?.options,
-					cellComponent: type.valueCellComponent,
-					defaultValue: type.defaultValue,
-					defaultSettings: type.defaultSettings,
-				};
-			});
-
-			return [
-				{
-					id: -1,
-					name: t("biblio", "Barcode"),
-					type: "short",
-					isProperty: true,
-					canSort: true,
-					sortIdentifier: "barcode",
-					canFilter: false,
-					clickable: false,
-					property: "barcode",
-					cellComponent: TextCell,
-				},
-				{
-					id: -3,
-					name: this.nomenclatureStore.loanedToCustomer,
-					type: "short",
-					isProperty: true,
-					canSort: true,
-					sortIdentifier: "loan_customer_name",
-					canFilter: true,
-					filterOperators: FieldTypes.short.filterOperators,
-					filterOperandType: FieldTypes.short.filterOperandType,
-					clickable: true,
-					property: ["loan", "customer", "name"],
-					cellComponent: TextCell,
-				},
-				...fieldColumns,
-			];
+			return getItemInstanceColumns(true, false, true, this.itemInstancesStore.sortedFields);
 		},
 	},
 	watch: {

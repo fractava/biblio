@@ -26,11 +26,11 @@ import { mapStores } from "pinia";
 import debounceFn from "debounce-fn";
 
 import DataTable from "../components/dataTable/DataTable.vue";
+
 import { useItemInstancesStore } from "../store/itemInstances.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
-import FieldTypes from "../models/FieldTypes.js";
-import TextCell from "../components/Fields/Cells/TextCell.vue";
+import { getMaxPage, getItemInstanceColumns } from "../utils/dataTableHelpers.js";
 
 export default {
 	components: {
@@ -39,71 +39,10 @@ export default {
 	computed: {
 		...mapStores(useItemInstancesStore, useNomenclatureStore),
 		maxPage() {
-			return Math.ceil(Math.max(this.itemInstancesStore.searchMeta.totalResultCount, 1) / this.itemInstancesStore.limit) || 1;
+			return getMaxPage(this.itemInstancesStore.searchMeta.totalResultCount, this.itemInstancesStore.limit);
 		},
 		columns() {
-			const fieldColumns = this.itemInstancesStore.sortedFields.map((field) => {
-				const type = FieldTypes[field.type];
-				return {
-					id: field.id,
-					name: field.name,
-					type: field.type,
-					isProperty: false,
-					canSort: type.canSort,
-					sortIdentifier: `field:${field.id}`,
-					canFilter: true,
-					filterOperators: type.filterOperators,
-					filterOperandType: type.filterOperandType,
-					filterOperandOptions: type.filterOperandOptions || field?.settings?.options,
-					cellComponent: type.valueCellComponent,
-					defaultValue: type.defaultValue,
-					defaultSettings: type.defaultSettings,
-				};
-			});
-
-			return [
-				{
-					id: -1,
-					name: t("biblio", "Barcode"),
-					type: "short",
-					isProperty: true,
-					canSort: true,
-					sortIdentifier: "barcode",
-					canFilter: false,
-					clickable: false,
-					property: "barcode",
-					cellComponent: TextCell,
-				},
-				{
-					id: -2,
-					name: this.nomenclatureStore.itemTitle,
-					type: "short",
-					isProperty: true,
-					canSort: true,
-					sortIdentifier: "item_title",
-					canFilter: true,
-					filterOperators: FieldTypes.short.filterOperators,
-					filterOperandType: FieldTypes.short.filterOperandType,
-					clickable: true,
-					property: ["item", "title"],
-					cellComponent: TextCell,
-				},
-				{
-					id: -3,
-					name: this.nomenclatureStore.loanedToCustomer,
-					type: "short",
-					isProperty: true,
-					canSort: true,
-					sortIdentifier: "loan_customer_name",
-					canFilter: true,
-					filterOperators: FieldTypes.short.filterOperators,
-					filterOperandType: FieldTypes.short.filterOperandType,
-					clickable: true,
-					property: ["loan", "customer", "name"],
-					cellComponent: TextCell,
-				},
-				...fieldColumns,
-			];
+			return getItemInstanceColumns(true, true, true, this.itemInstancesStore.sortedFields);
 		},
 	},
 	watch: {
