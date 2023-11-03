@@ -1,5 +1,5 @@
 <template>
-	<div style="display: flex; flex-direction: row;">
+	<div style="display: flex; flex-direction: row; gap: 10px;">
 		<Return class="column" />
 		<Loan class="column" />
 	</div>
