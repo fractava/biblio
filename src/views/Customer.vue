@@ -166,7 +166,7 @@ export default {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getItemInstances(route.params.collectionId, "model+item+fields", filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getItemInstances(route.params.collectionId, "model+loan+item+fields", filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.instances;
