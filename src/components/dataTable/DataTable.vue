@@ -56,6 +56,7 @@
 					<GridOff :size="25" />
 				</template>
 			</NcEmptyContent>
+			<slot v-if="rows.length > 0" name="footer" />
 		</div>
 	</div>
 </template>
