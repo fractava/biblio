@@ -183,6 +183,8 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		$this->handleIdFilter($qb, $filters["item_id"], 'instance.item_id');
 
+		$this->handleIdFilter($qb, $filters["loan_customer_id"], 'loan.customer_id');
+
 		if ($includesFieldValueFilters) {
 			$qb->groupBy('instance.id')
 				->having($qb->expr()->eq($qb->createFunction('COUNT(`instance`.`id`)'), $qb->createNamedParameter(count($validCombinations)), IQueryBuilder::PARAM_INT));
