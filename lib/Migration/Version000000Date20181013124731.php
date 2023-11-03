@@ -10,7 +10,7 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
-class Version000000Date20181013124731 extends SimpleMigrationStep {
+class Version000000Date20210619161300 extends SimpleMigrationStep {
 	// Collections
 	public const COLLECTIONS_TABLE = "biblio_collections";
 	public const COLLECTION_MEMBERS_TABLE = "biblio_collection_members";
