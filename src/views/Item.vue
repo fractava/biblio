@@ -4,15 +4,7 @@
 			<h1 class="sectionHeader">
 				{{ t("biblio", "Item Properties") }}
 			</h1>
-			<div class="editModeContainer">
-				<NcButton aria-label="Start/Stop editing mode"
-					@click="editMode = !editMode">
-					<template #icon>
-						<Pencil :size="20" />
-					</template>
-					Edit
-				</NcButton>
-			</div>
+			<EditModeButton :edit-mode.sync="editMode" />
 			<FieldsValueTable :field-values="item.fieldValues"
 				:edit-mode="editMode"
 				@update:value="updateValue">
@@ -66,17 +58,13 @@ import { mapStores } from "pinia";
 import PCancelable from "p-cancelable";
 import debounceFn from "debounce-fn";
 
-import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
-
-import Pencil from "vue-material-design-icons/Pencil.vue";
-
 import { api } from "../api.js";
 
 import ShortTextFieldValue from "../components/Fields/Values/ShortTextFieldValue.vue";
 import FieldsValueTable from "../components/FieldsValueTable.vue";
-import TextCell from "../components/Fields/Cells/TextCell.vue";
 import DataTable from "../components/dataTable/DataTable.vue";
 import AddItemInstanceModal from "../components/AddItemInstanceModal.vue";
+import EditModeButton from "../components/EditModeButton.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import { useItemInstancesStore } from "../store/itemInstances.js";
@@ -88,8 +76,7 @@ import FieldTypes from "../models/FieldTypes.js";
 
 export default {
 	components: {
-		NcButton,
-		Pencil,
+		EditModeButton,
 		ShortTextFieldValue,
 		FieldsValueTable,
 		AddItemInstanceModal,
@@ -121,7 +108,7 @@ export default {
 			return parseInt(this.$route.params.id);
 		},
 		maxPage() {
-			return getMaxPage(this.itemInstancesStore.searchMeta.totalResultCount, this.itemInstancesStore.limit);
+			return getMaxPage(this.searchMeta.totalResultCount, this.limit);
 		},
 		columns() {
 			return getItemInstanceColumns(true, false, true, this.itemInstancesStore.sortedFields);
@@ -297,30 +284,7 @@ export default {
 	}
 }
 
-.editModeContainer {
-	display: flex;
-	justify-content: flex-end;
-	margin-bottom: 20px;
-}
-
 .ignoreForLayout {
 	display: contents;
-}
-
-.itemInstancesTable {
-	width: 100%;
-	border-collapse: collapse;
-
-	tr, td, th {
-		border: 1px black solid;
-	}
-
-	td, th {
-		padding: 5px;
-	}
-
-	tr:hover, tr:focus, tr:active {
-		background-color: transparent;
-	}
 }
 </style>
