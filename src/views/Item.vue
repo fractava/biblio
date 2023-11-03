@@ -57,6 +57,7 @@ import Vue from "vue";
 import { mapStores } from "pinia";
 import PCancelable from "p-cancelable";
 import debounceFn from "debounce-fn";
+import { showError } from "@nextcloud/dialogs";
 
 import { api } from "../api.js";
 
@@ -284,9 +285,5 @@ export default {
 		font-size: 2em;
 		font-weight: bold;
 	}
-}
-
-.ignoreForLayout {
-	display: contents;
 }
 </style>
