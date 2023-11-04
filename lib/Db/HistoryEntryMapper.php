@@ -39,7 +39,7 @@ class HistoryEntryMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	 * @param int $collectionId
 	 * @return array
 	 */
-	public function findAll(int $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
+	public function findAll(int $collectionId, ?int $subEntryOf = null, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
 		/* @var $qb IQueryBuilder */
@@ -48,6 +48,12 @@ class HistoryEntryMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 			->addSelect($qb->createFunction('COUNT(*) OVER () AS totalResultCount'))
 			->from(self::TABLENAME)
 			->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
+
+		if (isset($subEntryOf)) {
+			$qb->andWhere($qb->expr()->eq('sub_entry_of', $qb->createNamedParameter($subEntryOf, IQueryBuilder::PARAM_INT)));
+		} else {
+			$qb->andWhere($qb->expr()->isNull('sub_entry_of'));
+		}
 		
 		$this->handleIdFilter($qb, $filters["collectionMemberId"], 'collectionMemberId');
 		$this->handleIdFilter($qb, $filters["itemId"], 'itemId');
