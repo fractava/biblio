@@ -113,7 +113,7 @@ class ItemService {
 			$this->historyEntryService->create(
 				type: "item.create",
 				collectionId: $collectionId,
-				properties: json_encode(["before" => [], "after" => $item]),
+				properties: json_encode(["before" => new \ArrayObject(), "after" => $item]),
 				itemId: $item->getId(),
 			);
 
@@ -151,9 +151,20 @@ class ItemService {
 
 	public function delete(int $collectionId, int $id) {
 		try {
-			$item = $this->mapper->find($collectionId, $id);
-			$this->mapper->delete($item);
-			return $item;
+			return $this->atomic(function () use ($collectionId, $id, $title) {
+				$item = $this->mapper->find($collectionId, $id);
+
+				$this->mapper->delete($item);
+
+				$this->historyEntryService->create(
+					type: "item.delete",
+					collectionId: $collectionId,
+					properties: json_encode(["before" => $item, "after" => new \ArrayObject()]),
+					itemId: $item->getId(),
+				);
+
+				return $item;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
