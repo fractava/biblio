@@ -6,6 +6,8 @@ use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\TTransactional;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\ItemNotFound;
 
@@ -15,6 +17,7 @@ use OCA\Biblio\Traits\ApiObjectService;
 
 class ItemService {
 	use ApiObjectService;
+	use TTransactional;
 
 	public const FIELDS_INCLUDE = 'fields';
 
@@ -24,9 +27,22 @@ class ItemService {
 	/** @var ItemFieldValueService */
 	private $fieldValueService;
 
-	public function __construct(ItemMapper $mapper, ItemFieldValueService $fieldValueService) {
+	/** @var HistoryEntryService */
+	private $historyEntryService;
+
+	/** @var IDBConnection */
+	private $db;
+
+	public function __construct(
+		ItemMapper $mapper,
+		ItemFieldValueService $fieldValueService,
+		HistoryEntryService $historyEntryService,
+		IDBConnection $db,
+	) {
 		$this->mapper = $mapper;
 		$this->fieldValueService = $fieldValueService;
+		$this->historyEntryService = $historyEntryService;
+		$this->db = $db;
 	}
 
 	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = null) {
@@ -87,13 +103,22 @@ class ItemService {
 	}
 
 	public function create(int $collectionId, string $title) {
-		$item = new Item();
-		$item->setCollectionId($collectionId);
-		$item->setTitle($title);
+		$this->atomic(function () use ($collectionId, $title) {
+			$item = new Item();
+			$item->setCollectionId($collectionId);
+			$item->setTitle($title);
 
-		$item = $this->mapper->insert($item);
+			$item = $this->mapper->insert($item);
 
-		return $item;
+			$historyEntry = $this->historyEntryService->create(
+				type: "item.create",
+				collectionId: $collectionId,
+				properties: json_encode(["before" => [], "after" => $item->jsonSerialize()]),
+				itemId: $item->getid(),
+			);
+
+			return $item;
+		}, $this->db);
 	}
 
 	public function update(int $collectionId, int $id, string $title) {
