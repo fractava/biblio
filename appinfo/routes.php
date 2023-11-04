@@ -94,5 +94,10 @@ return [
 
 		// Imports
 		['name' => 'v1_import#import', 'url' => '/import/v1', 'verb' => 'POST'],
+
+		// History
+		['name' => 'history_entry#index', 'url' => '/collections/{collectionId}/history', 'verb' => 'GET'],
+		['name' => 'history_entry#show', 'url' => '/collections/{collectionId}/history/{id}', 'verb' => 'GET'],
+		['name' => 'history_entry#destroy', 'url' => '/collections/{collectionId}/history/{id}', 'verb' => 'DELETE'],
 	]
 ];
