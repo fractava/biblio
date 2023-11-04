@@ -37,7 +37,8 @@ class HistoryEntryService {
 		}
 
 		if ($includeSubEntries) {
-			$result["subEntries"] = $this->mapper->findAll($collectionId, $entity->getId(), [], $sort);
+			[$subEntries, $meta] = $this->mapper->findAll($collectionId, $entity->getId(), [], $sort, false, 0, 0);
+			$result["subEntries"] = $subEntries;
 		}
 
 		return $result;
