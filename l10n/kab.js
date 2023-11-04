@@ -2,9 +2,9 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Azwel",
+    "Edit" : "Ẓreg",
     "Name" : "Nom",
     "Error" : "Erreur",
-    "Edit" : "Ẓreg",
     "Delete" : "Kkes",
     "Download" : "Sider",
     "Search" : "Nadi",

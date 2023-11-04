@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Judul",
+    "Edit" : "Sunting",
     "Name" : "Nama",
     "Error" : "Galat",
     "Reset" : "Setel ulang",
     "Value" : "Nilari",
-    "Edit" : "Sunting",
     "Delete" : "Hapus",
     "Members" : "Anggota",
     "Download" : "Unduh",

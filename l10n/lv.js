@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Amats",
+    "Edit" : "Rediģēt",
     "Name" : "Vārds",
     "Error" : "Kļūda",
     "Reset" : "Atiestatīt",
     "Value" : "Vērtība",
-    "Edit" : "Rediģēt",
     "Delete" : "Dzēst",
     "Members" : "Biedri",
     "Download" : "Lejupielādēt",

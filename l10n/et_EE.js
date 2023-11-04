@@ -2,10 +2,10 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Pealkiri",
+    "Edit" : "Redigeeri",
     "Name" : "Nimi",
     "Error" : "Viga",
     "Reset" : "Lähtesta",
-    "Edit" : "Redigeeri",
     "Delete" : "Kustuta",
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",

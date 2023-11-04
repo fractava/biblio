@@ -1,10 +1,10 @@
 OC.L10N.register(
     "biblio",
     {
+    "Edit" : "සංස්කරණය",
     "Name" : "නම",
     "Error" : "දෝෂය",
     "Value" : "අගය",
-    "Edit" : "සංස්කරණය",
     "Download" : "බාගන්න",
     "Search" : "සොයන්න",
     "Back" : "ආපසු",

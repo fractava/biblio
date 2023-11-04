@@ -1,5 +1,6 @@
 { "translations": {
     "Title" : "Otsikko",
+    "Edit" : "Muokkaa",
     "Add a field" : "Lisää kenttä",
     "Name" : "Nimi",
     "Invalid name" : "Virheellinen nimi",
@@ -7,7 +8,6 @@
     "Error" : "Virhe",
     "Reset" : "Palauta",
     "Value" : "Arvo",
-    "Edit" : "Muokkaa",
     "Delete" : "Poista",
     "Collections" : "Kokoelmat",
     "Members" : "Jäsenet",
@@ -17,6 +17,7 @@
     "Sorting" : "Lajittelu",
     "Export CSV" : "Vie CSV",
     "_%n selected row_::_%n selected rows_" : ["%n valittu rivi","%n valittua riviä"],
+    "Return" : "Palaa",
     "List" : "Lista",
     "Contains" : "Sisältää",
     "Short text" : "Lyhyt teksti",

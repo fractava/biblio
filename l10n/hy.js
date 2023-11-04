@@ -2,9 +2,9 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Վերնագիր",
+    "Edit" : "մշակել",
     "Name" : "Անուն",
     "Error" : "Սխալ",
-    "Edit" : "մշակել",
     "Delete" : "հեռացնել",
     "Download" : "Ներբեռնել",
     "Search" : "Search",

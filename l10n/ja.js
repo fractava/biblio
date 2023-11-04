@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "タイトル",
+    "Edit" : "編集",
     "Name" : "名前",
     "Error" : "エラー",
     "Reset" : "リセット",
     "Value" : "値",
-    "Edit" : "編集",
     "Delete" : "削除",
     "Collections" : "コレクション",
     "Members" : "メンバー",

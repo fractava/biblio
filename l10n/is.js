@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Titill",
+    "Edit" : "Breyta",
     "Name" : "Heiti",
     "Error" : "Villa",
     "Reset" : "Endurstilla",
     "Value" : "Gildi",
-    "Edit" : "Breyta",
     "Delete" : "Eyða",
     "Collections" : "Söfn",
     "Members" : "Meðlimir",

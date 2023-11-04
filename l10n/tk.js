@@ -1,9 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
+    "Edit" : "Redaktirläň",
     "Name" : "Ady",
     "Error" : "ýalňyşlyk",
-    "Edit" : "Redaktirläň",
     "Delete" : "Pozmak",
     "Download" : "Göçürip almak",
     "Search" : "Gözlemek",

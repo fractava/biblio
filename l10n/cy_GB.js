@@ -2,9 +2,9 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Teitl",
+    "Edit" : "Golygu",
     "Name" : "Enw",
     "Error" : "Gwall",
-    "Edit" : "Golygu",
     "Delete" : "Dileu",
     "Download" : "Llwytho i lawr",
     "Search" : "Chwilio",

@@ -2,10 +2,10 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "ชื่อเรื่อง",
+    "Edit" : "แก้ไข",
     "Name" : "ชื่อ",
     "Error" : "ข้อผิดพลาด",
     "Reset" : "รีเซ็ต",
-    "Edit" : "แก้ไข",
     "Delete" : "ลบ",
     "Collections" : "คอลเลคชั่น",
     "Download" : "ดาวน์โหลด",

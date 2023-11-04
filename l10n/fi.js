@@ -2,6 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Otsikko",
+    "Edit" : "Muokkaa",
     "Add a field" : "Lisää kenttä",
     "Name" : "Nimi",
     "Invalid name" : "Virheellinen nimi",
@@ -9,7 +10,6 @@ OC.L10N.register(
     "Error" : "Virhe",
     "Reset" : "Palauta",
     "Value" : "Arvo",
-    "Edit" : "Muokkaa",
     "Delete" : "Poista",
     "Collections" : "Kokoelmat",
     "Members" : "Jäsenet",
@@ -19,6 +19,7 @@ OC.L10N.register(
     "Sorting" : "Lajittelu",
     "Export CSV" : "Vie CSV",
     "_%n selected row_::_%n selected rows_" : ["%n valittu rivi","%n valittua riviä"],
+    "Return" : "Palaa",
     "List" : "Lista",
     "Contains" : "Sisältää",
     "Short text" : "Lyhyt teksti",

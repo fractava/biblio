@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Цол/Албан тушаал",
+    "Edit" : "Өөрчлөх",
     "Name" : "Нэр",
     "Error" : "Алдаа",
     "Reset" : "тохируулах",
     "Value" : "Үнийн дүн",
-    "Edit" : "Өөрчлөх",
     "Delete" : "Устгах",
     "Members" : "Гишүүд",
     "Download" : "Татах",

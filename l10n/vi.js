@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Tiêu đề",
+    "Edit" : "Chỉnh sửa",
     "Name" : "Tên",
     "Error" : "Lỗi",
     "Reset" : "Đặt lại",
     "Value" : "Giá trị",
-    "Edit" : "Chỉnh sửa",
     "Delete" : "Xóa",
     "Members" : "Thành viên",
     "Download" : "Tải xuống",

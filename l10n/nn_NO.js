@@ -2,10 +2,10 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Tittel",
+    "Edit" : "Rediger",
     "Name" : "Namn",
     "Error" : "Feil",
     "Value" : "Verdi",
-    "Edit" : "Rediger",
     "Delete" : "Slett",
     "Collections" : "Samlingar",
     "Download" : "Last ned",

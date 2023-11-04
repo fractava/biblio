@@ -2,10 +2,10 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "عنوان",
+    "Edit" : "تدوین کریں",
     "Name" : "اسم",
     "Error" : "ایرر",
     "Reset" : "ری سیٹ",
-    "Edit" : "تدوین کریں",
     "Delete" : "حذف کریں",
     "Download" : "ڈاؤن لوڈ",
     "Search" : "Search",

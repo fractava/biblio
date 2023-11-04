@@ -2,10 +2,10 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Başlıq",
+    "Edit" : "Dəyişiklik et",
     "Name" : "Ad",
     "Error" : "Səhv",
     "Reset" : "Sıfırla",
-    "Edit" : "Dəyişiklik et",
     "Delete" : "Sil",
     "Download" : "Yüklə",
     "Search" : "Axtarış",

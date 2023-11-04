@@ -2,12 +2,12 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Pavadinimas",
+    "Edit" : "Taisyti",
     "Name" : "Vardas",
     "Invalid name" : "Neteisingas vardas",
     "Error" : "Klaida",
     "Reset" : "Atstatyti",
     "Value" : "Reikšmė",
-    "Edit" : "Taisyti",
     "Delete" : "Ištrinti",
     "Collections" : "Kolekcijos",
     "Members" : "Nariai",

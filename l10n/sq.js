@@ -2,11 +2,11 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Titulli",
+    "Edit" : "Përpuno",
     "Name" : "Emër",
     "Error" : "Gabim",
     "Reset" : "Rivendos",
     "Value" : "Vlerë",
-    "Edit" : "Përpuno",
     "Delete" : "Fshi",
     "Members" : "Anëtar",
     "Download" : "Shkarko",

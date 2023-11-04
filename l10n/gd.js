@@ -1,9 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
+    "Edit" : "Deasaich",
     "Name" : "Ainm",
     "Error" : "Mearachd",
-    "Edit" : "Deasaich",
     "Delete" : "Sguab às",
     "Download" : "Luchdaich a-nuas",
     "Search" : "Lorg",

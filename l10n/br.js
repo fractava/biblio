@@ -2,9 +2,9 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Titl",
+    "Edit" : "Cheñch",
     "Name" : "Anv",
     "Error" : "Fazi",
-    "Edit" : "Cheñch",
     "Delete" : "Lemel",
     "Download" : "Pellgargañ",
     "Search" : "Klask",
