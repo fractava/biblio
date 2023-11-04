@@ -9,6 +9,7 @@ use OCP\AppFramework\Db\Entity;
 class HistoryEntry extends Entity implements JsonSerializable {
 	protected $type;
 	protected $subEntryOf;
+	protected $timestamp;
 	protected $collectionId;
 	protected $collectionMemberId;
 	protected $itemId;
@@ -24,6 +25,7 @@ class HistoryEntry extends Entity implements JsonSerializable {
 
 	public function __construct() {
 		$this->addType('subEntryOf', 'integer');
+		$this->addType('timestamp', 'integer');
 		$this->addType('collectionId', 'integer');
 		$this->addType('collectionMemberId', 'integer');
 		$this->addType('itemId', 'integer');
@@ -42,6 +44,7 @@ class HistoryEntry extends Entity implements JsonSerializable {
 			'id' => $this->id,
 			'type' => $this->type,
 			'subEntryOf' => $this->subEntryOf,
+			'timestamp' => $this->timestamp,
 			'collectionId' => $this->collectionId,
 			'collectionMemberId' => $this->collectionMemberId,
 			'itemId' => $this->itemId,
