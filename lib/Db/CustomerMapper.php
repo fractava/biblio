@@ -37,10 +37,10 @@ class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 	}
 
 	/**
-	 * @param string $collectionId
+	 * @param int $collectionId
 	 * @return array
 	 */
-	public function findAll(string $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
+	public function findAll(int $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
 		if (isset($filters)) {
@@ -61,13 +61,13 @@ class CustomerMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 				$qb->expr()->eq('c.id', 'v.customer_id'),
 				$qb->expr()->in('v.field_id', $qb->createNamedParameter(array_keys($fieldValueFilters), IQueryBuilder::PARAM_INT_ARRAY)),
 			))
-				->where($qb->expr()->eq('c.collection_id', $qb->createNamedParameter($collectionId)));
+				->where($qb->expr()->eq('c.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
 			$validCombinations = $this->getValidFieldValueCombinations($this->db, $qb, $fieldValueFilters, 'v.field_id', 'v.value');
 
 			$qb->andWhere($qb->expr()->orX(...$validCombinations));
 		} else {
-			$qb->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId)));
+			$qb->where($qb->expr()->eq('collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		}
 
 		$this->handleStringFilter($this->db, $qb, $filters["name"], 'c.name');

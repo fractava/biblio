@@ -20,7 +20,7 @@ class CollectionMemberService {
 		$this->mapper = $mapper;
 	}
 
-	public function findAll(string $collectionId): array {
+	public function findAll(int $collectionId): array {
 		return $this->mapper->findAll($collectionId);
 	}
 

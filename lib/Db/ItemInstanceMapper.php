@@ -121,10 +121,10 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	}
 
 	/**
-	 * @param string $collectionId
+	 * @param int $collectionId
 	 * @return array
 	 */
-	public function findAll(string $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
+	public function findAll(int $collectionId, ?array $filters, ?string $sort = null, ?bool $sortReverse = null, ?int $limit, ?int $offset): array {
 		$sortReverse = isset($sortReverse) ? $sortReverse : false;
 
 		if (isset($filters)) {
@@ -153,7 +153,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
 			$qb->expr()->eq('instance.item_id', 'item.id'),
 		))
-		->where($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId)));
+		->where($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
 		$qb->leftJoin('instance', self::LOANS_TABLE, 'loan', $qb->expr()->andX(
 			$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
