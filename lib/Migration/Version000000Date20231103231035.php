@@ -37,12 +37,16 @@ class Version000000Date20231103231035 extends SimpleMigrationStep {
 			$table->addColumn('sub_entry_of', Types::INTEGER, [
 				'notnull' => false,
 			]);
+			$table->addColumn('user_id', Types::STRING, [
+				'notnull' => true,
+				'length' => 200,
+			]);
 			$table->addColumn('timestamp', Types::BIGINT, [
 				'notnull' => true,
 			]);
 			
 			$table->addColumn('collection_id', Types::INTEGER, [
-				'notnull' => false,
+				'notnull' => true,
 			]);
 			$table->addColumn('collection_member_id', Types::INTEGER, [
 				'notnull' => false,

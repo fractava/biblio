@@ -18,10 +18,14 @@ class HistoryEntryService {
 
 	public const SUB_ENTRIES_INCLUDE = 'subEntries';
 
+	/** @var string */
+	private $userId;
+
 	/** @var HistoryEntryMapper */
 	private $mapper;
 
-	public function __construct(HistoryEntryMapper $mapper) {
+	public function __construct($userId, HistoryEntryMapper $mapper) {
+		$this->userId = $userId;
 		$this->mapper = $mapper;
 	}
 
@@ -78,10 +82,9 @@ class HistoryEntryService {
 
 	public function create(
 		string $type,
-		int $timestamp,
+		int $collectionId,
 		string $properties,
 		?int $subEntryOf = null,
-		?int $collectionId = null,
 		?int $collectionMemberId = null,
 		?int $itemId = null,
 		?int $itemFieldId = null,
@@ -96,7 +99,8 @@ class HistoryEntryService {
 		$entry = new HistoryEntry();
 		
 		$entry->setType($type);
-		$entry->setTimestamp($timestamp);
+		$entry->setTimestamp(time());
+		$entry->setUserId($this->userId);
 		$entry->setProperties($properties);
 
 		if (isset($subEntryOf)) {
