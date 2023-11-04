@@ -110,11 +110,11 @@ class ItemService {
 
 			$item = $this->mapper->insert($item);
 
-			$historyEntry = $this->historyEntryService->create(
+			$this->historyEntryService->create(
 				type: "item.create",
 				collectionId: $collectionId,
-				properties: json_encode(["before" => [], "after" => $item->jsonSerialize()]),
-				itemId: $item->getid(),
+				properties: json_encode(["before" => [], "after" => $item]),
+				itemId: $item->getId(),
 			);
 
 			return $item;
@@ -123,13 +123,27 @@ class ItemService {
 
 	public function update(int $collectionId, int $id, string $title) {
 		try {
-			$item = $this->mapper->find($collectionId, $id);
+			return $this->atomic(function () use ($collectionId, $id, $title) {
+				$item = $this->mapper->find($collectionId, $id);
+				$unmodifiedItem = $item->jsonSerialize();
 			
-			if (!is_null($title)) {
-				$item->setTitle($title);
-			}
+				if (!is_null($title)) {
+					$item->setTitle($title);
+				} else {
+					return $item;
+				}
 
-			return $this->mapper->update($item);
+				$item = $this->mapper->update($item);
+
+				$this->historyEntryService->create(
+					type: "item.update",
+					collectionId: $collectionId,
+					properties: json_encode(["before" => $unmodifiedItem, "after" => $item]),
+					itemId: $item->getId(),
+				);
+
+				return $updatedItem;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
