@@ -103,7 +103,7 @@ class ItemService {
 	}
 
 	public function create(int $collectionId, string $title) {
-		$this->atomic(function () use ($collectionId, $title) {
+		return $this->atomic(function () use ($collectionId, $title) {
 			$item = new Item();
 			$item->setCollectionId($collectionId);
 			$item->setTitle($title);
