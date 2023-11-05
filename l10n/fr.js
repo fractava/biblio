@@ -5,6 +5,8 @@ OC.L10N.register(
     "A library management system" : "Un système de gestion de bibliothèque",
     "This app can be used to manage a book library, sheet music archive or textbook library" : "Cette application peut être utilisée pour gérer une bibliothèque de livres, de partitions ou de manuels",
     "Title" : "Titre",
+    "Exit editing mode" : "Quitter le mode édition",
+    "Enter editing mode" : "Entrer dans le mode édition",
     "Edit" : "Modifier",
     "Add a field" : "Ajouter un champ",
     "Name" : "Nom",

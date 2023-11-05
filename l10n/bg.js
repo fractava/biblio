@@ -20,6 +20,7 @@ OC.L10N.register(
     "Search" : "Търсене",
     "Export CSV" : "Експортиране на CSV файл",
     "_%n selected row_::_%n selected rows_" : ["%n избрани редове","%n избрани редове"],
+    "Return" : "Връщане ",
     "List" : "Списък",
     "Contains" : "Съдържа",
     "Short text" : "Кратък текст",
