@@ -151,16 +151,16 @@ class ItemService {
 
 	public function delete(int $collectionId, int $id, ?int $historySubEntryOf = null) {
 		try {
-			return $this->atomic(function () use ($collectionId, $id) {
+			return $this->atomic(function () use ($collectionId, $id, $historySubEntryOf) {
+				$item = $this->mapper->find($collectionId, $id);
+
 				$historyEntry = $this->historyEntryService->create(
 					type: "item.delete",
-					collectionId: $collectionId,
+					collectionId: $item->getCollectionId(),
 					subEntryOf: $historySubEntryOf,
 					properties: json_encode(["before" => $item, "after" => new \ArrayObject()]),
 					itemId: $item->getId(),
 				);
-
-				$item = $this->mapper->find($collectionId, $id);
 
 				$this->mapper->delete($item);
 
