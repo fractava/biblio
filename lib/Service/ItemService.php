@@ -142,26 +142,27 @@ class ItemService {
 					itemId: $item->getId(),
 				);
 
-				return $updatedItem;
+				return $item;
 			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function delete(int $collectionId, int $id) {
+	public function delete(int $collectionId, int $id, ?int $historySubEntryOf = null) {
 		try {
-			return $this->atomic(function () use ($collectionId, $id, $title) {
-				$item = $this->mapper->find($collectionId, $id);
-
-				$this->mapper->delete($item);
-
-				$this->historyEntryService->create(
+			return $this->atomic(function () use ($collectionId, $id) {
+				$historyEntry = $this->historyEntryService->create(
 					type: "item.delete",
 					collectionId: $collectionId,
+					subEntryOf: $historySubEntryOf,
 					properties: json_encode(["before" => $item, "after" => new \ArrayObject()]),
 					itemId: $item->getId(),
 				);
+
+				$item = $this->mapper->find($collectionId, $id);
+
+				$this->mapper->delete($item);
 
 				return $item;
 			}, $this->db);
