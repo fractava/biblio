@@ -76,7 +76,7 @@ class CollectionServiceTest extends TestCase {
 
 
 	/**
-	 * @expectedException OCA\Biblio\Service\NotFoundException
+	 * @expectedException OCA\Biblio\Errors\CollectionNotFound
 	 */
 	public function testUpdateNotFound() {
 		// test the correct status code if no collection is found
