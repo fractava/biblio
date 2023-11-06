@@ -117,6 +117,10 @@ class ItemFieldValueMapper extends QBMapper {
 	 * @return array
 	 */
 	public function findAllIncludingFields(int $collectionId, int $itemId, ?array $filters, ?int $limit = null, ?int $offset = null): array {
+		if (!isset($filters)) {
+			$filters = [];
+		}
+
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')

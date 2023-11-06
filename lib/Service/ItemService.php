@@ -45,7 +45,7 @@ class ItemService {
 		$this->db = $db;
 	}
 
-	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = null) {
+	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = []) {
 		$result = [];
 
 		if ($includeModel) {

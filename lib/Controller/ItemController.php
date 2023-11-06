@@ -71,7 +71,7 @@ class ItemController extends Controller {
 		}
 
 		$newItem = $this->service->create($collectionId, $title);
-		$result = $this->service->getApiObjectFromEntity($collectionId, $newItem, true, true);
+		$result = $this->service->getApiObjectFromEntity($collectionId, $newItem, true, true, []);
 
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
