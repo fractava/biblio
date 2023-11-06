@@ -60,7 +60,7 @@ class ItemFieldValueMapper extends QBMapper {
 
 			$qb->select('*')
 				->addSelect("f.id AS field_id")
-				->from(self::TABLENAME, 'v');
+				->from(self::FIELDS_TABLENAME, 'f');
 
 			$findById = array_key_exists("id", $parameters);
 			$findByItemIdFieldId = array_key_exists("itemId", $parameters) && array_key_exists("fieldId", $parameters);
@@ -79,7 +79,7 @@ class ItemFieldValueMapper extends QBMapper {
 				throw new Exception("Invalid parameters supplied to ItemFieldValueMapper->findIncludingField");
 			}
 			
-			$qb->rightJoin('v', self::FIELDS_TABLENAME, 'f', $qb->expr()->andX(...$joinON));
+			$qb->leftJoin('f', self::TABLENAME, 'v', $qb->expr()->andX(...$joinON));
 
 			$collectionExpr = $qb->expr()->eq('f.collection_id', $qb->createNamedParameter($parameters["collectionId"], IQueryBuilder::PARAM_INT));
 
