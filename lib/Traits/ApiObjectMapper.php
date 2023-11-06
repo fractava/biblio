@@ -27,32 +27,34 @@ trait ApiObjectMapper {
 	}
 
 	public function handleJsonStringFilterExpr(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column) {
-		if (isset($filter) && is_string($filter["operand"]) && $filter["operand"] !== '') {
-			if ($filter["operator"] === "=") {
-				return $qb->expr()->orX(
-					$qb->expr()->eq($column, $qb->createNamedParameter("\"" . $filter["operand"] . "\"", IQueryBuilder::PARAM_STR)),
-					$qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_STR))
-				);
-			} elseif ($filter["operator"] === "contains") {
-				return $qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"]) . '%'));
-			} elseif ($filter["operator"] === "startsWith") {
-				return $qb->expr()->orX(
-					$qb->expr()->iLike($column, $qb->createNamedParameter($db->escapeLikeParameter("\"" . $filter["operand"]) . '%')),
-					$qb->expr()->iLike($column, $qb->createNamedParameter($db->escapeLikeParameter($filter["operand"]) . '%'))
-				);
-			} elseif ($filter["operator"] === "endsWith") {
-				return $qb->expr()->orX(
-					$qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"] . "\""))),
-					$qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"])))
-				);
-			} else {
-				throw new \Error("unknown operator");
+		if (isset($filter) && isset($filter["operand"]) && is_string($filter["operand"]) && $filter["operand"] !== '') {
+			if (isset($filter["operator"])) {
+				if ($filter["operator"] === "=") {
+					return $qb->expr()->orX(
+						$qb->expr()->eq($column, $qb->createNamedParameter("\"" . $filter["operand"] . "\"", IQueryBuilder::PARAM_STR)),
+						$qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_STR))
+					);
+				} elseif ($filter["operator"] === "contains") {
+					return $qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"]) . '%'));
+				} elseif ($filter["operator"] === "startsWith") {
+					return $qb->expr()->orX(
+						$qb->expr()->iLike($column, $qb->createNamedParameter($db->escapeLikeParameter("\"" . $filter["operand"]) . '%')),
+						$qb->expr()->iLike($column, $qb->createNamedParameter($db->escapeLikeParameter($filter["operand"]) . '%'))
+					);
+				} elseif ($filter["operator"] === "endsWith") {
+					return $qb->expr()->orX(
+						$qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"] . "\""))),
+						$qb->expr()->iLike($column, $qb->createNamedParameter('%' . $db->escapeLikeParameter($filter["operand"])))
+					);
+				} else {
+					throw new \Error("unknown operator");
+				}
 			}
 		}
 	}
 
 	public function handleJsonStringFilter(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
-		if (isset($filter) && is_string($filter["operand"]) && $filter["operand"] !== '') {
+		if (isset($filter) && isset($filter["operand"]) && is_string($filter["operand"]) && $filter["operand"] !== '') {
 			$expression = $this->handleJsonStringFilterExpr($db, $qb, $filter, $column);
 
 			if ($and) {
@@ -64,7 +66,7 @@ trait ApiObjectMapper {
 	}
 
 	public function handleStringFilter(IDBConnection $db, IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
-		if (isset($filter) && is_string($filter["operand"]) && $filter["operand"] !== '') {
+		if (isset($filter) && isset($filter["operand"]) && is_string($filter["operand"]) && $filter["operand"] !== '') {
 			if ($filter["operator"] === "=") {
 				$expression = $qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_STR));
 			} elseif ($filter["operator"] === "contains") {
@@ -91,8 +93,8 @@ trait ApiObjectMapper {
 	 * @param bool $and
 	 */
 	public function handleIdFilter(IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
-		if (isset($filter) && is_int($filter["operand"])) {
-			if ($filter["operator"] === "=") {
+		if (isset($filter) && isset($filter["operand"]) && is_int($filter["operand"])) {
+			if (isset($filter["operator"]) && $filter["operator"] === "=") {
 				$expression = $qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_INT));
 			}
 
