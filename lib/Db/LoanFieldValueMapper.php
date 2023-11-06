@@ -121,8 +121,8 @@ class LoanFieldValueMapper extends QBMapper {
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
 			->addSelect("f.id AS field_id")
-			->from(self::TABLENAME, 'v')
-			->rightJoin('v', self::FIELDS_TABLENAME, 'f', $qb->expr()->andX(
+			->from(self::FIELDS_TABLENAME, 'f')
+			->leftJoin('f', self::TABLENAME, 'v', $qb->expr()->andX(
 				$qb->expr()->eq('v.field_id', 'f.id'),
 				$qb->expr()->eq('v.loan_id', $qb->createNamedParameter($loanId, IQueryBuilder::PARAM_INT))
 			))
