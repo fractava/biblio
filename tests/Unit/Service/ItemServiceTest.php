@@ -5,9 +5,11 @@ namespace OCA\Biblio\Tests\Unit\Service;
 use PHPUnit\Framework\TestCase;
 
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Service\ItemService;
 use OCA\Biblio\Service\ItemFieldValueService;
+use OCA\Biblio\Service\HistoryEntryService;
 use OCA\Biblio\Db\Item;
 use OCA\Biblio\Db\ItemMapper;
 use OCA\Biblio\Errors\ItemNotFound;

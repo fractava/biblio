@@ -47,7 +47,7 @@ class CollectionControllerTest extends TestCase {
 
 
 	public function testUpdateNotFound() {
-		// test the correct status code if no note is found
+		// test if the correct status code is returned if no collection is found
 		$this->service->expects($this->once())
 			->method('update')
 			->will($this->throwException(new CollectionNotFound()));
