@@ -132,8 +132,8 @@ class ItemFieldValueMapper extends QBMapper {
 			))
 			->where($qb->expr()->eq('f.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
-		$this->handleBooleanFilter($qb, $filters["includeInList"], 'f.include_in_list');
-		$this->handleJsonStringFilter($this->db, $qb, $filters["value"], 'v.value');
+		$this->handleBooleanFilter($qb, $filters["includeInList"] ?? [], 'f.include_in_list');
+		$this->handleJsonStringFilter($this->db, $qb, $filters["value"] ?? [], 'v.value');
 
 		if (isset($offset)) {
 			$qb->setFirstResult($offset);

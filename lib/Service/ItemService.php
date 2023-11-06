@@ -53,9 +53,7 @@ class ItemService {
 		}
 
 		if ($includeFields) {
-			$result = array_merge($result, [
-				"fieldValues" => $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters),
-			]);
+			$result["fieldValues"] = $this->fieldValueService->findAll($collectionId, $entity->getId(), ["model", "field"], $fieldFilters);
 		}
 
 		return $result;
