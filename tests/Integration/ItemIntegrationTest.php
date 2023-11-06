@@ -42,7 +42,7 @@ class ItemIntegrationTest extends TestCase {
 		$this->collection = $this->collectionService->create("Test Collection", "[]", "[]", "[]", $this->userId);
 	}
 
-	protected function tearDown() {
+	public function tearDown(): void {
 		$this->collectionService->delete($this->collection->getId());
 		unset($this->collection);
 	}
