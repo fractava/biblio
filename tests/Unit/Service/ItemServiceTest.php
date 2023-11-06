@@ -89,4 +89,27 @@ class ItemServiceTest extends TestCase {
 			'newTitle',
 		);
 	}
+
+	public function testDelete() {
+		$item = Item::fromRow([
+			'id' => 3,
+			'collectionId' => 1,
+			'title' => 'test title',
+		]);
+		
+		$this->mapper->expects($this->once())
+			->method('find')
+			->with($this->equalTo(1),
+				$this->equalTo(3))
+			->will($this->returnValue($item));
+
+		$this->mapper->expects($this->once())
+			->method('delete')
+			->with($this->equalTo($item))
+			->will($this->returnValue($item));
+
+		$result = $this->service->delete(1, 3);
+
+		$this->assertEquals($item, $result);
+	}
 }
