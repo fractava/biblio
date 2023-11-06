@@ -3,7 +3,6 @@
 namespace OCA\Biblio\Tests\Unit\Controller;
 
 use PHPUnit\Framework\TestCase;
-
 use OCP\AppFramework\Http;
 
 use OCA\Biblio\Errors\CollectionNotFound;
@@ -14,7 +13,7 @@ class CollectionControllerTest extends TestCase {
 	protected $userId = 'tomtester';
 	protected $request;
 
-	public function setUp() {
+	protected function setUp() {
 		$this->request = $this->getMockBuilder(\OCP\IRequest::class)->getMock();
 		$this->service = $this->getMockBuilder(\OCA\Biblio\Service\CollectionService::class)
 			->disableOriginalConstructor()
