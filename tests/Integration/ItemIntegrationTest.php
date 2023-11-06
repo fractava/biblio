@@ -3,6 +3,7 @@
 namespace OCA\Biblio\Tests\Integration;
 
 use OCP\AppFramework\App;
+use OCP\AppFramework\Http;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -16,6 +17,8 @@ class ItemIntegrationTest extends TestCase {
 	private $mapper;
 	private $collectionService;
 	private $userId = 'tomtester';
+
+	private $collection;
 
 	public function setUp(): void {
 		$app = new App('biblio');
@@ -34,12 +37,42 @@ class ItemIntegrationTest extends TestCase {
 		$this->controller = $container->query(ItemController::class);
 		$this->mapper = $container->query(ItemMapper::class);
 		$this->collectionService = $container->query(CollectionService::class);
+
+		// prepare collection and collection membership
+		$this->collection = $this->collectionService->create("Test Collection", "[]", "[]", "[]", $this->userId);
+	}
+
+	protected function tearDown() {
+		$this->collectionService->delete($this->collection->getId());
+		unset($this->collection);
+	}
+
+	public function testCreateAndDestroy() {
+		$collectionId = $this->collection->getId();
+
+		// create new item
+		$itemCreateData = $this->controller->create($collectionId, 'Item Title')->getData();
+		$itemId = $itemCreateData["id"];
+
+		// test if database entry got created correctly
+		$this->assertNotNull($itemId);
+		$this->assertEquals($collectionId, $itemCreateData["collectionId"]);
+		$this->assertEquals('Item Title', $itemCreateData["title"]);
+		$this->assertEquals([], $itemCreateData["fieldValues"]);
+
+		// destroy item
+		$itemDestroyData = $this->controller->destroy($collectionId, $itemId)->getData();
+		$this->assertEquals($itemId, $itemDestroyData["id"]);
+		$this->assertEquals($collectionId, $itemDestroyData["collectionId"]);
+		$this->assertEquals('Item Title', $itemDestroyData["title"]);
+
+		// assure item can no longer be found
+		$itemShowResultAfterDestroy = $this->controller->show($collectionId, $itemId, "model+fields");
+		$this->assertEquals(Http::STATUS_NOT_FOUND, $itemShowResultAfterDestroy->getStatus());
 	}
 
 	public function testUpdate() {
-		// prepare collection and collection membership
-		$collection = $this->collectionService->create("Test Collection", "[]", "[]", "[]", $this->userId);
-		$collectionId = $collection->getId();
+		$collectionId = $this->collection->getId();
 
 		// create a new item that should be updated
 		$item = new Item();
@@ -61,6 +94,5 @@ class ItemIntegrationTest extends TestCase {
 
 		// clean up
 		$this->mapper->delete($result->getData());
-		$this->collectionService->delete($collectionId);
 	}
 }
