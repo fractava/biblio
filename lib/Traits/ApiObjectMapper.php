@@ -13,8 +13,8 @@ trait ApiObjectMapper {
 	 * @param bool $and
 	 */
 	public function handleBooleanFilter(IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
-		if (isset($filter) && is_bool($filter["operand"])) {
-			if ($filter["operator"] === "=") {
+		if (isset($filter) && isset($filter["operand"]) && is_bool($filter["operand"])) {
+			if (isset($filter["operator"]) && $filter["operator"] === "=") {
 				$expression = $qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_BOOL));
 			}
 
