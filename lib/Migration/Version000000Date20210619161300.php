@@ -102,10 +102,15 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			// TODO: Permissions
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['collection_id'], 'collection_id_index');
-			$table->addIndex(['user_id'], 'user_id_index');
-			$table->addForeignKeyConstraint($schema->getTable(self::COLLECTIONS_TABLE), ['collection_id'], ['id'], ['onDelete' => 'CASCADE'], 'members_collection_id_fk');
-			$table->addUniqueConstraint(['collection_id', 'user_id'], "collection_id_user_id_unique");
+			$table->addIndex(['collection_id'], 'members_collection_id_index');
+			$table->addIndex(['user_id'], 'members_user_id_index');
+			$table->addForeignKeyConstraint(
+				$schema->getTable(self::COLLECTIONS_TABLE),
+				['collection_id'],
+				['id'],
+				['onDelete' => 'CASCADE'],
+				'members_collection_id_fk');
+			$table->addUniqueConstraint(['collection_id', 'user_id'], "members_collection_id_user_id_unique");
 		}
 
 		if (!$schema->hasTable(self::ITEMS_TABLE)) {
@@ -123,7 +128,7 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addIndex(['collection_id'], 'items_collection_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::COLLECTIONS_TABLE),
 				['collection_id'],
@@ -159,14 +164,14 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addIndex(['collection_id'], 'item_fields_collection_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::COLLECTIONS_TABLE),
 				['collection_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
 				'item_fields_collection_id_fk');
-			$table->addUniqueConstraint(['collection_id', 'name'], "collection_id_name_unique");
+			$table->addUniqueConstraint(['collection_id', 'name'], "item_fields_collection_id_name_unique");
 		}
 
 		if (!$schema->hasTable(self::ITEM_FIELDS_VALUES_TABLE)) {
@@ -186,22 +191,22 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['item_id'], 'itemIdIndex');
-			$table->addIndex(['field_id'], 'fieldIdIndex');
+			$table->addIndex(['item_id'], 'item_fields_values_item_id_index');
+			$table->addIndex(['field_id'], 'item_fields_values_field_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::ITEMS_TABLE),
 				['item_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'item_fields_item_id_fk');
+				'item_fields_values_item_id_fk');
 
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::ITEM_FIELDS_TABLE),
 				['field_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'item_fields_field_id_fk');
-			$table->addUniqueConstraint(['item_id', 'field_id'], "item_id_field_id_unique");
+				'item_fields_values_field_id_fk');
+			$table->addUniqueConstraint(['item_id', 'field_id'], "item_fields_values_item_id_field_id_unique");
 		}
 
 		if (!$schema->hasTable(self::CUSTOMERS_TABLE)) {
@@ -219,7 +224,7 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addIndex(['collection_id'], 'customers_collection_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::COLLECTIONS_TABLE),
 				['collection_id'],
@@ -255,14 +260,14 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addIndex(['collection_id'], 'customer_fields_collection_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::COLLECTIONS_TABLE),
 				['collection_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
 				'customer_fields_collection_id_fk');
-			$table->addUniqueConstraint(['collection_id', 'name'], "collection_id_name_unique");
+			$table->addUniqueConstraint(['collection_id', 'name'], "customer_fields_collection_id_name_unique");
 		}
 
 		if (!$schema->hasTable(self::CUSTOMER_FIELDS_VALUES_TABLE)) {
@@ -282,8 +287,8 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['customer_id'], 'customerIdIndex');
-			$table->addIndex(['field_id'], 'fieldIdIndex');
+			$table->addIndex(['customer_id'], 'customer_fields_values_customer_id_index');
+			$table->addIndex(['field_id'], 'customer_fields_values_field_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::CUSTOMERS_TABLE),
 				['customer_id'],
@@ -297,7 +302,7 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 				['id'],
 				['onDelete' => 'CASCADE'],
 				'customer_fields_values_field_id_fk');
-			$table->addUniqueConstraint(['customer_id', 'field_id'], "customer_id_field_id_unique");
+			$table->addUniqueConstraint(['customer_id', 'field_id'], "customer_fields_values_customer_id_field_id_unique");
 		}
 
 		if (!$schema->hasTable(self::ITEM_INSTANCES_TABLE)) {
@@ -344,21 +349,21 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['item_instance_id'], 'item_instance_id_index');
-			$table->addUniqueConstraint(['item_instance_id'], "item_instance_id_unique");
+			$table->addIndex(['item_instance_id'], 'loans_item_instance_id_index');
+			$table->addUniqueConstraint(['item_instance_id'], "loans_item_instance_id_unique");
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::ITEM_INSTANCES_TABLE),
 				['item_instance_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'loaned_instance_id_fk');
-			$table->addIndex(['customer_id'], 'customer_id_index');
+				'loans_item_instance_id_fk');
+			$table->addIndex(['customer_id'], 'loans_customer_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::CUSTOMERS_TABLE),
 				['customer_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'loaned_customer_id_fk');
+				'loans_customer_id_fk');
 		}
 
 		if (!$schema->hasTable(self::LOAN_FIELDS_TABLE)) {
@@ -385,14 +390,14 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addIndex(['collection_id'], 'loan_fields_collection_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::COLLECTIONS_TABLE),
 				['collection_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
 				'loan_fields_collection_id_fk');
-			$table->addUniqueConstraint(['collection_id', 'name'], "collection_id_name_unique");
+			$table->addUniqueConstraint(['collection_id', 'name'], "loan_fields_collection_id_name_unique");
 		}
 
 		if (!$schema->hasTable(self::LOAN_FIELDS_VALUES_TABLE)) {
@@ -412,22 +417,22 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 			]);
 
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['loan_id'], 'loan_id_index');
-			$table->addIndex(['field_id'], 'field_id_index');
+			$table->addIndex(['loan_id'], 'loan_fields_values_loan_id_index');
+			$table->addIndex(['field_id'], 'loan_fields_values_field_id_index');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::LOANS_TABLE),
 				['loan_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'loan_fields_loan_id_fk');
+				'loan_fields_values_loan_id_fk');
 
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::LOAN_FIELDS_TABLE),
 				['field_id'],
 				['id'],
 				['onDelete' => 'CASCADE'],
-				'loan_fields_field_id_fk');
-			$table->addUniqueConstraint(['loan_id', 'field_id'], "loan_id_field_id_unique");
+				'loan_fields_values_field_id_fk');
+			$table->addUniqueConstraint(['loan_id', 'field_id'], "loan_fields_values_loan_id_field_id_unique");
 		}
 
 		return $schema;

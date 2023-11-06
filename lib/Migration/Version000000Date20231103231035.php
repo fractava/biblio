@@ -85,9 +85,9 @@ class Version000000Date20231103231035 extends SimpleMigrationStep {
 			]);
 			
 			$table->setPrimaryKey(['id']);
-			$table->addIndex(['type'], 'type_index');
-			$table->addIndex(['sub_entry_of'], 'sub_entry_of_index');
-			$table->addIndex(['collection_id'], 'collection_id_index');
+			$table->addIndex(['type'], 'history_entries_type_index');
+			$table->addIndex(['sub_entry_of'], 'history_entries_sub_entry_of_index');
+			$table->addIndex(['collection_id'], 'history_entries_collection_id_index');
 			// Foreign key to itself
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::HISTORY_TABLE),
