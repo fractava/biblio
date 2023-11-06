@@ -61,7 +61,7 @@ class ItemIntegrationTest extends TestCase {
 		$this->assertEquals([], $itemCreateData["fieldValues"]);
 
 		// destroy item
-		$itemDestroyData = $this->controller->destroy($collectionId, $itemId)->getData();
+		$itemDestroyData = $this->controller->destroy($collectionId, $itemId)->getData()->jsonSerialize();
 		$this->assertEquals($itemId, $itemDestroyData["id"]);
 		$this->assertEquals($collectionId, $itemDestroyData["collectionId"]);
 		$this->assertEquals('Item Title', $itemDestroyData["title"]);
