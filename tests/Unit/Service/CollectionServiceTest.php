@@ -10,6 +10,7 @@ use OCA\Biblio\Service\CollectionService;
 use OCA\Biblio\Service\CollectionMemberService;
 use OCA\Biblio\Db\Collection;
 use OCA\Biblio\Db\CollectionMapper;
+use OCA\Biblio\Errors\CollectionNotFound;
 
 class CollectionServiceTest extends TestCase {
 	private $service;
@@ -74,16 +75,14 @@ class CollectionServiceTest extends TestCase {
 		$this->assertEquals($updatedCollection, $result);
 	}
 
-
-	/**
-	 * @expectedException OCA\Biblio\Errors\CollectionNotFound
-	 */
 	public function testUpdateNotFound() {
-		// test the correct status code if no collection is found
+		// test if the correct error is thrown, if a collection is not found
 		$this->mapper->expects($this->once())
 			->method('find')
 			->with($this->equalTo(3))
 			->will($this->throwException(new DoesNotExistException('')));
+
+		$this->expectException(CollectionNotFound::class);
 
 		$this->service->update(
 			3,
