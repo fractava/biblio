@@ -40,7 +40,7 @@ class CollectionControllerTest extends TestCase {
 				$this->equalTo('customerFieldsOrder'))
 			->will($this->returnValue($testReturn));
 
-		$result = $this->controller->update(3, 'name', 'nomenclatureItem', 'nomenclatureInstance', 'nomenclatureCustomer', 'itemFieldsOrder', 'itemFieldsOrder', 'loanFieldsOrder', 'customerFieldsOrder');
+		$result = $this->controller->update(3, 'name', 'nomenclatureItem', 'nomenclatureInstance', 'nomenclatureCustomer', 'itemFieldsOrder', 'loanFieldsOrder', 'customerFieldsOrder');
 
 		$this->assertEquals($testReturn, $result->getData());
 	}
@@ -52,7 +52,7 @@ class CollectionControllerTest extends TestCase {
 			->method('update')
 			->will($this->throwException(new CollectionNotFound()));
 
-		$result = $this->controller->update(3, 'name', 'nomenclatureItem', 'nomenclatureInstance', 'nomenclatureCustomer', 'itemFieldsOrder', 'itemFieldsOrder', 'loanFieldsOrder', 'customerFieldsOrder');
+		$result = $this->controller->update(3, 'name', 'nomenclatureItem', 'nomenclatureInstance', 'nomenclatureCustomer', 'itemFieldsOrder', 'loanFieldsOrder', 'customerFieldsOrder');
 
 		$this->assertEquals(Http::STATUS_NOT_FOUND, $result->getStatus());
 	}
