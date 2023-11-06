@@ -1,8 +1,8 @@
 # Biblio
 
-[![PHPUnit GitHub Action](https://github.com/fractava/biblio/workflows/PHPUnit/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3APHPUnit)
-[![Node GitHub Action](https://github.com/fractava/biblio/workflows/Node/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ANode)
-[![Lint GitHub Action](https://github.com/fractava/biblio/workflows/Lint/badge.svg)](https://github.com/nextcloud/app-tutorial/actions?query=workflow%3ALint)
+[![PHPUnit GitHub Action](https://github.com/fractava/biblio/workflows/PHPUnit/badge.svg)](https://github.com/fractava/biblio/actions?query=workflow%3APHPUnit)
+[![Node GitHub Action](https://github.com/fractava/biblio/workflows/Node/badge.svg)](https://github.com/fractava/biblio/actions?query=workflow%3ANode)
+[![Lint GitHub Action](https://github.com/fractava/biblio/workflows/Lint/badge.svg)](https://github.com/fractava/biblio/actions?query=workflow%3ALint)
 
 ## Try it on Gitpod
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/fractava/biblio/)
