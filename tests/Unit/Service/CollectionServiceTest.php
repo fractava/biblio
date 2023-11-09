@@ -3,6 +3,7 @@
 namespace OCA\Biblio\Tests\Unit\Service;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 
@@ -12,6 +13,7 @@ use OCA\Biblio\Db\Collection;
 use OCA\Biblio\Db\CollectionMapper;
 use OCA\Biblio\Errors\CollectionNotFound;
 
+#[CoversClass(CollectionService::class)]
 class CollectionServiceTest extends TestCase {
 	private $service;
 	private $mapper;
