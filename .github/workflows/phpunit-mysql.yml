@@ -106,7 +106,12 @@ jobs:
         # Only run if phpunit config file exists
         if: steps.check_phpunit.outputs.files_exists == 'true'
         working-directory: apps/${{ env.APP_NAME }}
-        run: ./vendor/phpunit/phpunit/phpunit -c ${{ env.PHPUNIT_CONFIG }}
+        run: ./vendor/phpunit/phpunit/phpunit -c ${{ env.PHPUNIT_CONFIG }} --coverage-clover coverage.xml .
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4-beta
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
 
       - name: Check PHPUnit integration config file existence
         id: check_integration
