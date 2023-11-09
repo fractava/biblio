@@ -2,6 +2,9 @@ name: PHPUnit Codecov
 
 on: [push, pull_request]
 
+env:
+  PHPUNIT_CONFIG: ./tests/phpunit.xml
+
 jobs:
   run:
     runs-on: ubuntu-latest
