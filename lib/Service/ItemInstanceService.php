@@ -140,6 +140,7 @@ class ItemInstanceService {
 				subEntryOf: $historySubEntryOf,
 				properties: json_encode([ "before" => new \ArrayObject(), "after" => $itemInstance ]),
 				itemId: $item["id"],
+				itemInstanceId: $itemInstance->getId(),
 			);
 
 			return $itemInstance;
@@ -159,6 +160,7 @@ class ItemInstanceService {
 					subEntryOf: $historySubEntryOf,
 					properties: json_encode([ "before" => $itemInstance, "after" => new \ArrayObject() ]),
 					itemId: $itemInstance->getItemId(),
+					itemInstanceId: $itemInstance->getId(),
 				);
 
 				return $itemInstance;
@@ -181,6 +183,7 @@ class ItemInstanceService {
 					subEntryOf: $historySubEntryOf,
 					properties: json_encode([ "before" => $itemInstance, "after" => new \ArrayObject() ]),
 					itemId: $itemInstance->getItemId(),
+					itemInstanceId: $itemInstance->getId(),
 				);
 
 				return $itemInstance;
