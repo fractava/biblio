@@ -55,16 +55,17 @@ class HistoryEntryMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 			$qb->andWhere($qb->expr()->isNull('sub_entry_of'));
 		}
 		
-		$this->handleIdFilter($qb, $filters["collectionMemberId"], 'collectionMemberId');
-		$this->handleIdFilter($qb, $filters["itemId"], 'itemId');
-		$this->handleIdFilter($qb, $filters["itemFieldId"], 'itemFieldId');
-		$this->handleIdFilter($qb, $filters["itemFieldValueId"], 'itemFieldValueId');
-		$this->handleIdFilter($qb, $filters["loanId"], 'loanId');
-		$this->handleIdFilter($qb, $filters["loanFieldId"], 'loanFieldId');
-		$this->handleIdFilter($qb, $filters["loanFieldValueId"], 'loanFieldValueId');
-		$this->handleIdFilter($qb, $filters["customerId"], 'customerId');
-		$this->handleIdFilter($qb, $filters["customerFieldId"], 'customerFieldId');
-		$this->handleIdFilter($qb, $filters["customerFieldValueId"], 'customerFieldValueId');
+		$this->handleIdFilter($qb, $filters["collectionMemberId"], 'collection_member_id');
+		$this->handleIdFilter($qb, $filters["itemId"], 'item_id');
+		$this->handleIdFilter($qb, $filters["itemFieldId"], 'item_field_id');
+		$this->handleIdFilter($qb, $filters["itemFieldValueId"], 'item_field_value_id');
+		$this->handleIdFilter($qb, $filters["itemInstanceId"], 'item_instance_id');
+		$this->handleIdFilter($qb, $filters["loanId"], 'loan_id');
+		$this->handleIdFilter($qb, $filters["loanFieldId"], 'loan_field_id');
+		$this->handleIdFilter($qb, $filters["loanFieldValueId"], 'loan_field_value_id');
+		$this->handleIdFilter($qb, $filters["customerId"], 'customer_id');
+		$this->handleIdFilter($qb, $filters["customerFieldId"], 'customer_field_id');
+		$this->handleIdFilter($qb, $filters["customerFieldValueId"], 'customer_field_value_id');
 
 		if (isset($sort)) {
 			if ($sort === "timestamp") {
