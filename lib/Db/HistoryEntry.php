@@ -16,6 +16,7 @@ class HistoryEntry extends Entity implements JsonSerializable {
 	protected $itemId;
 	protected $itemFieldId;
 	protected $itemFieldValueId;
+	protected $itemInstanceId;
 	protected $loanId;
 	protected $loanFieldId;
 	protected $loanFieldValueId;
@@ -32,6 +33,7 @@ class HistoryEntry extends Entity implements JsonSerializable {
 		$this->addType('itemId', 'integer');
 		$this->addType('itemFieldId', 'integer');
 		$this->addType('itemFieldValueId', 'integer');
+		$this->addType('itemInstanceId', 'integer');
 		$this->addType('loanId', 'integer');
 		$this->addType('loanFieldId', 'integer');
 		$this->addType('loanFieldValueId', 'integer');
@@ -52,6 +54,7 @@ class HistoryEntry extends Entity implements JsonSerializable {
 			'itemId' => $this->itemId,
 			'itemFieldId' => $this->itemFieldId,
 			'itemFieldValueId' => $this->itemFieldValueId,
+			'itemInstanceId' => $this->itemInstanceId,
 			'loanId' => $this->loanId,
 			'loanFieldId' => $this->loanFieldId,
 			'loanFieldValueId' => $this->loanFieldValueId,

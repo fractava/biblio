@@ -90,6 +90,7 @@ class HistoryEntryService {
 		?int $itemId = null,
 		?int $itemFieldId = null,
 		?int $itemFieldValueId = null,
+		?int $itemInstanceId = null,
 		?int $loanId = null,
 		?int $loanFieldId = null,
 		?int $loanFieldValueId = null,
@@ -126,6 +127,10 @@ class HistoryEntryService {
 
 		if (isset($itemFieldValueId)) {
 			$entry->setItemFieldValueId($itemFieldValueId);
+		}
+
+		if (isset($itemInstanceId)) {
+			$entry->setItemInstanceId($itemInstanceId);
 		}
 
 		if (isset($loanId)) {

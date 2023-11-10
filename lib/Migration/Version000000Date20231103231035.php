@@ -60,6 +60,9 @@ class Version000000Date20231103231035 extends SimpleMigrationStep {
 			$table->addColumn('item_field_value_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
+			$table->addColumn('item_instance_id', Types::INTEGER, [
+				'notnull' => false,
+			]);
 			$table->addColumn('loan_id', Types::INTEGER, [
 				'notnull' => false,
 			]);
