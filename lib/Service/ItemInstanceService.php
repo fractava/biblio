@@ -34,6 +34,9 @@ class ItemInstanceService {
 	/** @var ItemService */
 	private $itemService;
 
+	/** @var HistoryEntryService */
+	private $historyEntryService;
+
 	public function __construct(
 		ItemInstanceMapper $mapper,
 		LoanFieldValueService $fieldValueService,

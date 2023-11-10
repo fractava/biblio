@@ -56,7 +56,7 @@ class LoanController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function update(int $collectionId, string $barcode, ?int $until): DataResponse {
-		return $this->handleNotFound(function () use ($barcode, $until) {
+		return $this->handleNotFound(function () use ($collectionId, $barcode, $until) {
 			return $this->service->updateByItemInstanceBarcode($barcode, $until);
 		});
 	}
@@ -65,7 +65,7 @@ class LoanController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function destroy(int $collectionId, string $barcode): DataResponse {
-		return $this->handleNotFound(function () use ($barcode) {
+		return $this->handleNotFound(function () use ($collectionId, $barcode) {
 			return $this->service->deleteByItemInstanceBarcode($barcode);
 		});
 	}

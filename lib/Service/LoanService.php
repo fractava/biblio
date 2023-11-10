@@ -6,6 +6,8 @@ use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\TTransactional;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\LoanNotFound;
 
@@ -13,15 +15,32 @@ use OCA\Biblio\Db\Loan;
 use OCA\Biblio\Db\LoanMapper;
 
 class LoanService {
+	use TTransactional;
+
 	/** @var LoanMapper */
 	private $mapper;
 	
 	/** @var ItemInstanceService */
 	private $itemInstanceService;
 
-	public function __construct(LoanMapper $mapper, ItemInstanceService $itemInstanceService) {
+	/** @var CustomerService */
+	private $customerService;
+
+	/** @var HistoryEntryService */
+	private $historyEntryService;
+
+	public function __construct(
+		LoanMapper $mapper,
+		ItemInstanceService $itemInstanceService,
+		CustomerService $customerService,
+		HistoryEntryService $historyEntryService,
+		IDBConnection $db,
+	) {
 		$this->mapper = $mapper;
 		$this->itemInstanceService = $itemInstanceService;
+		$this->customerService = $customerService;
+		$this->historyEntryService = $historyEntryService;
+		$this->db = $db;
 	}
 
 	public function findAll(int $collectionId): array {
@@ -53,21 +72,36 @@ class LoanService {
 		}
 	}
 
-	public function create(int $itemInstanceId, int $customerId, int $until) {
-		$newLoan = new Loan();
-		$newLoan->setItemInstanceId($itemInstanceId);
-		$newLoan->setCustomerId($customerId);
-		$newLoan->setUntil($until);
+	public function create(int $collectionId, int $itemInstanceId, int $customerId, int $until, ?int $historySubEntryOf = null) {
+		return $this->atomic(function () use ($collectionId, $itemInstanceId, $customerId, $until, $historySubEntryOf) {
+			$itemInstance = $this->itemInstanceService->find($collectionId, $itemInstanceId);
+			$customer = $this->customerService->find($collectionId, $customerId, ["model"]);
 
-		$newLoan = $this->mapper->insert($newLoan);
+			$loan = new Loan();
+			$loan->setItemInstanceId($itemInstance->getId());
+			$loan->setCustomerId($customer["id"]);
+			$loan->setUntil($until);
 
-		return $newLoan;
+			$loan = $this->mapper->insert($loan);
+
+			$historyEntry = $this->historyEntryService->create(
+				type: "loan.create",
+				collectionId: $collectionId,
+				subEntryOf: $historySubEntryOf,
+				properties: json_encode([ "before" => new \ArrayObject(), "after" => $loan ]),
+				itemInstanceId: $itemInstance->getId(),
+				customerId: $customer["id"],
+				loanId: $loan->getId(),
+			);
+
+			return $loan;
+		}, $this->db);
 	}
 
 	public function createByItemInstanceBarcode(int $collectionId, string $barcode, int $customerId, int $until) {
 		$itemInstanceId = $this->itemInstanceService->findByBarcode($collectionId, $barcode)->getId();
 
-		return $this->create($itemInstanceId, $customerId, $until);
+		return $this->create($collectionId, $itemInstanceId, $customerId, $until);
 	}
 
 	public function update(int $id, ?int $until) {
