@@ -1,11 +1,15 @@
 <?php
 
-namespace OCA\Biblio\Controller;
+namespace OCA\Biblio\Tests\Unit\Controller;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 use OCP\AppFramework\Http\TemplateResponse;
 
+use OCA\Biblio\Controller\PageController;
+
+#[CoversClass(PageController::class)]
 class PageControllerTest extends TestCase {
 	private $controller;
 
