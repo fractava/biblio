@@ -3,6 +3,8 @@
 namespace OCA\Biblio\Tests\Unit\Controller;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+
 use OCP\AppFramework\Http;
 use OCP\IRequest;
 
@@ -10,6 +12,7 @@ use OCA\Biblio\Service\CollectionService;
 use OCA\Biblio\Errors\CollectionNotFound;
 use OCA\Biblio\Controller\CollectionController;
 
+#[CoversClass(CollectionController::class)]
 class CollectionControllerTest extends TestCase {
 	protected $controller;
 	protected $service;
