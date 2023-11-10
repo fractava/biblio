@@ -28,12 +28,18 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id): ItemInstance {
+	public function find(int $collectionId, int $id): ItemInstance {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('*')
-			->from(self::TABLENAME)
-			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
+			->from(self::TABLENAME, 'instance');
+
+		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
+			$qb->expr()->eq('instance.item_id', 'item.id'),
+		));
+
+		$qb->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
 		return $this->findEntity($qb);
 	}
@@ -44,12 +50,18 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function findByBarcode(string $barcode): ItemInstance {
+	public function findByBarcode(int $collectionId, string $barcode): ItemInstance {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('*')
-			->from(self::TABLENAME)
-			->where($qb->expr()->eq('barcode', $qb->createNamedParameter($barcode)));
+		$qb->select('instance.*')
+			->from(self::TABLENAME, 'instance');
+
+		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
+			$qb->expr()->eq('instance.item_id', 'item.id'),
+		));
+
+		$qb->where($qb->expr()->eq('barcode', $qb->createNamedParameter($barcode)))
+			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
 		return $this->findEntity($qb);
 	}

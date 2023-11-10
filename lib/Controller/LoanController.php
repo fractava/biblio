@@ -47,8 +47,8 @@ class LoanController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $collectionId, string $barcode, int $customerId, int $until): DataResponse {
-		return $this->handleNotFound(function () use ($barcode, $customerId, $until) {
-			return $this->service->createByItemInstanceBarcode($barcode, $customerId, $until);
+		return $this->handleNotFound(function () use ($collectionId, $barcode, $customerId, $until) {
+			return $this->service->createByItemInstanceBarcode($collectionId, $barcode, $customerId, $until);
 		});
 	}
 

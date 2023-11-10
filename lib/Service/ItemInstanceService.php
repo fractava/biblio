@@ -6,6 +6,8 @@ use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\TTransactional;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\ItemInstanceNotFound;
 
@@ -16,6 +18,7 @@ use OCA\Biblio\Traits\ApiObjectService;
 
 class ItemInstanceService {
 	use ApiObjectService;
+	use TTransactional;
 
 	public const ITEM_INCLUDE = "item";
 	public const LOAN_INCLUDE = "loan";
@@ -28,9 +31,21 @@ class ItemInstanceService {
 	/** @var LoanFieldValueService */
 	private $fieldValueService;
 
-	public function __construct(ItemInstanceMapper $mapper, LoanFieldValueService $fieldValueService) {
+	/** @var ItemService */
+	private $itemService;
+
+	public function __construct(
+		ItemInstanceMapper $mapper,
+		LoanFieldValueService $fieldValueService,
+		HistoryEntryService $historyEntryService,
+		ItemService $itemService,
+		IDBConnection $db,
+	) {
 		$this->mapper = $mapper;
 		$this->fieldValueService = $fieldValueService;
+		$this->historyEntryService = $historyEntryService;
+		$this->itemService = $itemService;
+		$this->db = $db;
 	}
 
 	public function getApiObjectFromEntities(int $collectionId, $entities, bool $includeModel, bool $includeItem, bool $includeLoan, bool $includeLoanCustomer, bool $includeFields, ?array $fieldFilters = null) {
@@ -93,35 +108,47 @@ class ItemInstanceService {
 		}
 	}
 
-	public function find(int $id) {
+	public function find(int $collectionId, int $id) {
 		try {
-			return $this->mapper->find($id);
+			return $this->mapper->find($collectionId, $id);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function findByBarcode(string $barcode) {
+	public function findByBarcode(int $collectionId, string $barcode) {
 		try {
-			return $this->mapper->findByBarcode($barcode);
+			return $this->mapper->findByBarcode($collectionId, $barcode);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function create(string $barcode, int $itemId) {
-		$itemInstance = new ItemInstance();
-		$itemInstance->setBarcode($barcode);
-		$itemInstance->setItemId($itemId);
+	public function create(int $collectionId, string $barcode, int $itemId, ?int $historySubEntryOf = null) {
+		return $this->atomic(function () use ($collectionId, $barcode, $itemId, $historySubEntryOf) {
+			$item = $this->itemService->find($collectionId, $itemId, ["model"]);
 
-		$itemInstance = $this->mapper->insert($itemInstance);
+			$itemInstance = new ItemInstance();
+			$itemInstance->setBarcode($barcode);
+			$itemInstance->setItemId($item["id"]);
 
-		return $itemInstance;
+			$itemInstance = $this->mapper->insert($itemInstance);
+
+			$historyEntry = $this->historyEntryService->create(
+				type: "itemInstance.create",
+				collectionId: $collectionId,
+				subEntryOf: $historySubEntryOf,
+				properties: json_encode([ "before" => new \ArrayObject(), "after" => $itemInstance ]),
+				itemId: $item["id"],
+			);
+
+			return $itemInstance;
+		}, $this->db);
 	}
 
-	public function delete(int $id) {
+	public function delete(int $collectionId, int $id) {
 		try {
-			$itemInstance = $this->mapper->find($id);
+			$itemInstance = $this->mapper->find($collectionId, $id);
 			$this->mapper->delete($itemInstance);
 			return $itemInstance;
 		} catch (Exception $e) {
@@ -129,9 +156,9 @@ class ItemInstanceService {
 		}
 	}
 
-	public function deleteByBarcode(string $barcode) {
+	public function deleteByBarcode(int $collectionId, string $barcode) {
 		try {
-			$itemInstance = $this->mapper->findByBarcode($barcode);
+			$itemInstance = $this->mapper->findByBarcode($collectionId, $barcode);
 			$this->mapper->delete($itemInstance);
 			return $itemInstance;
 		} catch (Exception $e) {

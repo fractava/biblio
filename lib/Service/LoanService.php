@@ -64,8 +64,8 @@ class LoanService {
 		return $newLoan;
 	}
 
-	public function createByItemInstanceBarcode(string $barcode, int $customerId, int $until) {
-		$itemInstanceId = $this->itemInstanceService->findByBarcode($barcode)->getId();
+	public function createByItemInstanceBarcode(int $collectionId, string $barcode, int $customerId, int $until) {
+		$itemInstanceId = $this->itemInstanceService->findByBarcode($collectionId, $barcode)->getId();
 
 		return $this->create($itemInstanceId, $customerId, $until);
 	}

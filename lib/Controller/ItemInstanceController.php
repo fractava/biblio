@@ -46,8 +46,8 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function show(int $collectionId, int $instanceId): JSONResponse {
-		return $this->handleNotFound(function () use ($instanceId) {
-			$result = $this->service->find($instanceId);
+		return $this->handleNotFound(function () use ($collectionId, $instanceId) {
+			$result = $this->service->find($collectionId, $instanceId);
 			return new JSONResponse($result, Http::STATUS_OK);
 		});
 	}
@@ -56,8 +56,8 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function showByBarcode(int $collectionId, string $barcode): JSONResponse {
-		return $this->handleNotFound(function () use ($barcode) {
-			$result = $this->service->findByBarcode($barcode);
+		return $this->handleNotFound(function () use ($collectionId, $barcode) {
+			$result = $this->service->findByBarcode($collectionId, $barcode);
 			return new JSONResponse($result, Http::STATUS_OK);
 		});
 	}
@@ -66,7 +66,7 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $collectionId, string $barcode, int $itemId): JSONResponse {
-		$result = $this->service->create($barcode, $itemId);
+		$result = $this->service->create($collectionId, $barcode, $itemId);
 		return new JSONResponse($result, Http::STATUS_OK);
 	}
 
@@ -74,8 +74,8 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function destroy(int $collectionId, int $instanceId): DataResponse {
-		return $this->handleNotFound(function () use ($instanceId) {
-			return $this->service->delete($instanceId);
+		return $this->handleNotFound(function () use ($collectionId, $instanceId) {
+			return $this->service->delete($collectionId, $instanceId);
 		});
 	}
 
@@ -83,8 +83,8 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function destroyByBarcode(int $collectionId, string $barcode): DataResponse {
-		return $this->handleNotFound(function () use ($barcode) {
-			return $this->service->deleteByBarcode($barcode);
+		return $this->handleNotFound(function () use ($collectionId, $barcode) {
+			return $this->service->deleteByBarcode($collectionId, $barcode);
 		});
 	}
 
