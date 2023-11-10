@@ -134,7 +134,7 @@ class V1ImportService {
 					$loanedUntilTime = $datetime->getTimestamp();
 				}
 
-				$newItemInstance = $this->itemInstanceService->create($itemInstance["barcode"], $mappedItemId);
+				$newItemInstance = $this->itemInstanceService->create($collectionId, $itemInstance["barcode"], $mappedItemId);
 
 				if (isset($mappedLoanedToCustomerId)) {
 					$newItemInstanceId = $newItemInstance->getId();
