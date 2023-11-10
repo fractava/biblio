@@ -3,6 +3,7 @@
 namespace OCA\Biblio\Tests\Unit\Service;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\IDBConnection;
@@ -14,6 +15,7 @@ use OCA\Biblio\Db\Item;
 use OCA\Biblio\Db\ItemMapper;
 use OCA\Biblio\Errors\ItemNotFound;
 
+#[CoversClass(ItemService::class)]
 class ItemServiceTest extends TestCase {
 	private $service;
 	private $mapper;
