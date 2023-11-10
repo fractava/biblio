@@ -146,21 +146,45 @@ class ItemInstanceService {
 		}, $this->db);
 	}
 
-	public function delete(int $collectionId, int $id) {
+	public function delete(int $collectionId, int $id, ?int $historySubEntryOf = null) {
 		try {
-			$itemInstance = $this->mapper->find($collectionId, $id);
-			$this->mapper->delete($itemInstance);
-			return $itemInstance;
+			return $this->atomic(function () use ($collectionId, $id, $historySubEntryOf) {
+				$itemInstance = $this->mapper->find($collectionId, $id);
+
+				$this->mapper->delete($itemInstance);
+
+				$historyEntry = $this->historyEntryService->create(
+					type: "itemInstance.delete",
+					collectionId: $collectionId,
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode([ "before" => $itemInstance, "after" => new \ArrayObject() ]),
+					itemId: $itemInstance->getItemId(),
+				);
+
+				return $itemInstance;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function deleteByBarcode(int $collectionId, string $barcode) {
+	public function deleteByBarcode(int $collectionId, string $barcode, ?int $historySubEntryOf = null) {
 		try {
-			$itemInstance = $this->mapper->findByBarcode($collectionId, $barcode);
-			$this->mapper->delete($itemInstance);
-			return $itemInstance;
+			return $this->atomic(function () use ($collectionId, $barcode, $historySubEntryOf) {
+				$itemInstance = $this->mapper->findByBarcode($collectionId, $barcode);
+
+				$this->mapper->delete($itemInstance);
+
+				$historyEntry = $this->historyEntryService->create(
+					type: "itemInstance.delete",
+					collectionId: $collectionId,
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode([ "before" => $itemInstance, "after" => new \ArrayObject() ]),
+					itemId: $itemInstance->getItemId(),
+				);
+
+				return $itemInstance;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}

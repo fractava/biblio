@@ -31,14 +31,14 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 	public function find(int $collectionId, int $id): ItemInstance {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('*')
+		$qb->select('instance.*')
 			->from(self::TABLENAME, 'instance');
 
 		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
 			$qb->expr()->eq('instance.item_id', 'item.id'),
 		));
 
-		$qb->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
+		$qb->where($qb->expr()->eq('instance.id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
 			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
 		return $this->findEntity($qb);
@@ -60,7 +60,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 			$qb->expr()->eq('instance.item_id', 'item.id'),
 		));
 
-		$qb->where($qb->expr()->eq('barcode', $qb->createNamedParameter($barcode)))
+		$qb->where($qb->expr()->eq('instance.barcode', $qb->createNamedParameter($barcode)))
 			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
 		return $this->findEntity($qb);
