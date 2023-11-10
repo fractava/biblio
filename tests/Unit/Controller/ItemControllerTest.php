@@ -3,6 +3,8 @@
 namespace OCA\Biblio\Tests\Unit\Controller;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+
 use OCP\AppFramework\Http;
 use OCP\IRequest;
 
@@ -10,6 +12,7 @@ use OCA\Biblio\Service\ItemService;
 use OCA\Biblio\Errors\ItemNotFound;
 use OCA\Biblio\Controller\ItemController;
 
+#[CoversClass(ItemController::class)]
 class ItemControllerTest extends TestCase {
 	protected $controller;
 	protected $service;
