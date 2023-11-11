@@ -35,6 +35,7 @@ OC.L10N.register(
     "Select" : "Seleziona",
     "Checkbox" : "Casella di selezione",
     "Item" : "Elemento",
+    "Book" : "Libro",
     "Device" : "Dispositivo",
     "Copy" : "Copia",
     "Customer" : "Cliente",
