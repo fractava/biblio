@@ -11,6 +11,8 @@ use OCP\IDBConnection;
 class LoanMapper extends QBMapper {
 	public const TABLENAME = 'biblio_loans';
 	public const ITEM_INSTANCES_TABLENAME = 'biblio_item_instances';
+	public const ITEMS_TABLENAME = 'biblio_items';
+	public const CUSTOMERS_TABLENAME = "biblio_customers";
 
 	public function __construct(IDBConnection $db) {
 		parent::__construct($db, self::TABLENAME, Loan::class);
@@ -22,12 +24,27 @@ class LoanMapper extends QBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function find(int $id): Loan {
+	public function find(int $collectionId, int $id): Loan {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('*')
-			->from(self::TABLENAME)
-			->where($qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)));
+		$qb->select('loan.*')
+			->from(self::TABLENAME, 'loan');
+
+		$qb->innerJoin('loan', self::ITEM_INSTANCES_TABLENAME, 'instance', $qb->expr()->andX(
+			$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
+		));
+
+		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
+			$qb->expr()->eq('instance.item_id', 'item.id'),
+		));
+
+		$qb->innerJoin('loan', self::CUSTOMERS_TABLENAME, 'customer', $qb->expr()->andX(
+			$qb->expr()->eq('loan.customer_id', 'customer.id'),
+		));
+
+		$qb->where($qb->expr()->eq('loan.id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('customer.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
 		return $this->findEntity($qb);
 	}
@@ -38,15 +55,27 @@ class LoanMapper extends QBMapper {
 	 * @throws \OCP\AppFramework\Db\MultipleObjectsReturnedException
 	 * @throws DoesNotExistException
 	 */
-	public function findByItemInstanceBarcode(string $barcode): Loan {
+	public function findByItemInstanceBarcode(int $collectionId, string $barcode): Loan {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('loan.*')
-			->from(self::TABLENAME, 'loan')
-			->innerJoin('loan', self::ITEM_INSTANCES_TABLENAME, 'instance', $qb->expr()->andX(
-				$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
-				$qb->expr()->eq('instance.barcode', $qb->createNamedParameter($barcode))
-			));
+			->from(self::TABLENAME, 'loan');
+
+		$qb->innerJoin('loan', self::ITEM_INSTANCES_TABLENAME, 'instance', $qb->expr()->andX(
+			$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
+		));
+
+		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
+			$qb->expr()->eq('instance.item_id', 'item.id'),
+		));
+ 
+		$qb->innerJoin('loan', self::CUSTOMERS_TABLENAME, 'customer', $qb->expr()->andX(
+			$qb->expr()->eq('loan.customer_id', 'customer.id'),
+		));
+
+		$qb->where($qb->expr()->eq('instance.barcode', $qb->createNamedParameter($barcode)))
+			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)))
+			->andWhere($qb->expr()->eq('customer.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 		
 		return $this->findEntity($qb);
 	}

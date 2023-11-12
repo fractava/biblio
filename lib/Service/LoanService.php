@@ -104,37 +104,57 @@ class LoanService {
 		return $this->create($collectionId, $itemInstanceId, $customerId, $until);
 	}
 
-	public function update(int $id, ?int $until) {
+	public function update(int $collectionId, int $id, ?int $until, ?int $historySubEntryOf = null) {
 		try {
-			$loan = $this->mapper->find($id);
-			
-			if (!is_null($until)) {
-				$loan->setUntil($until);
-			}
+			return $this->atomic(function () use ($collectionId, $id, $until, $historySubEntryOf) {
+				$loan = $this->mapper->find($collectionId, $id);
 
-			return $this->mapper->update($loan);
+				return $this->updateLoan($collectionId, $loan, $until, $historySubEntryOf);
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function updateByItemInstanceBarcode(string $barcode, ?int $until) {
+	public function updateByItemInstanceBarcode(int $collectionId, string $barcode, ?int $until, ?int $historySubEntryOf = null) {
 		try {
-			$loan = $this->mapper->findByItemInstanceBarcode($barcode);
+			return $this->atomic(function () use ($collectionId, $barcode, $until, $historySubEntryOf) {
+				$loan = $this->mapper->findByItemInstanceBarcode($collectionId, $barcode);
 
-			if (!is_null($until)) {
-				$loan->setUntil($until);
-			}
-
-			return $this->mapper->update($loan);
+				return $this->updateLoan($collectionId, $loan, $until, $historySubEntryOf);
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function delete(int $id) {
+	private function updateLoan(int $collectionId, Loan $loan, ?int $until, ?int $historySubEntryOf = null) {
+		$unmodifiedLoan = $loan->jsonSerialize();
+		
+		if (!is_null($until)) {
+			$loan->setUntil($until);
+		} else {
+			return $loan;
+		}
+
+		$loan = $this->mapper->update($loan);
+
+		$historyEntry = $this->historyEntryService->create(
+			type: "loan.update",
+			collectionId: $collectionId,
+			subEntryOf: $historySubEntryOf,
+			properties: json_encode([ "before" => $unmodifiedLoan, "after" => $loan ]),
+			itemInstanceId: $loan->getItemInstanceId(),
+			customerId: $loan->getCustomerId(),
+			loanId: $loan->getId(),
+		);
+
+		return $loan;
+	}
+
+	public function delete(int $collectionId, int $id) {
 		try {
-			$loan = $this->mapper->find($id);
+			$loan = $this->mapper->find($collectionId, $id);
 			$this->mapper->delete($loan);
 			return $loan;
 		} catch (Exception $e) {
@@ -142,9 +162,9 @@ class LoanService {
 		}
 	}
 
-	public function deleteByItemInstanceBarcode(string $barcode) {
+	public function deleteByItemInstanceBarcode(int $collectionId, string $barcode) {
 		try {
-			$loan = $this->mapper->findByItemInstanceBarcode($barcode);
+			$loan = $this->mapper->findByItemInstanceBarcode($collectionId, $barcode);
 			$this->mapper->delete($loan);
 			return $loan;
 		} catch (Exception $e) {
