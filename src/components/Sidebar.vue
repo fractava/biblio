@@ -33,6 +33,11 @@
 				<component :is="nomenclatureStore.customerIcon" :size="20" />
 			</template>
 		</NcAppNavigationItem>
+		<NcAppNavigationItem :name="t('biblio', 'History')" :to="linkIfCollectionIdSelected('/history')">
+			<template #icon>
+				<History :size="20" />
+			</template>
+		</NcAppNavigationItem>
 	</NcAppNavigation>
 </template>
 <script>
@@ -43,10 +48,11 @@ import { mapStores } from "pinia";
 import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation";
 import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem";
 
-import SwapVertical from "vue-material-design-icons/SwapVertical";
-import AccountMultiple from "vue-material-design-icons/AccountMultiple";
-import Bookshelf from "vue-material-design-icons/Bookshelf";
-import Cog from "vue-material-design-icons/Cog";
+import SwapVertical from "vue-material-design-icons/SwapVertical.vue";
+import AccountMultiple from "vue-material-design-icons/AccountMultiple.vue";
+import Bookshelf from "vue-material-design-icons/Bookshelf.vue";
+import Cog from "vue-material-design-icons/Cog.vue";
+import History from "vue-material-design-icons/History.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
@@ -61,6 +67,7 @@ export default {
 		AccountMultiple,
 		Bookshelf,
 		Cog,
+		History,
 	},
 	data() {
 		return {
