@@ -152,23 +152,41 @@ class LoanService {
 		return $loan;
 	}
 
-	public function delete(int $collectionId, int $id) {
+	public function delete(int $collectionId, int $id, ?int $historySubEntryOf = null) {
 		try {
-			$loan = $this->mapper->find($collectionId, $id);
-			$this->mapper->delete($loan);
-			return $loan;
+			return $this->atomic(function () use ($collectionId, $id, $historySubEntryOf) {
+				$loan = $this->mapper->find($collectionId, $id);
+				return $this->deleteLoan($collectionId, $loan, $historySubEntryOf);
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function deleteByItemInstanceBarcode(int $collectionId, string $barcode) {
+	public function deleteByItemInstanceBarcode(int $collectionId, string $barcode, ?int $historySubEntryOf = null) {
 		try {
-			$loan = $this->mapper->findByItemInstanceBarcode($collectionId, $barcode);
-			$this->mapper->delete($loan);
-			return $loan;
+			return $this->atomic(function () use ($collectionId, $barcode, $historySubEntryOf) {
+				$loan = $this->mapper->findByItemInstanceBarcode($collectionId, $barcode);
+				return $this->deleteLoan($collectionId, $loan, $historySubEntryOf);
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
+	}
+
+	private function deleteLoan(int $collectionId, Loan $loan, ?int $historySubEntryOf = null) {
+		$this->mapper->delete($loan);
+
+		$historyEntry = $this->historyEntryService->create(
+			type: "loan.delete",
+			collectionId: $collectionId,
+			subEntryOf: $historySubEntryOf,
+			properties: json_encode([ "before" => $loan, "after" => new \ArrayObject() ]),
+			itemInstanceId: $loan->getItemInstanceId(),
+			customerId: $loan->getCustomerId(),
+			loanId: $loan->getId(),
+		);
+
+		return $loan;
 	}
 }
