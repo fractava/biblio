@@ -87,6 +87,20 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Create item");
 			}
 		},
+		itemCreated() {
+			return (title) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					return t("biblio", "Book \"{title}\" created", { title });
+				case "DEVICE":
+					return t("biblio", "Device \"{title}\" created", { title });
+				default:
+					return t("biblio", "Item \"{title}\" created", { title });
+				}
+			};
+		},
 		addNewItem() {
 			const biblioStore = useBiblioStore();
 
@@ -158,6 +172,20 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 			default:
 				return t("biblio", "Create customer");
 			}
+		},
+		customerCreated() {
+			return (name) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+				case "STUDENT":
+					return t("biblio", "Student \"{name}\" created", { name });
+				case "EMPLOYEE":
+					return t("biblio", "Employee \"{name}\" created", { name });
+				default:
+					return t("biblio", "Customer \"{name}\" created", { name });
+				}
+			};
 		},
 		addNewCustomer() {
 			const biblioStore = useBiblioStore();
