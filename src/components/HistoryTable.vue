@@ -5,7 +5,7 @@
 			:page="page"
 			:max-page="maxPage"
 			:can-create-rows="false"
-            :can-search="false"
+			:can-search="false"
 			:current-sort-reverse="sortReverse"
 			:current-filters="filters"
 			:current-sort="sort"
@@ -28,11 +28,14 @@ import { showError } from "@nextcloud/dialogs";
 import { api } from "../api.js";
 
 import DataTable from "../components/dataTable/DataTable.vue";
+import TextCell from "../components/Fields/Cells/TextCell.vue";
 import HistoryEntryDescriptionCell from "./HistoryEntryDescriptionCell.vue";
+import TimestampCell from "./TimestampCell.vue";
 
 import { useBiblioStore } from "../store/biblio.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
+import FieldTypes from "../models/FieldTypes.js";
 import { getMaxPage } from "../utils/dataTableHelpers.js";
 
 export default {
@@ -70,6 +73,33 @@ export default {
 					canFilter: false,
 					clickable: false,
 					cellComponent: HistoryEntryDescriptionCell,
+					// get whole row data, not specific property
+					property: [],
+				},
+				{
+					id: -2,
+					name: t("biblio", "User"),
+					type: "short",
+					isProperty: true,
+					canSort: true,
+					sortIdentifier: "userId",
+					canFilter: true,
+					clickable: false,
+					cellComponent: TextCell,
+					filterOperators: FieldTypes?.short?.filterOperators,
+					property: ["userId"],
+				},
+				{
+					id: -3,
+					name: t("biblio", "Timestamp"),
+					type: "short",
+					isProperty: true,
+					canSort: true,
+					sortIdentifier: "timestamp",
+					canFilter: false,
+					clickable: false,
+					cellComponent: TimestampCell,
+					property: ["timestamp"],
 				},
 			];
 		},
