@@ -1,8 +1,9 @@
 <template>
-	<NcDateTime :timestamp="value" :format="timeFormat" :relative-time="true" />
+	<NcDateTime :timestamp="timestamp" />
 </template>
 <script>
 import NcDateTime from "@nextcloud/vue/dist/Components/NcDateTime.js";
+// import { getCanonicalLocale } from "@nextcloud/l10n";
 
 export default {
 	components: {
@@ -16,6 +17,23 @@ export default {
 				timeStyle: "full",
 			},
 		};
+	},
+	computed: {
+		timestamp() {
+			if (Number.isInteger(this.value)) {
+				return this.value * 1000;
+			} else {
+				return 0;
+			}
+		},
+		/* absoluteTime() {
+			const formatter = new Intl.DateTimeFormat(getCanonicalLocale(), {
+				dateStyle: "short",
+				timeStyle: "full",
+				timeZoneName: "short",
+			});
+			return formatter.format(new Date(this.timestamp));
+		}, */
 	},
 };
 </script>
