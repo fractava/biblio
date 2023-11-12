@@ -6,6 +6,8 @@ use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\TTransactional;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\CustomerNotFound;
 
@@ -15,6 +17,7 @@ use OCA\Biblio\Traits\ApiObjectService;
 
 class CustomerService {
 	use ApiObjectService;
+	use TTransactional;
 
 	public const FIELDS_INCLUDE = 'fields';
 
@@ -24,9 +27,22 @@ class CustomerService {
 	/** @var CustomerFieldValueService */
 	private $fieldValueService;
 
-	public function __construct(CustomerMapper $mapper, CustomerFieldValueService $fieldValueService) {
+	/** @var HistoryEntryService */
+	private $historyEntryService;
+
+	/** @var IDBConnection */
+	private $db;
+
+	public function __construct(
+		CustomerMapper $mapper,
+		CustomerFieldValueService $fieldValueService,
+		HistoryEntryService $historyEntryService,
+		IDBConnection $db,
+	) {
 		$this->mapper = $mapper;
 		$this->fieldValueService = $fieldValueService;
+		$this->historyEntryService = $historyEntryService;
+		$this->db = $db;
 	}
 
 	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeFields, ?array $fieldFilters = null) {
@@ -87,13 +103,22 @@ class CustomerService {
 	}
 
 	public function create(int $collectionId, string $name) {
-		$customer = new Customer();
-		$customer->setCollectionId($collectionId);
-		$customer->setName($name);
+		return $this->atomic(function () use ($collectionId, $name) {
+			$customer = new Customer();
+			$customer->setCollectionId($collectionId);
+			$customer->setName($name);
 
-		$customer = $this->mapper->insert($customer);
+			$customer = $this->mapper->insert($customer);
 
-		return $customer;
+			$this->historyEntryService->create(
+				type: "customer.create",
+				collectionId: $collectionId,
+				properties: json_encode(["before" => new \ArrayObject(), "after" => $customer]),
+				customerId: $customer->getId(),
+			);
+
+			return $customer;
+		}, $this->db);
 	}
 
 	public function update(int $collectionId, int $id, string $name) {
