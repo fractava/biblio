@@ -31,6 +31,7 @@ import Item from "./views/Item.vue";
 import Customers from "./views/Customers.vue";
 import Customer from "./views/Customer.vue";
 import ItemInstances from "./views/ItemInstances.vue";
+import History from "./views/History.vue";
 
 Vue.use(Router);
 
@@ -78,6 +79,11 @@ const router = new Router({
 			path: "/:collectionId/customer/:id",
 			name: "customer",
 			component: Customer,
+		},
+		{
+			path: "/:collectionId/history/",
+			name: "history",
+			component: History,
 		},
 	],
 });
