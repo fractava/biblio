@@ -149,11 +149,23 @@ class CustomerService {
 		}
 	}
 
-	public function delete(int $collectionId, int $id) {
+	public function delete(int $collectionId, int $id, ?int $historySubEntryOf = null) {
 		try {
-			$customer = $this->mapper->find($collectionId, $id);
-			$this->mapper->delete($customer);
-			return $customer;
+			return $this->atomic(function () use ($collectionId, $id, $historySubEntryOf) {
+				$customer = $this->mapper->find($collectionId, $id);
+
+				$this->mapper->delete($customer);
+
+				$historyEntry = $this->historyEntryService->create(
+					type: "customer.delete",
+					collectionId: $customer->getCollectionId(),
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode([ "before" => $customer, "after" => new \ArrayObject() ]),
+					customerId: $customer->getId(),
+				);
+
+				return $customer;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
