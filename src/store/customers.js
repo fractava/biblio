@@ -49,7 +49,7 @@ export const useCustomersStore = defineStore("customers", {
 			return new Promise((resolve, reject) => {
 				api.createCustomer(route.params.collectionId, parameters)
 					.then((result) => {
-						this.searchResults.push(result);
+						this.refreshSearchResults();
 						resolve();
 					})
 					.catch((error) => {

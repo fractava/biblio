@@ -49,7 +49,7 @@ export const useItemsStore = defineStore("items", {
 			return new Promise((resolve, reject) => {
 				api.createItem(route.params.collectionId, parameters)
 					.then((result) => {
-						this.searchResults.push(result);
+						this.refreshSearchResults();
 						resolve();
 					})
 					.catch((error) => {
