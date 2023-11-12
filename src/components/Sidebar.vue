@@ -45,8 +45,8 @@ import AppNavigationSelect from "./AppNavigationSelect.vue";
 import Settings from "./Settings/Settings.vue";
 
 import { mapStores } from "pinia";
-import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation";
-import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem";
+import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation.js";
+import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem.js";
 
 import SwapVertical from "vue-material-design-icons/SwapVertical.vue";
 import AccountMultiple from "vue-material-design-icons/AccountMultiple.vue";

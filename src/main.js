@@ -26,7 +26,7 @@ import App from "./App.vue";
 
 import router from "./router.js";
 
-import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip";
+import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip.js";
 
 Vue.use(PiniaVuePlugin);
 

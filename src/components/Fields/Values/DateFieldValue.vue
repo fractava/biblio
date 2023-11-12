@@ -37,7 +37,7 @@
 <script>
 import moment from "@nextcloud/moment";
 
-import NcDatetimePicker from "@nextcloud/vue/dist/Components/NcDatetimePicker";
+import NcDateTimePicker from "@nextcloud/vue/dist/Components/NcDateTimePicker.js";
 
 import FieldValue from "../../mixins/FieldValue.js";
 

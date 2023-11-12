@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent";
+import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent.js";
 import "@nextcloud/dialogs/dist/index.css";
 import { mapStores } from "pinia";
 

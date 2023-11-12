@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import NcCheckboxRadioSwitch from "@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch";
+import NcCheckboxRadioSwitch from "@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js";
 
 import cellMixin from "./cellMixin.js";
 

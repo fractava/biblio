@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import NcCheckboxRadioSwitch from "@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch";
+import NcCheckboxRadioSwitch from "@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js";
 
 import FieldValue from "../../mixins/FieldValue.js";
 import FieldError from "../FieldError.vue";

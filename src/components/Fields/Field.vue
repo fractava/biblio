@@ -61,8 +61,8 @@
 import { directive as ClickOutside } from "v-click-outside";
 import { debounce } from "debounce";
 
-import NcActions from "@nextcloud/vue/dist/Components/NcActions";
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
+import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcCheckboxRadioSwitch from '@nextcloud/vue/dist/Components/NcCheckboxRadioSwitch.js'
 
