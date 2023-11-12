@@ -102,8 +102,8 @@ class CustomerService {
 		}
 	}
 
-	public function create(int $collectionId, string $name) {
-		return $this->atomic(function () use ($collectionId, $name) {
+	public function create(int $collectionId, string $name, ?int $historySubEntryOf = null) {
+		return $this->atomic(function () use ($collectionId, $name, $historySubEntryOf) {
 			$customer = new Customer();
 			$customer->setCollectionId($collectionId);
 			$customer->setName($name);
@@ -113,6 +113,7 @@ class CustomerService {
 			$this->historyEntryService->create(
 				type: "customer.create",
 				collectionId: $collectionId,
+				subEntryOf: $historySubEntryOf,
 				properties: json_encode(["before" => new \ArrayObject(), "after" => $customer]),
 				customerId: $customer->getId(),
 			);
@@ -121,15 +122,28 @@ class CustomerService {
 		}, $this->db);
 	}
 
-	public function update(int $collectionId, int $id, string $name) {
+	public function update(int $collectionId, int $id, string $name, ?int $historySubEntryOf = null) {
 		try {
-			$customer = $this->mapper->find($collectionId, $id);
+			return $this->atomic(function () use ($collectionId, $id, $name, $historySubEntryOf) {
+				$customer = $this->mapper->find($collectionId, $id);
+				$unmodifiedCustomer = $customer->jsonSerialize();
 			
-			if (!is_null($name)) {
-				$customer->setName($name);
-			}
+				if (!is_null($name)) {
+					$customer->setName($name);
+				} else {
+					return $customer;
+				}
 
-			return $this->mapper->update($customer);
+				$this->historyEntryService->create(
+					type: "customer.update",
+					collectionId: $collectionId,
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode(["before" => $unmodifiedCustomer, "after" => $customer]),
+					customerId: $customer->getId(),
+				);
+
+				return $this->mapper->update($customer);
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
