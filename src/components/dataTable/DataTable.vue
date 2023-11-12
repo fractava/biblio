@@ -5,6 +5,7 @@
 				:selected-rows="localSelectedRows"
 				:can-create-rows="canCreateRows"
 				:create-row-label="createRowLabel"
+				:can-search="canSearch"
 				:can-delete-rows="canDeleteRows"
 				:show-options="columns.length !== 0"
 				:row-limit-filter="rowLimitFilter"
@@ -139,6 +140,10 @@ export default {
 		createRowDescription: {
 			type: String,
 			default: t("biblio", "There are currently no rows in this table"),
+		},
+		canSearch: {
+			type: Boolean,
+			default: true,
 		},
 		canDeleteRows: {
 			type: Boolean,

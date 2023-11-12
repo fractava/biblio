@@ -1,38 +1,36 @@
 <template>
 	<div class="options">
-		<div v-if="showOptions" class="optionsRow fix-col-4">
-			<div :class="{'add-padding-left': isSmallMobile }"
-				class="addSearchLimitRow">
-				<NcButton v-if="!isSmallMobile && canCreateRows"
-					class="addRowButton"
-					:aria-label="createRowLabel"
-					:close-after-click="true"
-					type="secondary"
-					@click="$emit('create-row')">
-					{{ createRowLabel }}
-					<template #icon>
-						<Plus :size="25" />
-					</template>
-				</NcButton>
-				<NcButton v-if="isSmallMobile && canCreateRows"
-					class="addRowButton"
-					:close-after-click="true"
-					:aria-label="createRowLabel"
-					type="secondary"
-					@click="$emit('create-row')">
-					<template #icon>
-						<Plus :size="25" />
-					</template>
-				</NcButton>
-				<SearchForm class="searchForm"
-					:search-string="getSearchString"
-					@set-search-string="str => $emit('set-search-string', str)" />
-				<vueSelect class="limitSelect"
-					:options="[5, 20, 50, 100, 250, 1000]"
-					:value="rowLimitFilter"
-					:clearable="false"
-					@input="limit => $emit('update:rowLimitFilter', limit)" />
-			</div>
+		<div v-if="showOptions" class="optionsRow optionsRow1 fix-col-4">
+			<NcButton v-if="!isSmallMobile && canCreateRows"
+				class="addRowButton"
+				:aria-label="createRowLabel"
+				:close-after-click="true"
+				type="secondary"
+				@click="$emit('create-row')">
+				{{ createRowLabel }}
+				<template #icon>
+					<Plus :size="25" />
+				</template>
+			</NcButton>
+			<NcButton v-if="isSmallMobile && canCreateRows"
+				class="addRowButton"
+				:close-after-click="true"
+				:aria-label="createRowLabel"
+				type="secondary"
+				@click="$emit('create-row')">
+				<template #icon>
+					<Plus :size="25" />
+				</template>
+			</NcButton>
+			<SearchForm v-if="canSearch"
+				class="searchForm"
+				:search-string="getSearchString"
+				@set-search-string="str => $emit('set-search-string', str)" />
+			<vueSelect class="limitSelect"
+				:options="[5, 20, 50, 100, 250, 1000]"
+				:value="rowLimitFilter"
+				:clearable="false"
+				@input="limit => $emit('update:rowLimitFilter', limit)" />
 		</div>
 		<div class="optionsRow optionsRow2">
 			<div>
@@ -140,6 +138,10 @@ export default {
 			type: String,
 			default: t("biblio", "Create Row"),
 		},
+		canSearch: {
+			type: Boolean,
+			default: true,
+		},
 		canDeleteRows: {
 			type: Boolean,
 			default: true,
@@ -213,6 +215,7 @@ export default {
 	height: 48px;
 	width: 100%;
 	margin-bottom: 5px;
+	justify-content: flex-end;
 }
 
 .optionsRow2 {
@@ -236,7 +239,7 @@ export default {
 	max-width: fit-content;
 }
 
-.addSearchLimitRow {
+.optionsRow1 {
 	display: flex;
 	width: 100%;
 	align-items: center;
