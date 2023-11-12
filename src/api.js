@@ -230,6 +230,14 @@ const transforms = {
 			}
 			return customer;
 		},
+
+		transformHistoryEntry(historyEntry) {
+			if (historyEntry.properties && historyEntry.properties !== "") {
+				historyEntry.properties = JSON.parse(historyEntry.properties);
+			}
+
+			return historyEntry;
+		},
 	},
 	toAPI: {
 		/**
@@ -967,6 +975,38 @@ export const api = {
 					resolve(response);
 				})
 				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	getHistoryEntries(collectionId, include = "model+subEntries", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
+		return new PCancelable((resolve, reject, onCancel) => {
+			const controller = new AbortController();
+
+			onCancel(() => {
+				controller.abort();
+			});
+
+			axios.get(`/collections/${collectionId}/history`, {
+				signal: controller.signal,
+				params: {
+					include,
+					filter: JSON.stringify(filters),
+					sort,
+					sortReverse,
+					limit,
+					offset,
+				},
+			})
+				.then((response) => {
+					const historyEntries = response.data.result.map(transforms.fromAPI.transformHistoryEntry);
+					resolve({
+						meta: response.data.meta,
+						historyEntries,
+					});
+				})
+				.catch((error) => {
 					reject(error);
 				});
 		});
