@@ -100,8 +100,8 @@ class ItemService {
 		}
 	}
 
-	public function create(int $collectionId, string $title) {
-		return $this->atomic(function () use ($collectionId, $title) {
+	public function create(int $collectionId, string $title, ?int $historySubEntryOf = null) {
+		return $this->atomic(function () use ($collectionId, $title, $historySubEntryOf) {
 			$item = new Item();
 			$item->setCollectionId($collectionId);
 			$item->setTitle($title);
@@ -111,6 +111,7 @@ class ItemService {
 			$this->historyEntryService->create(
 				type: "item.create",
 				collectionId: $collectionId,
+				subEntryOf: $historySubEntryOf,
 				properties: json_encode(["before" => new \ArrayObject(), "after" => $item]),
 				itemId: $item->getId(),
 			);
@@ -119,9 +120,9 @@ class ItemService {
 		}, $this->db);
 	}
 
-	public function update(int $collectionId, int $id, string $title) {
+	public function update(int $collectionId, int $id, string $title, ?int $historySubEntryOf = null) {
 		try {
-			return $this->atomic(function () use ($collectionId, $id, $title) {
+			return $this->atomic(function () use ($collectionId, $id, $title, $historySubEntryOf) {
 				$item = $this->mapper->find($collectionId, $id);
 				$unmodifiedItem = $item->jsonSerialize();
 			
@@ -136,6 +137,7 @@ class ItemService {
 				$this->historyEntryService->create(
 					type: "item.update",
 					collectionId: $collectionId,
+					subEntryOf: $historySubEntryOf,
 					properties: json_encode(["before" => $unmodifiedItem, "after" => $item]),
 					itemId: $item->getId(),
 				);
