@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<span>
 		{{ message }}
-	</div>
+	</span>
 </template>
 <script>
 import { mapStores } from "pinia";
@@ -18,6 +18,8 @@ export default {
 				return this.nomenclatureStore.customerCreated(this.value?.properties?.after?.name);
 			case "item.create":
 				return this.nomenclatureStore.itemCreated(this.value?.properties?.after?.title);
+			case "item.update":
+				return this.nomenclatureStore.itemRenamed(this.value?.properties?.before?.title, this.value?.properties?.after?.title);
 			default:
 				return this.value?.type;
 			}

@@ -101,6 +101,20 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		itemRenamed() {
+			return (oldTitle, newTitle) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					return t("biblio", "Renamed book from \"{oldTitle}\" to \"{newTitle}\"", { oldTitle, newTitle });
+				case "DEVICE":
+					return t("biblio", "Renamed device from \"{oldTitle}\" to \"{newTitle}\"", { oldTitle, newTitle });
+				default:
+					return t("biblio", "Renamed item from \"{oldTitle}\" to \"{newTitle}\"", { oldTitle, newTitle });
+				}
+			};
+		},
 		addNewItem() {
 			const biblioStore = useBiblioStore();
 
