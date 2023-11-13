@@ -20,6 +20,8 @@ export default {
 				return this.nomenclatureStore.itemCreated(this.value?.properties?.after?.title);
 			case "item.update":
 				return this.nomenclatureStore.itemRenamed(this.value?.properties?.before?.title, this.value?.properties?.after?.title);
+			case "itemInstance.create":
+				return this.nomenclatureStore.createdInstance(this.value?.properties?.after?.barcode);
 			default:
 				return this.value?.type;
 			}

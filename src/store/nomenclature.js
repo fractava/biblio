@@ -163,6 +163,32 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			}
 		},
+		createdInstance() {
+			return (barcode) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Book copy \"{barcode}\" created", { barcode });
+					} else {
+						return t("biblio", "Book instance \"{barcode}\" created", { barcode });
+					}
+				case "DEVICE":
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Device copy \"{barcode}\" created", { barcode });
+					} else {
+						return t("biblio", "Device instance \"{barcode}\" created", { barcode });
+					}
+				default:
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Item copy \"{barcode}\" created", { barcode });
+					} else {
+						return t("biblio", "Item instance \"{barcode}\" created", { barcode });
+					}
+				}
+			};
+		},
 		customers() {
 			const biblioStore = useBiblioStore();
 
