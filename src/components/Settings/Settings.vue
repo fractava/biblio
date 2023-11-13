@@ -1,7 +1,7 @@
 <template>
 	<NcAppSettingsDialog :open="open"
 		:show-navigation="showNavigation"
-		title="Biblio settings"
+		name="Biblio settings"
 		class="biblio-settings-dialog"
 		@update:open="openClose">
 		<!-- Home -->
