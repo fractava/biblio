@@ -6,6 +6,8 @@ OC.L10N.register(
     "Name" : "Nimi",
     "Error" : "Viga",
     "Reset" : "Lähtesta",
+    "Description" : "Kirjeldus",
+    "User" : "Kasutaja",
     "Delete" : "Kustuta",
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",

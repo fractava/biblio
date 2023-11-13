@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "שגיאה",
     "Reset" : "איפוס",
     "Value" : "ערך",
+    "Description" : "תיאור",
+    "User" : "משתמש",
     "Delete" : "מחיקה",
     "Collections" : "אוספים",
     "Members" : "חברים",

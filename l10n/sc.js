@@ -12,6 +12,8 @@ OC.L10N.register(
     "Error" : "Errore",
     "Reset" : "Torra a impostare",
     "Value" : "Balore",
+    "User" : "Utente",
+    "Timestamp" : "Marca temporale",
     "Delete" : "Cantzella",
     "Drag to reorder the fields" : "Traga pro ordinare is campos",
     "Members" : "Membros",

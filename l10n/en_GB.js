@@ -25,6 +25,8 @@ OC.L10N.register(
     "Delete Entry" : "Delete Entry",
     "Add Entry" : "Add Entry",
     "Value" : "Value",
+    "User" : "User",
+    "Timestamp" : "Timestamp",
     "No collection selected" : "No collection selected",
     "Select a collection in the sidebar" : "Select a collection in the sidebar",
     "Could not fetch customer fields" : "Could not fetch customer fields",

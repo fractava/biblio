@@ -4,6 +4,7 @@ OC.L10N.register(
     "Edit" : "Redaktirläň",
     "Name" : "Ady",
     "Error" : "ýalňyşlyk",
+    "User" : "Ulanyjy",
     "Delete" : "Pozmak",
     "Download" : "Göçürip almak",
     "Search" : "Gözlemek",

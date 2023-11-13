@@ -6,6 +6,8 @@ OC.L10N.register(
     "Name" : "Nume",
     "Error" : "Eroare",
     "Reset" : "Resetare",
+    "Description" : "Descriere",
+    "User" : "Utilizator",
     "Delete" : "Șterge",
     "Download" : "Descărcare",
     "Search" : "Căutare",

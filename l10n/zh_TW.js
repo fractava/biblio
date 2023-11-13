@@ -27,6 +27,8 @@ OC.L10N.register(
     "Delete Entry" : "刪除條目",
     "Add Entry" : "新增條目",
     "Value" : "值",
+    "Description" : "描述",
+    "Timestamp" : "時間戳",
     "No collection selected" : "未選取收藏",
     "Select a collection in the sidebar" : "在側邊欄中選取收藏",
     "Add new collection" : "新增收藏",

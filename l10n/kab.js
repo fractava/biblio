@@ -5,6 +5,7 @@ OC.L10N.register(
     "Edit" : "Ẓreg",
     "Name" : "Nom",
     "Error" : "Erreur",
+    "User" : "Aseqdac",
     "Delete" : "Kkes",
     "Download" : "Sider",
     "Search" : "Nadi",

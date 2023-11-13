@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Алдаа",
     "Reset" : "тохируулах",
     "Value" : "Үнийн дүн",
+    "Description" : "Тодорхойлолт",
     "Delete" : "Устгах",
     "Members" : "Гишүүд",
     "Download" : "Татах",

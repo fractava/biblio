@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "エラー",
     "Reset" : "リセット",
     "Value" : "値",
+    "Description" : "説明",
+    "Timestamp" : "タイムスタンプ",
     "Delete" : "削除",
     "Collections" : "コレクション",
     "Members" : "メンバー",

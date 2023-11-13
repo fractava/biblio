@@ -4,6 +4,7 @@ OC.L10N.register(
     "Edit" : "Deasaich",
     "Name" : "Ainm",
     "Error" : "Mearachd",
+    "User" : "Cleachdaiche",
     "Delete" : "Sguab às",
     "Download" : "Luchdaich a-nuas",
     "Search" : "Lorg",

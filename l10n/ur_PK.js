@@ -6,6 +6,8 @@ OC.L10N.register(
     "Name" : "اسم",
     "Error" : "ایرر",
     "Reset" : "ری سیٹ",
+    "Description" : "تصریح",
+    "User" : "User",
     "Delete" : "حذف کریں",
     "Download" : "ڈاؤن لوڈ",
     "Search" : "Search",

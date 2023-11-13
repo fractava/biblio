@@ -6,6 +6,8 @@ OC.L10N.register(
     "Name" : "Numm",
     "Error" : "Fehler",
     "Reset" : "Zeréck setzen",
+    "Description" : "Beschreiwung",
+    "User" : "User",
     "Delete" : "Läschen",
     "Download" : "Eroflueden",
     "Search" : "Search",

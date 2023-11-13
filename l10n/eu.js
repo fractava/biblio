@@ -13,6 +13,8 @@ OC.L10N.register(
     "Reset" : "Berrezarri",
     "Add Option" : "Gehitu aukera",
     "Value" : "Balioa",
+    "Description" : "Deskripzioa",
+    "Timestamp" : "Denbora-marka",
     "Delete" : "Ezabatu",
     "Drag to reorder the fields" : "Arrastatu eremuak berrordenatzeko",
     "Collections" : "Bildumak",

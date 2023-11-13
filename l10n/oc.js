@@ -9,6 +9,8 @@ OC.L10N.register(
     "Error" : "Error",
     "Reset" : "Reïnicializar",
     "Value" : "Valor",
+    "Description" : "Descripcion",
+    "User" : "User",
     "Delete" : "Suprimir",
     "Members" : "Membres",
     "Lend/Return" : "Prestar/Tornar",

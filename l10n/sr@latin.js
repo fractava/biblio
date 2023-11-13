@@ -5,6 +5,8 @@ OC.L10N.register(
     "Edit" : "Izmeni",
     "Name" : "Ime",
     "Error" : "Greška",
+    "Description" : "Opis",
+    "User" : "Korisnik",
     "Delete" : "Obriši",
     "Search" : "Traži",
     "Date" : "Date",

@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "Lỗi",
     "Reset" : "Đặt lại",
     "Value" : "Giá trị",
+    "Description" : "Mô tả",
+    "User" : "Người dùng",
     "Delete" : "Xóa",
     "Members" : "Thành viên",
     "Download" : "Tải xuống",

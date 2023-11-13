@@ -6,6 +6,8 @@ OC.L10N.register(
     "Name" : "Namn",
     "Error" : "Feil",
     "Value" : "Verdi",
+    "Description" : "Skildring",
+    "User" : "Bruker",
     "Delete" : "Slett",
     "Collections" : "Samlingar",
     "Download" : "Last ned",

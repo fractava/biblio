@@ -13,6 +13,7 @@ OC.L10N.register(
     "Reset" : "Zurücksetzen",
     "Add Option" : "Option hinzufügen",
     "Value" : "Wert",
+    "Timestamp" : "Zeitstempel",
     "Delete" : "Löschen",
     "Drag to reorder the fields" : "Ziehen, um die Felder neu anzuordnen",
     "Collections" : "Sammlungen",

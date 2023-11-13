@@ -6,6 +6,7 @@ OC.L10N.register(
     "Name" : "﻿ಹೆಸರು",
     "Error" : "﻿ತಪ್ಪಾಗಿದೆ",
     "Reset" : "ಮರುಹೊಂದಿಸಿ",
+    "User" : "User",
     "Delete" : "﻿ಅಳಿಸಿ",
     "Download" : "ಪ್ರತಿಯನ್ನು ಸ್ಥಳೀಯವಾಗಿ ಉಳಿಸಿಕೊಳ್ಳಿ",
     "Search" : "Search",

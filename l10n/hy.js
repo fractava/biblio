@@ -5,6 +5,8 @@ OC.L10N.register(
     "Edit" : "մշակել",
     "Name" : "Անուն",
     "Error" : "Սխալ",
+    "Description" : "Նկարագրություն",
+    "User" : "User",
     "Delete" : "հեռացնել",
     "Download" : "Ներբեռնել",
     "Search" : "Search",

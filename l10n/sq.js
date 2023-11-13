@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "Gabim",
     "Reset" : "Rivendos",
     "Value" : "Vlerë",
+    "Description" : "Përshkrim",
+    "User" : "Përdorues",
     "Delete" : "Fshi",
     "Members" : "Anëtar",
     "Download" : "Shkarko",

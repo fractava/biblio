@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "Galat",
     "Reset" : "Setel ulang",
     "Value" : "Nilari",
+    "Description" : "Deskrisi",
+    "User" : "Pengguna",
     "Delete" : "Hapus",
     "Members" : "Anggota",
     "Download" : "Unduh",

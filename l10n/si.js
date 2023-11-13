@@ -5,6 +5,8 @@ OC.L10N.register(
     "Name" : "නම",
     "Error" : "දෝෂය",
     "Value" : "අගය",
+    "Description" : "විස්තරය",
+    "User" : "පරිශීලක",
     "Download" : "බාගන්න",
     "Search" : "සොයන්න",
     "Back" : "ආපසු",

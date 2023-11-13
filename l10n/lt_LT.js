@@ -8,6 +8,8 @@ OC.L10N.register(
     "Error" : "Klaida",
     "Reset" : "Atstatyti",
     "Value" : "Reikšmė",
+    "Description" : "Aprašas",
+    "Timestamp" : "Laiko žyma",
     "Delete" : "Ištrinti",
     "Collections" : "Kolekcijos",
     "Members" : "Nariai",
