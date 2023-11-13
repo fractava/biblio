@@ -11,7 +11,7 @@
 
 <script>
 import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent.js";
-import "@nextcloud/dialogs/dist/index.css";
+import "@nextcloud/dialogs/style.css";
 import { mapStores } from "pinia";
 
 import Sidebar from "./components/Sidebar.vue";
