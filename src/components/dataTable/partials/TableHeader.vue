@@ -5,7 +5,7 @@
 				<NcCheckboxRadioSwitch :checked="allRowsAreSelected" @update:checked="value => $emit('select-all-rows', value)" />
 			</div>
 		</th>
-		<th v-for="col in columns" :key="col.id">
+		<th v-for="col in columns" :key="col.id" :class="{ max: col.maximizeWidth }">
 			<div class="cell-wrapper">
 				<div class="cell-options-wrapper">
 					<div class="cell">

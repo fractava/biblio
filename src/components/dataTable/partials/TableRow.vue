@@ -5,7 +5,7 @@
 		</td>
 		<td v-for="col in columns"
 			:key="col.id"
-			:class="{ clickable: col.clickable }"
+			:class="{ clickable: col.clickable, max: col.maximizeWidth }"
 			@click="col.clickable && ($emit('click-row', row.id, col.id))">
 			<component :is="col.cellComponent"
 				v-if="col.isProperty || row?.fieldValues"

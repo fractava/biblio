@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<table>
+		<table :class="{ hasMaximizedColumn }">
 			<thead>
 				<TableHeader :columns="columns"
 					:selected-rows="localSelectedRows"
@@ -83,6 +83,14 @@ export default {
 				this.$emit("update:selectedRows", selectedRows);
 			},
 		},
+		hasMaximizedColumn() {
+			for (const column of this.columns) {
+				if (column.maximizeWidth) {
+					return true;
+				}
+			}
+			return false;
+		},
 	},
 
 	mounted() {
@@ -144,7 +152,8 @@ export default {
 	position: relative;
 	border-collapse: collapse;
 	border-spacing: 0;
-	table-layout: fixed;
+	/*table-layout: fixed;*/
+	max-width: 100%;
 	width: 100%;
 	border: none;
 
@@ -156,7 +165,13 @@ export default {
 	td {
 		text-overflow: ellipsis;
 		max-width: 100px;
+		word-break: break-all;
 		overflow: hidden;
+	}
+
+	&.hasMaximizedColumn :where(th, td):not(:first-child):not(.max) {
+		width: 0;
+		white-space: nowrap;
 	}
 
 	td, th {

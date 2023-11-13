@@ -57,7 +57,7 @@ export default {
 .fieldsValueTable {
 	width: 100%;
 	border-collapse: collapse;
-	table-layout: fixed;
+	/*table-layout: fixed;*/
 
 	th {
 		font-weight: bold;
