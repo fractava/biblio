@@ -12,7 +12,7 @@
 					</template>
 					{{ t('biblio', 'Back') }}
 				</NcActionButton>
-				<NcActionCaption :title="t('biblio', 'Select operator')" />
+				<NcActionCaption :name="t('biblio', 'Select operator')" />
 				<NcActionRadio v-for="(operator, index) in getOperators"
 					:key="index"
 					:name="'filter-operators-column-' + column.id"
@@ -29,7 +29,7 @@
 					</template>
 					{{ t('biblio', 'Back') }}
 				</NcActionButton>
-				<NcActionCaption :title="t('biblio', 'Select operand')" />
+				<NcActionCaption :name="t('biblio', 'Select operand')" />
 				<NcActionInput v-if="column.filterOperandType === 'string'"
 					:label-visible="false"
 					:label="t('biblio', 'Keyword and submit')"
@@ -49,7 +49,7 @@
 				</NcActionButton>
 			</template>
 			<template v-else>
-				<NcActionCaption v-if="canSort" :title="t('biblio', 'Sorting')" />
+				<NcActionCaption v-if="canSort" :name="t('biblio', 'Sorting')" />
 				<NcActionButtonGroup v-if="canSort">
 					<NcActionButton :class="{ selected: sortingByThisColumn && !currentSortReverse }" :aria-label="t('biblio', 'Sort asc')" @click="sort(false)">
 						<template #icon>
@@ -62,9 +62,9 @@
 						</template>
 					</NcActionButton>
 				</NcActionButtonGroup>
-				<NcActionCaption v-if="showFilter && hasOperators" :title="t('biblio', 'Filtering')" />
+				<NcActionCaption v-if="showFilter && hasOperators" :name="t('biblio', 'Filtering')" />
 				<NcActionButton v-if="showFilter && hasOperators"
-					:title="filterOperator.label"
+					:name="filterOperator.label"
 					@click="selectOperator = true">
 					<template #icon>
 						<FilterCog :size="25" />

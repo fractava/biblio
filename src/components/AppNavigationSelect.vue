@@ -140,6 +140,7 @@ export default {
         margin-top: 0px;
         height: 100% !important;
         border: none;
+		box-shadow: none !important;
     }
 
     .vs__dropdown-toggle {

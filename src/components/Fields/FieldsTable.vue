@@ -37,7 +37,7 @@
 			</Draggable>
 		</table>
 		<NcEmptyContent v-if="sortedFields.length === 0"
-			:title="t('biblio', 'No fields')"
+			:name="t('biblio', 'No fields')"
 			style="margin-top: 20px; margin-bottom: 20px;">
 			<template #icon>
 				<GridOff />

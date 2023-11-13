@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<NcEmptyContent v-if="biblioStore.collections.length === 0"
-			:title="t('biblio', 'No collections')">
+			:name="t('biblio', 'No collections')">
 			<template #icon>
 				<GridOff />
 			</template>
@@ -12,7 +12,7 @@
 		<ul>
 			<NcListItem v-for="collection in biblioStore.collections"
 				:key="collection.id"
-				:title="collection.name"
+				:name="collection.name"
 				:bold="false"
 				:active="false"
 				@click="editCollection(collection.id)">
@@ -34,7 +34,7 @@
 					</NcActionButton>
 				</template>
 			</NcListItem>
-			<NcListItem :title="t('biblio', 'Create new collection')"
+			<NcListItem :name="t('biblio', 'Create new collection')"
 				:bold="false"
 				:active="false"
 				@click="modalOpen = true">
@@ -43,7 +43,7 @@
 				</template>
 			</NcListItem>
 			<AddCollectionModal :open.sync="modalOpen" />
-			<NcListItem :title="t('biblio', 'Import collection')"
+			<NcListItem :name="t('biblio', 'Import collection')"
 				:bold="false"
 				:active="false"
 				@click="importCollection">

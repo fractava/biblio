@@ -22,7 +22,7 @@
 
 <template>
 	<div class="field__content">
-		<NcDatetimePicker :value="value"
+		<NcDateTimePickerNative :value="value"
 			value-type="format"
 			:disabled="!allowValueEdit"
 			:formatter="formatter"
@@ -37,13 +37,13 @@
 <script>
 import moment from "@nextcloud/moment";
 
-import NcDateTimePicker from "@nextcloud/vue/dist/Components/NcDateTimePicker.js";
+import NcDateTimePickerNative from '@nextcloud/vue/dist/Components/NcDateTimePickerNative.js';
 
 import FieldValue from "../../mixins/FieldValue.js";
 
 export default {
 	components: {
-		NcDatetimePicker,
+		NcDateTimePickerNative,
 	},
 	mixins: [FieldValue],
 	props: {

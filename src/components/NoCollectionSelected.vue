@@ -1,6 +1,6 @@
 <template>
 	<NcEmptyContent v-if="!$route.params.collectionId"
-		:title="t('biblio', 'No collection selected')">
+		:name="t('biblio', 'No collection selected')">
 		<template #icon>
 			<Magnify />
 		</template>

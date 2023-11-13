@@ -37,7 +37,7 @@
 				</template>
 			</CustomTable>
 			<NcEmptyContent v-if="rows.length === 0 && canCreateRows"
-				:title="createRowLabel"
+				:name="createRowLabel"
 				:description="createRowDescription">
 				<template #icon>
 					<Plus :size="25" />
@@ -52,7 +52,7 @@
 				</template>
 			</NcEmptyContent>
 			<NcEmptyContent v-if="rows.length === 0 && !canCreateRows"
-				:title="t('biblio', 'No Rows')">
+				:name="t('biblio', 'No Rows')">
 				<template #icon>
 					<GridOff :size="25" />
 				</template>

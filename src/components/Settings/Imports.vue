@@ -2,7 +2,7 @@
 	<div>
 		<ul>
 			<NcListItem v-if="!settingsStore.context.importMethod"
-				:title="t('biblio', 'Import from v1')"
+				:name="t('biblio', 'Import from v1')"
 				:bold="false"
 				:active="false"
 				@click="selectImportMethod('v1')">

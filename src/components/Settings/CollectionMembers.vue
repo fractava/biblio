@@ -3,7 +3,7 @@
 		<ul>
 			<NcListItem v-for="member in members"
 				:key="member.id"
-				:title="member.userId"
+				:name="member.userId"
 				:bold="false"
 				:active="true"
 				class="active">
