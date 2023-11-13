@@ -50,7 +50,7 @@ export default {
 			searchMeta: {},
 			filters: {},
 			sort: "timestamp",
-			sortReverse: false,
+			sortReverse: true,
 			limit: 100,
 			page: 1,
 			currentlyRunningFetch: false,
@@ -75,6 +75,7 @@ export default {
 					cellComponent: HistoryEntryDescriptionCell,
 					// get whole row data, not specific property
 					property: [],
+					maximizeWidth: true,
 				},
 				{
 					id: -2,
