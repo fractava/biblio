@@ -11,6 +11,9 @@ use OCA\Biblio\Errors\HistoryEntryNotFound;
 
 use OCA\Biblio\Db\HistoryEntry;
 use OCA\Biblio\Db\HistoryEntryMapper;
+use OCA\Biblio\Db\ItemMapper;
+use OCA\Biblio\Db\ItemInstanceMapper;
+use OCA\Biblio\Db\CustomerMapper;
 use OCA\Biblio\Traits\ApiObjectService;
 
 class HistoryEntryService {
@@ -18,6 +21,8 @@ class HistoryEntryService {
 
 	public const SUB_ENTRIES_INCLUDE = 'subEntries';
 	public const ITEM_INCLUDE = 'item';
+	public const ITEM_INSTANCE_INCLUDE = 'itemInstance';
+	public const CUSTOMER_INCLUDE = 'customer';
 
 	/** @var string */
 	private $userId;
@@ -25,17 +30,27 @@ class HistoryEntryService {
 	/** @var HistoryEntryMapper */
 	private $mapper;
 
-	/** @var ItemService */
-	private $itemService;
+	/** @var ItemMapper */
+	private $itemMapper;
+
+	/** @var ItemInstanceMapper */
+	private $itemInstanceMapper;
+
+	/** @var CustomerMapper */
+	private $customerMapper;
 
 	public function __construct(
 		$userId,
 		HistoryEntryMapper $mapper,
-		ItemService $itemService,
+		ItemMapper $itemMapper,
+		ItemInstanceMapper $itemInstanceMapper,
+		CustomerMapper $customerMapper,
 	) {
 		$this->userId = $userId;
 		$this->mapper = $mapper;
-		$this->itemService = $itemService;
+		$this->itemMapper = $itemMapper;
+		$this->itemInstanceMapper = $itemInstanceMapper;
+		$this->customerMapper = $customerMapper;
 	}
 
 	public function getApiObjectFromEntity(
@@ -44,6 +59,8 @@ class HistoryEntryService {
 		bool $includeModel,
 		bool $includeSubEntries,
 		bool $includeItem,
+		bool $includeItemInstance,
+		bool $includeCustomer,
 		?string $sort
 	) {
 		$result = [];
@@ -57,13 +74,47 @@ class HistoryEntryService {
 			$result["subEntries"] = $subEntries;
 		}
 
-		/*if ($includeItem) {
+		if ($includeItem) {
+			$itemId = $entity->getItemId();
+
 			try {
-				$result["item"] = $this->itemService->find($collectionId, $entity->getItemId(), ["model"]);
+				if (is_null($itemId)) {
+					$result["item"] = new \ArrayObject();
+				} else {
+					$result["item"] = $this->itemMapper->find($collectionId, $itemId);
+				}
 			} catch (Exception $e) {
 				$result["item"] = new \ArrayObject();
 			}
-		}*/
+		}
+
+		if ($includeItemInstance) {
+			$itemInstanceId = $entity->getItemInstanceId();
+
+			try {
+				if (is_null($itemInstanceId)) {
+					$result["itemInstance"] = new \ArrayObject();
+				} else {
+					$result["itemInstance"] = $this->itemInstanceMapper->find($collectionId, $itemInstanceId);
+				}
+			} catch (Exception $e) {
+				$result["itemInstance"] = new \ArrayObject();
+			}
+		}
+
+		if ($includeCustomer) {
+			$customerId = $entity->getCustomerId();
+
+			try {
+				if (is_null($customerId)) {
+					$result["customer"] = new \ArrayObject();
+				} else {
+					$result["customer"] = $this->customerMapper->find($collectionId, $customerId);
+				}
+			} catch (Exception $e) {
+				$result["customer"] = new \ArrayObject();
+			}
+		}
 
 		return $result;
 	}
@@ -72,6 +123,8 @@ class HistoryEntryService {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeSubEntries = $this->shouldInclude(self::SUB_ENTRIES_INCLUDE, $includes);
 		$includeItem = $this->shouldInclude(self::ITEM_INCLUDE, $includes);
+		$includeItemInstance = $this->shouldInclude(self::ITEM_INSTANCE_INCLUDE, $includes);
+		$includeCustomer = $this->shouldInclude(self::CUSTOMER_INCLUDE, $includes);
 
 		[$entities, $meta] = $this->mapper->findAll($collectionId, null, $filters, $sort, $sortReverse, $limit, $offset);
 
@@ -84,6 +137,8 @@ class HistoryEntryService {
 				includeModel: $includeModel,
 				includeSubEntries: $includeSubEntries,
 				includeItem: $includeItem,
+				includeItemInstance: $includeItemInstance,
+				includeCustomer: $includeCustomer,
 				sort: $sort,
 			);
 		}
