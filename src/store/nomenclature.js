@@ -263,6 +263,32 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Loaned to customer");
 			}
 		},
+		createdLoan() {
+			return (barcode, customerName, untilFormattedDate) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Book copy \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}", { barcode, customerName, untilFormattedDate });
+					} else {
+						return t("biblio", "Book instance \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}", { barcode, customerName, untilFormattedDate });
+					}
+				case "DEVICE":
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Device copy \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}", { barcode, customerName, untilFormattedDate });
+					} else {
+						return t("biblio", "Device instance \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}", { barcode, customerName, untilFormattedDate });
+					}
+				default:
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Item copy \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}", { barcode, customerName, untilFormattedDate });
+					} else {
+						return t("biblio", "Item instance \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}", { barcode, customerName, untilFormattedDate });
+					}
+				}
+			};
+		},
 		itemIcon() {
 			const biblioStore = useBiblioStore();
 

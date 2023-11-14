@@ -17,6 +17,7 @@ class HistoryEntryService {
 	use ApiObjectService;
 
 	public const SUB_ENTRIES_INCLUDE = 'subEntries';
+	public const ITEM_INCLUDE = 'item';
 
 	/** @var string */
 	private $userId;
@@ -24,12 +25,27 @@ class HistoryEntryService {
 	/** @var HistoryEntryMapper */
 	private $mapper;
 
-	public function __construct($userId, HistoryEntryMapper $mapper) {
+	/** @var ItemService */
+	private $itemService;
+
+	public function __construct(
+		$userId,
+		HistoryEntryMapper $mapper,
+		ItemService $itemService,
+	) {
 		$this->userId = $userId;
 		$this->mapper = $mapper;
+		$this->itemService = $itemService;
 	}
 
-	public function getApiObjectFromEntity(int $collectionId, $entity, bool $includeModel, bool $includeSubEntries, ?string $sort) {
+	public function getApiObjectFromEntity(
+		int $collectionId,
+		$entity,
+		bool $includeModel,
+		bool $includeSubEntries,
+		bool $includeItem,
+		?string $sort
+	) {
 		$result = [];
 
 		if ($includeModel) {
@@ -41,19 +57,35 @@ class HistoryEntryService {
 			$result["subEntries"] = $subEntries;
 		}
 
+		/*if ($includeItem) {
+			try {
+				$result["item"] = $this->itemService->find($collectionId, $entity->getItemId(), ["model"]);
+			} catch (Exception $e) {
+				$result["item"] = new \ArrayObject();
+			}
+		}*/
+
 		return $result;
 	}
 
 	public function findAll(int $collectionId, array $includes, ?array $filters, ?string $sort = null, bool $sortReverse = null, ?int $limit = null, ?int $offset = null): array {
 		$includeModel = $this->shouldInclude(self::MODEL_INCLUDE, $includes);
 		$includeSubEntries = $this->shouldInclude(self::SUB_ENTRIES_INCLUDE, $includes);
+		$includeItem = $this->shouldInclude(self::ITEM_INCLUDE, $includes);
 
 		[$entities, $meta] = $this->mapper->findAll($collectionId, null, $filters, $sort, $sortReverse, $limit, $offset);
 
 		$results = [];
 
 		foreach ($entities as $entry) {
-			$results[] = $this->getApiObjectFromEntity($collectionId, $entry, $includeModel, $includeSubEntries, $sort);
+			$results[] = $this->getApiObjectFromEntity(
+				collectionId: $collectionId,
+				entity: $entry,
+				includeModel: $includeModel,
+				includeSubEntries: $includeSubEntries,
+				includeItem: $includeItem,
+				sort: $sort,
+			);
 		}
 
 		return [$results, $meta];

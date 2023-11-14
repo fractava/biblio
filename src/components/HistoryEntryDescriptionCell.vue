@@ -22,6 +22,8 @@ export default {
 				return this.nomenclatureStore.itemRenamed(this.value?.properties?.before?.title, this.value?.properties?.after?.title);
 			case "itemInstance.create":
 				return this.nomenclatureStore.createdInstance(this.value?.properties?.after?.barcode);
+			case "loan.create":
+				return this.nomenclatureStore.createdLoan(this.value?.itemInstanceId, this.value?.customerId, this.value?.properties?.after?.until);
 			default:
 				return this.value?.type;
 			}
