@@ -129,7 +129,7 @@ export default {
 
 				const offset = (this.page - 1) * this.limit;
 
-				const apiPromise = api.getHistoryEntries(route.params.collectionId, "model+subEntries", this.filters, this.sort, this.sortReverse, this.limit, offset);
+				const apiPromise = api.getHistoryEntries(route.params.collectionId, "model+subEntries+item+itemInstance+customer", this.filters, this.sort, this.sortReverse, this.limit, offset);
 
 				apiPromise.then((result) => {
 					this.searchResults = result.historyEntries;

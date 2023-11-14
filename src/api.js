@@ -980,7 +980,7 @@ export const api = {
 		});
 	},
 
-	getHistoryEntries(collectionId, include = "model+subEntries", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
+	getHistoryEntries(collectionId, include = "model+subEntries+item+itemInstance+customer", filters = {}, sort = "", sortReverse = false, limit = 0, offset = 0) {
 		return new PCancelable((resolve, reject, onCancel) => {
 			const controller = new AbortController();
 
