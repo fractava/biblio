@@ -6,6 +6,8 @@ OC.L10N.register(
     "Name" : "Ad",
     "Error" : "Səhv",
     "Reset" : "Sıfırla",
+    "Description" : "Açıqlanma",
+    "User" : "User",
     "Delete" : "Sil",
     "Download" : "Yüklə",
     "Search" : "Axtarış",

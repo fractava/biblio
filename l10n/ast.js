@@ -5,6 +5,7 @@ OC.L10N.register(
     "Name" : "Nome",
     "Error" : "Error",
     "Value" : "Valor",
+    "Description" : "Descripción",
     "Delete" : "Desaniciar",
     "Collections" : "Coleiciones",
     "Members" : "Miembros",

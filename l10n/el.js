@@ -13,6 +13,8 @@ OC.L10N.register(
     "Reset" : "Επαναφορά",
     "Add Option" : "Προσθήκη Επιλογής",
     "Value" : "Τιμή",
+    "Description" : "Περιγραφή",
+    "User" : "Χρήστης",
     "Timestamp" : "Χρονοσφραγίδα",
     "Delete" : "Διαγραφή",
     "Drag to reorder the fields" : "Σύρετε για αναδιάταξη των πεδίων",

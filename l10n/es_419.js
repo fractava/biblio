@@ -6,6 +6,7 @@ OC.L10N.register(
     "Name" : "Nombre",
     "Reset" : "Restaurar",
     "Value" : "Valor",
+    "Description" : "Descripción",
     "User" : "Ususario",
     "Delete" : "Borrar",
     "Collections" : "Colecciones",

@@ -23,6 +23,7 @@ OC.L10N.register(
     "Delete Entry" : "Eliminar Entrada",
     "Add Entry" : "Añadir Entrada",
     "Value" : "Valor",
+    "Description" : "Descripción",
     "Timestamp" : "Marca de tiempo",
     "No collection selected" : "No se ha seleccionado una colección",
     "Select a collection in the sidebar" : "Seleccione una colección en la barra lateral",

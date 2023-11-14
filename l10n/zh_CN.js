@@ -22,6 +22,7 @@ OC.L10N.register(
     "History" : "历史",
     "Download" : "下载",
     "Search" : "搜索",
+    "Back" : "返回",
     "Sorting" : "正在排序",
     "Return" : "返回",
     "List" : "列表",

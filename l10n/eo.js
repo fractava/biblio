@@ -6,6 +6,7 @@ OC.L10N.register(
     "Name" : "Nomo",
     "Error" : "Eraro",
     "Reset" : "Restarigi",
+    "Description" : "Priskribo",
     "User" : "Uzanto",
     "Delete" : "Forigi",
     "Members" : "Membroj",

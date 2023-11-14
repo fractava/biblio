@@ -25,6 +25,7 @@ OC.L10N.register(
     "Delete Entry" : "Delete Entry",
     "Add Entry" : "Add Entry",
     "Value" : "Value",
+    "Description" : "Description",
     "User" : "User",
     "Timestamp" : "Timestamp",
     "No collection selected" : "No collection selected",

@@ -11,6 +11,8 @@ OC.L10N.register(
     "Error" : "Fejl",
     "Reset" : "Nulstil",
     "Value" : "Værdi",
+    "Description" : "Beskrivelse",
+    "User" : "ruger",
     "Timestamp" : "Tidsstempel",
     "Delete" : "Slet",
     "Drag to reorder the fields" : "Træk for at omarrangere felterne",

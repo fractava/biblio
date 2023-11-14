@@ -5,6 +5,8 @@ OC.L10N.register(
     "Edit" : "Cheñch",
     "Name" : "Anv",
     "Error" : "Fazi",
+    "Description" : "Deskrivadur",
+    "User" : "Implijer",
     "Delete" : "Lemel",
     "Download" : "Pellgargañ",
     "Search" : "Klask",

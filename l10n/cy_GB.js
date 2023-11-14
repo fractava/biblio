@@ -5,6 +5,8 @@ OC.L10N.register(
     "Edit" : "Golygu",
     "Name" : "Enw",
     "Error" : "Gwall",
+    "Description" : "Disgrifiad",
+    "User" : "Defnyddwyr",
     "Delete" : "Dileu",
     "Download" : "Llwytho i lawr",
     "Search" : "Chwilio",

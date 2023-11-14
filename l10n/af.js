@@ -4,6 +4,8 @@ OC.L10N.register(
     "Title" : "Titel",
     "Reset" : "Herstel",
     "Value" : "Waarde",
+    "Description" : "Beskrywing",
+    "User" : "Gebruiker",
     "Delete" : "Skrap",
     "Download" : "Laai af",
     "Search" : "Soek",
