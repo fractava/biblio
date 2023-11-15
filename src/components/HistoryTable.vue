@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<DataTable :columns="columns"
+		<DataTable class="historyDataTable"
+			:columns="columns"
 			:rows="searchResults"
 			:page="page"
 			:max-page="maxPage"
@@ -199,9 +200,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-
-.section {
-	margin-bottom: 1.34em;
+<style scoped>
+.historyDataTable {
+	margin-bottom: 330px;
 }
 </style>
