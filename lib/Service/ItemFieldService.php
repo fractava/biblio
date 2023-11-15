@@ -6,6 +6,8 @@ use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\TTransactional;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\ItemFieldNotFound;
 
@@ -13,11 +15,25 @@ use OCA\Biblio\Db\ItemField;
 use OCA\Biblio\Db\ItemFieldMapper;
 
 class ItemFieldService {
+	use TTransactional;
+
 	/** @var ItemFieldMapper */
 	private $mapper;
 
-	public function __construct(ItemFieldMapper $mapper) {
+	/** @var HistoryEntryService */
+	private $historyEntryService;
+
+	/** @var IDBConnection */
+	private $db;
+
+	public function __construct(
+		ItemFieldMapper $mapper,
+		HistoryEntryService $historyEntryService,
+		IDBConnection $db,
+	) {
 		$this->mapper = $mapper;
+		$this->historyEntryService = $historyEntryService;
+		$this->db = $db;
 	}
 
 	public function findAll(int $collectionId): array {
@@ -41,44 +57,97 @@ class ItemFieldService {
 		}
 	}
 
-	public function create(int $collectionId, string $type, string $name, string $settings, bool $includeInList = false): ItemField {
-		$field = new ItemField();
-		$field->setCollectionId($collectionId);
-		$field->setType($type);
-		$field->setName($name);
-		$field->setSettings($settings);
-		$field->setIncludeInList((int)$includeInList);
-		return $this->mapper->insert($field);
+	public function create(
+		int $collectionId,
+		string $type,
+		string $name,
+		string $settings,
+		bool $includeInList = false,
+		?int $historySubEntryOf = null,
+	): ItemField {
+		return $this->atomic(function () use ($collectionId, $type, $name, $settings, $includeInList, $historySubEntryOf) {
+			$field = new ItemField();
+			$field->setCollectionId($collectionId);
+			$field->setType($type);
+			$field->setName($name);
+			$field->setSettings($settings);
+			$field->setIncludeInList((int)$includeInList);
+
+			$field = $this->mapper->insert($field);
+
+			$this->historyEntryService->create(
+				type: "itemField.create",
+				collectionId: $collectionId,
+				subEntryOf: $historySubEntryOf,
+				properties: json_encode(["before" => new \ArrayObject(), "after" => $field]),
+				itemFieldId: $field->getId(),
+			);
+
+			return $field;
+		}, $this->db);
 	}
 
-	public function update(int $id, int $collectionId, ?string $newType, ?string $newName, ?string $newSettings, ?bool $newIncludeInList): ItemField {
+	public function update(
+		int $id,
+		int $collectionId,
+		?string $newType,
+		?string $newName,
+		?string $newSettings,
+		?bool $newIncludeInList,
+		?int $historySubEntryOf = null,
+	): ItemField {
 		try {
-			$field = $this->mapper->find($id, $collectionId);
+			return $this->atomic(function () use ($id, $collectionId, $newType, $newName, $newSettings, $newIncludeInList, $historySubEntryOf) {
+				$field = $this->mapper->find($id, $collectionId);
+				$unmodifiedField = $field->jsonSerialize();
 			
-			if (!is_null($newType)) {
-				$field->setType($newType);
-			}
-			if (!is_null($newName) && strlen($newName) >= 3) {
-				$field->setName($newName);
-			}
-			if (!is_null($newSettings)) {
-				$field->setSettings($newSettings);
-			}
-			if (!is_null($newIncludeInList)) {
-				$field->setIncludeInList((int)$newIncludeInList);
-			}
+				if (!is_null($newType)) {
+					$field->setType($newType);
+				}
+				if (!is_null($newName) && strlen($newName) >= 3) {
+					$field->setName($newName);
+				}
+				if (!is_null($newSettings)) {
+					$field->setSettings($newSettings);
+				}
+				if (!is_null($newIncludeInList)) {
+					$field->setIncludeInList((int)$newIncludeInList);
+				}
 
-			return $this->mapper->update($field);
+				$field = $this->mapper->update($field);
+
+				$this->historyEntryService->create(
+					type: "itemField.update",
+					collectionId: $collectionId,
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode(["before" => $unmodifiedField, "after" => $field]),
+					itemFieldId: $field->getId(),
+				);
+
+				return $field;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function delete($id, $collectionId): ItemField {
+	public function delete($id, $collectionId, ?int $historySubEntryOf = null): ItemField {
 		try {
-			$field = $this->mapper->find($id, $collectionId);
-			$this->mapper->delete($field);
-			return $field;
+			return $this->atomic(function () use ($id, $collectionId) {
+				$field = $this->mapper->find($id, $collectionId);
+
+				$historyEntry = $this->historyEntryService->create(
+					type: "itemField.delete",
+					collectionId: $field->getCollectionId(),
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode(["before" => $field, "after" => new \ArrayObject()]),
+					itemFieldId: $field->getId(),
+				);
+
+				$this->mapper->delete($field);
+
+				return $field;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
