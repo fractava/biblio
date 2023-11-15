@@ -359,5 +359,17 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return Account;
 			}
 		},
+		itemFields() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				return t("biblio", "Book Fields");
+			case "DEVICE":
+				return t("biblio", "Device Fields");
+			default:
+				return t("biblio", "Item Fields");
+			}
+		},
 	},
 });
