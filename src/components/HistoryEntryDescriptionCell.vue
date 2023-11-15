@@ -31,6 +31,9 @@ export default {
 			case "item.update": {
 				return this.nomenclatureStore.itemRenamed(this.value?.properties?.before?.title, this.value?.properties?.after?.title);
 			}
+			case "item.delete": {
+				return this.nomenclatureStore.itemDeleted(this.value?.properties?.before?.title);
+			}
 			case "itemInstance.create": {
 				return this.nomenclatureStore.itemInstanceCreated(this.value?.properties?.after?.barcode);
 			}

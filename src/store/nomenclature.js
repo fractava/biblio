@@ -115,6 +115,20 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		itemDeleted() {
+			return (title) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					return t("biblio", "Book \"{title}\" deleted", { title });
+				case "DEVICE":
+					return t("biblio", "Device \"{title}\" deleted", { title });
+				default:
+					return t("biblio", "Item \"{title}\" deleted", { title });
+				}
+			};
+		},
 		addNewItem() {
 			const biblioStore = useBiblioStore();
 
