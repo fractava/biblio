@@ -364,12 +364,40 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 			case "BOOK":
-				return t("biblio", "Book Fields");
+				return t("biblio", "Book fields");
 			case "DEVICE":
-				return t("biblio", "Device Fields");
+				return t("biblio", "Device fields");
 			default:
-				return t("biblio", "Item Fields");
+				return t("biblio", "Item fields");
 			}
+		},
+		createdItemField() {
+			return (name, type) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					return t("biblio", "Book field \"{name}\" of type {type} created", { name, type });
+				case "DEVICE":
+					return t("biblio", "Device field \"{name}\" of type {type} created", { name, type });
+				default:
+					return t("biblio", "Item field \"{name}\" of type {type} created", { name, type });
+				}
+			};
+		},
+		updatedItemField() {
+			return (name) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					return t("biblio", "Book field \"{name}\" updated:", { name });
+				case "DEVICE":
+					return t("biblio", "Device field \"{name}\" updated:", { name });
+				default:
+					return t("biblio", "Item field \"{name}\" updated:", { name });
+				}
+			};
 		},
 	},
 });

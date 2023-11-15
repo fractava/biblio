@@ -37,6 +37,38 @@ export default {
 
 				return this.nomenclatureStore.createdLoan(itemInstanceBarcode, customerName, untilFormattedDate);
 			}
+			case "itemField.create": {
+				return this.nomenclatureStore.createdItemField(this.value?.properties?.after?.name, this.value?.properties?.after?.type);
+			}
+			case "itemField.update": {
+				let description = this.nomenclatureStore.updatedItemField(this.value?.properties?.before?.name) + " ";
+
+				const changes = [];
+
+				if (this.value?.properties?.after?.name !== this.value?.properties?.before?.name) {
+					changes.push(t("biblio", "Renamed to \"{newName}\"", { newName: this.value?.properties?.after?.name }));
+				}
+
+				if (this.value?.properties?.after?.includeInList !== this.value?.properties?.before?.includeInList) {
+					if (this.value?.properties?.after?.includeInList) {
+						changes.push(t("biblio", "Enabled visibility in list views"));
+					} else {
+						changes.push(t("biblio", "Disabled visibility in list views"));
+					}
+				}
+
+				if (this.value?.properties?.after?.settings !== this.value?.properties?.before?.settings) {
+					changes.push(t("biblio", "Changed settings"));
+				}
+
+				if (changes.length === 0) {
+					description += t("biblio", "No changes");
+				} else {
+					description += changes.join(", ");
+				}
+
+				return description;
+			}
 			default:
 				return this.value?.type;
 			}
