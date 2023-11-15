@@ -114,15 +114,17 @@ class ItemFieldService {
 					$field->setIncludeInList((int)$newIncludeInList);
 				}
 
-				$field = $this->mapper->update($field);
+				if (count($field->getUpdatedFields()) > 0) {
+					$field = $this->mapper->update($field);
 
-				$this->historyEntryService->create(
-					type: "itemField.update",
-					collectionId: $collectionId,
-					subEntryOf: $historySubEntryOf,
-					properties: json_encode(["before" => $unmodifiedField, "after" => $field]),
-					itemFieldId: $field->getId(),
-				);
+					$this->historyEntryService->create(
+						type: "itemField.update",
+						collectionId: $collectionId,
+						subEntryOf: $historySubEntryOf,
+						properties: json_encode(["before" => $unmodifiedField, "after" => $field]),
+						itemFieldId: $field->getId(),
+					);
+				}
 
 				return $field;
 			}, $this->db);
