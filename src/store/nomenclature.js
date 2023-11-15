@@ -399,5 +399,19 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		deletedItemField() {
+			return (name) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					return t("biblio", "Book field \"{name}\" deleted", { name });
+				case "DEVICE":
+					return t("biblio", "Device field \"{name}\" deleted", { name });
+				default:
+					return t("biblio", "Item field \"{name}\" deleted", { name });
+				}
+			};
+		}
 	},
 });

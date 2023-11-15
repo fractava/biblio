@@ -69,6 +69,9 @@ export default {
 
 				return description;
 			}
+			case "itemField.delete": {
+				return this.nomenclatureStore.deletedItemField(this.value?.properties?.before?.name);
+			}
 			default:
 				return this.value?.type;
 			}
