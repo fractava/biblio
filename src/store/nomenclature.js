@@ -189,6 +189,30 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		deletedInstance() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+					return t("biblio", "[deleted book copy]");
+				} else {
+					return t("biblio", "[deleted book instance]");
+				}
+			case "DEVICE":
+				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+					return t("biblio", "[deleted device copy]");
+				} else {
+					return t("biblio", "[deleted device instance]");
+				}
+			default:
+				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+					return t("biblio", "[deleted item copy]");
+				} else {
+					return t("biblio", "[deleted item instance]");
+				}
+			}
+		},
 		customers() {
 			const biblioStore = useBiblioStore();
 
@@ -226,6 +250,18 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 					return t("biblio", "Customer \"{name}\" created", { name });
 				}
 			};
+		},
+		deletedCustomer() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "[deleted student]");
+			case "EMPLOYEE":
+				return t("biblio", "[deleted employee]");
+			default:
+				return t("biblio", "[deleted customer]");
+			}
 		},
 		addNewCustomer() {
 			const biblioStore = useBiblioStore();

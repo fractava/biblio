@@ -29,12 +29,13 @@ export default {
 				return this.nomenclatureStore.createdInstance(this.value?.properties?.after?.barcode);
 			}
 			case "loan.create": {
-				const itemInstanceBarcode = this.value?.itemInstance?.barcode || t("biblio", "[deleted item instance]");
-				const customerNameBarcode = this.value?.customer?.name || t("biblio", "[deleted customer]");
+				const itemInstanceBarcode = this.value?.itemInstance?.barcode || this.nomenclatureStore.deletedInstance();
+				const customerName = this.value?.customer?.name || this.nomenclatureStore.deletedCustomer();
+
 				const untilDate = new Date(this.value?.properties?.after?.until * 1000);
 				const untilFormattedDate = new Intl.DateTimeFormat(getCanonicalLocale()).format(untilDate);
 
-				return this.nomenclatureStore.createdLoan(itemInstanceBarcode, customerNameBarcode, untilFormattedDate);
+				return this.nomenclatureStore.createdLoan(itemInstanceBarcode, customerName, untilFormattedDate);
 			}
 			default:
 				return this.value?.type;
