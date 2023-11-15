@@ -37,6 +37,9 @@ export default {
 			case "itemInstance.create": {
 				return this.nomenclatureStore.itemInstanceCreated(this.value?.properties?.after?.barcode);
 			}
+			case "itemInstance.delete": {
+				return this.nomenclatureStore.itemInstanceDeleted(this.value?.properties?.before?.barcode);
+			}
 			case "loan.create": {
 				const itemInstanceBarcode = this.value?.itemInstance?.barcode || this.nomenclatureStore.deletedItemInstance();
 				const customerName = this.value?.customer?.name || this.nomenclatureStore.deletedCustomer();
