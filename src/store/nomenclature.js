@@ -251,6 +251,20 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		customerRenamed() {
+			return (oldName, newName) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+				case "STUDENT":
+					return t("biblio", "Student renamed from \"{oldName}\" to \"{newName}\"", { oldName, newName });
+				case "EMPLOYEE":
+					return t("biblio", "Employee renamed from \"{oldName}\" to \"{newName}\"", { oldName, newName });
+				default:
+					return t("biblio", "Customer renamed from \"{oldName}\" to \"{newName}\"", { oldName, newName });
+				}
+			};
+		},
 		customerDeleted() {
 			return (name) => {
 				const biblioStore = useBiblioStore();

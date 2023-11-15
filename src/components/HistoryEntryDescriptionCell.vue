@@ -19,6 +19,9 @@ export default {
 			case "customer.create": {
 				return this.nomenclatureStore.customerCreated(this.value?.properties?.after?.name);
 			}
+			case "customer.update": {
+				return this.nomenclatureStore.customerRenamed(this.value?.properties?.before?.name, this.value?.properties?.after?.name);
+			}
 			case "customer.delete": {
 				return this.nomenclatureStore.customerDeleted(this.value?.properties?.before?.name);
 			}
