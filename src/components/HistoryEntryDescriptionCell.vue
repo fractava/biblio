@@ -19,6 +19,9 @@ export default {
 			case "customer.create": {
 				return this.nomenclatureStore.customerCreated(this.value?.properties?.after?.name);
 			}
+			case "customer.delete": {
+				return this.nomenclatureStore.customerDeleted(this.value?.properties?.before?.name);
+			}
 			case "item.create": {
 				return this.nomenclatureStore.itemCreated(this.value?.properties?.after?.title);
 			}
@@ -26,22 +29,22 @@ export default {
 				return this.nomenclatureStore.itemRenamed(this.value?.properties?.before?.title, this.value?.properties?.after?.title);
 			}
 			case "itemInstance.create": {
-				return this.nomenclatureStore.createdInstance(this.value?.properties?.after?.barcode);
+				return this.nomenclatureStore.itemInstanceCreated(this.value?.properties?.after?.barcode);
 			}
 			case "loan.create": {
-				const itemInstanceBarcode = this.value?.itemInstance?.barcode || this.nomenclatureStore.deletedInstance();
+				const itemInstanceBarcode = this.value?.itemInstance?.barcode || this.nomenclatureStore.deletedItemInstance();
 				const customerName = this.value?.customer?.name || this.nomenclatureStore.deletedCustomer();
 
 				const untilDate = new Date(this.value?.properties?.after?.until * 1000);
 				const untilFormattedDate = new Intl.DateTimeFormat(getCanonicalLocale()).format(untilDate);
 
-				return this.nomenclatureStore.createdLoan(itemInstanceBarcode, customerName, untilFormattedDate);
+				return this.nomenclatureStore.loanCreated(itemInstanceBarcode, customerName, untilFormattedDate);
 			}
 			case "itemField.create": {
-				return this.nomenclatureStore.createdItemField(this.value?.properties?.after?.name, this.value?.properties?.after?.type);
+				return this.nomenclatureStore.itemFieldCreated(this.value?.properties?.after?.name, this.value?.properties?.after?.type);
 			}
 			case "itemField.update": {
-				let description = this.nomenclatureStore.updatedItemField(this.value?.properties?.before?.name) + " ";
+				let description = this.nomenclatureStore.itemFieldUpdated(this.value?.properties?.before?.name) + " ";
 
 				const changes = [];
 
@@ -70,7 +73,7 @@ export default {
 				return description;
 			}
 			case "itemField.delete": {
-				return this.nomenclatureStore.deletedItemField(this.value?.properties?.before?.name);
+				return this.nomenclatureStore.itemFieldDeleted(this.value?.properties?.before?.name);
 			}
 			default:
 				return this.value?.type;

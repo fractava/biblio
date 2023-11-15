@@ -163,7 +163,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			}
 		},
-		createdInstance() {
+		itemInstanceCreated() {
 			return (barcode) => {
 				const biblioStore = useBiblioStore();
 
@@ -189,7 +189,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
-		deletedInstance() {
+		deletedItemInstance() {
 			const biblioStore = useBiblioStore();
 
 			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
@@ -251,6 +251,20 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		customerDeleted() {
+			return (name) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+				case "STUDENT":
+					return t("biblio", "Student \"{name}\" deleted", { name });
+				case "EMPLOYEE":
+					return t("biblio", "Employee \"{name}\" deleted", { name });
+				default:
+					return t("biblio", "Customer \"{name}\" deleted", { name });
+				}
+			};
+		},
 		deletedCustomer() {
 			const biblioStore = useBiblioStore();
 
@@ -299,7 +313,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Loaned to customer");
 			}
 		},
-		createdLoan() {
+		loanCreated() {
 			return (barcode, customerName, untilFormattedDate) => {
 				const biblioStore = useBiblioStore();
 
@@ -371,7 +385,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Item fields");
 			}
 		},
-		createdItemField() {
+		itemFieldCreated() {
 			return (name, type) => {
 				const biblioStore = useBiblioStore();
 
@@ -385,7 +399,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
-		updatedItemField() {
+		itemFieldUpdated() {
 			return (name) => {
 				const biblioStore = useBiblioStore();
 
@@ -399,7 +413,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
-		deletedItemField() {
+		itemFieldDeleted() {
 			return (name) => {
 				const biblioStore = useBiblioStore();
 
