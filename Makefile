@@ -22,10 +22,10 @@ ifeq (, $(composer))
 	php $(build_tools_directory)/composer.phar update --prefer-dist
 else
 	composer install --prefer-dist
-	composer update --prefer-dist
+	# composer update --prefer-dist
 	cd tools/php-cs-fixer; \
 	composer install --prefer-dist; \
-	composer update --prefer-dist
+	# composer update --prefer-dist
 endif
 
 npm-init:
