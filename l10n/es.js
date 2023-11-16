@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema de gestión de bibliotecas",
+    "This app can be used to manage a book library, sheet music archive or textbook library" : "Esta app se puede utilizar para gestionar una biblioteca de libros, un archivo de partituras o una biblioteca de libros de texto",
     "Add new Item Instance" : "Añadir nueva instancia de ítem",
     "Title" : "Título",
     "Edit" : "Editar",
