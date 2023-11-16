@@ -36,6 +36,10 @@ class Version000000Date20231116120500 extends SimpleMigrationStep {
 			]);
 			$table->addColumn('type', Types::STRING, [
 				'notnull' => true,
+				'length' => 50,
+			]);
+			$table->addColumn('name', Types::STRING, [
+				'notnull' => true,
 				'length' => 200,
 			]);
 			$table->addColumn('timestamp', Types::BIGINT, [
