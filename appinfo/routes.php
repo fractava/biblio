@@ -59,6 +59,13 @@ return [
 		['name' => 'loan#update', 'url' => '/collections/{collectionId}/loans/byBarcode/{barcode}', 'verb' => 'PUT'],
 		['name' => 'loan#destroy', 'url' => '/collections/{collectionId}/loans/byBarcode/{barcode}', 'verb' => 'DELETE'],
 
+		// Loan Until Presets
+		['name' => 'loan_until_preset#index', 'url' => '/collections/{collectionId}/loan_until_presets', 'verb' => 'GET'],
+		['name' => 'loan_until_preset#show', 'url' => '/collections/{collectionId}/loan_until_presets/{id}', 'verb' => 'GET'],
+		['name' => 'loan_until_preset#create', 'url' => '/collections/{collectionId}/loan_until_presets', 'verb' => 'POST'],
+		['name' => 'loan_until_preset#update', 'url' => '/collections/{collectionId}/loan_until_presets/{id}', 'verb' => 'PUT'],
+		['name' => 'loan_until_preset#destroy', 'url' => '/collections/{collectionId}/loan_until_presets/{id}', 'verb' => 'DELETE'],
+
 		// Loan Fields
 		['name' => 'loan_field#index', 'url' => '/collections/{collectionId}/loan_fields', 'verb' => 'GET'],
 		['name' => 'loan_field#show', 'url' => '/collections/{collectionId}/loan_fields/{id}', 'verb' => 'GET'],
