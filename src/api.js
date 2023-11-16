@@ -125,6 +125,20 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * @typedef {{
  *   id: number
  *   collectionId: number
+ *   type: string
+ *   name: string
+ *   timestamp: number
+ * }} LoanUntilPreset
+ *
+ * @typedef {{
+ *   type: string
+ *   name: string
+ *   timestamp: number
+ * }} updateLoanUntilPresetParameters
+ *
+ * @typedef {{
+ *   id: number
+ *   collectionId: number
  *   title: string
  *   fieldValues: Array<FieldValueResponse>
  * }} CustomerResponse
@@ -959,6 +973,56 @@ export const api = {
 	deleteLoan(collectionId, barcode) {
 		return new Promise((resolve, reject) => {
 			axios.delete(`/collections/${collectionId}/loans/byBarcode/${barcode}`)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of collection
+	 * @return {Promise<Array<LoanUntilPreset>>}
+	 */
+	getLoanUntilPresets(collectionId) {
+		return new Promise((resolve, reject) => {
+			axios.get(`/collections/${collectionId}/loan_until_presets`, {})
+				.then((response) => {
+					resolve(response.data);
+				})
+				.catch((error) => {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection to create the loan until preset in
+	 * @param {updateLoanUntilPresetParameters} parameters attributes of the new loan until preset
+	 * @return {Promise<LoanUntilPreset>}
+	 */
+	createLoanUntilPreset(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/loan_until_presets`, parameters)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection
+	 * @param {number} id id of the loan until preset to delete
+	 * @return {Promise<LoanUntilPreset>}
+	 */
+	deleteLoanUntilPreset(collectionId, id) {
+		return new Promise((resolve, reject) => {
+			axios.delete(`/collections/${collectionId}/loan_until_presets/${id}`)
 				.then(function(response) {
 					resolve(response.data);
 				})
