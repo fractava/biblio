@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "Грешка",
     "Reset" : "Ресетирање",
     "Value" : "Вредност",
+    "Type" : "Вид",
+    "Time" : "Време",
     "Delete" : "Избриши",
     "Members" : "Членови",
     "Download" : "Преземи",

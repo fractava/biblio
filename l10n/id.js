@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "Nilari",
     "Description" : "Deskrisi",
     "User" : "Pengguna",
+    "Type" : "tipe",
+    "Time" : "Waktu",
     "Delete" : "Hapus",
     "Members" : "Anggota",
     "Download" : "Unduh",

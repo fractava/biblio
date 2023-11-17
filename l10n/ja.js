@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "値",
     "Description" : "説明",
     "Timestamp" : "タイムスタンプ",
+    "Type" : "タイプ",
+    "Time" : "時間",
     "Delete" : "削除",
     "Collections" : "コレクション",
     "Members" : "メンバー",

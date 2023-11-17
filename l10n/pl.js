@@ -14,6 +14,8 @@ OC.L10N.register(
     "Add Option" : "Dodaj opcję",
     "Value" : "Wartość",
     "Timestamp" : "Znacznik czasu",
+    "Type" : "Rodzaj",
+    "Time" : "Czas",
     "Delete" : "Usuń",
     "Drag to reorder the fields" : "Przeciągnij, aby zmienić kolejność pól",
     "Collections" : "Kolekcje",

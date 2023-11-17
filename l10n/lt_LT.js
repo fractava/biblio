@@ -10,6 +10,8 @@ OC.L10N.register(
     "Value" : "Reikšmė",
     "Description" : "Aprašas",
     "Timestamp" : "Laiko žyma",
+    "Type" : "Tipas",
+    "Time" : "Laikas",
     "Delete" : "Ištrinti",
     "Collections" : "Kolekcijos",
     "Members" : "Nariai",

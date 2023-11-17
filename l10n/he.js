@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "ערך",
     "Description" : "תיאור",
     "User" : "משתמש",
+    "Type" : "סוג",
+    "Time" : "זמן",
     "Delete" : "מחיקה",
     "Collections" : "אוספים",
     "Members" : "חברים",

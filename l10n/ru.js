@@ -13,6 +13,8 @@ OC.L10N.register(
     "Value" : "Значение",
     "Description" : "Описание",
     "Timestamp" : "Метка времени",
+    "Type" : "Тип",
+    "Time" : "Время",
     "Delete" : "Удалить",
     "Drag to reorder the fields" : "Перетащите, чтобы изменить порядок полей",
     "Collections" : "Коллекции",

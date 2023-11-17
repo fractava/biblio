@@ -15,6 +15,8 @@ OC.L10N.register(
     "Value" : "Balioa",
     "Description" : "Deskripzioa",
     "Timestamp" : "Denbora-marka",
+    "Type" : "Mota",
+    "Time" : "Noiz",
     "Delete" : "Ezabatu",
     "Drag to reorder the fields" : "Arrastatu eremuak berrordenatzeko",
     "Collections" : "Bildumak",

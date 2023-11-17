@@ -34,6 +34,8 @@
     "Could not update item field" : "No se pudo actualizar el campo del ítem",
     "Could not create item field" : "No se pudo crear el campo del ítem",
     "Could not delete item field" : "No se pudo eliminar el campo del ítem",
+    "Type" : "Tipo",
+    "Time" : "Fecha",
     "Delete" : "Eliminar",
     "Drag to reorder the fields" : "Arrastra para reordenar los campos",
     "Collections" : "Colecciones",

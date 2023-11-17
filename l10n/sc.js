@@ -14,6 +14,8 @@ OC.L10N.register(
     "Value" : "Balore",
     "User" : "Utente",
     "Timestamp" : "Marca temporale",
+    "Type" : "Genia",
+    "Time" : "Ora",
     "Delete" : "Cantzella",
     "Drag to reorder the fields" : "Traga pro ordinare is campos",
     "Members" : "Membros",

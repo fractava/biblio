@@ -11,6 +11,8 @@ OC.L10N.register(
     "Value" : "Valor",
     "Description" : "Descripcion",
     "User" : "User",
+    "Type" : "Tipe",
+    "Time" : "Ora",
     "Delete" : "Suprimir",
     "Members" : "Membres",
     "Lend/Return" : "Prestar/Tornar",

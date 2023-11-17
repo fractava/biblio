@@ -49,6 +49,8 @@
     "Could not update loan field" : "Nepodařilo se zaktualizovat kolonku o zápůjčce",
     "Could not create loan field" : "Nepodařilo se vytvořit kolonku o zápůjčce",
     "Could not delete loan field" : "Nepodařilo se smazat kolonku o zápůjčce",
+    "Type" : "Typ",
+    "Time" : "Čas",
     "Item Nomenclature" : "Nomenklatura položky",
     "Instance Nomenclature" : "Nomenklatura instance",
     "Customer Nomenclature" : "Nomenklatura zákazníka",

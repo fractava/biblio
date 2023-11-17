@@ -8,6 +8,8 @@ OC.L10N.register(
     "Value" : "Verdi",
     "Description" : "Skildring",
     "User" : "Bruker",
+    "Type" : "Skriv",
+    "Time" : "Tid",
     "Delete" : "Slett",
     "Collections" : "Samlingar",
     "Download" : "Last ned",

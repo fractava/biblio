@@ -14,6 +14,8 @@ OC.L10N.register(
     "Value" : "值",
     "Description" : "描述",
     "Timestamp" : "时间戳",
+    "Type" : "类型",
+    "Time" : "时间",
     "Delete" : "删除",
     "Drag to reorder the fields" : "拖动以重新排列字段",
     "Collections" : "集合",

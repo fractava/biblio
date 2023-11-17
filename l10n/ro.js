@@ -8,6 +8,8 @@ OC.L10N.register(
     "Reset" : "Resetare",
     "Description" : "Descriere",
     "User" : "Utilizator",
+    "Type" : "Tip",
+    "Time" : "Timp",
     "Delete" : "Șterge",
     "Download" : "Descărcare",
     "Search" : "Căutare",

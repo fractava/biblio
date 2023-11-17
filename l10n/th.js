@@ -9,6 +9,8 @@ OC.L10N.register(
     "Description" : "คำอธิบาย",
     "User" : "ผู้ใช้",
     "Timestamp" : "ประทับเวลา",
+    "Type" : "ประเภท",
+    "Time" : "เวลา",
     "Delete" : "ลบ",
     "Collections" : "คอลเลคชั่น",
     "Download" : "ดาวน์โหลด",

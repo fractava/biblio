@@ -7,6 +7,8 @@ OC.L10N.register(
     "Error" : "Gwall",
     "Description" : "Disgrifiad",
     "User" : "Defnyddwyr",
+    "Type" : "Math",
+    "Time" : "Amser",
     "Delete" : "Dileu",
     "Download" : "Llwytho i lawr",
     "Search" : "Chwilio",

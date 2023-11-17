@@ -15,6 +15,8 @@ OC.L10N.register(
     "Value" : "Waarde",
     "Description" : "Omschrijving",
     "Timestamp" : "Tijdstempel",
+    "Type" : "Type",
+    "Time" : "Tijd",
     "Delete" : "Verwijder",
     "Drag to reorder the fields" : "Sleep om de veldvolgorde te wijzigen",
     "Collections" : "Verzamelingen",

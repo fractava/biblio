@@ -49,6 +49,8 @@
     "Could not update loan field" : "無法更新貸款欄位",
     "Could not create loan field" : "無法建立貸款欄位",
     "Could not delete loan field" : "無法刪除貸款欄位",
+    "Type" : "類型",
+    "Time" : "時間",
     "Item Nomenclature" : "項目命名法",
     "Instance Nomenclature" : "實體命名法",
     "Customer Nomenclature" : "顧客命名法",

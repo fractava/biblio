@@ -16,6 +16,8 @@ OC.L10N.register(
     "Description" : "Beschreibung",
     "User" : "Benutzer",
     "Timestamp" : "Zeitstempel",
+    "Type" : "Typ",
+    "Time" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
     "Delete" : "Löschen",
     "Drag to reorder the fields" : "Ziehen, um die Felder neu anzuordnen",
     "Collections" : "Sammlungen",

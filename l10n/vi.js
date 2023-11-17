@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "Giá trị",
     "Description" : "Mô tả",
     "User" : "Người dùng",
+    "Type" : "Loại",
+    "Time" : "Thời gian",
     "Delete" : "Xóa",
     "Members" : "Thành viên",
     "Download" : "Tải xuống",

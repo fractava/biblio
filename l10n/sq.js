@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "Vlerë",
     "Description" : "Përshkrim",
     "User" : "Përdorues",
+    "Type" : "Tipi",
+    "Time" : "Kohë",
     "Delete" : "Fshi",
     "Members" : "Anëtar",
     "Download" : "Shkarko",

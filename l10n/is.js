@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "Gildi",
     "Description" : "Lýsing",
     "User" : "Notandi",
+    "Type" : "Tegund",
+    "Time" : "Tími",
     "Delete" : "Eyða",
     "Collections" : "Söfn",
     "Members" : "Meðlimir",

@@ -14,6 +14,7 @@ OC.L10N.register(
     "Description" : "Beskrivelse",
     "User" : "ruger",
     "Timestamp" : "Tidsstempel",
+    "Time" : "Tid",
     "Delete" : "Slet",
     "Drag to reorder the fields" : "Træk for at omarrangere felterne",
     "Collections" : "Samlinger",

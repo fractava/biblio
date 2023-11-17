@@ -42,6 +42,8 @@ OC.L10N.register(
     "Could not update loan field" : "Could not update loan field",
     "Could not create loan field" : "Could not create loan field",
     "Could not delete loan field" : "Could not delete loan field",
+    "Type" : "Type",
+    "Time" : "Time",
     "Item Nomenclature" : "Item Nomenclature",
     "Instance Nomenclature" : "Instance Nomenclature",
     "Customer Nomenclature" : "Customer Nomenclature",

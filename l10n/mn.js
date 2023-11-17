@@ -8,6 +8,8 @@ OC.L10N.register(
     "Reset" : "тохируулах",
     "Value" : "Үнийн дүн",
     "Description" : "Тодорхойлолт",
+    "Type" : "Төрөл",
+    "Time" : "Цаг",
     "Delete" : "Устгах",
     "Members" : "Гишүүд",
     "Download" : "Татах",

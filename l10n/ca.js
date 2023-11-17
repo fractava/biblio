@@ -12,6 +12,8 @@ OC.L10N.register(
     "Reset" : "Reinicialitza",
     "Value" : "Valor",
     "Timestamp" : "Marca de temps",
+    "Type" : "Tipus",
+    "Time" : "Hora",
     "Delete" : "Suprimir",
     "Drag to reorder the fields" : "Arrossegueu per reordenar els camps",
     "Collections" : "Col·leccions",

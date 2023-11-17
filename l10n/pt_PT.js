@@ -10,6 +10,8 @@ OC.L10N.register(
     "Description" : "Descrição",
     "User" : "Utilizador",
     "Timestamp" : "Indicador de dia e hora",
+    "Type" : "Tipo",
+    "Time" : "Tempo",
     "Delete" : "Eliminar",
     "Members" : "Membros",
     "Download" : "Transferir",

@@ -14,6 +14,8 @@ OC.L10N.register(
     "Value" : "Vrednost",
     "Description" : "Opis",
     "Timestamp" : "Časovni žig",
+    "Type" : "Vrsta",
+    "Time" : "Čas",
     "Delete" : "Izbriši",
     "Drag to reorder the fields" : "Potegnite vprašanja in jih preuredite",
     "Collections" : "Zbirke",

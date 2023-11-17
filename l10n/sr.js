@@ -51,6 +51,8 @@ OC.L10N.register(
     "Could not update loan field" : "Није успело ажурирање поља позајмице",
     "Could not create loan field" : "Није успело креирање поља позајмице",
     "Could not delete loan field" : "Није успело брисање поља позајмице",
+    "Type" : "Тип",
+    "Time" : "Време",
     "Item Nomenclature" : "Номенклатура ставке",
     "Instance Nomenclature" : "Номенклатура инстанце",
     "Customer Nomenclature" : "Произвољна номенклатура",

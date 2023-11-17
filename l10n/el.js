@@ -16,6 +16,8 @@ OC.L10N.register(
     "Description" : "Περιγραφή",
     "User" : "Χρήστης",
     "Timestamp" : "Χρονοσφραγίδα",
+    "Type" : "Τύπος",
+    "Time" : "Ώρα",
     "Delete" : "Διαγραφή",
     "Drag to reorder the fields" : "Σύρετε για αναδιάταξη των πεδίων",
     "Collections" : "Συλλογές",

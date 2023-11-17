@@ -36,6 +36,8 @@ OC.L10N.register(
     "Could not update item field" : "Nem sikerült frissíteni az elem mezőket",
     "Could not create item field" : "Nem sikerült létrehozni az elem mezőket",
     "Could not delete item field" : "Nem sikerült törölni az elem mezőket",
+    "Type" : "Típus",
+    "Time" : "Idő",
     "Delete" : "Törlés",
     "Drag to reorder the fields" : "Húzza a mezők átrendezéséhez",
     "Collections" : "Gyűjtemények",

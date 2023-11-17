@@ -12,6 +12,8 @@ OC.L10N.register(
     "Value" : "Arvo",
     "Description" : "Kuvaus",
     "Timestamp" : "Aikaleima",
+    "Type" : "Tyyppi",
+    "Time" : "Aika",
     "Delete" : "Poista",
     "Collections" : "Kokoelmat",
     "Members" : "Jäsenet",

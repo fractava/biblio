@@ -8,6 +8,8 @@ OC.L10N.register(
     "Value" : "Valor",
     "Description" : "Descripción",
     "User" : "Usuario",
+    "Type" : "Tipo",
+    "Time" : "Hora",
     "Delete" : "Borrar",
     "Collections" : "Colecciones",
     "Members" : "Miembros",

@@ -46,6 +46,8 @@ OC.L10N.register(
     "Could not update loan field" : "Ödünç alanı güncellenemedi",
     "Could not create loan field" : "Ödünç alanı eklenemedi",
     "Could not delete loan field" : "Ödünç alanı silinemedi",
+    "Type" : "Tür",
+    "Time" : "Saat",
     "Item Nomenclature" : "Öge adlandırma",
     "Instance Nomenclature" : "Örnek adlandırma",
     "Customer Nomenclature" : "Üye adlandırma",

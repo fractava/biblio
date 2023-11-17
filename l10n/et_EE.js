@@ -8,6 +8,8 @@ OC.L10N.register(
     "Reset" : "Lähtesta",
     "Description" : "Kirjeldus",
     "User" : "Kasutaja",
+    "Type" : "Tüüp",
+    "Time" : "Aeg",
     "Delete" : "Kustuta",
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",

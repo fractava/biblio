@@ -8,6 +8,8 @@ OC.L10N.register(
     "Reset" : "Restarigi",
     "Description" : "Priskribo",
     "User" : "Uzanto",
+    "Type" : "Tipo",
+    "Time" : "Dato",
     "Delete" : "Forigi",
     "Members" : "Membroj",
     "Download" : "Elŝuti",

@@ -10,6 +10,8 @@ OC.L10N.register(
     "Description" : "Опис",
     "User" : "Користувач",
     "Timestamp" : "Мітка часу",
+    "Type" : "Тип",
+    "Time" : "Час",
     "Delete" : "Вилучити",
     "Members" : "Учасники",
     "Download" : "Завантажити",

@@ -17,6 +17,8 @@ OC.L10N.register(
     "User" : "Používateľ",
     "Timestamp" : "Časová značka",
     "Could not update customer field" : "Nepodarilo sa aktualizovať pole zákazníka",
+    "Type" : "Typ",
+    "Time" : "Čas",
     "Delete" : "Vymazať",
     "Drag to reorder the fields" : "Potiahnutím zmeníte poradie polí",
     "Collections" : "Zbierky",

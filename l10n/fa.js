@@ -14,6 +14,8 @@ OC.L10N.register(
     "Description" : "شرح",
     "User" : "کاربر",
     "Timestamp" : "مهر زمان",
+    "Type" : "نوع",
+    "Time" : "زمان",
     "Delete" : "حذف",
     "Drag to reorder the fields" : "Drag to reorder the fields",
     "Collections" : "مجموعه ها",

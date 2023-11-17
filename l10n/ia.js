@@ -7,6 +7,8 @@ OC.L10N.register(
     "Reset" : "Re-fixar",
     "Description" : "Description",
     "User" : "User",
+    "Type" : "Typo",
+    "Time" : "Tempore",
     "Delete" : "Deler",
     "Members" : "Membros",
     "History" : "Historia",

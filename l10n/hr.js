@@ -16,6 +16,8 @@ OC.L10N.register(
     "Description" : "Opis",
     "User" : "@string/user_icon",
     "Timestamp" : "Vremenska oznaka",
+    "Type" : "Vrsta",
+    "Time" : "Vrijeme",
     "Delete" : "Izbriši",
     "Drag to reorder the fields" : "Promijenite redoslijed povlačenjem polja",
     "Collections" : "Zbirke",

@@ -9,6 +9,8 @@ OC.L10N.register(
     "Value" : "Vērtība",
     "Description" : "Apraksts",
     "User" : "Lietotājs",
+    "Type" : "Tips",
+    "Time" : "Laiks",
     "Delete" : "Dzēst",
     "Members" : "Biedri",
     "History" : "Vēsture",
