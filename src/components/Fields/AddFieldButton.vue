@@ -1,7 +1,8 @@
 <template>
 	<NcActions class="addFieldButton"
+		primary
 		:open.sync="open"
-		:menu-title="t('biblio', 'Add a field')"
+		:menu-name="t('biblio', 'Add a field')"
 		default-icon="icon-add">
 		<NcActionButton v-for="(field, type) in FieldTypes"
 			:key="field.label"
@@ -41,7 +42,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .addFieldButton {
 	width: calc(100% - 24px);
 	margin-left: 24px;
@@ -49,7 +50,7 @@ export default {
 	transition: opacity 0.5s;
 }
 
-.addFieldButton button {
+.addFieldButton >>> button {
 	width: 100% !important;
 }
 </style>
