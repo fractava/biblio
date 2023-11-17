@@ -125,13 +125,13 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * @typedef {{
  *   id: number
  *   collectionId: number
- *   type: string
+ *   type: ("relative"|"absolute")
  *   name: string
  *   timestamp: number
  * }} LoanUntilPreset
  *
  * @typedef {{
- *   type: string
+ *   type: ("relative"|"absolute")
  *   name: string
  *   timestamp: number
  * }} updateLoanUntilPresetParameters
