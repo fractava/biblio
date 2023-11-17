@@ -3,7 +3,7 @@
 		<NcTextField :value.sync="collectionName"
 			:error="!collectionNameValid"
 			:label-visible="true"
-			:helper-text="collectionNameValid ? '' : 'Ungültiger Name'"
+			:helper-text="collectionNameValid ? '' : t('biblio', 'Invalid name')"
 			label="Name"
 			:show-trailing-button="collectionNameHasChanges"
 			trailing-button-icon="arrowRight"
