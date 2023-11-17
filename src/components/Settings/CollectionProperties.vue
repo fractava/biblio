@@ -4,7 +4,7 @@
 			:error="!collectionNameValid"
 			:label-visible="true"
 			:helper-text="collectionNameValid ? '' : t('biblio', 'Invalid name')"
-			label="Name"
+			:label="t('biblio', 'Name')"
 			:show-trailing-button="collectionNameHasChanges"
 			trailing-button-icon="arrowRight"
 			style=" --color-border-maxcontrast: #949494;"

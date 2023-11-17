@@ -28,6 +28,11 @@
 			<CollectionMembers />
 		</NcAppSettingsSection>
 		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
+			id="collection-loan-until-presets"
+			:name="t('biblio', 'Loan Until Presets')">
+			<CollectionLoanUntilPresets />
+		</NcAppSettingsSection>
+		<NcAppSettingsSection v-if="settingsStore.site === 'collection'"
 			id="collection-item-fields"
 			:name="t('biblio', 'Item Fields')">
 			<CollectionItemFields />
@@ -63,6 +68,7 @@ import CollectionsList from "./CollectionsList.vue";
 import CollectionProperties from "./CollectionProperties.vue";
 import CollectionNomenclature from "./CollectionNomenclature.vue";
 import CollectionMembers from "./CollectionMembers.vue";
+import CollectionLoanUntilPresets from "./CollectionLoanUntilPresets.vue";
 import CollectionItemFields from "./CollectionItemFields.vue";
 import CollectionLoanFields from "./CollectionLoanFields.vue";
 import CollectionCustomerFields from "./CollectionCustomerFields.vue";
@@ -76,6 +82,7 @@ export default {
 		CollectionProperties,
 		CollectionNomenclature,
 		CollectionMembers,
+		CollectionLoanUntilPresets,
 		CollectionItemFields,
 		CollectionLoanFields,
 		CollectionCustomerFields,
