@@ -9,18 +9,9 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="preset in presets"
-					:key="preset.id">
-					<td>
-						<NcTextField :value="preset.name"
-							:error="preset.name?.length < 1"
-							:label-visible="true"
-							:helper-text="preset.name?.length > 1 ? '' : t('biblio', 'Invalid name')"
-							:label="t('biblio', 'Name')" />
-					</td>
-					<td>{{ preset.type }}</td>
-					<td>{{ preset.timestamp }}</td>
-				</tr>
+				<LoanUntilPresetRow v-for="(preset, index) in presets"
+					:key="preset.id"
+					:preset.sync="presets[index]" />
 			</tbody>
 		</table>
 		<NcActions class="addPresetButton"
@@ -41,19 +32,19 @@ import { mapStores } from "pinia";
 
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
-import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import Plus from "vue-material-design-icons/Plus.vue";
 
 import { useSettingsStore } from "../../store/settings.js";
 import { api } from "../../api.js";
+import LoanUntilPresetRow from "./LoanUntilPresetRow.vue";
 
 export default {
 	components: {
 		NcActions,
 		NcActionButton,
-		NcTextField,
 		Plus,
+		LoanUntilPresetRow,
 	},
 	data() {
 		return {
@@ -64,10 +55,10 @@ export default {
 		...mapStores(useSettingsStore),
 	},
 	mounted() {
-		this.fetchMembers();
+		this.fetchPresets();
 	},
 	methods: {
-		fetchMembers() {
+		fetchPresets() {
 			api.getLoanUntilPresets(this.settingsStore.context?.collectionId).then((result) => {
 				this.presets = result;
 			});
@@ -78,7 +69,7 @@ export default {
 				type: "absolute",
 				timestamp: 1000000,
 			}).then((result) => {
-				console.log(result);
+				this.fetchPresets();
 			});
 		},
 	},
