@@ -102,7 +102,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * }} Item
  *
  * @typedef {{
- *   title: string
+ *   title: string | undefined
  * }} updateItemParameters
  *
  * @typedef {{
@@ -131,9 +131,9 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * }} LoanUntilPreset
  *
  * @typedef {{
- *   type: ("relative"|"absolute")
- *   name: string
- *   timestamp: number
+ *   type: ("relative"|"absolute") | undefined
+ *   name: string | undefined
+ *   timestamp: number | undefined
  * }} updateLoanUntilPresetParameters
  *
  * @typedef {{
@@ -151,7 +151,7 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * }} Customer
  *
  * @typedef {{
- *   name: string
+ *   name: string | undefined
  * }} updateCustomerParameters
  *
  */
@@ -1006,6 +1006,24 @@ export const api = {
 	createLoanUntilPreset(collectionId, parameters) {
 		return new Promise((resolve, reject) => {
 			axios.post(`/collections/${collectionId}/loan_until_presets`, parameters)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	/**
+	 * @param {number} collectionId Id of the collection to create the loan until preset in
+	 * @param {number} id id of the loan until preset to update
+	 * @param {updateLoanUntilPresetParameters} parameters attributes of the new loan until preset
+	 * @return {Promise<LoanUntilPreset>}
+	 */
+	updateLoanUntilPreset(collectionId, id, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.put(`/collections/${collectionId}/loan_until_presets/${id}`, parameters)
 				.then(function(response) {
 					resolve(response.data);
 				})
