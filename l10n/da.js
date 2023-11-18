@@ -17,6 +17,8 @@ OC.L10N.register(
     "Time" : "Tid",
     "Delete" : "Slet",
     "Drag to reorder the fields" : "Træk for at omarrangere felterne",
+    "Relative" : "Relative",
+    "Absolute" : "Absolut",
     "Collections" : "Samlinger",
     "Members" : "Medlemmer",
     "Lend/Return" : "Udlån/Returnering",

@@ -10,6 +10,8 @@ OC.L10N.register(
     "Type" : "Typo",
     "Time" : "Tempore",
     "Delete" : "Deler",
+    "Relative" : "Relative",
+    "Absolute" : "Absolute",
     "Members" : "Membros",
     "History" : "Historia",
     "Download" : "Discargar",

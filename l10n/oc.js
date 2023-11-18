@@ -14,6 +14,8 @@ OC.L10N.register(
     "Type" : "Tipe",
     "Time" : "Ora",
     "Delete" : "Suprimir",
+    "Relative" : "Relatiu",
+    "Absolute" : "Absolut",
     "Members" : "Membres",
     "Lend/Return" : "Prestar/Tornar",
     "Download" : "Telecargar",

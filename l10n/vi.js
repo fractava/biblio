@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "Loại",
     "Time" : "Thời gian",
     "Delete" : "Xóa",
+    "Relative" : "Liên quan",
+    "Absolute" : "Chính xác",
     "Members" : "Thành viên",
     "Download" : "Tải xuống",
     "Search" : "Tìm kiếm",

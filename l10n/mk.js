@@ -10,6 +10,8 @@ OC.L10N.register(
     "Type" : "Вид",
     "Time" : "Време",
     "Delete" : "Избриши",
+    "Relative" : "Релативно",
+    "Absolute" : "Апсолутно",
     "Members" : "Членови",
     "Download" : "Преземи",
     "Search" : "Барај",

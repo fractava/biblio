@@ -11,6 +11,8 @@ OC.L10N.register(
     "User" : "მომხმარებელი",
     "Time" : "დრო",
     "Delete" : "წაშლა",
+    "Relative" : "ფარდობითი",
+    "Absolute" : "აბსოლუტური",
     "Collections" : "კოლექციები",
     "Members" : "წევრები",
     "Download" : "ჩამოტვირთვა",

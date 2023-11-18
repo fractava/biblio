@@ -11,6 +11,8 @@ OC.L10N.register(
     "Type" : "Төрөл",
     "Time" : "Цаг",
     "Delete" : "Устгах",
+    "Relative" : "Хамаарал",
+    "Absolute" : "Тогтсон цагт",
     "Members" : "Гишүүд",
     "Download" : "Татах",
     "Search" : "Хайх",

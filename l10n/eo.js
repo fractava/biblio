@@ -11,6 +11,8 @@ OC.L10N.register(
     "Type" : "Tipo",
     "Time" : "Dato",
     "Delete" : "Forigi",
+    "Relative" : "Relative",
+    "Absolute" : "Absolute",
     "Members" : "Membroj",
     "Download" : "Elŝuti",
     "Search" : "Serĉi",

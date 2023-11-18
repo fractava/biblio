@@ -10,6 +10,8 @@ OC.L10N.register(
     "Type" : "Math",
     "Time" : "Amser",
     "Delete" : "Dileu",
+    "Relative" : "Perthynas",
+    "Absolute" : "Absoliwt",
     "Download" : "Llwytho i lawr",
     "Search" : "Chwilio",
     "List" : "Rhestr",

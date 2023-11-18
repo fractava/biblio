@@ -20,6 +20,8 @@ OC.L10N.register(
     "Time" : "Vrijeme",
     "Delete" : "Izbriši",
     "Drag to reorder the fields" : "Promijenite redoslijed povlačenjem polja",
+    "Relative" : "Relativno",
+    "Absolute" : "Apsolutno",
     "Collections" : "Zbirke",
     "Members" : "Članovi",
     "Lend/Return" : "Posudi/vrati",

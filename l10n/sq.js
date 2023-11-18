@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "Tipi",
     "Time" : "Kohë",
     "Delete" : "Fshi",
+    "Relative" : "Relative",
+    "Absolute" : "Absolute",
     "Members" : "Anëtar",
     "Download" : "Shkarko",
     "Search" : "Kërko",

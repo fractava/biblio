@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "タイプ",
     "Time" : "時間",
     "Delete" : "削除",
+    "Relative" : "相対指定",
+    "Absolute" : "絶対指定",
     "Collections" : "コレクション",
     "Members" : "メンバー",
     "Download" : "ダウンロード",

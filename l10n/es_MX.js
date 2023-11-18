@@ -12,6 +12,8 @@ OC.L10N.register(
     "Timestamp" : "Marca de tiempo",
     "Time" : "Hora",
     "Delete" : "Eliminar",
+    "Relative" : "Relativo",
+    "Absolute" : "Absoluto",
     "Collections" : "Colecciones",
     "Members" : "Miembros",
     "History" : "Histórico",

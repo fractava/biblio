@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "Tegund",
     "Time" : "Tími",
     "Delete" : "Eyða",
+    "Relative" : "Hlutfallslegt",
+    "Absolute" : "Algilt",
     "Collections" : "Söfn",
     "Members" : "Meðlimir",
     "History" : "Ferill",

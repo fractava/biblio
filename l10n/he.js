@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "סוג",
     "Time" : "זמן",
     "Delete" : "מחיקה",
+    "Relative" : "יחסי",
+    "Absolute" : "מוחלט",
     "Collections" : "אוספים",
     "Members" : "חברים",
     "Download" : "הורדה",

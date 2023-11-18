@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "Sıfırla",
     "Description" : "Açıqlanma",
     "User" : "User",
+    "Time" : "Vaxt",
     "Delete" : "Sil",
     "Download" : "Yüklə",
     "Search" : "Axtarış",

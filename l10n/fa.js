@@ -18,6 +18,7 @@ OC.L10N.register(
     "Time" : "زمان",
     "Delete" : "حذف",
     "Drag to reorder the fields" : "Drag to reorder the fields",
+    "Select Type" : "Select Type",
     "Collections" : "مجموعه ها",
     "Members" : "اعضا",
     "Lend/Return" : "Lend/Return",

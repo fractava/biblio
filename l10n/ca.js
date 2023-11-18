@@ -16,6 +16,8 @@ OC.L10N.register(
     "Time" : "Hora",
     "Delete" : "Suprimir",
     "Drag to reorder the fields" : "Arrossegueu per reordenar els camps",
+    "Relative" : "Relativa",
+    "Absolute" : "Absoluta",
     "Collections" : "Col·leccions",
     "Members" : "Membres",
     "Lend/Return" : "Préstec/Retorn",

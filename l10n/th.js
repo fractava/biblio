@@ -12,6 +12,7 @@ OC.L10N.register(
     "Type" : "ประเภท",
     "Time" : "เวลา",
     "Delete" : "ลบ",
+    "Absolute" : "สมบูรณ์",
     "Collections" : "คอลเลคชั่น",
     "Download" : "ดาวน์โหลด",
     "Search" : "ค้นหา",

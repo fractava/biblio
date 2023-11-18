@@ -11,6 +11,8 @@ OC.L10N.register(
     "Type" : "Tüüp",
     "Time" : "Aeg",
     "Delete" : "Kustuta",
+    "Relative" : "Suhteline",
+    "Absolute" : "Absoluutne",
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",
     "Search" : "Otsi",

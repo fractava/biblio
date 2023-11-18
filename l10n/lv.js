@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "Tips",
     "Time" : "Laiks",
     "Delete" : "Dzēst",
+    "Relative" : "Relatīvs",
+    "Absolute" : "Absolūts",
     "Members" : "Biedri",
     "History" : "Vēsture",
     "Download" : "Lejupielādēt",

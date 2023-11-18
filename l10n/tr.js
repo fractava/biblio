@@ -59,6 +59,8 @@ OC.L10N.register(
     "Drag to reorder the fields" : "Alan sıralamasını sürükleyerek değiştirebilirsiniz",
     "Import from v1" : "1. sürümden içe aktar",
     "Import a phpmyadmin JSON export of a database used with v1 of this app (before the nextcloud rewrite)" : "Bu uygulamanın 1. sürümüyle kullanılan bir veri tabanının phpmyadmin ile JSON olarak dışa aktarılmış dosyasını içe aktarın (Nextcloud yeniden yazmasından önce)",
+    "Select Type" : "Türü seçin",
+    "Absolute" : "Mutlak",
     "Collections" : "Derlemeler",
     "Properties" : "Özellikler",
     "Nomenclature" : "Adlandırma",

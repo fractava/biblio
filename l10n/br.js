@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Fazi",
     "Description" : "Deskrivadur",
     "User" : "Implijer",
+    "Type" : "Stumm",
     "Delete" : "Lemel",
     "Download" : "Pellgargañ",
     "Search" : "Klask",

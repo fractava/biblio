@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "Escribir",
     "Time" : "Hora",
     "Delete" : "Eliminar",
+    "Relative" : "Relativo",
+    "Absolute" : "Absoluto",
     "Members" : "Miembros",
     "History" : "Histórico",
     "Download" : "Descargar",

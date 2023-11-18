@@ -49,6 +49,8 @@ OC.L10N.register(
     "Customer Nomenclature" : "顧客命名法",
     "Delete" : "刪除",
     "Drag to reorder the fields" : "拖曳以重新排序字段",
+    "Select Type" : "選擇類型",
+    "Absolute" : "絶對",
     "Collections" : "收藏品",
     "Properties" : "屬性",
     "Nomenclature" : "命名法",

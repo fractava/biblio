@@ -12,6 +12,8 @@ OC.L10N.register(
     "Type" : "종류",
     "Time" : "시간",
     "Delete" : "삭제",
+    "Relative" : "상대적",
+    "Absolute" : "절대적",
     "Collections" : "모음집",
     "Members" : "구성원",
     "History" : "과거 기록",

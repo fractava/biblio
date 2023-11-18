@@ -11,6 +11,8 @@ OC.L10N.register(
     "Type" : "Tip",
     "Time" : "Timp",
     "Delete" : "Șterge",
+    "Relative" : "Relativ",
+    "Absolute" : "Absolut",
     "Download" : "Descărcare",
     "Search" : "Căutare",
     "List" : "Listă",

@@ -11,6 +11,8 @@ OC.L10N.register(
     "Type" : "Tipo",
     "Time" : "Hora",
     "Delete" : "Borrar",
+    "Relative" : "Relativo",
+    "Absolute" : "Absoluto",
     "Collections" : "Colecciones",
     "Members" : "Miembros",
     "Search" : "Buscar",

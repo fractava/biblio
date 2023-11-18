@@ -13,6 +13,8 @@ OC.L10N.register(
     "Type" : "Tipas",
     "Time" : "Laikas",
     "Delete" : "Ištrinti",
+    "Relative" : "Santykinis laikas",
+    "Absolute" : "Tikslus laikas",
     "Collections" : "Kolekcijos",
     "Members" : "Nariai",
     "Download" : "Atsisiųsti",
