@@ -41,10 +41,12 @@ OC.L10N.register(
     "Contains" : "Obsahuje",
     "Short text" : "Krátky text",
     "Enter a short text" : "Zadajte krátky text",
+    "Ends with" : "Končí sa na",
     "Long text" : "Dlhý text",
     "Enter a long text" : "Zadajte dlhý text",
     "Date" : "Dátum",
     "Pick a date" : "Vyberte dátum",
+    "Before" : "Pred",
     "After" : "Po",
     "Date and time" : "Dátum a čas",
     "Pick a date and time" : "Vyberte dátum a čas",
@@ -57,6 +59,8 @@ OC.L10N.register(
     "Customer" : "Zákazník",
     "Devices" : "Zariadenia",
     "Customers" : "Zákazníci",
+    "Customer renamed from \"{oldName}\" to \"{newName}\"" : "Zákazník bol premenovaný z \"{oldName}\" na \"{newName}\"",
+    "Add new customer" : "Pridať nového zákazníka",
     "Unknown error." : "Neznáma chyba."
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
