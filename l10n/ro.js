@@ -13,6 +13,7 @@ OC.L10N.register(
     "Delete" : "Șterge",
     "Relative" : "Relativ",
     "Absolute" : "Absolut",
+    "Members" : "Membri",
     "Download" : "Descărcare",
     "Search" : "Căutare",
     "List" : "Listă",
