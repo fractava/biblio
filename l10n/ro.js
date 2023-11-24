@@ -16,6 +16,7 @@ OC.L10N.register(
     "Members" : "Membri",
     "Download" : "Descărcare",
     "Search" : "Căutare",
+    "Back" : "Înapoi",
     "List" : "Listă",
     "Date" : "Date",
     "Pick a date" : "Alege o dată",
