@@ -22,8 +22,9 @@
 				<NcDateTimePickerNative :id="'loanUntilPresetInput' + preset.id"
 					:value="new Date(preset.timestamp * 1000)"
 					type="date"
-					@input="updateTimestamp" />
+					@input="updateTimestampByDateString" />
 			</div>
+			<RelativeTimePicker v-else :timestamp="preset.timestamp" @update:timestamp="updateTimestamp" />
 		</td>
 	</tr>
 </template>
@@ -37,13 +38,15 @@ import NcDateTimePickerNative from "@nextcloud/vue/dist/Components/NcDateTimePic
 
 import { useSettingsStore } from "../../store/settings.js";
 import { api } from "../../api.js";
+import RelativeTimePicker from "./RelativeTimePicker.vue";
 
 export default {
 	components: {
-		vueSelect,
-		NcTextField,
-		NcDateTimePickerNative,
-	},
+    vueSelect,
+    NcTextField,
+    NcDateTimePickerNative,
+    RelativeTimePicker
+},
 	props: {
 		preset: {
 			type: Object,
@@ -82,11 +85,17 @@ export default {
 				this.$emit("update:preset", result);
 			});
 		}, { wait: 100 }),
-		updateTimestamp: debounceFn(function(newTimestamp) {
+		updateTimestampByDateString(newTimestamp) {
 			const unixTimestamp = Math.floor(new Date(newTimestamp).valueOf() / 1000);
-
+			this.updateTimestamp(unixTimestamp);
+		},
+		updateTimestamp: debounceFn(function(newTimestamp) {
+			// optimistic update
+			this.$emit("update:preset", Object.assign(this.preset, {
+				timestamp: newTimestamp,
+			}));
 			api.updateLoanUntilPreset(this.settingsStore.context?.collectionId, this.preset.id, {
-				timestamp: unixTimestamp,
+				timestamp: newTimestamp,
 			}).then((result) => {
 				this.$emit("update:preset", result);
 			});
