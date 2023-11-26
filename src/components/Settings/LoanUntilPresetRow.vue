@@ -21,10 +21,21 @@
 			<div v-if="preset.type === 'absolute'">
 				<NcDateTimePickerNative :id="'loanUntilPresetInput' + preset.id"
 					:value="new Date(preset.timestamp * 1000)"
+					:hide-label="true"
 					type="date"
 					@input="updateTimestampByDateString" />
 			</div>
 			<RelativeTimePicker v-else :timestamp="preset.timestamp" @update:timestamp="updateTimestamp" />
+		</td>
+		<td>
+			<NcActions>
+				<NcActionButton @click="onDelete">
+					<template #icon>
+						<Delete :size="20" />
+					</template>
+					{{ t('biblio', 'Delete Preset') }}
+				</NcActionButton>
+			</NcActions>
 		</td>
 	</tr>
 </template>
@@ -35,6 +46,10 @@ import vueSelect from "vue-select";
 
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcDateTimePickerNative from "@nextcloud/vue/dist/Components/NcDateTimePickerNative.js";
+import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
+
+import Delete from "vue-material-design-icons/Delete.vue";
 
 import { useSettingsStore } from "../../store/settings.js";
 import { api } from "../../api.js";
@@ -42,11 +57,14 @@ import RelativeTimePicker from "./RelativeTimePicker.vue";
 
 export default {
 	components: {
-    vueSelect,
-    NcTextField,
-    NcDateTimePickerNative,
-    RelativeTimePicker
-},
+		vueSelect,
+		NcTextField,
+		NcDateTimePickerNative,
+		Delete,
+		RelativeTimePicker,
+		NcActions,
+		NcActionButton,
+	},
 	props: {
 		preset: {
 			type: Object,
@@ -79,8 +97,14 @@ export default {
 			});
 		}, { wait: 100 }),
 		updateType: debounceFn(function(newType) {
+			if (newType === "absolute") {
+				var newTimestamp = Math.floor(Date.now() / 1000);
+			} else {
+				var newTimestamp = 86400 * 365;
+			}
 			api.updateLoanUntilPreset(this.settingsStore.context?.collectionId, this.preset.id, {
 				type: newType,
+				timestamp: newTimestamp,
 			}).then((result) => {
 				this.$emit("update:preset", result);
 			});
@@ -100,9 +124,18 @@ export default {
 				this.$emit("update:preset", result);
 			});
 		}, { wait: 100 }),
+		async onDelete() {
+			await api.deleteLoanUntilPreset(this.settingsStore.context?.collectionId, this.preset.id);
+			this.$emit("refresh");
+		},
 		reduce(option) {
 			return option.id;
 		},
 	},
 };
 </script>
+<style scoped>
+.typeSelect {
+	min-width: 100px;
+}
+</style>

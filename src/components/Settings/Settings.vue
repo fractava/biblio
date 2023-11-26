@@ -127,4 +127,9 @@ export default {
     min-height: 90vh;
     min-width: 75vw;
 }
+
+.biblio-settings-dialog .app-settings-section {
+	padding-right: 20px;
+}
+
 </style>

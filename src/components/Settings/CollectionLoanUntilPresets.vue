@@ -1,17 +1,23 @@
 <template>
 	<div>
 		<table class="loanUntilPresetsTable">
+			<colgroup>
+				<col span="3">
+				<col style="width: fit-content;">
+			</colgroup>
 			<thead>
 				<tr>
 					<th>{{ t("biblio", "Name") }}</th>
 					<th>{{ t("biblio", "Type") }}</th>
 					<th>{{ t("biblio", "Time") }}</th>
+					<th>{{ t("biblio", "Actions") }}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<LoanUntilPresetRow v-for="(preset, index) in presets"
 					:key="preset.id"
-					:preset.sync="presets[index]" />
+					:preset.sync="presets[index]"
+					@refresh="fetchPresets" />
 			</tbody>
 		</table>
 		<NcActions class="addPresetButton"
@@ -67,7 +73,7 @@ export default {
 			api.createLoanUntilPreset(this.settingsStore.context?.collectionId, {
 				name: "Test 1",
 				type: "absolute",
-				timestamp: 1000000,
+				timestamp: Math.floor(Date.now() / 1000),
 			}).then((result) => {
 				this.fetchPresets();
 			});

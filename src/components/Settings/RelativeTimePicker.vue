@@ -1,9 +1,10 @@
 <template>
-	<div>
-		<NcTextField :value="timestampConvertedToUnit.toString()"
-			:label-visible="true"
+	<div class="container">
+		<NcTextField class="relativeTextField"
+			:value="timestampConvertedToUnit.toString()"
 			:type="'number'"
 			:label="selectedUnit.label"
+			:placeholder="''"
 			@update:value="updateTimestamp" />
 		<vueSelect class="unitSelect"
 			:options="units"
@@ -86,3 +87,27 @@ export default {
 	},
 };
 </script>
+<style lang="scss" scoped>
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+
+	.relativeTextField {
+		flex-grow: 1;
+		max-width: 100%;
+		width: auto;
+		margin-right: 5px;
+	}
+
+	.unitSelect {
+		min-width: 100px;
+
+		/*&.vs--open {
+			:deep(.vs__selected-options) {
+				padding-right: 16px;
+			}
+		}*/
+	}
+}
+</style>
