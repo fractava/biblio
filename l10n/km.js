@@ -11,6 +11,7 @@ OC.L10N.register(
     "Type" : "ប្រភេទ",
     "Time" : "ម៉ោង",
     "Delete" : "លុប",
+    "Years" : "ឆ្នាំ",
     "Download" : "ទាញយក",
     "Search" : "ស្វែងរក",
     "Date" : "Date"

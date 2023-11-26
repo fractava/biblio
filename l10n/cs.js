@@ -68,6 +68,8 @@ OC.L10N.register(
     "Select Type" : "Vyberte typ",
     "Relative" : "Relativní",
     "Absolute" : "Absolutní",
+    "Years" : "Léta",
+    "Hours" : "Hodiny",
     "Collections" : "Sbírky",
     "Properties" : "Vlastnosti",
     "Nomenclature" : "Nomenklatura",

@@ -14,6 +14,7 @@ OC.L10N.register(
     "Delete" : "Fshi",
     "Relative" : "Relative",
     "Absolute" : "Absolute",
+    "Hours" : "Orët",
     "Members" : "Anëtar",
     "Download" : "Shkarko",
     "Search" : "Kërko",

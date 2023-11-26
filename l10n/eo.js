@@ -13,6 +13,7 @@ OC.L10N.register(
     "Delete" : "Forigi",
     "Relative" : "Relative",
     "Absolute" : "Absolute",
+    "Hours" : "Horoj",
     "Members" : "Membroj",
     "Download" : "Elŝuti",
     "Search" : "Serĉi",

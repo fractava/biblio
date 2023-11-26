@@ -44,6 +44,7 @@ OC.L10N.register(
     "Select Type" : "Sélectionnez le type",
     "Relative" : "Relatif",
     "Absolute" : "Absolu",
+    "Years" : "Années",
     "Collections" : "Albums",
     "Properties" : "Propriétés",
     "Nomenclature" : "Nomenclature",

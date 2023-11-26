@@ -51,6 +51,8 @@ OC.L10N.register(
     "Drag to reorder the fields" : "拖曳以重新排序字段",
     "Select Type" : "選擇類型",
     "Absolute" : "絶對",
+    "Years" : "年",
+    "Days" : "天",
     "Collections" : "收藏品",
     "Properties" : "屬性",
     "Nomenclature" : "命名法",

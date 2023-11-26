@@ -22,6 +22,7 @@ OC.L10N.register(
     "Drag to reorder the fields" : "Promijenite redoslijed povlačenjem polja",
     "Relative" : "Relativno",
     "Absolute" : "Apsolutno",
+    "Years" : "Godina",
     "Collections" : "Zbirke",
     "Members" : "Članovi",
     "Lend/Return" : "Posudi/vrati",

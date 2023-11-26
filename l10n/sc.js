@@ -18,6 +18,7 @@ OC.L10N.register(
     "Time" : "Ora",
     "Delete" : "Cantzella",
     "Drag to reorder the fields" : "Traga pro ordinare is campos",
+    "Years" : "Annos",
     "Members" : "Membros",
     "Lend/Return" : "Prestare/Torrare",
     "Download" : "Iscàrriga",

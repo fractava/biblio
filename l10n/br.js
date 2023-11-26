@@ -9,6 +9,8 @@ OC.L10N.register(
     "User" : "Implijer",
     "Type" : "Stumm",
     "Delete" : "Lemel",
+    "Years" : "Bloaz",
+    "Days" : "Deiz",
     "Download" : "Pellgargañ",
     "Search" : "Klask",
     "List" : "Roll",

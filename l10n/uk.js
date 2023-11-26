@@ -14,6 +14,8 @@ OC.L10N.register(
     "Time" : "Час",
     "Delete" : "Вилучити",
     "Select Type" : "Виберіть Тип",
+    "Years" : "Роки ",
+    "Hours" : "Годин",
     "Members" : "Учасники",
     "Download" : "Завантажити",
     "Create Row" : "Додати рядок",

@@ -16,6 +16,7 @@ OC.L10N.register(
     "Select Type" : "Seleccionar Tipo",
     "Relative" : "Relativo",
     "Absolute" : "Absoluto",
+    "Hours" : "Horas",
     "Members" : "Membros",
     "Download" : "Transferir",
     "Search" : "Pesquisa sobre",

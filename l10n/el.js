@@ -23,6 +23,7 @@ OC.L10N.register(
     "Select Type" : "Επιλέξτε τύπο",
     "Relative" : "Σχετικό",
     "Absolute" : "Απόλυτο",
+    "Years" : "Έτη",
     "Collections" : "Συλλογές",
     "Members" : "Μέλη",
     "Lend/Return" : "Δανεισμός/Επιστροφή",

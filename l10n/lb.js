@@ -13,6 +13,7 @@ OC.L10N.register(
     "Delete" : "Läschen",
     "Relative" : "Relativ",
     "Absolute" : "Absolut",
+    "Hours" : "Stonnen",
     "Download" : "Eroflueden",
     "Search" : "Search",
     "Date" : "Date",

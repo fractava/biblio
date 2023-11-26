@@ -16,6 +16,8 @@ OC.L10N.register(
     "Delete" : "Suprimir",
     "Relative" : "Relatiu",
     "Absolute" : "Absolut",
+    "Years" : "Annadas",
+    "Hours" : "Oras",
     "Members" : "Membres",
     "Lend/Return" : "Prestar/Tornar",
     "Download" : "Telecargar",

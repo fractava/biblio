@@ -67,6 +67,7 @@ OC.L10N.register(
     "Select Type" : "Seleccione el tipo",
     "Relative" : "Relativo",
     "Absolute" : "Absoluto",
+    "Years" : "Años",
     "Collections" : "Colecciones",
     "Properties" : "Propiedades",
     "Nomenclature" : "Nomenclatura",

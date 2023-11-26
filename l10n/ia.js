@@ -12,6 +12,7 @@ OC.L10N.register(
     "Delete" : "Deler",
     "Relative" : "Relative",
     "Absolute" : "Absolute",
+    "Hours" : "Horas",
     "Members" : "Membros",
     "History" : "Historia",
     "Download" : "Discargar",

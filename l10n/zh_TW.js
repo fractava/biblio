@@ -68,6 +68,7 @@ OC.L10N.register(
     "Select Type" : "選取類型",
     "Relative" : "相對",
     "Absolute" : "絕對",
+    "Years" : "年",
     "Collections" : "收藏庫",
     "Properties" : "屬性",
     "Nomenclature" : "命名法",

@@ -12,6 +12,7 @@ OC.L10N.register(
     "Delete" : "հեռացնել",
     "Relative" : "Հարաբերական",
     "Absolute" : "Բացարձակ",
+    "Hours" : "Ժամ",
     "Download" : "Ներբեռնել",
     "Search" : "Search",
     "Date" : "Date",

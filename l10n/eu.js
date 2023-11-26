@@ -22,6 +22,7 @@ OC.L10N.register(
     "Select Type" : "Hautatu mota",
     "Relative" : "Erlatiboa",
     "Absolute" : "Absolutua",
+    "Years" : "Urteak",
     "Collections" : "Bildumak",
     "Members" : "Partaideak",
     "Lend/Return" : "Mailegatu/itzuli",

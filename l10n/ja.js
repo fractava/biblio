@@ -14,6 +14,7 @@ OC.L10N.register(
     "Delete" : "削除",
     "Relative" : "相対指定",
     "Absolute" : "絶対指定",
+    "Years" : "年",
     "Collections" : "コレクション",
     "Members" : "メンバー",
     "Download" : "ダウンロード",

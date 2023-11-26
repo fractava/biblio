@@ -6,6 +6,7 @@ OC.L10N.register(
     "Name" : "Nume",
     "Error" : "Eroare",
     "Reset" : "Resetare",
+    "Value" : "Valoare",
     "Description" : "Descriere",
     "User" : "Utilizator",
     "Type" : "Tip",

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Type" : "ধরণ",
     "Time" : "সময়",
     "Delete" : "মুছে",
+    "Hours" : "ঘন্টা",
     "Download" : "ডাউনলোড",
     "Search" : "Search",
     "Date" : "Date",

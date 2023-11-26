@@ -20,6 +20,7 @@ OC.L10N.register(
     "Drag to reorder the fields" : "拖动以重新排列字段",
     "Relative" : "相对",
     "Absolute" : "绝对",
+    "Years" : "年份",
     "Collections" : "集合",
     "Members" : "成员",
     "Lend/Return" : "借出/归还",

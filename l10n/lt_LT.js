@@ -15,6 +15,8 @@ OC.L10N.register(
     "Delete" : "Ištrinti",
     "Relative" : "Santykinis laikas",
     "Absolute" : "Tikslus laikas",
+    "Years" : "Metai",
+    "Hours" : "Valandos",
     "Collections" : "Kolekcijos",
     "Members" : "Nariai",
     "Download" : "Atsisiųsti",

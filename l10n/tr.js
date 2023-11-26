@@ -68,6 +68,7 @@ OC.L10N.register(
     "Select Type" : "Türü seçin",
     "Relative" : "Göreceli",
     "Absolute" : "Mutlak",
+    "Years" : "Yıllar",
     "Collections" : "Derlemeler",
     "Properties" : "Özellikler",
     "Nomenclature" : "Adlandırma",

@@ -21,6 +21,8 @@ OC.L10N.register(
     "Select Type" : "Wybierz rodzaj",
     "Relative" : "Pokrewny",
     "Absolute" : "Całkowity",
+    "Years" : "Lata",
+    "Hours" : "Godzin",
     "Collections" : "Kolekcje",
     "Members" : "Członkowie",
     "Lend/Return" : "Wypożyczenie/zwrot",

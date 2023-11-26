@@ -22,6 +22,7 @@ OC.L10N.register(
     "Select Type" : "Selezionare il tipo",
     "Relative" : "Relativo",
     "Absolute" : "Assoluto",
+    "Years" : "Anni",
     "Collections" : "Raccolte",
     "Members" : "Partecipanti",
     "Lend/Return" : "Prestare/Rendere",

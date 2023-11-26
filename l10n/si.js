@@ -8,6 +8,8 @@ OC.L10N.register(
     "Description" : "විස්තරය",
     "User" : "පරිශීලක",
     "Time" : "වේලාව",
+    "Years" : "වර්ෂ",
+    "Days" : "දින",
     "Download" : "බාගන්න",
     "Search" : "සොයන්න",
     "Back" : "ආපසු",

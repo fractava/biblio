@@ -22,6 +22,8 @@ OC.L10N.register(
     "Select Type" : "Selecteer type",
     "Relative" : "Relatief",
     "Absolute" : "Absoluut",
+    "Years" : "Jaren",
+    "Hours" : "Uren",
     "Collections" : "Verzamelingen",
     "Members" : "Leden",
     "Lend/Return" : "Lenen/Inleveren",

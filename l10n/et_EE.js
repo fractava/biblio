@@ -13,6 +13,7 @@ OC.L10N.register(
     "Delete" : "Kustuta",
     "Relative" : "Suhteline",
     "Absolute" : "Absoluutne",
+    "Hours" : "Tunnid",
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",
     "Search" : "Otsi",

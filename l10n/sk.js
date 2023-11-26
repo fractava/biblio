@@ -24,6 +24,7 @@ OC.L10N.register(
     "Select Type" : "Vyberte Typ",
     "Relative" : "Relatívny",
     "Absolute" : "Absolútny",
+    "Years" : "Roky",
     "Collections" : "Zbierky",
     "Members" : "Členovia",
     "Lend/Return" : "Požičať/Vrátiť",

@@ -13,6 +13,7 @@ OC.L10N.register(
     "Delete" : "წაშლა",
     "Relative" : "ფარდობითი",
     "Absolute" : "აბსოლუტური",
+    "Hours" : "საათი",
     "Collections" : "კოლექციები",
     "Members" : "წევრები",
     "Download" : "ჩამოტვირთვა",

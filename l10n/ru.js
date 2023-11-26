@@ -20,6 +20,8 @@ OC.L10N.register(
     "Select Type" : "Выбор типа",
     "Relative" : "Относительно",
     "Absolute" : "В заданное время",
+    "Years" : "Года",
+    "Hours" : "Часы",
     "Collections" : "Коллекции",
     "Members" : "Участники",
     "Lend/Return" : "Одолжить/возвратить",
