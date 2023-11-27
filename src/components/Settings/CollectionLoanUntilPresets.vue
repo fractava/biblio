@@ -56,6 +56,7 @@ import Plus from "vue-material-design-icons/Plus.vue";
 import GridOff from "vue-material-design-icons/GridOff.vue";
 
 import { useSettingsStore } from "../../store/settings.js";
+
 import { api } from "../../api.js";
 import LoanUntilPresetRow from "./LoanUntilPresetRow.vue";
 import AddLoanUntilPresetModal from "./AddLoanUntilPresetModal.vue";

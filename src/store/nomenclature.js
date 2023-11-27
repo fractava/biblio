@@ -265,6 +265,18 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Customers");
 			}
 		},
+		customer() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "Student");
+			case "EMPLOYEE":
+				return t("biblio", "Employee");
+			default:
+				return t("biblio", "Customer");
+			}
+		},
 		createCustomer() {
 			const biblioStore = useBiblioStore();
 

@@ -1,30 +1,50 @@
 <template>
 	<div>
 		<SectionHeader>{{ t("biblio", "Loan") }}</SectionHeader>
-		<vueSelect v-model="currentCustomer"
-			style="width: 100%;"
-			:options="searchResults"
-			:label="'name'"
-			:reduce="reduce"
-			@search="refreshSearchResults" />
-		<NcTextField label="Barcode"
-			:value.sync="currentBarcode"
-			:show-trailing-button="true"
-			trailing-button-icon="arrowRight"
-			@trailing-button-click="loan"
-			@keydown.enter.prevent="loan" />
+		<table class="loanTable">
+			<tbody>
+				<tr>
+					<td>{{ nomenclatureStore.customer }}</td>
+					<td>
+						<vueSelect v-model="currentCustomer"
+							style="width: 100%;"
+							:options="searchResults"
+							:label="'name'"
+							:reduce="reduce"
+							@search="refreshSearchResults" />
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t("biblio", "Barcode") }}</td>
+					<td>
+						<NcTextField label="Barcode"
+							:value.sync="currentBarcode"
+							:show-trailing-button="true"
+							trailing-button-icon="arrowRight"
+							@trailing-button-click="loan"
+							@keydown.enter.prevent="loan" />
+					</td>
+				</tr>
+				<tr>
+					<td>{{ t("biblio", "Until") }}</td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </template>
 <script>
 import vueSelect from "vue-select";
 import PCancelable from "p-cancelable";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
+import { mapStores } from "pinia";
 
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import SectionHeader from "../components/SectionHeader.vue";
 
 import { api } from "../api.js";
+import { useNomenclatureStore } from "../store/nomenclature.js";
 
 export default {
 	components: {
@@ -39,6 +59,9 @@ export default {
 			currentBarcode: "",
 			currentCustomer: null,
 		};
+	},
+	computed: {
+		...mapStores(useNomenclatureStore),
 	},
 	mounted() {
 		this.refreshSearchResults("", () => {});
@@ -113,3 +136,19 @@ export default {
 	},
 };
 </script>
+<style lang="scss">
+.loanTable {
+	width: 100%;
+	border-collapse: collapse;
+
+	td, th {
+		padding: 7px;
+		border-bottom: 1px solid var(--color-border);
+		border-top: 1px solid var(--color-border);
+	}
+
+	tr:hover, tr:focus, tr:active {
+		background-color: transparent;
+	}
+}
+</style>

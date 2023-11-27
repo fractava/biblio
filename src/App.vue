@@ -55,6 +55,7 @@ export default {
 			const itemInstancesStore = useItemInstancesStore();
 			const customersStore = useCustomersStore();
 
+			this.biblioStore.fetchLoanUntilPresets();
 			itemsStore.fetchFields();
 			itemsStore.refreshSearchResults();
 			itemInstancesStore.fetchFields();

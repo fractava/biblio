@@ -8,6 +8,7 @@ export const useBiblioStore = defineStore("biblio", {
 	state: () => ({
 		collections: [],
 		selectedCollectionId: undefined,
+		selectedCollectionLoanUntilPresets: [],
 	}),
 	actions: {
 		/* Collections */
@@ -65,6 +66,21 @@ export const useBiblioStore = defineStore("biblio", {
 						resolve();
 					});
 			});
+		},
+
+		fetchLoanUntilPresets() {
+			if (!this.selectedCollectionId) {
+				this.selectedCollectionLoanUntilPresets = [];
+				return;
+			}
+
+			api.getLoanUntilPresets(this.selectedCollectionId)
+				.then((presets) => {
+					this.selectedCollectionLoanUntilPresets = presets;
+				})
+				.catch(() => {
+					showError(t("biblio", "Could not fetch loan until presets"));
+				});
 		},
 	},
 	getters: {
