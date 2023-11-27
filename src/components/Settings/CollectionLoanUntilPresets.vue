@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<table class="loanUntilPresetsTable">
+		<table v-if="presets.length > 0"
+			class="loanUntilPresetsTable">
 			<colgroup>
 				<col span="3">
 				<col style="width: fit-content;">
@@ -20,16 +21,27 @@
 					@refresh="fetchPresets" />
 			</tbody>
 		</table>
+
+		<NcEmptyContent v-if="presets.length === 0"
+			:name="t('biblio', 'No presets')"
+			style="margin-top: 20px; margin-bottom: 20px;">
+			<template #icon>
+				<GridOff />
+			</template>
+		</NcEmptyContent>
+
 		<NcActions class="addPresetButton"
 			primary
 			:force-name="true">
-			<NcActionButton @click="addPreset">
+			<NcActionButton @click="modalOpen = true">
 				{{ t("biblio", "Add Preset") }}
 				<template #icon>
 					<Plus :size="20" />
 				</template>
 			</NcActionButton>
 		</NcActions>
+
+		<AddLoanUntilPresetModal :open.sync="modalOpen" @refresh="fetchPresets" />
 	</div>
 </template>
 
@@ -38,23 +50,30 @@ import { mapStores } from "pinia";
 
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
+import NcEmptyContent from "@nextcloud/vue/dist/Components/NcEmptyContent.js"
 
 import Plus from "vue-material-design-icons/Plus.vue";
+import GridOff from "vue-material-design-icons/GridOff.vue";
 
 import { useSettingsStore } from "../../store/settings.js";
 import { api } from "../../api.js";
 import LoanUntilPresetRow from "./LoanUntilPresetRow.vue";
+import AddLoanUntilPresetModal from "./AddLoanUntilPresetModal.vue";
 
 export default {
 	components: {
 		NcActions,
 		NcActionButton,
+		NcEmptyContent,
 		Plus,
+		GridOff,
 		LoanUntilPresetRow,
+		AddLoanUntilPresetModal,
 	},
 	data() {
 		return {
 			presets: [],
+			modalOpen: false,
 		};
 	},
 	computed: {
@@ -69,15 +88,6 @@ export default {
 				this.presets = result;
 			});
 		},
-		addPreset() {
-			api.createLoanUntilPreset(this.settingsStore.context?.collectionId, {
-				name: "Test 1",
-				type: "absolute",
-				timestamp: Math.floor(Date.now() / 1000),
-			}).then((result) => {
-				this.fetchPresets();
-			});
-		},
 	},
 };
 </script>
@@ -85,6 +95,7 @@ export default {
 .loanUntilPresetsTable {
 	width: 100%;
 	border-collapse: collapse;
+	margin-bottom: 20px;
 
 	th {
 		font-weight: bold;
