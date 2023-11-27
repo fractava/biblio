@@ -19,15 +19,18 @@
 					<td>
 						<NcTextField label="Barcode"
 							:value.sync="currentBarcode"
-							:show-trailing-button="true"
-							trailing-button-icon="arrowRight"
-							@trailing-button-click="loan"
+							:show-trailing-button="false"
 							@keydown.enter.prevent="loan" />
 					</td>
 				</tr>
 				<tr>
 					<td>{{ t("biblio", "Until") }}</td>
-					<td></td>
+					<td>
+						<vueSelect v-model="currentLoanUntilPreset"
+							style="width: 100%;"
+							:options="biblioStore.selectedCollectionLoanUntilPresets"
+							:label="'name'" />
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -44,6 +47,7 @@ import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import SectionHeader from "../components/SectionHeader.vue";
 
 import { api } from "../api.js";
+import { useBiblioStore } from "../store/biblio.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
 export default {
@@ -58,10 +62,11 @@ export default {
 			searchResults: [],
 			currentBarcode: "",
 			currentCustomer: null,
+			currentLoanUntilPreset: null,
 		};
 	},
 	computed: {
-		...mapStores(useNomenclatureStore),
+		...mapStores(useBiblioStore, useNomenclatureStore),
 	},
 	mounted() {
 		this.refreshSearchResults("", () => {});
@@ -120,10 +125,28 @@ export default {
 		loan() {
 			const route = window.biblioRouter.currentRoute;
 
+			if (!this.currentCustomer) {
+				return;
+			}
+
+			if (!this.currentBarcode) {
+				return;
+			}
+
+			if (!this.currentLoanUntilPreset) {
+				return;
+			} else {
+				if (this.currentLoanUntilPreset.type === "relative") {
+					var loanUntil = Math.floor(Date.now() / 1000) + this.currentLoanUntilPreset.timestamp;
+				} else {
+					var loanUntil = this.currentLoanUntilPreset.timestamp;
+				}
+			}
+
 			api.createLoan(route.params.collectionId, {
 				barcode: this.currentBarcode,
 				customerId: this.currentCustomer,
-				until: 10000000,
+				until: loanUntil,
 			})
 				.then(() => {
 					this.currentBarcode = "";
