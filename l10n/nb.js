@@ -15,6 +15,7 @@ OC.L10N.register(
     "User" : "Bruker",
     "Timestamp" : "Tidsstempel",
     "Time" : "Tid",
+    "Actions" : "Handlinger",
     "Delete" : "Slett",
     "Drag to reorder the fields" : "Trekk for å endre rekkefølge på felt",
     "Relative" : "Relativ",

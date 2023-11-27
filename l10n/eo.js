@@ -10,6 +10,7 @@ OC.L10N.register(
     "User" : "Uzanto",
     "Type" : "Tipo",
     "Time" : "Dato",
+    "Actions" : "Agoj",
     "Delete" : "Forigi",
     "Relative" : "Relative",
     "Absolute" : "Absolute",

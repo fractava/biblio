@@ -18,6 +18,7 @@ OC.L10N.register(
     "Timestamp" : "Χρονοσφραγίδα",
     "Type" : "Τύπος",
     "Time" : "Ώρα",
+    "Actions" : "Ενέργειες",
     "Delete" : "Διαγραφή",
     "Drag to reorder the fields" : "Σύρετε για αναδιάταξη των πεδίων",
     "Select Type" : "Επιλέξτε τύπο",

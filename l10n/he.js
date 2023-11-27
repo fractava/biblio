@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "משתמש",
     "Type" : "סוג",
     "Time" : "זמן",
+    "Actions" : "פעולות",
     "Delete" : "מחיקה",
     "Relative" : "יחסי",
     "Absolute" : "מוחלט",

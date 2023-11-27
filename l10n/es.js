@@ -53,6 +53,7 @@ OC.L10N.register(
     "Could not delete loan field" : "No se pudo borrar el campo de préstamo",
     "Type" : "Tipo",
     "Time" : "Fecha",
+    "Actions" : "Acciones",
     "Item Nomenclature" : "Nomenclatura de elemento",
     "Instance Nomenclature" : "Nomenclatura de instancia",
     "Customer Nomenclature" : "Nomenclatura de cliente",

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Description" : "설명",
     "Type" : "종류",
     "Time" : "시간",
+    "Actions" : "동작",
     "Delete" : "삭제",
     "Relative" : "상대적",
     "Absolute" : "절대적",

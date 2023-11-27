@@ -12,6 +12,7 @@ OC.L10N.register(
     "Timestamp" : "Мітка часу",
     "Type" : "Тип",
     "Time" : "Час",
+    "Actions" : "Дії",
     "Delete" : "Вилучити",
     "Select Type" : "Виберіть Тип",
     "Years" : "Роки ",

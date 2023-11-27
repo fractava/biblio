@@ -38,6 +38,7 @@ OC.L10N.register(
     "Could not delete item field" : "Nem sikerült törölni az elem mezőket",
     "Type" : "Típus",
     "Time" : "Idő",
+    "Actions" : "Műveletek",
     "Delete" : "Törlés",
     "Drag to reorder the fields" : "Húzza a mezők átrendezéséhez",
     "Select Type" : "Válasszon típust",

@@ -18,6 +18,7 @@ OC.L10N.register(
     "Timestamp" : "Vremenska oznaka",
     "Type" : "Vrsta",
     "Time" : "Vrijeme",
+    "Actions" : "Radnje",
     "Delete" : "Izbriši",
     "Drag to reorder the fields" : "Promijenite redoslijed povlačenjem polja",
     "Relative" : "Relativno",

@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "Përdorues",
     "Type" : "Tipi",
     "Time" : "Kohë",
+    "Actions" : "Veprimet",
     "Delete" : "Fshi",
     "Relative" : "Relative",
     "Absolute" : "Absolute",

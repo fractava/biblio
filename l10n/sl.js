@@ -16,6 +16,7 @@ OC.L10N.register(
     "Timestamp" : "Časovni žig",
     "Type" : "Vrsta",
     "Time" : "Čas",
+    "Actions" : "Dejanja",
     "Delete" : "Izbriši",
     "Drag to reorder the fields" : "Potegnite vprašanja in jih preuredite",
     "Relative" : "Relativno",

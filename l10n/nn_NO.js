@@ -10,6 +10,7 @@ OC.L10N.register(
     "User" : "Bruker",
     "Type" : "Skriv",
     "Time" : "Tid",
+    "Actions" : "Handlingar",
     "Delete" : "Slett",
     "Collections" : "Samlingar",
     "Download" : "Last ned",

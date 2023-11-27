@@ -10,6 +10,7 @@ OC.L10N.register(
     "Description" : "Тодорхойлолт",
     "Type" : "Төрөл",
     "Time" : "Цаг",
+    "Actions" : "Үйл ажиллагаа",
     "Delete" : "Устгах",
     "Relative" : "Хамаарал",
     "Absolute" : "Тогтсон цагт",

@@ -15,6 +15,7 @@ OC.L10N.register(
     "Timestamp" : "Метка времени",
     "Type" : "Тип",
     "Time" : "Время",
+    "Actions" : "Действия",
     "Delete" : "Удалить",
     "Drag to reorder the fields" : "Перетащите, чтобы изменить порядок полей",
     "Select Type" : "Выбор типа",

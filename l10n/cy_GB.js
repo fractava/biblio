@@ -9,6 +9,7 @@ OC.L10N.register(
     "User" : "Defnyddwyr",
     "Type" : "Math",
     "Time" : "Amser",
+    "Actions" : "Gweithredoedd",
     "Delete" : "Dileu",
     "Relative" : "Perthynas",
     "Absolute" : "Absoliwt",

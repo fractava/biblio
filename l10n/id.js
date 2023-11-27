@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "Pengguna",
     "Type" : "tipe",
     "Time" : "Waktu",
+    "Actions" : "Tindakan",
     "Delete" : "Hapus",
     "Years" : "Tahun",
     "Days" : "Hari",

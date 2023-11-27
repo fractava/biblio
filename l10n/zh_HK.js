@@ -44,6 +44,7 @@ OC.L10N.register(
     "Could not delete loan field" : "無法刪除借出欄位",
     "Type" : "類型",
     "Time" : "時間",
+    "Actions" : "操作",
     "Item Nomenclature" : "項目命名法",
     "Instance Nomenclature" : "實例命名法",
     "Customer Nomenclature" : "顧客命名法",

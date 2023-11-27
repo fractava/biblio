@@ -17,6 +17,7 @@ OC.L10N.register(
     "Timestamp" : "Denbora-marka",
     "Type" : "Mota",
     "Time" : "Noiz",
+    "Actions" : "Ekintzak",
     "Delete" : "Ezabatu",
     "Drag to reorder the fields" : "Arrastatu eremuak berrordenatzeko",
     "Select Type" : "Hautatu mota",

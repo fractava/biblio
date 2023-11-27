@@ -12,6 +12,7 @@ OC.L10N.register(
     "Timestamp" : "Laiko žyma",
     "Type" : "Tipas",
     "Time" : "Laikas",
+    "Actions" : "Veiksmai",
     "Delete" : "Ištrinti",
     "Relative" : "Santykinis laikas",
     "Absolute" : "Tikslus laikas",

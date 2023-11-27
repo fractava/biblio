@@ -53,6 +53,7 @@ OC.L10N.register(
     "Could not delete loan field" : "Није успело брисање поља позајмице",
     "Type" : "Тип",
     "Time" : "Време",
+    "Actions" : "Радње",
     "Add Preset" : "Додај унапред подешене вредности",
     "Item Nomenclature" : "Номенклатура ставке",
     "Instance Nomenclature" : "Номенклатура инстанце",

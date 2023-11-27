@@ -19,6 +19,7 @@ OC.L10N.register(
     "Could not update customer field" : "Nepodarilo sa aktualizovať pole zákazníka",
     "Type" : "Typ",
     "Time" : "Čas",
+    "Actions" : "Akcie",
     "Delete" : "Vymazať",
     "Drag to reorder the fields" : "Potiahnutím zmeníte poradie polí",
     "Select Type" : "Vyberte Typ",

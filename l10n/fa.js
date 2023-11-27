@@ -16,6 +16,7 @@ OC.L10N.register(
     "Timestamp" : "مهر زمان",
     "Type" : "نوع",
     "Time" : "زمان",
+    "Actions" : "کنش‌ها",
     "Delete" : "حذف",
     "Drag to reorder the fields" : "Drag to reorder the fields",
     "Select Type" : "Select Type",

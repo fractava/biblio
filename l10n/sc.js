@@ -16,6 +16,7 @@ OC.L10N.register(
     "Timestamp" : "Marca temporale",
     "Type" : "Genia",
     "Time" : "Ora",
+    "Actions" : "Atziones",
     "Delete" : "Cantzella",
     "Drag to reorder the fields" : "Traga pro ordinare is campos",
     "Years" : "Annos",

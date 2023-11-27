@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "Вредност",
     "Type" : "Вид",
     "Time" : "Време",
+    "Actions" : "Акции",
     "Delete" : "Избриши",
     "Relative" : "Релативно",
     "Absolute" : "Апсолутно",

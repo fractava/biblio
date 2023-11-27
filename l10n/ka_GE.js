@@ -10,6 +10,7 @@ OC.L10N.register(
     "Description" : "აღწერილობა",
     "User" : "მომხმარებელი",
     "Time" : "დრო",
+    "Actions" : "მოქმედებები",
     "Delete" : "წაშლა",
     "Relative" : "ფარდობითი",
     "Absolute" : "აბსოლუტური",

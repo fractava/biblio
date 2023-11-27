@@ -16,6 +16,7 @@ OC.L10N.register(
     "Timestamp" : "Znacznik czasu",
     "Type" : "Rodzaj",
     "Time" : "Czas",
+    "Actions" : "Akcje",
     "Delete" : "Usuń",
     "Drag to reorder the fields" : "Przeciągnij, aby zmienić kolejność pól",
     "Select Type" : "Wybierz rodzaj",

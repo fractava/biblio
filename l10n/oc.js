@@ -13,6 +13,7 @@ OC.L10N.register(
     "User" : "User",
     "Type" : "Tipe",
     "Time" : "Ora",
+    "Actions" : "Accions",
     "Delete" : "Suprimir",
     "Relative" : "Relatiu",
     "Absolute" : "Absolut",

@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "Lietotājs",
     "Type" : "Tips",
     "Time" : "Laiks",
+    "Actions" : "Darbības",
     "Delete" : "Dzēst",
     "Relative" : "Relatīvs",
     "Absolute" : "Absolūts",

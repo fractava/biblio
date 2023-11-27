@@ -18,6 +18,7 @@ OC.L10N.register(
     "Timestamp" : "Zeitstempel",
     "Type" : "Typ",
     "Time" : "Zeit",
+    "Actions" : "Aktionen",
     "Delete" : "Löschen",
     "Drag to reorder the fields" : "Ziehen, um die Felder neu anzuordnen",
     "Select Type" : "Typ auswählen",

@@ -32,6 +32,7 @@
     "Could not update customer field" : "Impossible de mettre à jour le client du client",
     "Type" : "Type",
     "Time" : "Date et heure",
+    "Actions" : "Actions",
     "Add Preset" : "Ajouter une préconfiguration",
     "No collections" : "Aucune collection",
     "You currently don’t have access to any collection. Create or import one below." : "Vous n'avez accès à aucune collection actuellement. Créez-en ou importez-en une ci-dessous.",

@@ -10,6 +10,7 @@ OC.L10N.register(
     "User" : "Kasutaja",
     "Type" : "Tüüp",
     "Time" : "Aeg",
+    "Actions" : "Tegevused",
     "Delete" : "Kustuta",
     "Relative" : "Suhteline",
     "Absolute" : "Absoluutne",

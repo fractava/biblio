@@ -10,6 +10,7 @@ OC.L10N.register(
     "Timestamp" : "Tidsstämpel",
     "Type" : "Typ",
     "Time" : "Tid",
+    "Actions" : "Funktioner",
     "Delete" : "Radera",
     "Select Type" : "Välj typ",
     "Relative" : "Relativ",

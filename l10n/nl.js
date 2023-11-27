@@ -17,6 +17,7 @@ OC.L10N.register(
     "Timestamp" : "Tijdstempel",
     "Type" : "Type",
     "Time" : "Tijd",
+    "Actions" : "Acties",
     "Delete" : "Verwijder",
     "Drag to reorder the fields" : "Sleep om de veldvolgorde te wijzigen",
     "Select Type" : "Selecteer type",

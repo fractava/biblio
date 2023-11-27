@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "Utilizator",
     "Type" : "Tip",
     "Time" : "Timp",
+    "Actions" : "Acțiuni",
     "Delete" : "Șterge",
     "Relative" : "Relativ",
     "Absolute" : "Absolut",

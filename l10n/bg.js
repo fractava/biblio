@@ -20,6 +20,8 @@ OC.L10N.register(
     "Select Type" : "Изор на тип",
     "Relative" : "Относително",
     "Absolute" : "Абсолютно",
+    "Years" : "Години",
+    "Hours" : "Часа",
     "Members" : "Членове",
     "Lend/Return" : "Даване на заем/Връщане",
     "History" : "История",

@@ -53,6 +53,7 @@ OC.L10N.register(
     "Could not delete loan field" : "Ödünç alanı silinemedi",
     "Type" : "Tür",
     "Time" : "Süre",
+    "Actions" : "İşlemler",
     "Add Preset" : "Hazır ayar ekle",
     "Item Nomenclature" : "Öge adlandırma",
     "Instance Nomenclature" : "Örnek adlandırma",

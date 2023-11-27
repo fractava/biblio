@@ -9,6 +9,7 @@ OC.L10N.register(
     "Description" : "விவரிப்பு",
     "User" : "User",
     "Type" : "வகை",
+    "Actions" : "செயல்கள்",
     "Delete" : "நீக்குக",
     "Download" : "பதிவிறக்குக",
     "Search" : "தேடுதல்",

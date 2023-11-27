@@ -16,6 +16,7 @@ OC.L10N.register(
     "Timestamp" : "Marca de tiempo",
     "Type" : "Tipo",
     "Time" : "Hora",
+    "Actions" : "Acciones",
     "Delete" : "Borrar",
     "Drag to reorder the fields" : "Arrastra para reordenar los campos",
     "Select Type" : "Seleccionar Tipo",

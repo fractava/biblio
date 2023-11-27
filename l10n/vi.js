@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "Người dùng",
     "Type" : "Loại",
     "Time" : "Thời gian",
+    "Actions" : "Hành động",
     "Delete" : "Xóa",
     "Relative" : "Liên quan",
     "Absolute" : "Chính xác",

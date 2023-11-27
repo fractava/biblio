@@ -11,6 +11,7 @@ OC.L10N.register(
     "User" : "Notandi",
     "Type" : "Tegund",
     "Time" : "Tími",
+    "Actions" : "Aðgerðir",
     "Delete" : "Eyða",
     "Relative" : "Hlutfallslegt",
     "Absolute" : "Algilt",

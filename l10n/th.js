@@ -11,6 +11,7 @@ OC.L10N.register(
     "Timestamp" : "ประทับเวลา",
     "Type" : "ประเภท",
     "Time" : "เวลา",
+    "Actions" : "การกระทำ",
     "Delete" : "ลบ",
     "Absolute" : "สมบูรณ์",
     "Hours" : "ชั่วโมง",

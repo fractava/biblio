@@ -12,6 +12,7 @@ OC.L10N.register(
     "Timestamp" : "Indicador de dia e hora",
     "Type" : "Tipo",
     "Time" : "Tempo",
+    "Actions" : "Acções",
     "Delete" : "Eliminar",
     "Select Type" : "Seleccionar Tipo",
     "Relative" : "Relativo",

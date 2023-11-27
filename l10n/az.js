@@ -10,6 +10,7 @@ OC.L10N.register(
     "User" : "User",
     "Time" : "Vaxt",
     "Delete" : "Sil",
+    "Hours" : "Saatlar",
     "Download" : "Yüklə",
     "Search" : "Axtarış",
     "Date" : "Date",

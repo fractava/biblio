@@ -10,6 +10,7 @@ OC.L10N.register(
     "Description" : "Descripción",
     "User" : "Usuario",
     "Time" : "Hora",
+    "Actions" : "Acciones",
     "Delete" : "Borrar",
     "Relative" : "Relativo",
     "Absolute" : "Absoluto",

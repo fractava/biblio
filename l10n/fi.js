@@ -14,6 +14,7 @@ OC.L10N.register(
     "Timestamp" : "Aikaleima",
     "Type" : "Tyyppi",
     "Time" : "Aika",
+    "Actions" : "Toiminnot",
     "Delete" : "Poista",
     "Select Type" : "Valitse tyyppi",
     "Relative" : "Suhteellinen",

@@ -10,6 +10,8 @@ OC.L10N.register(
     "Delete" : "Desaniciar",
     "Relative" : "Relativu",
     "Absolute" : "Absolutu",
+    "Years" : "Años",
+    "Days" : "Díes",
     "Collections" : "Coleiciones",
     "Members" : "Miembros",
     "Download" : "Baxar",
