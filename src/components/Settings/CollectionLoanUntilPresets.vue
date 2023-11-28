@@ -18,7 +18,7 @@
 				<LoanUntilPresetRow v-for="(preset, index) in presets"
 					:key="preset.id"
 					:preset.sync="presets[index]"
-					@refresh="fetchPresets" />
+					@refresh="onChange" />
 			</tbody>
 		</table>
 
@@ -41,12 +41,13 @@
 			</NcActionButton>
 		</NcActions>
 
-		<AddLoanUntilPresetModal :open.sync="modalOpen" @refresh="fetchPresets" />
+		<AddLoanUntilPresetModal :open.sync="modalOpen" @refresh="onChange" />
 	</div>
 </template>
 
 <script>
 import { mapStores } from "pinia";
+import debounceFn from "debounce-fn";
 
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
@@ -56,6 +57,7 @@ import Plus from "vue-material-design-icons/Plus.vue";
 import GridOff from "vue-material-design-icons/GridOff.vue";
 
 import { useSettingsStore } from "../../store/settings.js";
+import { useBiblioStore } from "../../store/biblio.js";
 
 import { api } from "../../api.js";
 import LoanUntilPresetRow from "./LoanUntilPresetRow.vue";
@@ -89,6 +91,20 @@ export default {
 				this.presets = result;
 			});
 		},
+		onChange() {
+			this.fetchPresets();
+			this.refreshLoanUntilPresetsInBiblioStoreIfNeeded();
+		},
+		refreshLoanUntilPresetsInBiblioStoreIfNeeded: debounceFn(function() {
+			const biblioStore = useBiblioStore();
+
+			// the settings made changes to the loan until presets of the collection currently selected in the main application
+			// refresh the data, so the changes take effect in the main application without a manual refresh
+
+			if (biblioStore.selectedCollectionId === this.settingsStore.context?.collectionId) {
+				biblioStore.fetchLoanUntilPresets();
+			}
+		}, { wait: 2000 }),
 	},
 };
 </script>
