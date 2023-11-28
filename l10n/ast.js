@@ -7,6 +7,7 @@ OC.L10N.register(
     "Value" : "Valor",
     "Description" : "Descripción",
     "Type" : "Triba",
+    "Actions" : "Aiciones",
     "Delete" : "Desaniciar",
     "Relative" : "Relativu",
     "Absolute" : "Absolutu",

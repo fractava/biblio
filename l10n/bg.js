@@ -15,6 +15,7 @@ OC.L10N.register(
     "Timestamp" : "Времево клеймо",
     "Type" : "Тип",
     "Time" : "Час",
+    "Actions" : "Действия",
     "Delete" : "Изтриване",
     "Drag to reorder the fields" : "Плъзнете, за да пренаредите полетата",
     "Select Type" : "Изор на тип",

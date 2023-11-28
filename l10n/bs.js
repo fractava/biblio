@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Greška",
     "Description" : "Opis",
     "User" : "User",
+    "Actions" : "Radnje",
     "Delete" : "Obriši",
     "Hours" : "Sati",
     "Members" : "Članovi",

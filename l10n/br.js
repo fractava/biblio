@@ -8,6 +8,7 @@ OC.L10N.register(
     "Description" : "Deskrivadur",
     "User" : "Implijer",
     "Type" : "Stumm",
+    "Actions" : "Oberoù",
     "Delete" : "Lemel",
     "Years" : "Bloaz",
     "Days" : "Deiz",

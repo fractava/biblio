@@ -7,6 +7,7 @@ OC.L10N.register(
     "Description" : "Beskrywing",
     "User" : "Gebruiker",
     "Time" : "Tyd",
+    "Actions" : "Aksies",
     "Delete" : "Skrap",
     "Relative" : "Relatief",
     "Absolute" : "Absoluut",

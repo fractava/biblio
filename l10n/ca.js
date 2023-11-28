@@ -14,6 +14,7 @@ OC.L10N.register(
     "Timestamp" : "Marca de temps",
     "Type" : "Tipus",
     "Time" : "Hora",
+    "Actions" : "Accions",
     "Delete" : "Suprimir",
     "Drag to reorder the fields" : "Arrossegueu per reordenar els camps",
     "Relative" : "Relativa",

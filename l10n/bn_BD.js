@@ -10,6 +10,7 @@ OC.L10N.register(
     "User" : "User",
     "Type" : "ধরণ",
     "Time" : "সময়",
+    "Actions" : "পদক্ষেপসমূহ",
     "Delete" : "মুছে",
     "Hours" : "ঘন্টা",
     "Download" : "ডাউনলোড",

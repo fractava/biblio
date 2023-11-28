@@ -9,6 +9,7 @@ OC.L10N.register(
     "Description" : "Açıqlanma",
     "User" : "User",
     "Time" : "Vaxt",
+    "Actions" : "İşlər",
     "Delete" : "Sil",
     "Hours" : "Saatlar",
     "Download" : "Yüklə",
