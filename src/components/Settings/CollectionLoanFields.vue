@@ -14,12 +14,13 @@
 <script>
 import { mapStores } from "pinia";
 import { showError } from "@nextcloud/dialogs";
-import { debounce } from "debounce";
+import debounceFn from "debounce-fn";
 
 import { api } from "../../api.js";
 import FieldsTable from "../Fields/FieldsTable.vue";
 import AddFieldButton from "../Fields/AddFieldButton.vue";
 
+import { useBiblioStore } from "../../store/biblio.js";
 import { useItemInstancesStore } from "../../store/itemInstances.js";
 import { useSettingsStore } from "../../store/settings.js";
 
@@ -109,17 +110,18 @@ export default {
 			});
 		},
 
-		refreshLoanFieldsInBiblioStoreIfNeeded: debounce(() => {
+		refreshLoanFieldsInBiblioStoreIfNeeded: debounceFn(function() {
+			const biblioStore = useBiblioStore();
 			const itemInstancesStore = useItemInstancesStore();
 			const settingsStore = useSettingsStore();
 
 			// the settings made changes to the loan fields of the collection currently selected in the main application
 			// refresh the data, so the changes take effect in the main application without a manual refresh
 
-			if (window.biblioRouter.currentRoute.params.collectionId === settingsStore.context?.collectionId) {
+			if (biblioStore.selectedCollectionId === settingsStore.context?.collectionId) {
 				itemInstancesStore.fetchFields();
 			}
-		}, 2000),
+		}, { wait: 2000 }),
 	},
 };
 </script>
