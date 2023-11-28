@@ -15,6 +15,7 @@
 				:name="collection.name"
 				:bold="false"
 				:active="false"
+				:to="$route.fullPath"
 				@click="editCollection(collection.id)">
 				<template #icon>
 					<LibraryShelves :size="20" />
