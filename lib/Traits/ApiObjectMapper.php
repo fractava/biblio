@@ -106,6 +106,34 @@ trait ApiObjectMapper {
 		}
 	}
 
+	/**
+	 * @param IQueryBuilder $qb
+	 * @param array $filter
+	 * @param string $column
+	 * @param bool $and
+	 */
+	public function handleNumberFilter(IQueryBuilder $qb, ?array $filter, string $column, bool $and = true) {
+		if (isset($filter) && isset($filter["operand"]) && is_int($filter["operand"])) {
+			if (isset($filter["operator"])) {
+				if ($filter["operator"] === "=") {
+					$expression = $qb->expr()->eq($column, $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_INT));
+				} elseif ($filter["operator"] === "smallerThan") {
+					$expression = $qb->expr()->comparison($column, "<=", $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_INT));
+				} elseif ($filter["operator"] === "largerThan") {
+					$expression = $qb->expr()->comparison($column, ">=", $qb->createNamedParameter($filter["operand"], IQueryBuilder::PARAM_INT));
+				} else {
+					throw new \Error("unknown operator");
+				}
+
+				if ($and) {
+					$qb->andWhere($expression);
+				} else {
+					$qb->where($expression);
+				}
+			}
+		}
+	}
+
 	public function handleSortByColumn(IQueryBuilder $qb, string $column, bool $reverse) {
 		$sortDirection = $this->getSortDirection($reverse);
 		$qb->orderBy($column, $sortDirection);
