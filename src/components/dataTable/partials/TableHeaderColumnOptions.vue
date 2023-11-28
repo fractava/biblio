@@ -30,16 +30,7 @@
 					{{ t('biblio', 'Back') }}
 				</NcActionButton>
 				<NcActionCaption :name="t('biblio', 'Select operand')" />
-				<NcActionInput v-if="column.filterOperandType === 'string'"
-					:label-visible="false"
-					:label="t('biblio', 'Keyword and submit')"
-					:value.sync="filterOperand">
-					<template #icon>
-						<Magnify :size="20" />
-					</template>
-				</NcActionInput>
 				<NcActionButton v-for="operand in column.filterOperandOptions"
-					v-else
 					:key="operand.id"
 					@click="filterOperand = operand.id">
 					<template #icon>
@@ -71,13 +62,37 @@
 					</template>
 					{{ t('biblio', 'Select Operator') }}
 				</NcActionButton>
-				<NcActionButton v-if="showFilter && hasOperators"
+
+				<!-- This is a options operand type, that needs it's own operand selection view, that this button opens -->
+				<NcActionButton v-if="showFilter && column.filterOperandType === 'options' && hasOperators"
 					@click="selectValue = true">
 					<template #icon>
 						<Magnify :size="25" />
 					</template>
-					{{ t('biblio', 'Select Value') }}
+					{{ t('biblio', 'Select Operand') }}
 				</NcActionButton>
+
+				<!-- These are a string/date operand types, that don't needs it's own operand selection view -->
+				<NcActionInput v-else-if="showFilter && column.filterOperandType === 'string'"
+					:label-visible="false"
+					:label="t('biblio', 'Input search')"
+					:value.sync="filterOperand">
+					<template #icon>
+						<Magnify :size="20" />
+					</template>
+				</NcActionInput>
+				<NcActionInput v-else-if="showFilter && column.filterOperandType === 'date'"
+					type="datetime-local"
+					is-native-picker
+					:label-visible="false"
+					:label="t('biblio', 'Input date')"
+					:label-outside="false"
+					:value="filterOperand"
+					@input="dateInput">
+					<template #icon>
+						<Magnify :size="20" />
+					</template>
+				</NcActionInput>
 			</template>
 		</NcActions>
 	</div>
@@ -185,7 +200,19 @@ export default {
 		},
 		filterOperand: {
 			get() {
-				return this.columnFilter.operand || "";
+				if (this.columnFilter.operand) {
+					if (this.column.filterOperandType === "date") {
+						return new Date(this.columnFilter.operand * 1000);
+					} else {
+						return this.columnFilter.operand;
+					}
+				} else {
+					if (this.column.filterOperandType === "date") {
+						return new Date();
+					} else {
+						return "";
+					}
+				}
 			},
 			set(operand) {
 				this.patchColumnFilter({
@@ -247,6 +274,10 @@ export default {
 				this.$emit("update:currentSortReverse", reverse);
 			}
 			this.close();
+		},
+		dateInput(value) {
+			const unixTimestamp = Math.floor(new Date(value).valueOf() / 1000);
+			this.filterOperand = unixTimestamp;
 		},
 	},
 };

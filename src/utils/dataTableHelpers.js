@@ -1,5 +1,6 @@
 import FieldTypes from "../models/FieldTypes.js";
 import TextCell from "../components/Fields/Cells/TextCell.vue";
+import TimestampCell from "../components/TimestampCell.vue";
 
 import { useNomenclatureStore } from "../store/nomenclature.js";
 
@@ -28,7 +29,7 @@ function getFieldColumns(sortedFields = []) {
 	});
 }
 
-function getItemInstanceColumns(includeBarcode = true, includeItemTitle = true, includeLoanedCustomerName = true, fields = []) {
+function getItemInstanceColumns(includeBarcode = true, includeItemTitle = true, includeLoanedCustomerName = true, includeLoanedUntil = true, fields = []) {
 	const nomenclatureStore = useNomenclatureStore();
 
 	const fieldColumns = getFieldColumns(fields);
@@ -80,6 +81,23 @@ function getItemInstanceColumns(includeBarcode = true, includeItemTitle = true, 
 			clickable: true,
 			property: ["loan", "customer", "name"],
 			cellComponent: TextCell,
+		});
+	}
+
+	if (includeLoanedUntil) {
+		result.push({
+			id: -4,
+			name: t("biblio", "Loaned Until"),
+			type: "date",
+			isProperty: true,
+			canSort: true,
+			sortIdentifier: "loan_until",
+			canFilter: true,
+			filterOperators: FieldTypes.date.filterOperators,
+			filterOperandType: FieldTypes.date.filterOperandType,
+			clickable: true,
+			property: ["loan", "until"],
+			cellComponent: TimestampCell,
 		});
 	}
 

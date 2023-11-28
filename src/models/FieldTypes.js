@@ -178,7 +178,7 @@ export default {
 				label: t("biblio", "After"),
 			},
 		],
-		filterOperandType: "string",
+		filterOperandType: "date",
 	},
 
 	datetime: {

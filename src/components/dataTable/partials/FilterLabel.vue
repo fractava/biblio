@@ -21,7 +21,7 @@ export default {
 			default: "",
 		},
 		operand: {
-			type: String,
+			type: [String, Number],
 			default: "",
 		},
 		type: {
