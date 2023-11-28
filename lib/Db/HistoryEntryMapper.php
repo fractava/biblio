@@ -54,6 +54,8 @@ class HistoryEntryMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 		} else {
 			$qb->andWhere($qb->expr()->isNull('sub_entry_of'));
 		}
+
+		$this->handleNumberFilter($qb, $filters["timestamp"], 'timestamp');
 		
 		$this->handleIdFilter($qb, $filters["collectionMemberId"], 'collection_member_id');
 		$this->handleIdFilter($qb, $filters["itemId"], 'item_id');
