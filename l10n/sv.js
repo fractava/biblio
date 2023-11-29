@@ -25,7 +25,6 @@ OC.L10N.register(
     "Create Row" : "Skapa rad",
     "Search" : "Sök",
     "Back" : "Tillbaka",
-    "Keyword and submit" : "Sökord och skicka in",
     "Sorting" : "Sortering",
     "Sort asc" : "Sortera stigande",
     "Sort desc" : "Sortera fallande",

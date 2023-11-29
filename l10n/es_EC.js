@@ -30,7 +30,6 @@ OC.L10N.register(
     "Lend/Return" : "Prestar/Devolver",
     "Download" : "Descargar",
     "Search" : "Buscar",
-    "Keyword and submit" : "Palabra clave y enviar",
     "Sorting" : "Ordenar",
     "Sort asc" : "Ordenar asc",
     "Sort desc" : "Ordenar desc",

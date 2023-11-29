@@ -23,7 +23,6 @@ OC.L10N.register(
     "Search" : "Пошук",
     "Back" : "Назад",
     "Select operator" : "Виберіть оператор",
-    "Keyword and submit" : "Ключове слово та підтвердження",
     "Sorting" : "Впорядкування",
     "Sort asc" : "За зростанням",
     "Sort desc" : "За спаданням",

@@ -31,7 +31,6 @@ OC.L10N.register(
     "Search" : "جستجو",
     "Back" : "Back",
     "Select operator" : "Select operator",
-    "Keyword and submit" : "Keyword and submit",
     "Sorting" : "مرتب سازی",
     "Sort asc" : "Sort asc",
     "Sort desc" : "Sort desc",

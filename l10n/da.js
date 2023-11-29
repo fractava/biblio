@@ -29,7 +29,6 @@ OC.L10N.register(
     "History" : "Historik",
     "Download" : "Download",
     "Search" : "Søg",
-    "Keyword and submit" : "Søgeord og send",
     "Sorting" : "Sortering",
     "Sort asc" : "Sortér stigende",
     "Sort desc" : "Sortér faldende",

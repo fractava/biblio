@@ -33,7 +33,6 @@ OC.L10N.register(
     "Search" : "Pesquisar",
     "Back" : "Voltar",
     "Select operator" : "Selecione operador",
-    "Keyword and submit" : "Palavra-chave e enviar",
     "Sorting" : "Classificação",
     "Sort asc" : "Ordenar asc",
     "Sort desc" : "Classificar desc",

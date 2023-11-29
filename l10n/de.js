@@ -33,7 +33,6 @@ OC.L10N.register(
     "Download" : "Herunterladen",
     "Search" : "Suchen",
     "Back" : "Zurück",
-    "Keyword and submit" : "Schlagwort und übermitteln",
     "Sorting" : "Sortiere",
     "Sort asc" : "Aufsteigend sortieren",
     "Sort desc" : "Absteigend sortieren",
