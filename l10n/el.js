@@ -63,6 +63,7 @@ OC.L10N.register(
     "Customer" : "Πελάτης",
     "Devices" : "Συσκευές",
     "Customers" : "Πελάτες",
+    "Request is not authorized. Are you logged in?" : "Το αίτημα δεν εξουσιοδοτείται. Έχετε συνδεθεί;",
     "Request not allowed." : "Το αίτημα δεν επιτρέπεται.",
     "Resource not found." : "Ο πόρος δε βρέθηκε.",
     "Unknown error." : "Άγνωστο σφάλμα"
