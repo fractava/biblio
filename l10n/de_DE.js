@@ -107,7 +107,7 @@ OC.L10N.register(
     "Select Operator" : "Operator auswählen",
     "Select Operand" : "Operant auswählen",
     "Input search" : "Eingabesuche",
-    "Input date" : "Datum eingeben",
+    "Input date" : "Eingabedatum",
     "Export CSV" : "CSV exportieren",
     "Uncheck all" : "Auswahl aufheben",
     "_%n selected row_::_%n selected rows_" : ["%n ausgewählte Zeile","%n ausgewählte Zeilen"],
