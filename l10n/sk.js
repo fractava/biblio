@@ -58,6 +58,7 @@ OC.L10N.register(
     "Item" : "Položka",
     "Book" : "Kniha",
     "Device" : "Zariadenie",
+    "Copy" : "Kopírovať",
     "Customer" : "Zákazník",
     "Devices" : "Zariadenia",
     "Customers" : "Zákazníci",
