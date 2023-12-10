@@ -23,6 +23,7 @@ OC.L10N.register(
     "History" : "Ferill",
     "Download" : "Sækja",
     "Search" : "Search",
+    "Back" : "Til baka",
     "Sorting" : "Röðun",
     "List" : "Listi",
     "Long text" : "Langur texti",
