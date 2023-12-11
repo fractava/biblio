@@ -33,6 +33,7 @@ OC.L10N.register(
     "Select" : "Velja",
     "Checkbox" : "Gátreitur",
     "Device" : "Tæki",
+    "Copy" : "Afrita",
     "Devices" : "Tæki"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
