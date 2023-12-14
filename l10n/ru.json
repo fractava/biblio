@@ -26,13 +26,17 @@
     "Lend/Return" : "Одолжить/возвратить",
     "History" : "История",
     "Download" : "Скачать",
+    "Create Row" : "Создать строку",
     "Search" : "Поиск",
     "Back" : "Назад",
     "Sorting" : "Сортировка",
+    "Export CSV" : "Экспорт как CSV",
     "Return" : "Возврат",
     "List" : "Список",
+    "Contains" : "Содержит",
     "Short text" : "Короткий текст",
     "Enter a short text" : "Введите короткий текст",
+    "Ends with" : "Заканчивается на",
     "Long text" : "Длинный текст",
     "Enter a long text" : "Введите длинный текст",
     "Date" : "Дата",
@@ -42,12 +46,14 @@
     "Pick a date and time" : "Выбрать дату и время",
     "Select" : "Выбрать",
     "Checkbox" : "Флажок",
+    "Checked" : "Проверено",
     "Item" : "Пункт",
     "Book" : "Книга",
     "Device" : "Устройство",
     "Copy" : "Копировать",
     "Customer" : "Клиент",
     "Devices" : "Устройства",
-    "Customers" : "Клиенты"
+    "Customers" : "Клиенты",
+    "Unknown error." : "Неизвестная ошибка"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }
