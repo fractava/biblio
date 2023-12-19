@@ -119,7 +119,7 @@ OC.L10N.register(
     "This Item currently has no Instance, that fits the search parameters" : "Von diesem Objekt gibt es derzeit keine Instanz, die den Suchparametern entspricht",
     "Item Properties" : "Objekteigenschaften",
     "Item Instances" : "Objektinstanzen",
-    "Item instances {firstItemIndex} to {lastItemIndex} visible of {totalRows} item instances in total" : "Objektinstanzen {firstItemIndex} bis {lastItemIndex} von insgesamt {totalRows} Objektinstanzen sichtbar ",
+    "Item instances {firstItemIndex} to {lastItemIndex} visible of {totalRows} item instances in total" : "Objektinstanzen {firstItemIndex} bis {lastItemIndex} von insgesamt {totalRows} Objektinstanzen sichtbar",
     "There are currently no items in this collection, that fit the search parameters" : "Derzeit gibt es in dieser Sammlung keine Objekte, die den Suchparametern entsprechen",
     "Items {firstItemIndex} to {lastItemIndex} visible of {totalRows} items in total" : "Objekt {firstItemIndex} bis {lastItemIndex} von insgesamt {totalRows} Objekten sichtbar",
     "Loan" : "Ausleihe",
