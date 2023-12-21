@@ -121,7 +121,7 @@ OC.L10N.register(
     "Item Instances" : "Objektinstanzen",
     "Item instances {firstItemIndex} to {lastItemIndex} visible of {totalRows} item instances in total" : "Objektinstanzen {firstItemIndex} bis {lastItemIndex} von insgesamt {totalRows} Objektinstanzen sichtbar",
     "There are currently no items in this collection, that fit the search parameters" : "Derzeit gibt es in dieser Sammlung keine Objekte, die den Suchparametern entsprechen",
-    "Items {firstItemIndex} to {lastItemIndex} visible of {totalRows} items in total" : "Objekt {firstItemIndex} bis {lastItemIndex} von insgesamt {totalRows} Objekten sichtbar",
+    "Items {firstItemIndex} to {lastItemIndex} visible of {totalRows} items in total" : "Objekte {firstItemIndex} bis {lastItemIndex} von insgesamt {totalRows} Objekten sichtbar",
     "Loan" : "Ausleihe",
     "Barcode" : "Barcode",
     "Until" : "Bis",
