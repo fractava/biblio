@@ -14,6 +14,7 @@ OC.L10N.register(
     "Hours" : "Saatlar",
     "Download" : "Yüklə",
     "Search" : "Axtarış",
+    "Back" : "Geri",
     "Date" : "Date",
     "Select" : "Seç",
     "Device" : "Cihaz",

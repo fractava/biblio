@@ -23,6 +23,7 @@ OC.L10N.register(
     "Pick a date" : "Pilih tanggal",
     "Select" : "Pilih",
     "Checkbox" : "Kotak check",
-    "Device" : "Perangkat"
+    "Device" : "Perangkat",
+    "Copy" : "Salin"
 },
 "nplurals=1; plural=0;");
