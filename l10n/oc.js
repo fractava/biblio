@@ -29,6 +29,7 @@ OC.L10N.register(
     "Pick a date" : "Causir una data",
     "Book" : "Libre",
     "Device" : "Periferic",
+    "Devices" : "Periferics",
     "Customers" : "Clients"
 },
 "nplurals=2; plural=(n > 1);");
