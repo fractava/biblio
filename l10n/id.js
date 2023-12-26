@@ -19,6 +19,7 @@ OC.L10N.register(
     "Members" : "Anggota",
     "Download" : "Unduh",
     "Search" : "Cari",
+    "List" : "daftar",
     "Date" : "Date",
     "Pick a date" : "Pilih tanggal",
     "Select" : "Pilih",
