@@ -4,6 +4,7 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Name" : "Nome",
     "Error" : "Error",
+    "Reset" : "Reafitar",
     "Value" : "Valor",
     "Description" : "Descripción",
     "Type" : "Triba",
