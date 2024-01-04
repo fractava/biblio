@@ -1,0 +1,27 @@
+{ "translations": {
+    "Edit" : "Edit",
+    "Name" : "Name",
+    "Error" : "Error",
+    "Reset" : "Reset",
+    "Value" : "Value",
+    "Description" : "Description",
+    "User" : "User",
+    "Type" : "Type",
+    "Time" : "Time",
+    "Actions" : "Actions",
+    "Delete" : "Delete",
+    "Members" : "Members",
+    "Download" : "Download",
+    "Search" : "Search",
+    "Back" : "Back",
+    "Sorting" : "Sorting",
+    "List" : "List",
+    "Date" : "Date",
+    "Pick a date" : "Pick a date",
+    "Select" : "Select",
+    "Checkbox" : "Checkbox",
+    "Device" : "Device",
+    "Copy" : "Copy",
+    "Devices" : "Devices"
+},"pluralForm" :"nplurals=2; plural=(n!=1);"
+}
