@@ -175,7 +175,7 @@
     "Create device" : "Gerät erstellen",
     "Create item" : "Objekt erstellen",
     "Book \"{title}\" created" : "Buch \"{title}\" erstellt",
-    "Device \"{title}\" created" : "Geräte \"{title}\" erstellt",
+    "Device \"{title}\" created" : "Gerät \"{title}\" erstellt",
     "Item \"{title}\" created" : "Objekt \"{title}\" erstellt",
     "Renamed book from \"{oldTitle}\" to \"{newTitle}\"" : "Buch von \"{oldTitle}\" nach \"{newTitle}\" umbenannt",
     "Renamed device from \"{oldTitle}\" to \"{newTitle}\"" : "Gerät von \"{oldTitle}\" nach \"{newTitle}\" umbenannt",
