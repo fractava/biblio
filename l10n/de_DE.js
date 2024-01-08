@@ -209,7 +209,7 @@ OC.L10N.register(
     "Device instance \"{barcode}\" deleted" : "Geräteinstz \"{barcode}\" gelöscht",
     "Item copy \"{barcode}\" deleted" : "Objektkopie \"{barcode}\" gelöscht",
     "Item instance \"{barcode}\" deleted" : "Geräteinstanz \"{barcode}\" gelöscht",
-    "[deleted book copy]" : "[deleted book copy]",
+    "[deleted book copy]" : "[gelöschte Buchkopie]",
     "[deleted book instance]" : "[deleted book instance]",
     "[deleted device copy]" : "[deleted device copy]",
     "[deleted device instance]" : "[deleted device instance]",
