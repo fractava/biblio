@@ -29,6 +29,7 @@ OC.L10N.register(
     "Select" : "선택",
     "Checkbox" : "체크 상자",
     "Device" : "장치",
+    "Copy" : "복사",
     "Devices" : "장치"
 },
 "nplurals=1; plural=0;");
