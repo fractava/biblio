@@ -28,6 +28,7 @@ OC.L10N.register(
     "Pick a date" : "날짜 선택",
     "Select" : "선택",
     "Checkbox" : "체크 상자",
+    "Book" : "책",
     "Device" : "장치",
     "Copy" : "복사",
     "Devices" : "장치"
