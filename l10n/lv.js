@@ -24,6 +24,7 @@ OC.L10N.register(
     "Search" : "Meklēt",
     "List" : "Saraksts",
     "Date" : "Datums",
+    "Pick a date" : "Izvēlieties datumu",
     "Select" : "Atzīmēt",
     "Device" : "Ierīce",
     "Devices" : "Ierīces"
