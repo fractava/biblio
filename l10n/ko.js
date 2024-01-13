@@ -9,6 +9,7 @@ OC.L10N.register(
     "Reset" : "초기화",
     "Value" : "값",
     "Description" : "설명",
+    "User" : "사용자",
     "Type" : "종류",
     "Time" : "시간",
     "Actions" : "동작",
