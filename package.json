@@ -28,7 +28,7 @@
 	"dependencies": {
 		"@babel/eslint-parser": "^7.23.3",
 		"@nextcloud/axios": "^2.4.0",
-		"@nextcloud/dialogs": "^5.0.1",
+		"@nextcloud/dialogs": "^5.1.0",
 		"@nextcloud/eslint-plugin": "^2.0.0",
 		"@nextcloud/moment": "^1.2.2",
 		"@nextcloud/router": "^2.2.0",
