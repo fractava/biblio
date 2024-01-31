@@ -31,6 +31,7 @@ OC.L10N.register(
     "Search" : "Søk",
     "Back" : "Tilbake",
     "Sorting" : "Sorter",
+    "Return" : "Returner",
     "List" : "Liste",
     "Short text" : "Kort beskrivelse",
     "Enter a short text" : "Oppgi en kort beskrivelse",
