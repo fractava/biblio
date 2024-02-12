@@ -12,6 +12,7 @@ OC.L10N.register(
     "Error" : "Errore",
     "Reset" : "Torra a impostare",
     "Value" : "Balore",
+    "Description" : "Descritzione",
     "User" : "Utente",
     "Timestamp" : "Marca temporale",
     "Type" : "Genia",
