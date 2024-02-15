@@ -2,6 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Título",
+    "Exit editing mode" : "Salir del modo de edición",
     "Edit" : "Editar",
     "Name" : "Nombre",
     "Error" : "Error",
