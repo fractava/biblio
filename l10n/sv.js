@@ -34,6 +34,7 @@ OC.L10N.register(
     "Export CSV" : "Exportera CSV",
     "Uncheck all" : "Avmarkera alla",
     "_%n selected row_::_%n selected rows_" : ["%n vald rad","%n valda rader"],
+    "Return" : "Tillbaka",
     "List" : "Lista",
     "Contains" : "Innehåller",
     "Ends with" : "Slutar med",
