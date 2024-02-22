@@ -24,6 +24,7 @@ OC.L10N.register(
     "History" : "Histórico",
     "Download" : "Descargar",
     "Search" : "Buscar",
+    "Back" : "Atrás",
     "List" : "Lista",
     "Long text" : "Texto extenso",
     "Date" : "Fecha",
