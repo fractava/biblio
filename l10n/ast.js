@@ -22,6 +22,7 @@ OC.L10N.register(
     "Contains" : "Contién",
     "Date" : "Data",
     "Device" : "Preséu",
+    "Copy" : "Copiar",
     "Devices" : "Preseos"
 },
 "nplurals=2; plural=(n != 1);");
