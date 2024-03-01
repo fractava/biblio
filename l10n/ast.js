@@ -7,6 +7,7 @@ OC.L10N.register(
     "Reset" : "Reafitar",
     "Value" : "Valor",
     "Description" : "Descripción",
+    "User" : "Usuariu",
     "Type" : "Triba",
     "Actions" : "Aiciones",
     "Delete" : "Desaniciar",
