@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Title" : "Tñitulu",
     "Edit" : "Editar",
     "Name" : "Nome",
     "Error" : "Error",
@@ -15,6 +16,7 @@ OC.L10N.register(
     "Absolute" : "Absolutu",
     "Years" : "Años",
     "Days" : "Díes",
+    "Hours" : "Hores",
     "Collections" : "Coleiciones",
     "Members" : "Miembros",
     "Download" : "Baxar",
