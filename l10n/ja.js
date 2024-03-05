@@ -34,6 +34,7 @@ OC.L10N.register(
     "Item" : "アイテム",
     "Device" : "端末",
     "Copy" : "コピー",
-    "Devices" : "端末"
+    "Devices" : "端末",
+    "Customers" : "顧客"
 },
 "nplurals=1; plural=0;");
