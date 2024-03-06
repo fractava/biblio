@@ -45,6 +45,7 @@ OC.L10N.register(
     "Could not delete loan field" : "Nun se pudo desaniciar el campu del emprestu",
     "No presets" : "Nun hai nengún preaxuste",
     "Type" : "Tipu",
+    "Time" : "Data",
     "Actions" : "Aiciones",
     "Item Nomenclature" : "Nomenclatura del elementu",
     "Instance Nomenclature" : "Nomenclatura de la instancia",
