@@ -34,6 +34,7 @@ OC.L10N.register(
     "Checkbox" : "Casilla de verificación",
     "Item" : "Elemento",
     "Device" : "Dispositivo",
+    "Copy" : "Copiar",
     "Devices" : "Dispositivos"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
