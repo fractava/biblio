@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Fel",
     "Reset" : "Återställ",
     "Value" : "Värde",
+    "Description" : "Beskrivning",
     "Timestamp" : "Tidsstämpel",
     "Type" : "Typ",
     "Time" : "Tid",
