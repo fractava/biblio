@@ -62,6 +62,7 @@ OC.L10N.register(
     "Lend/Return" : "Préstec/Retorn",
     "History" : "Història",
     "Download" : "Baixa",
+    "Select Page" : "Selecciona una pàgina.",
     "Search" : "Cercar",
     "Back" : "Torna",
     "Sorting" : "Ordenació",

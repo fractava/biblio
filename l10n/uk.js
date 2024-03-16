@@ -20,7 +20,7 @@ OC.L10N.register(
     "Hours" : "Години",
     "Seconds" : "Секунди",
     "Members" : "Учасники",
-    "Download" : "Завантажити",
+    "Download" : "Звантажити",
     "Create Row" : "Додати рядок",
     "Search" : "Пошук",
     "Back" : "Назад",
