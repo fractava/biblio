@@ -235,20 +235,26 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 			case "BOOK":
 				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+					// TRANSLATORS this is used as a placeholder in the history view, if a book copy does not exist anymore, but a history entry still points to the id
 					return t("biblio", "[deleted book copy]");
 				} else {
+					// TRANSLATORS this is used as a placeholder in the history view, if a book instance does not exist anymore, but a history entry still points to the id
 					return t("biblio", "[deleted book instance]");
 				}
 			case "DEVICE":
 				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+					// TRANSLATORS this is used as a placeholder in the history view, if a device copy does not exist anymore, but a history entry still points to the id
 					return t("biblio", "[deleted device copy]");
 				} else {
+					// TRANSLATORS this is used as a placeholder in the history view, if a device instance does not exist anymore, but a history entry still points to the id
 					return t("biblio", "[deleted device instance]");
 				}
 			default:
 				if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+					// TRANSLATORS this is used as a placeholder in the history view, if a item copy does not exist anymore, but a history entry still points to the id
 					return t("biblio", "[deleted item copy]");
 				} else {
+					// TRANSLATORS this is used as a placeholder in the history view, if a item instance does not exist anymore, but a history entry still points to the id
 					return t("biblio", "[deleted item instance]");
 				}
 			}
@@ -336,10 +342,13 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
 			case "STUDENT":
+				// TRANSLATORS this is used as a placeholder in the history view, if a student does not exist anymore, but a history entry still points to the id
 				return t("biblio", "[deleted student]");
 			case "EMPLOYEE":
+				// TRANSLATORS this is used as a placeholder in the history view, if an employee does not exist anymore, but a history entry still points to the id
 				return t("biblio", "[deleted employee]");
 			default:
+				// TRANSLATORS this is used as a placeholder in the history view, if a customer does not exist anymore, but a history entry still points to the id
 				return t("biblio", "[deleted customer]");
 			}
 		},
