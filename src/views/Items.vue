@@ -13,7 +13,7 @@
 				:current-filters="itemsStore.filters"
 				:row-limit-filter="itemsStore.limit"
 				:create-row-label="nomenclatureStore.createItem"
-				:create-row-description="t('biblio', 'There are currently no items in this collection, that fit the search parameters')"
+				:create-row-description="nomenclatureStore.currentlyNoItemsInSearch"
 				@create-row="modalOpen = true"
 				@set-search-string="onSearchUpdate"
 				@update:currentFilters="onFieltersUpdate"

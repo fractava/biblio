@@ -153,6 +153,30 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Item title");
 			}
 		},
+		currentlyNoItems() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				return t("biblio", "There are currently no books in this collection");
+			case "DEVICE":
+				return t("biblio", "There are currently no devices in this collection");
+			default:
+				return t("biblio", "There are currently no items in this collection");
+			}
+		},
+		currentlyNoItemsInSearch() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				return t("biblio", "There are currently no books in this collection, that fit the search parameters");
+			case "DEVICE":
+				return t("biblio", "There are currently no devices in this collection, that fit the search parameters");
+			default:
+				return t("biblio", "There are currently no items in this collection, that fit the search parameters");
+			}
+		},
 		instances() {
 			const biblioStore = useBiblioStore();
 
@@ -212,6 +236,7 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
 						return t("biblio", "Book copy \"{barcode}\" deleted", { barcode });
 					} else {
+						// TRANSLATORS this app has user-configured nomenclature, this combination of nomenclature settings does not make much sense, but it can be set by the user, so this string must exist. If a translation is not feasable in a language you can leave it out
 						return t("biblio", "Book instance \"{barcode}\" deleted", { barcode });
 					}
 				case "DEVICE":
