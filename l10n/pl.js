@@ -13,6 +13,7 @@ OC.L10N.register(
     "Reset" : "Resetuj",
     "Add Option" : "Dodaj opcję",
     "Value" : "Wartość",
+    "User" : "Użytkownik",
     "Timestamp" : "Znacznik czasu",
     "Type" : "Rodzaj",
     "Time" : "Czas",
