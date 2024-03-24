@@ -4,9 +4,9 @@
 		<SimpleTable>
 			<tbody>
 				<tr>
-					<td>{{ nomenclatureStore.customer }}</td>
 					<td>
 						<vueSelect v-model="currentCustomer"
+							:placeholder="nomenclatureStore.customer"
 							style="width: 100%;"
 							:options="searchResults"
 							:label="'name'"
@@ -15,9 +15,9 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ t("biblio", "Until") }}</td>
 					<td>
 						<vueSelect v-model="currentLoanUntilPresetId"
+							:placeholder="t('biblio', 'Until')"
 							style="width: 100%;"
 							:options="biblioStore.selectedCollectionLoanUntilPresets"
 							:label="'name'"
@@ -25,9 +25,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ t("biblio", "Barcode") }}</td>
 					<td>
-						<NcTextField label="Barcode"
+						<NcTextField :label="t('biblio', 'Barcode')"
 							:value.sync="currentBarcode"
 							:show-trailing-button="false"
 							@keydown.enter.prevent="loan" />
@@ -35,6 +34,7 @@
 				</tr>
 			</tbody>
 		</SimpleTable>
+		<SimpleTableSubmitButon @click="loan" />
 	</div>
 </template>
 <script>
@@ -47,6 +47,7 @@ import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import SectionHeader from "../components/SectionHeader.vue";
 import SimpleTable from "../components/SimpleTable.vue";
+import SimpleTableSubmitButon from "../components/SImpleTableSubmitButton.vue";
 
 import { api } from "../api.js";
 import { useBiblioStore } from "../store/biblio.js";
@@ -58,6 +59,7 @@ export default {
 		NcTextField,
 		SectionHeader,
 		SimpleTable,
+		SimpleTableSubmitButon,
 	},
 	data() {
 		return {
@@ -139,13 +141,15 @@ export default {
 				return;
 			}
 
+			let loanUntil;
+
 			if (!this.currentLoanUntilPreset) {
 				return;
 			} else {
 				if (this.currentLoanUntilPreset.type === "relative") {
-					var loanUntil = Math.floor(Date.now() / 1000) + this.currentLoanUntilPreset.timestamp;
+					loanUntil = Math.floor(Date.now() / 1000) + this.currentLoanUntilPreset.timestamp;
 				} else {
-					var loanUntil = this.currentLoanUntilPreset.timestamp;
+					loanUntil = this.currentLoanUntilPreset.timestamp;
 				}
 			}
 

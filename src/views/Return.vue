@@ -1,12 +1,18 @@
 <template>
 	<div>
 		<SectionHeader>{{ t("biblio", "Return") }}</SectionHeader>
-		<NcTextField label="Barcode"
-			:value.sync="currentBarcode"
-			:show-trailing-button="true"
-			trailing-button-icon="arrowRight"
-			@trailing-button-click="returnItemInstance"
-			@keydown.enter.prevent="returnItemInstance" />
+		<SimpleTable>
+			<tbody>
+				<tr>
+					<td>
+						<NcTextField :label="t('biblio', 'Barcode')"
+							:value.sync="currentBarcode"
+							@keydown.enter.prevent="returnItemInstance" />
+					</td>
+				</tr>
+			</tbody>
+		</SimpleTable>
+		<SimpleTableSubmitButon @click="returnItemInstance" />
 	</div>
 </template>
 <script>
@@ -14,13 +20,17 @@ import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import { showError /*, showSuccess */ } from "@nextcloud/dialogs";
 
 import SectionHeader from "../components/SectionHeader.vue";
+import SimpleTable from "../components/SimpleTable.vue";
+import SimpleTableSubmitButon from "../components/SImpleTableSubmitButton.vue";
 
 import { api } from "../api.js";
 
 export default {
 	components: {
-		SectionHeader,
 		NcTextField,
+		SectionHeader,
+		SimpleTable,
+		SimpleTableSubmitButon,
 	},
 	data() {
 		return {
