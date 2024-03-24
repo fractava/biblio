@@ -1,5 +1,5 @@
 <template>
-	<NcDateTime :timestamp="timestamp" />
+	<NcDateTime v-if="timestamp !== false" :timestamp="timestamp" />
 </template>
 <script>
 import NcDateTime from "@nextcloud/vue/dist/Components/NcDateTime.js";
@@ -23,7 +23,7 @@ export default {
 			if (Number.isInteger(this.value)) {
 				return this.value * 1000;
 			} else {
-				return 0;
+				return false;
 			}
 		},
 		/* absoluteTime() {
