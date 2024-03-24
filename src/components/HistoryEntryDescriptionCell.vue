@@ -49,6 +49,12 @@ export default {
 
 				return this.nomenclatureStore.loanCreated(itemInstanceBarcode, customerName, untilFormattedDate);
 			}
+			case "loan.delete": {
+				const itemInstanceBarcode = this.value?.itemInstance?.barcode || this.nomenclatureStore.deletedItemInstance();
+				const customerName = this.value?.customer?.name || this.nomenclatureStore.deletedCustomer();
+
+				return this.nomenclatureStore.loanDeleted(itemInstanceBarcode, customerName);
+			}
 			case "itemField.create": {
 				return this.nomenclatureStore.itemFieldCreated(this.value?.properties?.after?.name, this.value?.properties?.after?.type);
 			}

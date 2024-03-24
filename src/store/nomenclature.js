@@ -439,6 +439,32 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				}
 			};
 		},
+		loanDeleted() {
+			return (barcode, customerName) => {
+				const biblioStore = useBiblioStore();
+
+				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+				case "BOOK":
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Book copy \"{barcode}\" returned by \"{customerName}\"", { barcode, customerName });
+					} else {
+						return t("biblio", "Book instance \"{barcode}\" returned by \"{customerName}\"", { barcode, customerName });
+					}
+				case "DEVICE":
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Device copy \"{barcode}\" returned by \"{customerName}\"", { barcode, customerName });
+					} else {
+						return t("biblio", "Device instance \"{barcode}\" returned by \"{customerName}\"", { barcode, customerName });
+					}
+				default:
+					if (biblioStore?.selectedCollection?.nomenclatureInstance === "COPY") {
+						return t("biblio", "Item copy \"{barcode}\" returned by \"{customerName}\"", { barcode, customerName });
+					} else {
+						return t("biblio", "Item instance \"{barcode}\" returned by \"{customerName}\"", { barcode, customerName });
+					}
+				}
+			};
+		},
 		itemIcon() {
 			const biblioStore = useBiblioStore();
 
