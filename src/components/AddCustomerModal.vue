@@ -29,7 +29,7 @@ import { mapStores } from "pinia";
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import NcModal from "@nextcloud/vue/dist/Components/NcModal.js";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
-import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
+import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon.js";
 
 import Plus from "vue-material-design-icons/Plus.vue";
 
