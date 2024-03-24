@@ -2,7 +2,7 @@
 	<div>
 		<div class="section">
 			<SectionHeader>
-				{{ t("biblio", "Item Properties") }}
+				{{ nomenclatureStore.itemProperties }}
 			</SectionHeader>
 			<EditModeButton :edit-mode.sync="editMode" />
 			<FieldsValueTable :field-values="item.fieldValues"
@@ -23,7 +23,7 @@
 		</div>
 		<div class="section">
 			<SectionHeader>
-				{{ t("biblio", "Item Instances") }}
+				{{ nomenclatureStore.instances }}
 			</SectionHeader>
 			<AddItemInstanceModal :open.sync="modalOpen"
 				:item-id="itemId"

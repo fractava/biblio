@@ -2,7 +2,7 @@
 	<div>
 		<div class="section">
 			<SectionHeader>
-				{{ t("biblio", "Customer Properties") }}
+				{{ nomenclatureStore.customerProperties }}
 			</SectionHeader>
 			<EditModeButton :edit-mode.sync="editMode" />
 			<FieldsValueTable :field-values="customer.fieldValues"
@@ -23,7 +23,7 @@
 		</div>
 		<div class="section">
 			<SectionHeader>
-				{{ t("biblio", "Customer Loans") }}
+				{{ nomenclatureStore.customerLoans }}
 			</SectionHeader>
 			<DataTable :columns="columns"
 				:rows="searchResults"

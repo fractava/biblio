@@ -75,6 +75,18 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Items");
 			}
 		},
+		itemProperties() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureItem) {
+			case "BOOK":
+				return t("biblio", "Book Properties");
+			case "DEVICE":
+				return t("biblio", "Device Properties");
+			default:
+				return t("biblio", "Item Properties");
+			}
+		},
 		createItem() {
 			const biblioStore = useBiblioStore();
 
@@ -306,6 +318,30 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 				return t("biblio", "Employee");
 			default:
 				return t("biblio", "Customer");
+			}
+		},
+		customerProperties() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "Student Properties");
+			case "EMPLOYEE":
+				return t("biblio", "Employee Properties");
+			default:
+				return t("biblio", "Customer Properties");
+			}
+		},
+		customerLoans() {
+			const biblioStore = useBiblioStore();
+
+			switch (biblioStore?.selectedCollection?.nomenclatureCustomer) {
+			case "STUDENT":
+				return t("biblio", "Student Loans");
+			case "EMPLOYEE":
+				return t("biblio", "Employee Loans");
+			default:
+				return t("biblio", "Customer Loans");
 			}
 		},
 		createCustomer() {
