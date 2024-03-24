@@ -27,7 +27,7 @@
 			</SectionHeader>
 			<AddItemInstanceModal :open.sync="modalOpen"
 				:item-id="itemId"
-				:prefix="barcodePrefix"
+				:default-prefix="barcodePrefix"
 				@added-instance="onAddedInstance" />
 			<DataTable :columns="columns"
 				:rows="searchResults"

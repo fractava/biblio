@@ -6,7 +6,26 @@
 			<div class="modal__content">
 				<h2>{{ t('biblio', 'Add new Item Instance') }}</h2>
 
-				<NcTextField label="Barcode" :value.sync="barcode" />
+				<ButtonGroup style="margin-bottom: 10px;">
+					<NcButton :pressed="!multipleMode"
+						@click="multipleMode = false">
+						{{ t('biblio', 'Single Mode') }}
+					</NcButton>
+					<NcButton :pressed="multipleMode"
+						@click="multipleMode = true">
+						{{ t('biblio', 'Batch Mode') }}
+					</NcButton>
+				</ButtonGroup>
+
+				<div v-if="!multipleMode">
+					<NcTextField :label="t('biblio', 'Barcode')" :value.sync="barcode" />
+				</div>
+				<div v-else>
+					<NcTextField :label="t('biblio', 'Prefix')" :value.sync="prefix" />
+					<NcInputField :label="t('biblio', 'Start Number')" type="number" :value.sync="startNumber" />
+					<NcInputField :label="t('biblio', 'Count')" type="number" :value.sync="count" />
+					<NcTextField :label="t('biblio', 'Suffix')" :value.sync="suffix" />
+				</div>
 
 				<NcButton :disabled="!barcode"
 					type="primary"
@@ -29,10 +48,12 @@ import { mapStores } from "pinia";
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import NcModal from "@nextcloud/vue/dist/Components/NcModal.js";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
+import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js"
 import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon.js";
 
 import Plus from "vue-material-design-icons/Plus.vue";
 
+import ButtonGroup from "./ButtonGroup.vue";
 import { useBiblioStore } from "../store/biblio.js";
 import { api } from "../api.js";
 
@@ -41,8 +62,10 @@ export default {
 		NcButton,
 		NcModal,
 		NcTextField,
+		NcInputField,
 		NcLoadingIcon,
 		Plus,
+		ButtonGroup,
 	},
 	props: {
 		open: {
@@ -53,22 +76,27 @@ export default {
 			type: Number,
 			required: true,
 		},
-		prefix: {
+		defaultPrefix: {
 			type: String,
 			default: "",
 		},
 	},
 	data() {
 		return {
+			multipleMode: false,
 			loading: false,
 			barcode: "",
+			prefix: "",
+			startNumber: 1,
+			count: 1,
+			suffix: "",
 		};
 	},
 	computed: {
 		...mapStores(useBiblioStore),
 	},
 	watch: {
-		prefix() {
+		defaultPrefix() {
 			this.resetBarcode();
 		},
 	},
@@ -81,12 +109,13 @@ export default {
 			this.resetBarcode();
 		},
 		resetBarcode() {
-			this.barcode = this.prefix;
+			this.barcode = this.defaultPrefix;
+			this.prefix = this.defaultPrefix;
 		},
 		async submit() {
 			this.loading = true;
 			try {
-				let newInstance = await api.createItemInstance(this.$route.params.collectionId, {
+				const newInstance = await api.createItemInstance(this.$route.params.collectionId, {
 					itemId: this.itemId,
 					barcode: this.barcode,
 				});
