@@ -12,7 +12,7 @@
 				</tr>
 			</tbody>
 		</SimpleTable>
-		<SimpleTableSubmitButon @click="returnItemInstance" />
+		<SimpleTableSubmitButon :loading="loading" @click="returnItemInstance" />
 	</div>
 </template>
 <script>
@@ -35,17 +35,22 @@ export default {
 	data() {
 		return {
 			currentBarcode: "",
+			loading: false,
 		};
 	},
 	methods: {
 		returnItemInstance() {
+			this.loading = true;
+
 			api.deleteLoan(this.$route.params.collectionId, this.currentBarcode)
 				.then(() => {
 					this.currentBarcode = "";
+					this.loading = false;
 				})
 				.catch((error) => {
 					console.error(error);
 					showError(t("biblio", "Could not return item instance"));
+					this.loading = false;
 				});
 		},
 	},

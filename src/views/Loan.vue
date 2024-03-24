@@ -34,7 +34,7 @@
 				</tr>
 			</tbody>
 		</SimpleTable>
-		<SimpleTableSubmitButon @click="loan" />
+		<SimpleTableSubmitButon :loading="loading" @click="loan" />
 	</div>
 </template>
 <script>
@@ -68,6 +68,7 @@ export default {
 			currentBarcode: "",
 			currentCustomer: null,
 			currentLoanUntilPresetId: null,
+			loading: false,
 		};
 	},
 	computed: {
@@ -153,6 +154,8 @@ export default {
 				}
 			}
 
+			this.loading = true;
+
 			api.createLoan(route.params.collectionId, {
 				barcode: this.currentBarcode,
 				customerId: this.currentCustomer,
@@ -160,10 +163,12 @@ export default {
 			})
 				.then(() => {
 					this.currentBarcode = "";
+					this.loading = false;
 				})
 				.catch((error) => {
 					console.error(error);
 					showError(t("biblio", "Could not loan item instance"));
+					this.loading = false;
 				});
 		},
 	},

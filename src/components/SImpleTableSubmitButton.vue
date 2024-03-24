@@ -5,7 +5,8 @@
 			@click="click">
 			{{ t("biblio", "Submit") }}
 			<template #icon>
-				<ArrowRight :size="20" />
+				<ArrowRight v-if="!loading" :size="20" />
+				<NcLoadingIcon v-else />
 			</template>
 		</NcButton>
 	</div>
@@ -13,13 +14,21 @@
 
 <script>
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
+import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon.js";
 
 import ArrowRight from "vue-material-design-icons/ArrowRight.vue";
 
 export default {
 	components: {
 		NcButton,
+		NcLoadingIcon,
 		ArrowRight,
+	},
+	props: {
+		loading: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	methods: {
 		click(event) {
