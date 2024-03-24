@@ -18,7 +18,7 @@
 				<LoanUntilPresetRow v-for="(preset, index) in presets"
 					:key="preset.id"
 					:preset.sync="presets[index]"
-					@refresh="onChange" />
+					@refresh="refreshLoanUntilPresetsInBiblioStoreIfNeeded" />
 			</tbody>
 		</table>
 

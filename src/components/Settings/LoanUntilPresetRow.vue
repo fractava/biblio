@@ -122,8 +122,9 @@ export default {
 				timestamp: newTimestamp,
 			}).then((result) => {
 				this.$emit("update:preset", result);
+				this.$emit("refresh");
 			});
-		}, { wait: 100 }),
+		}, { wait: 1000 }),
 		async onDelete() {
 			await api.deleteLoanUntilPreset(this.settingsStore.context?.collectionId, this.preset.id);
 			this.$emit("refresh");

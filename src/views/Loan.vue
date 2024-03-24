@@ -26,10 +26,11 @@
 				<tr>
 					<td>{{ t("biblio", "Until") }}</td>
 					<td>
-						<vueSelect v-model="currentLoanUntilPreset"
+						<vueSelect v-model="currentLoanUntilPresetId"
 							style="width: 100%;"
 							:options="biblioStore.selectedCollectionLoanUntilPresets"
-							:label="'name'" />
+							:label="'name'"
+							:reduce="reduce" />
 					</td>
 				</tr>
 			</tbody>
@@ -62,11 +63,14 @@ export default {
 			searchResults: [],
 			currentBarcode: "",
 			currentCustomer: null,
-			currentLoanUntilPreset: null,
+			currentLoanUntilPresetId: null,
 		};
 	},
 	computed: {
 		...mapStores(useBiblioStore, useNomenclatureStore),
+		currentLoanUntilPreset() {
+			return this.biblioStore.selectedCollectionLoanUntilPresets.find((preset) => (preset.id === this.currentLoanUntilPresetId));
+		},
 	},
 	mounted() {
 		this.refreshSearchResults("", () => {});
