@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<SectionHeader>{{ t("biblio", "Loan") }}</SectionHeader>
-		<table class="loanTable">
+		<SimpleTable>
 			<tbody>
 				<tr>
 					<td>{{ nomenclatureStore.customer }}</td>
@@ -15,15 +15,6 @@
 					</td>
 				</tr>
 				<tr>
-					<td>{{ t("biblio", "Barcode") }}</td>
-					<td>
-						<NcTextField label="Barcode"
-							:value.sync="currentBarcode"
-							:show-trailing-button="false"
-							@keydown.enter.prevent="loan" />
-					</td>
-				</tr>
-				<tr>
 					<td>{{ t("biblio", "Until") }}</td>
 					<td>
 						<vueSelect v-model="currentLoanUntilPresetId"
@@ -33,8 +24,17 @@
 							:reduce="reduce" />
 					</td>
 				</tr>
+				<tr>
+					<td>{{ t("biblio", "Barcode") }}</td>
+					<td>
+						<NcTextField label="Barcode"
+							:value.sync="currentBarcode"
+							:show-trailing-button="false"
+							@keydown.enter.prevent="loan" />
+					</td>
+				</tr>
 			</tbody>
-		</table>
+		</SimpleTable>
 	</div>
 </template>
 <script>
@@ -46,6 +46,7 @@ import { mapStores } from "pinia";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 
 import SectionHeader from "../components/SectionHeader.vue";
+import SimpleTable from "../components/SimpleTable.vue";
 
 import { api } from "../api.js";
 import { useBiblioStore } from "../store/biblio.js";
@@ -56,6 +57,7 @@ export default {
 		vueSelect,
 		NcTextField,
 		SectionHeader,
+		SimpleTable,
 	},
 	data() {
 		return {
@@ -163,19 +165,3 @@ export default {
 	},
 };
 </script>
-<style lang="scss">
-.loanTable {
-	width: 100%;
-	border-collapse: collapse;
-
-	td, th {
-		padding: 7px;
-		border-bottom: 1px solid var(--color-border);
-		border-top: 1px solid var(--color-border);
-	}
-
-	tr:hover, tr:focus, tr:active {
-		background-color: transparent;
-	}
-}
-</style>
