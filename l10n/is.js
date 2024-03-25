@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "Gildi",
     "Description" : "Lýsing",
     "User" : "Notandi",
+    "Submit" : "Senda inn",
     "Type" : "Tegund",
     "Time" : "Tími",
     "Actions" : "Aðgerðir",

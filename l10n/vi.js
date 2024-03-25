@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "Giá trị",
     "Description" : "Mô tả",
     "User" : "Người dùng",
+    "Submit" : "Gửi đi",
     "Type" : "Loại",
     "Time" : "Thời gian",
     "Actions" : "Hành động",

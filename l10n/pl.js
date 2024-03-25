@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "System zarządzania biblioteką",
+    "Count" : "Ilość pobrań",
     "Title" : "Tytuł",
     "Edit" : "Edycja",
     "Add a field" : "Dodaj pole",
@@ -15,6 +16,7 @@ OC.L10N.register(
     "Value" : "Wartość",
     "User" : "Użytkownik",
     "Timestamp" : "Znacznik czasu",
+    "Submit" : "Wyślij",
     "Type" : "Rodzaj",
     "Time" : "Czas",
     "Actions" : "Akcje",

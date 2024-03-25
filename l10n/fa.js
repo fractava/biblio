@@ -14,6 +14,7 @@ OC.L10N.register(
     "Description" : "شرح",
     "User" : "کاربر",
     "Timestamp" : "مهر زمان",
+    "Submit" : "ارسال",
     "Type" : "نوع",
     "Time" : "زمان",
     "Actions" : "کنش‌ها",

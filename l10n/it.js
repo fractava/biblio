@@ -15,6 +15,7 @@ OC.L10N.register(
     "Value" : "Valore",
     "Description" : "Descrizione",
     "Timestamp" : "Marca temporale",
+    "Submit" : "Invia",
     "Type" : "Tipo",
     "Time" : "Ora",
     "Actions" : "Azioni",

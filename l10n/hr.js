@@ -16,6 +16,7 @@ OC.L10N.register(
     "Description" : "Opis",
     "User" : "@string/user_icon",
     "Timestamp" : "Vremenska oznaka",
+    "Submit" : "Šalji",
     "Type" : "Vrsta",
     "Time" : "Vrijeme",
     "Actions" : "Radnje",

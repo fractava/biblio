@@ -10,6 +10,7 @@ OC.L10N.register(
     "Description" : "Опис",
     "User" : "Користувач",
     "Timestamp" : "Мітка часу",
+    "Submit" : "Відправити",
     "Type" : "Тип",
     "Time" : "Час",
     "Actions" : "Дії",

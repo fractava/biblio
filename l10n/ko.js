@@ -10,6 +10,7 @@ OC.L10N.register(
     "Value" : "값",
     "Description" : "설명",
     "User" : "사용자",
+    "Submit" : "제출",
     "Type" : "종류",
     "Time" : "시간",
     "Actions" : "동작",

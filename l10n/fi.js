@@ -12,6 +12,7 @@ OC.L10N.register(
     "Value" : "Arvo",
     "Description" : "Kuvaus",
     "Timestamp" : "Aikaleima",
+    "Submit" : "Lähetä",
     "Type" : "Tyyppi",
     "Time" : "Aika",
     "Actions" : "Toiminnot",

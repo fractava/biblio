@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "тохируулах",
     "Value" : "Үнийн дүн",
     "Description" : "Тодорхойлолт",
+    "Submit" : "мэдэгдэх",
     "Type" : "Төрөл",
     "Time" : "Цаг",
     "Actions" : "Үйл ажиллагаа",

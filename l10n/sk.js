@@ -3,6 +3,9 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Systém pre správu knižnice",
+    "Prefix" : "Predvoľba",
+    "Count" : "Počet",
+    "Suffix" : "Prípona",
     "Title" : "Názov",
     "Edit" : "Úprava",
     "Add a field" : "Pridať pole",
@@ -16,6 +19,7 @@ OC.L10N.register(
     "Description" : "Popis",
     "User" : "Používateľ",
     "Timestamp" : "Časová značka",
+    "Submit" : "Odoslať",
     "Could not update customer field" : "Nepodarilo sa aktualizovať pole zákazníka",
     "Type" : "Typ",
     "Time" : "Čas",

@@ -14,6 +14,7 @@ OC.L10N.register(
     "Description" : "Descripción",
     "User" : "Usuario",
     "Timestamp" : "Marca de tiempo",
+    "Submit" : "Enviar",
     "Type" : "Tipo",
     "Time" : "Hora",
     "Actions" : "Acciones",

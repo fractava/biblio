@@ -15,6 +15,7 @@ OC.L10N.register(
     "Value" : "Waarde",
     "Description" : "Omschrijving",
     "Timestamp" : "Tijdstempel",
+    "Submit" : "Verwerken",
     "Type" : "Type",
     "Time" : "Tijd",
     "Actions" : "Acties",

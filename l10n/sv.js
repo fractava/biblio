@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "Värde",
     "Description" : "Beskrivning",
     "Timestamp" : "Tidsstämpel",
+    "Submit" : "Skicka",
     "Type" : "Typ",
     "Time" : "Tid",
     "Actions" : "Funktioner",

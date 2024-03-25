@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "値",
     "Description" : "説明",
     "Timestamp" : "タイムスタンプ",
+    "Submit" : "送信",
     "Type" : "タイプ",
     "Time" : "時間",
     "Actions" : "アクション",

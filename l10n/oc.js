@@ -11,6 +11,7 @@ OC.L10N.register(
     "Value" : "Valor",
     "Description" : "Descripcion",
     "User" : "User",
+    "Submit" : "Transmetre",
     "Type" : "Tipe",
     "Time" : "Ora",
     "Actions" : "Accions",

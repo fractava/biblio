@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "მნიშვნელობა",
     "Description" : "აღწერილობა",
     "User" : "მომხმარებელი",
+    "Submit" : "გაგზავნა",
     "Time" : "დრო",
     "Actions" : "მოქმედებები",
     "Delete" : "წაშლა",

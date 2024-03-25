@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "Restarigi",
     "Description" : "Priskribo",
     "User" : "Uzanto",
+    "Submit" : "Sendi",
     "Type" : "Tipo",
     "Time" : "Dato",
     "Actions" : "Agoj",

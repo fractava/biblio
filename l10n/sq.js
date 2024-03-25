@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "Vlerë",
     "Description" : "Përshkrim",
     "User" : "Përdorues",
+    "Submit" : "Dërgo",
     "Type" : "Tipi",
     "Time" : "Kohë",
     "Actions" : "Veprimet",

@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "Vērtība",
     "Description" : "Apraksts",
     "User" : "Lietotājs",
+    "Submit" : "Iesniegt",
     "Type" : "Tips",
     "Time" : "Laiks",
     "Actions" : "Darbības",

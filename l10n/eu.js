@@ -16,6 +16,7 @@ OC.L10N.register(
     "Description" : "Deskripzioa",
     "User" : "Erabiltzailea",
     "Timestamp" : "Denbora-marka",
+    "Submit" : "Bidali",
     "Type" : "Mota",
     "Time" : "Noiz",
     "Actions" : "Ekintzak",

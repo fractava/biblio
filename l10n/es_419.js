@@ -8,6 +8,7 @@ OC.L10N.register(
     "Value" : "Valor",
     "Description" : "Descripción",
     "User" : "Ususario",
+    "Submit" : "Enviar",
     "Type" : "Tipo",
     "Time" : "Hora",
     "Actions" : "Acciones",

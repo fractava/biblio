@@ -14,6 +14,7 @@ OC.L10N.register(
     "Value" : "值",
     "Description" : "描述",
     "Timestamp" : "时间戳",
+    "Submit" : "提交",
     "Type" : "类型",
     "Time" : "时间",
     "Actions" : "操作",

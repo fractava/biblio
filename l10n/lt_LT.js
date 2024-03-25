@@ -10,6 +10,7 @@ OC.L10N.register(
     "Value" : "Reikšmė",
     "Description" : "Aprašas",
     "Timestamp" : "Laiko žyma",
+    "Submit" : "Pateikti",
     "Type" : "Tipas",
     "Time" : "Laikas",
     "Actions" : "Veiksmai",

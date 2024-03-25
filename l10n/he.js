@@ -9,6 +9,7 @@ OC.L10N.register(
     "Value" : "ערך",
     "Description" : "תיאור",
     "User" : "משתמש",
+    "Submit" : "שליחה",
     "Type" : "סוג",
     "Time" : "זמן",
     "Actions" : "פעולות",

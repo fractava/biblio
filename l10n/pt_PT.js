@@ -10,6 +10,7 @@ OC.L10N.register(
     "Description" : "Descrição",
     "User" : "Utilizador",
     "Timestamp" : "Indicador de dia e hora",
+    "Submit" : "Submeter",
     "Type" : "Tipo",
     "Time" : "Tempo",
     "Actions" : "Acções",

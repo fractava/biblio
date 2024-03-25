@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "Lähtesta",
     "Description" : "Kirjeldus",
     "User" : "Kasutaja",
+    "Submit" : "Saada",
     "Type" : "Tüüp",
     "Time" : "Aeg",
     "Actions" : "Tegevused",

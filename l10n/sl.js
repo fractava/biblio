@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Sistem za upravljanje knjižnice",
+    "Barcode" : "Črtna koda",
     "Title" : "Naslov",
     "Edit" : "Uredi",
     "Add a field" : "Dodaj polje",
@@ -23,6 +24,7 @@ OC.L10N.register(
     "Description" : "Opis",
     "User" : "Uporabnik",
     "Timestamp" : "Časovni žig",
+    "Submit" : "Pošlji",
     "Add new collection" : "Dodaj novo zbirko",
     "Type" : "Vrsta",
     "Time" : "Čas",
@@ -56,7 +58,6 @@ OC.L10N.register(
     "Filtering" : "Filtriranje",
     "Export CSV" : "Izvozi CSV",
     "_%n selected row_::_%n selected rows_" : ["%n izbrana vrstica","%n izbrani vrstici","%n izbrane vrstice","%n izbranih vrstic"],
-    "Barcode" : "Črtna koda",
     "Until" : "Do",
     "Return" : "Nazaj",
     "List" : "Seznam",

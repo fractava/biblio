@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Грешка",
     "Reset" : "Ресетирање",
     "Value" : "Вредност",
+    "Submit" : "Испрати",
     "Type" : "Вид",
     "Time" : "Време",
     "Actions" : "Акции",

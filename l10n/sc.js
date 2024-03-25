@@ -15,6 +15,7 @@ OC.L10N.register(
     "Description" : "Descritzione",
     "User" : "Utente",
     "Timestamp" : "Marca temporale",
+    "Submit" : "Imbia",
     "Type" : "Genia",
     "Time" : "Ora",
     "Actions" : "Atziones",

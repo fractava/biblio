@@ -9,6 +9,7 @@ OC.L10N.register(
     "Description" : "คำอธิบาย",
     "User" : "ผู้ใช้",
     "Timestamp" : "ประทับเวลา",
+    "Submit" : "ส่ง",
     "Type" : "ประเภท",
     "Time" : "เวลา",
     "Actions" : "การกระทำ",

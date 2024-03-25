@@ -13,6 +13,7 @@ OC.L10N.register(
     "Value" : "Значение",
     "Description" : "Описание",
     "Timestamp" : "Метка времени",
+    "Submit" : "Отправить ответ",
     "Type" : "Тип",
     "Time" : "Время",
     "Actions" : "Действия",
