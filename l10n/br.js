@@ -7,6 +7,7 @@ OC.L10N.register(
     "Error" : "Fazi",
     "Description" : "Deskrivadur",
     "User" : "Implijer",
+    "Submit" : "Kinnig",
     "Type" : "Stumm",
     "Actions" : "Oberoù",
     "Delete" : "Lemel",

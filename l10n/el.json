@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Σύστημα διαχείρισης βιβλιοθηκών",
+    "Suffix" : "Επίθεμα",
     "Title" : "Τίτλος",
     "Edit" : "Επεξεργασία",
     "Add a field" : "Προσθήκη πεδίου",
@@ -14,6 +15,7 @@
     "Description" : "Περιγραφή",
     "User" : "Χρήστης",
     "Timestamp" : "Χρονοσφραγίδα",
+    "Submit" : "Υποβολή",
     "Type" : "Τύπος",
     "Time" : "Ώρα",
     "Actions" : "Ενέργειες",

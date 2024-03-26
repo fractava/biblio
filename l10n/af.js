@@ -6,6 +6,7 @@ OC.L10N.register(
     "Value" : "Waarde",
     "Description" : "Beskrywing",
     "User" : "Gebruiker",
+    "Submit" : "Dien in",
     "Time" : "Tyd",
     "Actions" : "Aksies",
     "Delete" : "Skrap",

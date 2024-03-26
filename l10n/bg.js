@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio /Библио/",
     "A library management system" : "Система за управление на библиотека",
+    "Prefix" : "Префикс /Обръщение/",
     "Title" : "Заглавие",
     "Edit" : "Редактиране",
     "Add a field" : "Добавяне на поле",
@@ -13,6 +14,7 @@ OC.L10N.register(
     "Reset" : "Възстановяване",
     "Value" : "Стойност",
     "Timestamp" : "Времево клеймо",
+    "Submit" : "Изпращане",
     "Type" : "Тип",
     "Time" : "Час",
     "Actions" : "Действия",

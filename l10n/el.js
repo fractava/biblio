@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Σύστημα διαχείρισης βιβλιοθηκών",
+    "Suffix" : "Επίθεμα",
     "Title" : "Τίτλος",
     "Edit" : "Επεξεργασία",
     "Add a field" : "Προσθήκη πεδίου",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "Description" : "Περιγραφή",
     "User" : "Χρήστης",
     "Timestamp" : "Χρονοσφραγίδα",
+    "Submit" : "Υποβολή",
     "Type" : "Τύπος",
     "Time" : "Ώρα",
     "Actions" : "Ενέργειες",
