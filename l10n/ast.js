@@ -144,6 +144,7 @@ OC.L10N.register(
     "Add new customer" : "Amestar un veceru nuevu",
     "There are currently no students in this collection, that fit the search parameters" : "Nun hai nengún estudiante nesta coleición que s'axuste a los parámetros de la busca",
     "There are currently no customers in this collection, that fit the search parameters" : "Nun hai nengún veceros nesta coleición que s'axuste a los parámetros de la busca",
+    "Request is not authorized. Are you logged in?" : "Nun s'autorizó la solicitú. ¿Aniciesti la sesión?",
     "Resource not found." : "Nun s'atopó'l recursu.",
     "Unknown error." : "Error desconocíu."
 },
