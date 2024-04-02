@@ -11,6 +11,7 @@ OC.L10N.register(
     "Reset" : "Palauta",
     "Value" : "Arvo",
     "Description" : "Kuvaus",
+    "User" : "Käyttäjä",
     "Timestamp" : "Aikaleima",
     "Submit" : "Lähetä",
     "Type" : "Tyyppi",

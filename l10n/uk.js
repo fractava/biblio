@@ -16,6 +16,7 @@ OC.L10N.register(
     "Actions" : "Дії",
     "Delete" : "Вилучити",
     "Select Type" : "Виберіть Тип",
+    "Relative" : "Відносно",
     "Years" : "Роки ",
     "Days" : "Дні",
     "Hours" : "Години",
