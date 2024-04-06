@@ -37,7 +37,7 @@
 		"babel-loader": "^9.1.2",
 		"caniuse-lite": "^1.0.30001606",
 		"debounce": "^2.0.0",
-		"debounce-fn": "^5.1.2",
+		"debounce-fn": "^6.0.0",
 		"node-polyfill-webpack-plugin": "^2.0.1",
 		"p-cancelable": "^4.0.1",
 		"p-queue": "^8.0.1",
