@@ -86,6 +86,7 @@ OC.L10N.register(
     "Starts with" : "Comienza per",
     "Ends with" : "Acaba per",
     "Date" : "Data",
+    "Pick a date" : "Escueyi una data",
     "Date and time" : "Data y hora",
     "Select" : "Seleicionar",
     "Checkbox" : "Caxellu",
