@@ -18,6 +18,8 @@ OC.L10N.register(
     "Download" : "Eroflueden",
     "Search" : "Search",
     "Date" : "Date",
-    "Select" : "Auswielen"
+    "Select" : "Auswielen",
+    "Checkbox" : "Checkbox",
+    "Copy" : "Kopie"
 },
 "nplurals=2; plural=(n != 1);");
