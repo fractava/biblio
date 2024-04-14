@@ -14,6 +14,7 @@ OC.L10N.register(
     "Description" : "Beskrivelse",
     "User" : "ruger",
     "Timestamp" : "Tidsstempel",
+    "Submit" : "Tilføj",
     "Time" : "Tid",
     "Actions" : "Handlinger",
     "Delete" : "Slet",

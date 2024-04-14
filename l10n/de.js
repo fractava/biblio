@@ -17,6 +17,7 @@ OC.L10N.register(
     "Description" : "Beschreibung",
     "User" : "Benutzer",
     "Timestamp" : "Zeitstempel",
+    "Submit" : "Übermitteln",
     "Type" : "Typ",
     "Time" : "Zeit",
     "Actions" : "Aktionen",
