@@ -81,6 +81,7 @@ OC.L10N.register(
     "Uncheck all" : "Desmarcar too",
     "Create Instance" : "Crear una instancia",
     "This Item currently has no Instance, that fits the search parameters" : "Esti elementu nun tien nenguna instancia que s'axuste a los parámetros de la busca",
+    "List" : "Llista",
     "Contains" : "Contién",
     "Equals" : "Igual a",
     "Starts with" : "Comienza per",
