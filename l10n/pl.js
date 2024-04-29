@@ -14,6 +14,7 @@ OC.L10N.register(
     "Reset" : "Resetuj",
     "Add Option" : "Dodaj opcję",
     "Value" : "Wartość",
+    "Description" : "Opis",
     "User" : "Użytkownik",
     "Timestamp" : "Znacznik czasu",
     "Submit" : "Wyślij",
