@@ -47,6 +47,7 @@ OC.L10N.register(
     "Select Operator" : "Hautatu operadorea",
     "Export CSV" : "Esportatu CSVa",
     "Uncheck all" : "Desautatu dena",
+    "_%n selected row_::_%n selected rows_" : ["Hautatutako errenkada %n","%n hautatutako errenkada"],
     "Return" : "Bueltatu",
     "List" : "Zerrenda",
     "Contains" : "Dauka",
