@@ -35,7 +35,7 @@
 		"@nextcloud/vue": "^8.11.1",
 		"@nextcloud/webpack-vue-config": "^6.0.0",
 		"babel-loader": "^9.1.2",
-		"caniuse-lite": "^1.0.30001606",
+		"caniuse-lite": "^1.0.30001615",
 		"debounce": "^2.0.0",
 		"debounce-fn": "^6.0.0",
 		"node-polyfill-webpack-plugin": "^2.0.1",
