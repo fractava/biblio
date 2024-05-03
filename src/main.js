@@ -21,12 +21,16 @@
  */
 import Vue from "vue";
 import { createPinia, PiniaVuePlugin } from "pinia";
+import { generateFilePath } from "@nextcloud/router";
 
 import App from "./App.vue";
 
 import router from "./router.js";
 
 import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip.js";
+
+// eslint-disable-next-line
+__webpack_public_path__ = generateFilePath("biblio", '', 'js/');
 
 Vue.use(PiniaVuePlugin);
 
