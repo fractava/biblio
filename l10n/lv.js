@@ -2,7 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Amats",
-    "Edit" : "Rediģēt",
+    "Edit" : "Labot",
     "Name" : "Vārds",
     "Error" : "Kļūda",
     "Reset" : "Atiestatīt",
