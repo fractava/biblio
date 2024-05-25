@@ -5,6 +5,7 @@ OC.L10N.register(
     "Edit" : "Cuir in eagar",
     "Name" : "Ainm",
     "Error" : "Earráid",
+    "Reset" : "Athshocraigh",
     "Description" : "Cur síos",
     "Submit" : "Cuir isteach",
     "Type" : "Cineál",

@@ -10,7 +10,7 @@ OC.L10N.register(
     "Description" : "Apraksts",
     "User" : "Lietotājs",
     "Submit" : "Iesniegt",
-    "Type" : "Tips",
+    "Type" : "Veids",
     "Time" : "Laiks",
     "Actions" : "Darbības",
     "Delete" : "Dzēst",
