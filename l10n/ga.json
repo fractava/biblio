@@ -4,9 +4,11 @@
     "Name" : "Ainm",
     "Error" : "Earráid",
     "Reset" : "Athshocraigh",
+    "Value" : "Luach",
     "Description" : "Cur síos",
     "Submit" : "Cuir isteach",
     "Type" : "Cineál",
+    "Time" : "Am",
     "Actions" : "Gníomhartha",
     "Delete" : "Scrios",
     "Select Type" : "Roghnaigh Cineál",
@@ -14,7 +16,9 @@
     "Search" : "Cuardach",
     "Back" : "Ar ais",
     "Sorting" : "Sórtáil",
+    "List" : "Liosta",
     "Date" : "Dáta",
+    "Select" : "Roghnaigh",
     "Device" : "Gléas",
     "Copy" : "Cóipeáil"
 },"pluralForm" :"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);"
