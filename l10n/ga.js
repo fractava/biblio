@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "Athshocraigh",
     "Value" : "Luach",
     "Description" : "Cur síos",
+    "User" : "Úsáideoir",
     "Submit" : "Cuir isteach",
     "Type" : "Cineál",
     "Time" : "Am",
@@ -21,6 +22,7 @@ OC.L10N.register(
     "List" : "Liosta",
     "Date" : "Dáta",
     "Select" : "Roghnaigh",
+    "Checkbox" : "ticbhosca",
     "Device" : "Gléas",
     "Copy" : "Cóipeáil"
 },
