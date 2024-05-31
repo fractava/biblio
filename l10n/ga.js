@@ -15,6 +15,7 @@ OC.L10N.register(
     "Actions" : "Gníomhartha",
     "Delete" : "Scrios",
     "Select Type" : "Roghnaigh Cineál",
+    "Relative" : "Coibhneasta",
     "Download" : "Íoslódáil",
     "Search" : "Cuardach",
     "Back" : "Ar ais",
@@ -24,6 +25,7 @@ OC.L10N.register(
     "Select" : "Roghnaigh",
     "Checkbox" : "ticbhosca",
     "Device" : "Gléas",
-    "Copy" : "Cóipeáil"
+    "Copy" : "Cóipeáil",
+    "Devices" : "Gléasanna"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
