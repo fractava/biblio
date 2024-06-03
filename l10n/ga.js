@@ -22,6 +22,7 @@ OC.L10N.register(
     "Sorting" : "Sórtáil",
     "List" : "Liosta",
     "Date" : "Dáta",
+    "Pick a date" : "Roghnaigh dáta",
     "Select" : "Roghnaigh",
     "Checkbox" : "ticbhosca",
     "Device" : "Gléas",
