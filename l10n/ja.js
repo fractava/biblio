@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "リセット",
     "Value" : "値",
     "Description" : "説明",
+    "User" : "ユーザー",
     "Timestamp" : "タイムスタンプ",
     "Submit" : "送信",
     "Type" : "タイプ",
