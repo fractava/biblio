@@ -16,6 +16,8 @@ OC.L10N.register(
     "Delete" : "Scrios",
     "Select Type" : "Roghnaigh Cineál",
     "Relative" : "Coibhneasta",
+    "Years" : "Blianta",
+    "Hours" : "Uaireanta",
     "Members" : "Baill",
     "Download" : "Íoslódáil",
     "Search" : "Cuardach",
