@@ -54,14 +54,14 @@ jobs:
 
     steps:
       - name: Checkout server
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.7
         with:
           submodules: true
           repository: nextcloud/server
           ref: ${{ matrix.server-versions }}
 
       - name: Checkout app
-        uses: actions/checkout@v4.1.4
+        uses: actions/checkout@v4.1.7
         with:
           path: apps/${{ env.APP_NAME }}
 
