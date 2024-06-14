@@ -143,6 +143,11 @@ export default {
 		box-shadow: none !important;
     }
 
+	.vs__search::placeholder {
+		color: var(--vs-search-input-color);
+		opacity: 1;
+	}
+
     .vs__dropdown-toggle {
         border-radius: 24px;
         padding-bottom: 0px;
