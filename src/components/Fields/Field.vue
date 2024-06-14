@@ -59,7 +59,7 @@
 
 <script>
 import { directive as ClickOutside } from "v-click-outside";
-import { debounce } from "debounce";
+import debounceFn from "debounce-fn";
 
 import NcActions from "@nextcloud/vue/dist/Components/NcActions.js";
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton.js";
@@ -130,9 +130,9 @@ export default {
 	},
 
 	methods: {
-		onNameChange: debounce(function({ target }) {
+		onNameChange: debounceFn(function({ target }) {
 			this.$emit("update:name", target.value);
-		}, 200),
+		}, { wait:  200}),
 
 		onIncludeInListChange(includeInList) {
 			this.$emit("update:includeInList", includeInList);
