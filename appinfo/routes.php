@@ -44,6 +44,8 @@ return [
 		['name' => 'item_instance#index', 'url' => '/collections/{collectionId}/itemInstances', 'verb' => 'GET'],
 		['name' => 'item_instance#show', 'url' => '/collections/{collectionId}/itemInstances/{instanceId}', 'verb' => 'GET'],
 		['name' => 'item_instance#create', 'url' => '/collections/{collectionId}/itemInstances', 'verb' => 'POST'],
+		['name' => 'item_instance#batchCreateTest', 'url' => '/collections/{collectionId}/itemInstances/batchTest', 'verb' => 'POST'],
+		['name' => 'item_instance#batchCreate', 'url' => '/collections/{collectionId}/itemInstances/batch', 'verb' => 'POST'],
 		['name' => 'item_instance#destroy', 'url' => '/collections/{collectionId}/itemInstances/{instanceId}', 'verb' => 'DELETE'],
 
 		// Item Instances by Barcode

@@ -66,6 +66,23 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		return $this->findEntity($qb);
 	}
 
+	public function existsByBarcode(int $collectionId, string $barcode) {
+		/* @var $qb IQueryBuilder */
+		$qb = $this->db->getQueryBuilder();
+
+		$qb->select($qb->createFunction('COUNT(1)'))
+			->from(self::TABLENAME, 'instance');
+
+		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
+			$qb->expr()->eq('instance.item_id', 'item.id'),
+		));
+
+		$qb->where($qb->expr()->eq('instance.barcode', $qb->createNamedParameter($barcode)))
+			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
+
+		return $qb->executeQuery()->fetch()["COUNT(1)"] === 1;
+	}
+
 	/**
 	 * Runs a sql query and returns an array of entities
 	 *
@@ -249,7 +266,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 			for ($i = 0; $i < $maxPrefixLen && $first[$i] == $last[$i]; $i++);
 		}
 
-		if ($i > 1) {
+		if ($i >= 1) {
 			$prefix = substr($first, 0, $i);
 		} else {
 			$prefix = "";

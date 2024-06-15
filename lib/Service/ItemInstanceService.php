@@ -150,6 +150,39 @@ class ItemInstanceService {
 		}, $this->db);
 	}
 
+	public function batchCreateTest(int $collectionId, int $itemId, string $prefix, int $startNumber, int $count, string $suffix) {
+		$existingBarcodes = [];
+		$anyNewBarcodes = False;
+
+		for($i = 0; $i < $count; $i++) {
+			$barcode = $prefix . ($startNumber + $i) . $suffix;
+
+			if($this->mapper->existsByBarcode($collectionId, $barcode)) {
+				$existingBarcodes[] = $barcode;
+			} else {
+				$anyNewBarcodes = True;
+			}
+		}
+
+		return [
+			'existingBarcodes' => $existingBarcodes,
+			'anyNewBarcodes' => $anyNewBarcodes,
+		];
+	}
+
+	public function batchCreate(int $collectionId, int $itemId, string $prefix, int $startNumber, int $count, string $suffix) {
+		$result = [];
+		for($i = 0; $i < $count; $i++) {
+			$barcode = $prefix . ($startNumber + $i) . $suffix;
+			
+			if(!$this->mapper->existsByBarcode($collectionId, $barcode)) {
+				$result[] = $this->create($collectionId, $barcode, $itemId);
+			}
+		}
+
+		return $result;
+	}
+
 	public function delete(int $collectionId, int $id, ?int $historySubEntryOf = null) {
 		try {
 			return $this->atomic(function () use ($collectionId, $id, $historySubEntryOf) {

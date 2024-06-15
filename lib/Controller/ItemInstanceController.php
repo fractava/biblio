@@ -73,6 +73,22 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
+	public function batchCreateTest(int $collectionId, int $itemId, string $prefix, int $startNumber, int $count, string $suffix) {
+		$result = $this->service->batchCreateTest($collectionId, $itemId, $prefix, $startNumber, $count, $suffix);
+		return new JSONResponse($result, Http::STATUS_OK);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
+	public function batchCreate(int $collectionId, int $itemId, string $prefix, int $startNumber, int $count, string $suffix) {
+		$result = $this->service->batchCreate($collectionId, $itemId, $prefix, $startNumber, $count, $suffix);
+		return new JSONResponse($result, Http::STATUS_OK);
+	}
+
+	/**
+	 * @NoAdminRequired
+	 */
 	public function destroy(int $collectionId, int $instanceId): DataResponse {
 		return $this->handleNotFound(function () use ($collectionId, $instanceId) {
 			return $this->service->delete($collectionId, $instanceId);
