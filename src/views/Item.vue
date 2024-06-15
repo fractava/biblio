@@ -28,7 +28,7 @@
 			<AddItemInstanceModal :open.sync="modalOpen"
 				:item-id="itemId"
 				:default-prefix="barcodePrefix"
-				@added-instance="onAddedInstance" />
+				@added-instances="onAddedInstance" />
 			<DataTable :columns="columns"
 				:rows="searchResults"
 				:page="page"

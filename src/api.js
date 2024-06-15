@@ -931,6 +931,30 @@ export const api = {
 		});
 	},
 
+	batchCreateItemInstanceTest(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/itemInstances/batchTest`, parameters)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
+	batchCreateItemInstance(collectionId, parameters) {
+		return new Promise((resolve, reject) => {
+			axios.post(`/collections/${collectionId}/itemInstances/batch`, parameters)
+				.then(function(response) {
+					resolve(response.data);
+				})
+				.catch(function(error) {
+					reject(error);
+				});
+		});
+	},
+
 	/**
 	 * @param {number} collectionId Id of the collection the item instance is in
 	 * @param {number} itemInstanceId Id of the item instance to delete

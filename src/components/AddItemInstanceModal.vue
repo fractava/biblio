@@ -25,9 +25,15 @@
 					<NcInputField :label="t('biblio', 'Start Number')" type="number" :value.sync="startNumber" />
 					<NcInputField :label="t('biblio', 'Count')" type="number" :value.sync="count" />
 					<NcTextField :label="t('biblio', 'Suffix')" :value.sync="suffix" />
+					<NcNoteCard v-if="startNumber > 0 && count > 0" type="info">
+						<span>{{ actionDescription }}</span>
+					</NcNoteCard>
+					<NcNoteCard :type="warningCardType">
+						<span>{{ existingWarning }}</span>
+					</NcNoteCard>
 				</div>
 
-				<NcButton :disabled="!barcode"
+				<NcButton :disabled="submitDisabled"
 					type="primary"
 					style="margin-top: 15px;"
 					@click="submit">
@@ -44,12 +50,14 @@
 
 <script>
 import { mapStores } from "pinia";
+import debounceFn from "debounce-fn";
 
 import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
 import NcModal from "@nextcloud/vue/dist/Components/NcModal.js";
 import NcTextField from "@nextcloud/vue/dist/Components/NcTextField.js";
 import NcInputField from "@nextcloud/vue/dist/Components/NcInputField.js"
 import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon.js";
+import NcNoteCard from '@nextcloud/vue/dist/Components/NcNoteCard.js'
 
 import Plus from "vue-material-design-icons/Plus.vue";
 
@@ -64,6 +72,7 @@ export default {
 		NcTextField,
 		NcInputField,
 		NcLoadingIcon,
+		NcNoteCard,
 		Plus,
 		ButtonGroup,
 	},
@@ -90,18 +99,109 @@ export default {
 			startNumber: 1,
 			count: 1,
 			suffix: "",
+			existingBarcodes: [],
+			anyNewBarcodes: true,
 		};
 	},
 	computed: {
 		...mapStores(useBiblioStore),
+		submitDisabled() {
+			if(this.multipleMode) {
+				return !(this.startNumber && (this.count > 0)  && this.anyNewBarcodes);
+			} else {
+				return !(this.barcode);
+			}
+		},
+		actionDescription() {
+			if(this.multipleMode) {
+				if(this.count == 1) {
+					return t('biblio', 'Press submit to create barcode {barcode}', { barcode: (this.prefix + this.startNumber + this.suffix) });
+				} else if(this.count <= 3) {
+					let barcodes = [];
+
+					for(let i = 0; i < this.count; i++) {
+						barcodes.push(this.prefix + (this.startNumber + i) + this.suffix);
+					}
+
+					return t('biblio', 'Press submit to create barcodes {firstBarcodesList} and {lastBarcode}', {
+						firstBarcodesList: barcodes.slice(0, -1).join(", "),
+						lastBarcode: barcodes.at(-1)
+					});
+				} else {
+					return t('biblio', 'Press submit to create barcodes {firstBarcode}, {secondBarcode}, ... {lastBarcode}', {
+						firstBarcode: (this.prefix + this.startNumber + this.suffix),
+						secondBarcode: (this.prefix + (this.startNumber + 1) + this.suffix),
+						lastBarcode: (this.prefix + (this.startNumber + this.count - 1) + this.suffix)
+					});
+				}
+			} else {
+				return "";
+			}
+		},
+		warningCardType() {
+			if(this.multipleMode) {
+				if(this.startNumber > 0 && this.count > 0 && this.anyNewBarcodes) {
+					if(this.existingBarcodes.length > 0) {
+						return "warning";
+					} else {
+						return "success";
+					}
+				} else {
+					return "error";
+				}
+			}
+		},
+		existingWarning() {
+			if(this.multipleMode) {
+				if(this.startNumber > 0 && this.count > 0) {
+					if(this.anyNewBarcodes) {
+						if(this.existingBarcodes.length === 0) {
+							return t('biblio', 'No barcodes in the selected range already exist');
+						} else if(this.existingBarcodes.length == 1) {
+							return t('biblio', 'Barcode {barcode} already exist and will not be created', { barcode: this.existingBarcodes[0] });
+						} else if(this.existingBarcodes.length <= 4) {
+							return t('biblio', 'Barcodes {barcodeList} already exist and will not be created', { barcodeList: this.existingBarcodes.join(", ") });
+						} else {
+							return t('biblio', 'Barcodes {barcodeList} and {additionalNumber} more already exist and will not be created', {
+								barcodeList: this.existingBarcodes.slice(0, 4).join(", "),
+								additionalNumber: this.existingBarcodes.length - 4,
+							});
+						}
+					} else {
+						return t('biblio', 'All included barcodes already exist');
+					}
+				} else {
+					return t('biblio', 'You need to select a valid range');
+				}
+			} else {
+				return "";
+			}
+		}
 	},
 	watch: {
 		defaultPrefix() {
 			this.resetBarcode();
 		},
+		prefix() {
+			this.reloadTest();
+		},
+		startNumber() {
+			this.reloadTest();
+		},
+		count() {
+			this.reloadTest();
+		},
+		suffix() {
+			this.reloadTest();
+		},
+		open() {
+			this.resetInputs();
+			this.reloadTest();
+		}
 	},
 	mounted() {
-		this.resetBarcode();
+		this.resetInputs();
+		this.reloadTest();
 	},
 	methods: {
 		closeModal() {
@@ -112,15 +212,48 @@ export default {
 			this.barcode = this.defaultPrefix;
 			this.prefix = this.defaultPrefix;
 		},
+		resetInputs() {
+			this.resetBarcode();
+			this.startNumber = 1;
+			this.count = 1;
+			this.suffix = "";
+		},
+		reloadTest: debounceFn(async function () {
+			if(this.startNumber > 0 && this.count > 0) {
+				({existingBarcodes: this.existingBarcodes, anyNewBarcodes: this.anyNewBarcodes } = await api.batchCreateItemInstanceTest(this.$route.params.collectionId, {
+					itemId: this.itemId,
+					prefix: this.prefix,
+					startNumber: this.startNumber,
+					count: this.count,
+					suffix: this.suffix,
+				}));
+			} else {
+				this.existingBarcodes = [];
+				this.anyNewBarcodes = false;
+			}
+		}, { wait: 200 }),
 		async submit() {
 			this.loading = true;
 			try {
-				const newInstance = await api.createItemInstance(this.$route.params.collectionId, {
-					itemId: this.itemId,
-					barcode: this.barcode,
-				});
+				if(this.multipleMode) {
+					const newInstances = await api.batchCreateItemInstance(this.$route.params.collectionId, {
+						itemId: this.itemId,
+						prefix: this.prefix,
+						startNumber: this.startNumber,
+						count: this.count,
+						suffix: this.suffix,
+					});
 
-				this.$emit("added-instance", newInstance);
+					this.$emit("added-instances", newInstances);
+				} else {
+					const newInstance = await api.createItemInstance(this.$route.params.collectionId, {
+						itemId: this.itemId,
+						barcode: this.barcode,
+					});
+
+					this.$emit("added-instances", [newInstance]);
+				}
+
 			} catch (error) {
 				console.error(error);
 			} finally {

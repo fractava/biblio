@@ -108,7 +108,7 @@ export default {
 	},
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .loanUntilPresetsTable {
 	width: 100%;
 	border-collapse: collapse;
@@ -126,5 +126,8 @@ export default {
 	tr:hover, tr:focus, tr:active {
 		background-color: transparent;
 	}
+}
+.addPresetButton{
+	width: 100% !important;
 }
 </style>
