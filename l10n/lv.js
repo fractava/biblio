@@ -28,6 +28,7 @@ OC.L10N.register(
     "Pick a date" : "Izvēlieties datumu",
     "Select" : "Atzīmēt",
     "Device" : "Ierīce",
+    "Copy" : "Kopēt",
     "Devices" : "Ierīces"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
