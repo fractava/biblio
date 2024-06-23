@@ -117,9 +117,15 @@ axios.defaults.baseURL = generateUrl("/apps/biblio");
  * }} updateLoanParameters
  *
  * @typedef {{
+ * 	fieldId: number
+ *  value: string
+ * }} createLoanFieldValue
+ * 
+ * @typedef {{
  *   barcode: string
  *   customerId: number
  *   until: number
+ *   fieldValues: Array<createLoanFieldValue>
  * }} createLoanParameters
  *
  * @typedef {{

@@ -160,6 +160,12 @@ export default {
 				barcode: this.currentBarcode,
 				customerId: this.currentCustomer,
 				until: loanUntil,
+				fieldValues: [
+					{
+						fieldId: 2,
+						value: "true",
+					}
+				]
 			})
 				.then(() => {
 					this.currentBarcode = "";

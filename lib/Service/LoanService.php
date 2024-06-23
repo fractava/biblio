@@ -13,33 +13,21 @@ use OCA\Biblio\Errors\LoanNotFound;
 
 use OCA\Biblio\Db\Loan;
 use OCA\Biblio\Db\LoanMapper;
+use OCA\Biblio\Service\LoanFieldService;
+use OCA\Biblio\Service\LoanFieldValueService;
 
 class LoanService {
 	use TTransactional;
 
-	/** @var LoanMapper */
-	private $mapper;
-	
-	/** @var ItemInstanceService */
-	private $itemInstanceService;
-
-	/** @var CustomerService */
-	private $customerService;
-
-	/** @var HistoryEntryService */
-	private $historyEntryService;
-
 	public function __construct(
-		LoanMapper $mapper,
-		ItemInstanceService $itemInstanceService,
-		CustomerService $customerService,
-		HistoryEntryService $historyEntryService,
-		IDBConnection $db,
+		private LoanMapper $mapper,
+		private ItemInstanceService $itemInstanceService,
+		private CustomerService $customerService,
+		private LoanFieldService $loanFieldService,
+		private LoanFieldValueService $loanFieldValueService,
+		private HistoryEntryService $historyEntryService,
+		private IDBConnection $db,
 	) {
-		$this->mapper = $mapper;
-		$this->itemInstanceService = $itemInstanceService;
-		$this->customerService = $customerService;
-		$this->historyEntryService = $historyEntryService;
 		$this->db = $db;
 	}
 
@@ -72,8 +60,8 @@ class LoanService {
 		}
 	}
 
-	public function create(int $collectionId, int $itemInstanceId, int $customerId, int $until, ?int $historySubEntryOf = null) {
-		return $this->atomic(function () use ($collectionId, $itemInstanceId, $customerId, $until, $historySubEntryOf) {
+	public function create(int $collectionId, int $itemInstanceId, int $customerId, int $until, array $fieldValues, ?int $historySubEntryOf = null) {
+		return $this->atomic(function () use ($collectionId, $itemInstanceId, $customerId, $until, $fieldValues, $historySubEntryOf) {
 			$itemInstance = $this->itemInstanceService->find($collectionId, $itemInstanceId);
 			$customer = $this->customerService->find($collectionId, $customerId, ["model"]);
 
@@ -94,14 +82,22 @@ class LoanService {
 				loanId: $loan->getId(),
 			);
 
+			foreach($fieldValues as $fieldValue) {
+				if(array_key_exists("fieldId", $fieldValue) && array_key_exists("value", $fieldValue)) {
+					$field = $this->loanFieldService->find($fieldValue["fieldId"], $collectionId);
+
+					$this->loanFieldValueService->create($loan->getId(), $field->getId(), $fieldValue["value"]);
+				}
+			}
+
 			return $loan;
 		}, $this->db);
 	}
 
-	public function createByItemInstanceBarcode(int $collectionId, string $barcode, int $customerId, int $until) {
+	public function createByItemInstanceBarcode(int $collectionId, string $barcode, int $customerId, int $until, array $fieldValues, ?int $historySubEntryOf = null) {
 		$itemInstanceId = $this->itemInstanceService->findByBarcode($collectionId, $barcode)->getId();
 
-		return $this->create($collectionId, $itemInstanceId, $customerId, $until);
+		return $this->create($collectionId, $itemInstanceId, $customerId, $until, $fieldValues, $historySubEntryOf);
 	}
 
 	public function update(int $collectionId, int $id, ?int $until, ?int $historySubEntryOf = null) {
