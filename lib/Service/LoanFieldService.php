@@ -6,6 +6,8 @@ use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
+use OCP\AppFramework\Db\TTransactional;
+use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\LoanFieldNotFound;
 
@@ -13,11 +15,13 @@ use OCA\Biblio\Db\LoanField;
 use OCA\Biblio\Db\LoanFieldMapper;
 
 class LoanFieldService {
-	/** @var LoanFieldMapper */
-	private $mapper;
+	use TTransactional;
 
-	public function __construct(LoanFieldMapper $mapper) {
-		$this->mapper = $mapper;
+	public function __construct(
+		private LoanFieldMapper $mapper,
+		private HistoryEntryService $historyEntryService,
+		private IDBConnection $db,
+	) {
 	}
 
 	public function findAll(int $collectionId): array {
@@ -41,40 +45,101 @@ class LoanFieldService {
 		}
 	}
 
-	public function create(int $collectionId, string $type, string $name, string $settings): LoanField {
-		$field = new LoanField();
-		$field->setCollectionId($collectionId);
-		$field->setType($type);
-		$field->setName($name);
-		$field->setSettings($settings);
-		return $this->mapper->insert($field);
+	public function create(
+		int $collectionId,
+		string $type,
+		string $name,
+		string $settings,
+		bool $includeInList = false,
+		?int $historySubEntryOf = null,
+	): LoanField {
+		return $this->atomic(function () use ($collectionId, $type, $name, $settings, $includeInList, $historySubEntryOf) {
+			throw "test";
+			
+			$field = new LoanField();
+			$field->setCollectionId($collectionId);
+			$field->setType($type);
+			$field->setName($name);
+			$field->setSettings($settings);
+			$field->setIncludeInList((int)$includeInList);
+
+			$field = $this->mapper->insert($field);
+
+			$this->historyEntryService->create(
+				type: "loanField.create",
+				collectionId: $collectionId,
+				subEntryOf: $historySubEntryOf,
+				properties: json_encode(["before" => new \ArrayObject(), "after" => $field]),
+				loanFieldId: $field->getId(),
+			);
+
+			return $field;
+		}, $this->db);
 	}
 
-	public function update(int $id, int $collectionId, ?string $newType, ?string $newName, ?string $newSettings): LoanField {
+	public function update(
+		int $id,
+		int $collectionId,
+		?string $newType,
+		?string $newName,
+		?string $newSettings,
+		?bool $newIncludeInList,
+		?int $historySubEntryOf = null,
+	): LoanField {
 		try {
-			$field = $this->mapper->find($id, $collectionId);
-			
-			if (!is_null($newType)) {
-				$field->setType($newType);
-			}
-			if (!is_null($newName) && strlen($newName) >= 3) {
-				$field->setName($newName);
-			}
-			if (!is_null($newSettings)) {
-				$field->setSettings($newSettings);
-			}
+			return $this->atomic(function () use ($id, $collectionId, $newType, $newName, $newSettings, $newIncludeInList, $historySubEntryOf) {
+				$field = $this->mapper->find($id, $collectionId);
+				$unmodifiedField = $field->jsonSerialize();
+				
+				if (!is_null($newType)) {
+					$field->setType($newType);
+				}
+				if (!is_null($newName) && strlen($newName) >= 3) {
+					$field->setName($newName);
+				}
+				if (!is_null($newSettings)) {
+					$field->setSettings($newSettings);
+				}
+				if (!is_null($newIncludeInList)) {
+					$field->setIncludeInList((int)$newIncludeInList);
+				}
 
-			return $this->mapper->update($field);
+				if (count($field->getUpdatedFields()) > 0) {
+					$field = $this->mapper->update($field);
+
+					$this->historyEntryService->create(
+						type: "loanField.update",
+						collectionId: $collectionId,
+						subEntryOf: $historySubEntryOf,
+						properties: json_encode(["before" => $unmodifiedField, "after" => $field]),
+						loanFieldId: $field->getId(),
+					);
+				}
+
+				return $field;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}
 	}
 
-	public function delete($id, $collectionId): LoanField {
+	public function delete($id, $collectionId, ?int $historySubEntryOf = null): LoanField {
 		try {
-			$field = $this->mapper->find($id, $collectionId);
-			$this->mapper->delete($field);
-			return $field;
+			return $this->atomic(function () use ($id, $collectionId, $historySubEntryOf) {
+				$field = $this->mapper->find($id, $collectionId);
+
+				$historyEntry = $this->historyEntryService->create(
+					type: "loanField.delete",
+					collectionId: $field->getCollectionId(),
+					subEntryOf: $historySubEntryOf,
+					properties: json_encode(["before" => $field, "after" => new \ArrayObject()]),
+					loanFieldId: $field->getId(),
+				);
+
+				$this->mapper->delete($field);
+
+				return $field;
+			}, $this->db);
 		} catch (Exception $e) {
 			$this->handleException($e);
 		}

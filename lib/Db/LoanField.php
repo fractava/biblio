@@ -11,9 +11,11 @@ class LoanField extends Entity implements JsonSerializable {
 	protected $name;
 	protected $type;
 	protected $settings;
-
+	protected $includeInList;
+	
 	public function __construct() {
 		$this->addType('collectionId','integer');
+		$this->addType('includeInList','bool');
 	}
 
 	public function jsonSerialize(): array {
@@ -23,6 +25,7 @@ class LoanField extends Entity implements JsonSerializable {
 			'name' => $this->name,
 			'type' => $this->type,
 			'settings' => $this->settings,
+			'includeInList' => $this->includeInList,
 		];
 	}
 }

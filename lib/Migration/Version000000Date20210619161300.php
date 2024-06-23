@@ -387,6 +387,9 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 				'notnull' => true,
 				'length' => 5000,
 			]);
+			$table->addColumn('include_in_list', Types::BOOLEAN, [
+				'notnull' => true,
+			]);
 			
 
 			$table->setPrimaryKey(['id']);
