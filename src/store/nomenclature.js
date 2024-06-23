@@ -553,10 +553,13 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 				case "BOOK":
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It is the description of a specific creation event. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Book field \"{name}\" of type {type} created", { name, type });
 				case "DEVICE":
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It is the description of a specific creation event. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Device field \"{name}\" of type {type} created", { name, type });
 				default:
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It is the description of a specific creation event. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Item field \"{name}\" of type {type} created", { name, type });
 				}
 			};
@@ -567,10 +570,13 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 				case "BOOK":
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It starts the description of a specific edit event. After the colon follows a list of specific changes made in the edit. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Book field \"{name}\" updated:", { name });
 				case "DEVICE":
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It starts the description of a specific edit event. After the colon follows a list of specific changes made in the edit. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Device field \"{name}\" updated:", { name });
 				default:
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It starts the description of a specific edit event. After the colon follows a list of specific changes made in the edit. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Item field \"{name}\" updated:", { name });
 				}
 			};
@@ -581,13 +587,34 @@ export const useNomenclatureStore = defineStore("nomenclature", {
 
 				switch (biblioStore?.selectedCollection?.nomenclatureItem) {
 				case "BOOK":
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It is the description of a specific deletion event. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Book field \"{name}\" deleted", { name });
 				case "DEVICE":
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It is the description of a specific deletion event. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Device field \"{name}\" deleted", { name });
 				default:
+					// TRANSLATORS this is shown in a table of all changes ever made in the collection. It is the description of a specific deletion event. This exists in multiple variations ("book field", "device field", "item field") depending on the nomenclature selected for the collection by the user.
 					return t("biblio", "Item field \"{name}\" deleted", { name });
 				}
 			};
-		}
+		},
+		loanFieldCreated() {
+			return (name, type) => {
+				// TRANSLATORS this is shown in a table of all changes ever made in the collection. It starts the description of a specific creation event.
+				return t("biblio", "Loan field \"{name}\" of type {type} created", { name, type });
+			};
+		},
+		loanFieldUpdated() {
+			return (name) => {
+				// TRANSLATORS this is shown in a table of all changes ever made in the collection. It starts the description of a specific edit event. After the colon follows a list of specific changes made in the edit.
+				return t("biblio", "Loan field \"{name}\" updated:", { name });
+			};
+		},
+		loanFieldDeleted() {
+			return (name) => {
+				// TRANSLATORS this is shown in a table of all changes ever made in the collection. It starts the description of a specific deletion event.
+				return t("biblio", "Loan field \"{name}\" deleted", { name });
+			};
+		},
 	},
 });
