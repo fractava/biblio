@@ -176,12 +176,7 @@ export default {
 				barcode: this.currentBarcode,
 				customerId: this.currentCustomer,
 				until: loanUntil,
-				fieldValues: [
-					{
-						fieldId: 2,
-						value: "true",
-					}
-				]
+				fieldValues: Object.entries(this.fieldValues).map(([fieldId, value]) => ({ fieldId, value })),
 			})
 				.then(() => {
 					this.currentBarcode = "";

@@ -11,12 +11,14 @@ class LoanFieldValueFieldCombination extends Entity implements JsonSerializable 
 	protected $name;
 	protected $type;
 	protected $settings;
+	protected $includeInList;
 	protected $loanId;
 	protected $fieldId;
 	protected $value;
 
 	public function __construct() {
 		$this->addType('collectionId','integer');
+		$this->addType('includeInList','bool');
 		$this->addType('loanId','integer');
 		$this->addType('fieldId','integer');
 	}
@@ -28,6 +30,7 @@ class LoanFieldValueFieldCombination extends Entity implements JsonSerializable 
 			'name' => $this->name,
 			'type' => $this->type,
 			'settings' => $this->settings,
+			'includeInList' => $this->includeInList,
 			'loanId' => $this->loanId,
 			'fieldId' => $this->fieldId,
 			'value' => $this->value
