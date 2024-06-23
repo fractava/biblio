@@ -41,16 +41,16 @@ class LoanFieldController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, string $type, string $name, string $settings): DataResponse {
-		return new DataResponse($this->service->create($collectionId, $type, $name, $settings));
+	public function create(int $collectionId, string $type, string $name, string $settings, bool $includeInList): DataResponse {
+		return new DataResponse($this->service->create($collectionId, $type, $name, $settings, $includeInList));
 	}
 
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $settings = null): DataResponse {
-		return $this->handleNotFound(function () use ($id, $collectionId, $type, $name, $settings) {
-			return $this->service->update($id, $collectionId, $type, $name, $settings);
+	public function update(int $collectionId, int $id, string $type = null, string $name = null, string $settings = null, bool $includeInList = null): DataResponse {
+		return $this->handleNotFound(function () use ($id, $collectionId, $type, $name, $settings, $includeInList) {
+			return $this->service->update($id, $collectionId, $type, $name, $settings, $includeInList);
 		});
 	}
 
