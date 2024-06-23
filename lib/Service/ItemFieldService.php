@@ -17,23 +17,11 @@ use OCA\Biblio\Db\ItemFieldMapper;
 class ItemFieldService {
 	use TTransactional;
 
-	/** @var ItemFieldMapper */
-	private $mapper;
-
-	/** @var HistoryEntryService */
-	private $historyEntryService;
-
-	/** @var IDBConnection */
-	private $db;
-
 	public function __construct(
-		ItemFieldMapper $mapper,
-		HistoryEntryService $historyEntryService,
-		IDBConnection $db,
+		private ItemFieldMapper $mapper,
+		private HistoryEntryService $historyEntryService,
+		private IDBConnection $db,
 	) {
-		$this->mapper = $mapper;
-		$this->historyEntryService = $historyEntryService;
-		$this->db = $db;
 	}
 
 	public function findAll(int $collectionId): array {
@@ -135,7 +123,7 @@ class ItemFieldService {
 
 	public function delete($id, $collectionId, ?int $historySubEntryOf = null): ItemField {
 		try {
-			return $this->atomic(function () use ($id, $collectionId) {
+			return $this->atomic(function () use ($id, $collectionId, $historySubEntryOf) {
 				$field = $this->mapper->find($id, $collectionId);
 
 				$historyEntry = $this->historyEntryService->create(
