@@ -53,9 +53,7 @@ class LoanFieldService {
 		bool $includeInList = false,
 		?int $historySubEntryOf = null,
 	): LoanField {
-		return $this->atomic(function () use ($collectionId, $type, $name, $settings, $includeInList, $historySubEntryOf) {
-			throw "test";
-			
+		return $this->atomic(function () use ($collectionId, $type, $name, $settings, $includeInList, $historySubEntryOf) {			
 			$field = new LoanField();
 			$field->setCollectionId($collectionId);
 			$field->setType($type);

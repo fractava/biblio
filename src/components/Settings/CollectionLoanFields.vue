@@ -2,7 +2,6 @@
 	<div>
 		<FieldsTable :fields="fields"
 			:fields-order="settingsStore.selectedCollection.loanFieldsOrder"
-            :enable-include-in-list="false"
 			@update:fieldsOrder="onFieldOrderUpdate"
 			@field-update="onFieldUpdate"
 			@delete="deleteField" />
