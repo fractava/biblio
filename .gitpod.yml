@@ -31,7 +31,7 @@ ports:
 
 vscode:
   extensions:
-    - higoka.php-cs-fixer
+    #- higoka.php-cs-fixer
     - Vue.volar
     - dbaeumer.vscode-eslint
     - ms-azuretools.vscode-docker
