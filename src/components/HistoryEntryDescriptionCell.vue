@@ -61,23 +61,7 @@ export default {
 			case "itemField.update": {
 				let description = this.nomenclatureStore.itemFieldUpdated(this.value?.properties?.before?.name) + " ";
 
-				const changes = [];
-
-				if (this.value?.properties?.after?.name !== this.value?.properties?.before?.name) {
-					changes.push(t("biblio", "Renamed to \"{newName}\"", { newName: this.value?.properties?.after?.name }));
-				}
-
-				if (this.value?.properties?.after?.includeInList !== this.value?.properties?.before?.includeInList) {
-					if (this.value?.properties?.after?.includeInList) {
-						changes.push(t("biblio", "Enabled visibility in list views"));
-					} else {
-						changes.push(t("biblio", "Disabled visibility in list views"));
-					}
-				}
-
-				if (this.value?.properties?.after?.settings !== this.value?.properties?.before?.settings) {
-					changes.push(t("biblio", "Changed settings"));
-				}
+				let changes = this.genericFieldUpdates(this.value?.properties?.before, this.value?.properties?.after)
 
 				if (changes.length === 0) {
 					description += t("biblio", "No changes");
@@ -90,10 +74,53 @@ export default {
 			case "itemField.delete": {
 				return this.nomenclatureStore.itemFieldDeleted(this.value?.properties?.before?.name);
 			}
+			case "loanField.create": {
+				return this.nomenclatureStore.loanFieldCreated(this.value?.properties?.after?.name, this.value?.properties?.after?.type);
+			}
+			case "loanField.update": {
+				let description = this.nomenclatureStore.loanFieldUpdated(this.value?.properties?.before?.name) + " ";
+
+				let changes = this.genericFieldUpdates(this.value?.properties?.before, this.value?.properties?.after)
+
+				if (changes.length === 0) {
+					description += t("biblio", "No changes");
+				} else {
+					description += changes.join(", ");
+				}
+
+				return description;
+			}
+			case "loanField.delete": {
+				return this.nomenclatureStore.loanFieldDeleted(this.value?.properties?.before?.name);
+			}
 			default:
 				return this.value?.type;
 			}
 		},
+	},
+	methods: {
+		// works with item fields, customer fields, loan fields
+		genericFieldUpdates(before, after) {
+			const changes = [];
+
+			if (after?.name !== before?.name) {
+				changes.push(t("biblio", "Renamed to \"{newName}\"", { newName: after?.name }));
+			}
+
+			if (after?.includeInList !== before?.includeInList) {
+				if (after?.includeInList) {
+					changes.push(t("biblio", "Enabled visibility in list views"));
+				} else {
+					changes.push(t("biblio", "Disabled visibility in list views"));
+				}
+			}
+
+			if (after?.settings !== before?.settings) {
+				changes.push(t("biblio", "Changed settings"));
+			}
+
+			return changes;
+		}
 	},
 };
 </script>
