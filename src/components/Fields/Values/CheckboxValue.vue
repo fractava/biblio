@@ -6,7 +6,7 @@
 		<div v-else>
 			<NcCheckboxRadioSwitch :checked="validatedValue"
 				:disabled="!allowValueEdit"
-				@update:checked="onInput" />
+				@update:checked="onInput">{{ name }}</NcCheckboxRadioSwitch>
 		</div>
 	</div>
 </template>

@@ -32,6 +32,17 @@
 							@keydown.enter.prevent="loan" />
 					</td>
 				</tr>
+				<tr v-for="field in itemInstancesStore.fields">
+					<td>
+						<FieldValue :is="FieldTypes[field.type].valueEditComponent"
+							:field-type="FieldTypes[field.type]"
+							:allow-value-edit="true"
+							:value="fieldValues[field.id] || FieldTypes[field.type].defaultValue"
+							:settings="field.settings"
+							:name="field.name"
+							@update:value="(newValue) => { fieldValues[field.id] = newValue }" />
+					</td>
+				</tr>
 			</tbody>
 		</SimpleTable>
 		<SimpleTableSubmitButon :loading="loading" @click="loan" />
@@ -52,6 +63,9 @@ import SimpleTableSubmitButon from "../components/SImpleTableSubmitButton.vue";
 import { api } from "../api.js";
 import { useBiblioStore } from "../store/biblio.js";
 import { useNomenclatureStore } from "../store/nomenclature.js";
+import { useItemInstancesStore } from "../store/itemInstances.js";
+
+import FieldTypes from "../models/FieldTypes";
 
 export default {
 	components: {
@@ -69,10 +83,12 @@ export default {
 			currentCustomer: null,
 			currentLoanUntilPresetId: null,
 			loading: false,
+			FieldTypes,
+			fieldValues: {},
 		};
 	},
 	computed: {
-		...mapStores(useBiblioStore, useNomenclatureStore),
+		...mapStores(useBiblioStore, useNomenclatureStore, useItemInstancesStore),
 		currentLoanUntilPreset() {
 			return this.biblioStore.selectedCollectionLoanUntilPresets.find((preset) => (preset.id === this.currentLoanUntilPresetId));
 		},

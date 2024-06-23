@@ -6,6 +6,7 @@
 		<div v-else>
 			<NcInputField v-if="allowValueEdit"
 				:placeholder="placeholder"
+				:label="name"
 				:disabled="!allowValueEdit"
 				:value="validatedValue"
 				minlength="0"
