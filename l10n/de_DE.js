@@ -12,7 +12,7 @@ OC.L10N.register(
     "Start Number" : "Anfangszahl",
     "Count" : "Anzahl",
     "Suffix" : "Suffix",
-    "Press submit to create barcode {barcode}" : "„Senden“ drücken, um einen Barcode {barcode} zu erstellen",
+    "Press submit to create barcode {barcode}" : "\"Senden“ drücken, um einen Barcode {barcode} zu erstellen",
     "Press submit to create barcodes {firstBarcodesList} and {lastBarcode}" : "\"Senden\" drücken um Barcodes {firstBarcodesList} und {lastBarcode} zu erstellen",
     "Press submit to create barcodes {firstBarcode}, {secondBarcode}, ... {lastBarcode}" : "\"Senden\" drücken um Barcodes {firstBarcode}, {secondBarcode}, ... {lastBarcode} zu erstellen",
     "No barcodes in the selected range already exist" : "Es sind noch keine Barcodes im ausgewählten Bereich vorhanden",
