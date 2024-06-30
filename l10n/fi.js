@@ -28,6 +28,7 @@ OC.L10N.register(
     "Members" : "Jäsenet",
     "History" : "Historia",
     "Download" : "Lataa",
+    "Select Page" : "Valitse sivu",
     "Search" : "Etsi",
     "Back" : "Takaisin",
     "Sorting" : "Lajittelu",
