@@ -32,7 +32,7 @@
 							@keydown.enter.prevent="loan" />
 					</td>
 				</tr>
-				<tr v-for="field in itemInstancesStore.fields">
+				<tr v-for="field in itemInstancesStore.sortedFields">
 					<td>
 						<FieldValue :is="FieldTypes[field.type].valueEditComponent"
 							:field-type="FieldTypes[field.type]"
