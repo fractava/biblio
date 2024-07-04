@@ -22,6 +22,7 @@
 import Vue from "vue";
 import { createPinia, PiniaVuePlugin } from "pinia";
 import { generateFilePath } from "@nextcloud/router";
+import VuePapaParse from 'vue-papa-parse'
 
 import App from "./App.vue";
 
@@ -33,6 +34,7 @@ import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip.js";
 __webpack_public_path__ = generateFilePath("biblio", '', 'js/');
 
 Vue.use(PiniaVuePlugin);
+Vue.use(VuePapaParse);
 
 Vue.directive("tooltip", Tooltip);
 
