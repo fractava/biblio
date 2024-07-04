@@ -37,7 +37,7 @@
 						<FieldValue :is="FieldTypes[field.type].valueEditComponent"
 							:field-type="FieldTypes[field.type]"
 							:allow-value-edit="true"
-							:value="fieldValues[field.id] || FieldTypes[field.type].defaultValue"
+							:value="fieldValues[field.id]"
 							:settings="field.settings"
 							:name="field.name"
 							@update:value="(newValue) => { fieldValues[field.id] = newValue }" />
@@ -188,6 +188,36 @@ export default {
 					this.loading = false;
 				});
 		},
+		ensureValuesForAllFields() {
+			console.log(this.itemInstancesStore?.fields);
+			const fieldIds = [];
+			// set values for fields not changed yet to default
+			for(const field of this.itemInstancesStore.fields) {
+				fieldIds.push(field.id.toString());
+				if(!this.fieldValues.hasOwnProperty(field.id)) {
+					console.log("setting new field value to default: ", field.id, JSON.stringify(this.FieldTypes[field.type].defaultValue));
+					this.$set(this.fieldValues, field.id, this.FieldTypes[field.type].defaultValue);
+				}
+			}
+
+			console.log(fieldIds);
+
+			// remove field values for fields that no longer exist
+			for(const fieldId of Object.keys(this.fieldValues)) {
+				if(!fieldIds.includes(fieldId)) {
+					console.log("deleting old field value: ", fieldId);
+					this.$delete(this.fieldValues, fieldId)
+				}
+			}
+		}
 	},
+	watch: {
+		'itemInstancesStore.fields': {
+			handler (){
+        		this.ensureValuesForAllFields();
+			},
+			immediate: true
+		},
+	}
 };
 </script>
