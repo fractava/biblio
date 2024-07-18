@@ -145,7 +145,7 @@ class V1ImportService {
 						$holiday = (bool) $holidayInt;
 					}
 
-					$newLoan = $this->loanService->create($newItemInstanceId, $mappedLoanedToCustomerId, $loanedUntilTime);
+					$newLoan = $this->loanService->create($collectionId, $newItemInstanceId, $mappedLoanedToCustomerId, $loanedUntilTime, []);
 
 					$this->loanFieldValueService->updateByLoanAndFieldId($newLoan->getId(), $newHolidayField->getId(), json_encode($holiday));
 				}
