@@ -74,6 +74,7 @@ export default {
 	list: {
 		valueEditComponent: ListFieldValue,
 		valueCellComponent: ListFieldCell,
+		hasSettings: false,
 		settingsComponent: NoSettings,
 		iconComponent: FormatListNumbered,
 		label: t("biblio", "List"),
@@ -92,6 +93,7 @@ export default {
 	short: {
 		valueEditComponent: ShortTextFieldValue,
 		valueCellComponent: TextCell,
+		hasSettings: false,
 		settingsComponent: NoSettings,
 		iconComponent: TextShort,
 		label: t("biblio", "Short text"),
@@ -124,6 +126,7 @@ export default {
 	long: {
 		valueEditComponent: LongTextFieldValue,
 		valueCellComponent: TextCell,
+		hasSettings: false,
 		settingsComponent: NoSettings,
 		iconComponent: TextLong,
 		label: t("biblio", "Long text"),
@@ -156,6 +159,7 @@ export default {
 	date: {
 		valueEditComponent: DateFieldValue,
 		valueCellComponent: TextCell,
+		hasSettings: false,
 		settingsComponent: NoSettings,
 		iconComponent: CalendarMonth,
 		label: t("biblio", "Date"),
@@ -184,6 +188,7 @@ export default {
 	datetime: {
 		valueEditComponent: DateFieldValue,
 		valueCellComponent: TextCell,
+		hasSettings: false,
 		settingsComponent: NoSettings,
 		iconComponent: CalendarClock,
 		label: t("biblio", "Date and time"),
@@ -215,6 +220,7 @@ export default {
 	select: {
 		valueEditComponent: SelectValue,
 		valueCellComponent: SelectCell,
+		hasSettings: true,
 		settingsComponent: SelectSettings,
 		iconComponent: FormDropdown,
 		label: t("biblio", "Select"),
@@ -235,6 +241,7 @@ export default {
 	checkbox: {
 		valueEditComponent: CheckboxValue,
 		valueCellComponent: CheckboxCell,
+		hasSettings: false,
 		settingsComponent: NoSettings,
 		iconComponent: CheckboxMarkedOutline,
 		label: t("biblio", "Checkbox"),
