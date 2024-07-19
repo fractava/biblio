@@ -3,10 +3,12 @@
 		<div v-if="settingsError">
 			<FieldError @reset="resetSettings" />
 		</div>
-		<div v-else class="container">
+		<div v-else
+			class="container"
+			style="flex-direction: column; margin: 15px;">
 			<div v-for="option in validatedSettings.options"
 				:key="option.id"
-				style="display: flex; align-items: center;">
+				style="display: flex; align-items: center; margin-bottom: 7px;">
 				<NcTextField class="entry"
 					:value="option.label"
 					:show-trailing-button="false"

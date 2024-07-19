@@ -21,7 +21,7 @@
   -->
 
 <template>
-	<FieldsTableRow :enable-drag-handle="enableDragHandle" :enable-include-in-list="enableIncludeInList">
+	<FieldsTableRow :enable-drag-handle="enableDragHandle" :enable-include-in-list="enableIncludeInList" :enable-settings="enableSettings">
 		<template #icon>
 			<slot name="icon" />
 		</template>
@@ -46,7 +46,7 @@
 		</template>
 		<template #actions>
 			<NcActions>
-				<NcActionButton @click="onDelete">
+				<NcActionButton type="secondary" @click="onDelete">
 					<template #icon>
 						<Delete :size="20" />
 					</template>
@@ -108,6 +108,10 @@ export default {
 			default: false,
 		},
 		enableIncludeInList: {
+			type: Boolean,
+			default: true,
+		},
+		enableSettings: {
 			type: Boolean,
 			default: true,
 		},

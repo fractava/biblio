@@ -25,7 +25,30 @@
 
 		<!-- Settings -->
 		<td>
-			<slot name="settings" />
+			<NcButton v-if="enableSettings"
+				aria-label="Show Settings"
+				@click="showModal">
+				<template #icon>
+					<Cog :size="20" />
+				</template>
+			</NcButton>
+
+			<NcButton v-else
+				aria-label="Show Settings"
+				:disabled="true">
+					<template #icon>
+						<Cog :size="20" />
+					</template>
+			</NcButton>
+
+			<NcModal v-if="settingsModalShown"
+				ref="modalRef"
+				@close="closeModal"
+				name="Field Settings">
+				<div style="margin: 50px;">
+					<slot name="settings"></slot>
+				</div>
+			</NcModal>
 		</td>
 
 		<!-- Actions -->
@@ -36,12 +59,23 @@
 </template>
 
 <script>
-import Drag from "vue-material-design-icons/Drag.vue";
+import NcButton from "@nextcloud/vue/dist/Components/NcButton.js";
+import NcModal from "@nextcloud/vue/dist/Components/NcModal.js";
 
+import Drag from "vue-material-design-icons/Drag.vue";
+import Cog from "vue-material-design-icons/Cog.vue";
 
 export default {
 	components: {
+		NcButton,
+		NcModal,
 		Drag,
+		Cog,
+	},
+	data() {
+		return {
+			settingsModalShown: false,
+		};
 	},
 	props: {
 		enableDragHandle: {
@@ -52,6 +86,18 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+		enableSettings: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	methods: {
+		showModal() {
+			this.settingsModalShown = true
+		},
+		closeModal() {
+			this.settingsModalShown = false
+		}
 	},
 };
 </script>

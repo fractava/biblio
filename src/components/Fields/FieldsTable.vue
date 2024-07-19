@@ -5,7 +5,7 @@
 				<col>
 				<col v-if="enableIncludeInList">
 				<col>
-				<col span="2" style="width: 50%;">
+				<col style="width: 90%;">
 			</colgroup>
 			<Draggable :value="sortedFields"
 				drag-class="drag"
@@ -23,6 +23,7 @@
 					:name="field.name"
 					:include-in-list="!!field.includeInList"
 					:enable-include-in-list="enableIncludeInList"
+					:enable-settings="FieldTypes[field.type].hasSettings"
 					class="draggableitem"
 					@update:name="(newName) => onFieldUpdate(field.id, { name: newName })"
 					@update:includeInList="(newIncludeInList) => onFieldUpdate(field.id, { includeInList: newIncludeInList })"
