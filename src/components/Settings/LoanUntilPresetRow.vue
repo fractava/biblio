@@ -1,7 +1,8 @@
 <template>
 	<tr>
 		<td>
-			<NcTextField :value="preset.name"
+			<NcTextField class="presetNameInput"
+				:value="preset.name"
 				:error="preset.name?.length < 1"
 				:label-visible="true"
 				:helper-text="preset.name?.length > 1 ? '' : t('biblio', 'Invalid name')"
@@ -20,6 +21,7 @@
 		<td>
 			<div v-if="preset.type === 'absolute'">
 				<NcDateTimePickerNative :id="'loanUntilPresetInput' + preset.id"
+					class="absoluteTimePicker"
 					:value="new Date(preset.timestamp * 1000)"
 					:hide-label="true"
 					type="date"
@@ -28,7 +30,7 @@
 			<RelativeTimePicker v-else :timestamp="preset.timestamp" @update:timestamp="updateTimestamp" />
 		</td>
 		<td>
-			<NcActions>
+			<NcActions class="deleteButton">
 				<NcActionButton @click="onDelete">
 					<template #icon>
 						<Delete :size="20" />
@@ -122,12 +124,12 @@ export default {
 				timestamp: newTimestamp,
 			}).then((result) => {
 				this.$emit("update:preset", result);
-				this.$emit("refresh");
+				this.$emit("updated");
 			});
 		}, { wait: 1000 }),
 		async onDelete() {
 			await api.deleteLoanUntilPreset(this.settingsStore.context?.collectionId, this.preset.id);
-			this.$emit("refresh");
+			this.$emit("deleted");
 		},
 		reduce(option) {
 			return option.id;
@@ -136,7 +138,19 @@ export default {
 };
 </script>
 <style scoped>
+.presetNameInput {
+	--default-clickable-area: 48px;
+}
 .typeSelect {
-	min-width: 100px;
+	min-width: var(--vs-dropdown-min-width);
+	width: 100%;
+	margin: 0px;
+}
+.absoluteTimePicker :deep(.native-datetime-picker--input) {
+	height: 48px !important;
+	margin: 0px;
+}
+.deleteButton {
+	margin-bottom: 2px;
 }
 </style>

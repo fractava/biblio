@@ -18,7 +18,8 @@
 				<LoanUntilPresetRow v-for="(preset, index) in presets"
 					:key="preset.id"
 					:preset.sync="presets[index]"
-					@refresh="refreshLoanUntilPresetsInBiblioStoreIfNeeded" />
+					@updated="refreshLoanUntilPresetsInBiblioStoreIfNeeded"
+					@deleted="reFetch"/>
 			</tbody>
 		</table>
 
@@ -41,7 +42,7 @@
 			</NcActionButton>
 		</NcActions>
 
-		<AddLoanUntilPresetModal :open.sync="modalOpen" @refresh="onChange" />
+		<AddLoanUntilPresetModal :open.sync="modalOpen" @added="reFetch" />
 	</div>
 </template>
 
@@ -91,7 +92,7 @@ export default {
 				this.presets = result;
 			});
 		},
-		onChange() {
+		reFetch() {
 			this.fetchPresets();
 			this.refreshLoanUntilPresetsInBiblioStoreIfNeeded();
 		},
@@ -118,9 +119,18 @@ export default {
 		font-weight: bold;
 	}
 
-	td, th {
+	:deep(td), th {
 		padding: 7px;
 		border-bottom: 1px solid var(--color-border);
+	}
+
+	:deep(td) {
+		vertical-align: bottom;
+		padding-bottom: 13px;
+	}
+
+	:deep(td):last-child {
+		text-align: center;
 	}
 
 	tr:hover, tr:focus, tr:active {

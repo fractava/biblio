@@ -91,17 +91,26 @@ export default {
 .container {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	align-items: baseline;
+	row-gap: 7px;
+	column-gap: 14px;
+	
+	/* Increase input field height to match height of selects */
+	--default-clickable-area: 48px;
 
 	.relativeTextField {
+		width: calc(50% - 7px);
+		flex-shrink: 1;
+		min-width: 100px;
 		flex-grow: 1;
-		max-width: 100%;
-		width: auto;
-		margin-right: 5px;
 	}
 
 	.unitSelect {
-		min-width: 100px;
+		min-width: var(--vs-dropdown-min-width);
+		width: calc(50% - 7px);
+		flex-shrink: 1;
+		flex-grow: 1;
+		margin: 0px;
 
 		/*&.vs--open {
 			:deep(.vs__selected-options) {

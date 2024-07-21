@@ -72,7 +72,7 @@ export default {
 						type: "absolute",
 						timestamp: Math.floor(Date.now() / 1000),
 					}).then(() => {
-						this.$emit("refresh");
+						this.$emit("added");
 					});
 				} catch {
 
