@@ -68,8 +68,8 @@ export default {
 </script>
 <style scoped>
 	#biblio-main-content {
-		padding-left: 4% !important;
-		padding-right: 4% !important;
-		padding-top: 7px !important;
+		padding-left: max(60px, 4%) !important;
+		padding-right: max(60px, 4%) !important;
+		padding-top: 8px !important;
 	}
 </style>
