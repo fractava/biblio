@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- TRANSLATORS Header of section, that allows loaning out items to customers -->
 		<SectionHeader>{{ t("biblio", "Loan") }}</SectionHeader>
 		<SimpleTable>
 			<tbody>
