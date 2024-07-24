@@ -5,7 +5,7 @@
 			<Magnify />
 		</template>
 		<template #description>
-			{{ t('biblio', 'Select a collection in the sidebar') }}
+			{{ t('biblio', 'Select or create a collection in the sidebar') }}
 		</template>
 	</NcEmptyContent>
 	<div v-else>

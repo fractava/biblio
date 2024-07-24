@@ -6,7 +6,7 @@
 			<div class="modal__content">
 				<h2>{{ t('biblio', 'Add new collection') }}</h2>
 
-				<NcTextField :label="t('biblio', 'Name')" :value.sync="name" @keydown.enter.prevent="submit" />
+				<NcTextField v-focus :label="t('biblio', 'Name')" :value.sync="name" @keydown.enter.prevent="submit" />
 
 				<NcButton :disabled="!name"
 					type="primary"

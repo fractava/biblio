@@ -29,6 +29,7 @@ import App from "./App.vue";
 import router from "./router.js";
 
 import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip.js";
+import Focus from "@nextcloud/vue/dist/Directives/Focus.js";
 
 // eslint-disable-next-line
 __webpack_public_path__ = generateFilePath("biblio", '', 'js/');
@@ -37,6 +38,7 @@ Vue.use(PiniaVuePlugin);
 Vue.use(VuePapaParse);
 
 Vue.directive("tooltip", Tooltip);
+Vue.directive('focus', Focus);
 
 Vue.mixin({ methods: { t, n } });
 

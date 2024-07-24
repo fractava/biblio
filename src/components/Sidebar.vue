@@ -1,7 +1,6 @@
 <template>
 	<NcAppNavigation>
-		<AppNavigationSelect style="margin-bottom: 12px;"
-			:options="biblioStore.collections"
+		<AppNavigationSelect :options="biblioStore.collections"
 			:value="selectValue"
 			options-label="name"
 			:button-aria-label="t('biblio', 'Open Collection Settings')"
@@ -13,31 +12,33 @@
 			</template>
 		</AppNavigationSelect>
 		<Settings :open.sync="settingsOpen" />
-		<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" :to="linkIfCollectionIdSelected('/loan-return')">
-			<template #icon>
-				<SwapVertical :size="20" />
-			</template>
-		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="nomenclatureStore.items" :to="linkIfCollectionIdSelected('/items')">
-			<template #icon>
-				<component :is="nomenclatureStore.itemIcon" :size="20" />
-			</template>
-		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="nomenclatureStore.instances" :to="linkIfCollectionIdSelected('/iteminstances')">
-			<template #icon>
-				<component :is="nomenclatureStore.instanceIcon" :size="20" />
-			</template>
-		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="nomenclatureStore.customers" :to="linkIfCollectionIdSelected('/customers')">
-			<template #icon>
-				<component :is="nomenclatureStore.customerIcon" :size="20" />
-			</template>
-		</NcAppNavigationItem>
-		<NcAppNavigationItem :name="t('biblio', 'History')" :to="linkIfCollectionIdSelected('/history')">
-			<template #icon>
-				<History :size="20" />
-			</template>
-		</NcAppNavigationItem>
+		<NcAppNavigationList>
+			<NcAppNavigationItem :name="t('biblio', 'Lend/Return')" :to="linkIfCollectionIdSelected('/loan-return')">
+				<template #icon>
+					<SwapVertical :size="20" />
+				</template>
+			</NcAppNavigationItem>
+			<NcAppNavigationItem :name="nomenclatureStore.items" :to="linkIfCollectionIdSelected('/items')">
+				<template #icon>
+					<component :is="nomenclatureStore.itemIcon" :size="20" />
+				</template>
+			</NcAppNavigationItem>
+			<NcAppNavigationItem :name="nomenclatureStore.instances" :to="linkIfCollectionIdSelected('/iteminstances')">
+				<template #icon>
+					<component :is="nomenclatureStore.instanceIcon" :size="20" />
+				</template>
+			</NcAppNavigationItem>
+			<NcAppNavigationItem :name="nomenclatureStore.customers" :to="linkIfCollectionIdSelected('/customers')">
+				<template #icon>
+					<component :is="nomenclatureStore.customerIcon" :size="20" />
+				</template>
+			</NcAppNavigationItem>
+			<NcAppNavigationItem :name="t('biblio', 'History')" :to="linkIfCollectionIdSelected('/history')">
+				<template #icon>
+					<History :size="20" />
+				</template>
+			</NcAppNavigationItem>
+		</NcAppNavigationList>
 	</NcAppNavigation>
 </template>
 <script>
@@ -46,6 +47,7 @@ import Settings from "./Settings/Settings.vue";
 
 import { mapStores } from "pinia";
 import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation.js";
+import NcAppNavigationList from '@nextcloud/vue/dist/Components/NcAppNavigationList.js'
 import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem.js";
 
 import SwapVertical from "vue-material-design-icons/SwapVertical.vue";
@@ -62,6 +64,7 @@ export default {
 		AppNavigationSelect,
 		Settings,
 		NcAppNavigation,
+		NcAppNavigationList,
 		NcAppNavigationItem,
 		SwapVertical,
 		AccountMultiple,

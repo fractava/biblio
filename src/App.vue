@@ -1,15 +1,16 @@
 <template>
-	<div id="content" class="app-biblio">
+	<NcContent appName="biblio">
 		<Sidebar />
 		<NcAppContent>
 			<div id="biblio-main-content">
 				<router-view />
 			</div>
 		</NcAppContent>
-	</div>
+	</NcContent>
 </template>
 
 <script>
+import NcContent from '@nextcloud/vue/dist/Components/NcContent.js'
 import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent.js";
 import "@nextcloud/dialogs/style.css";
 import { mapStores } from "pinia";
@@ -23,6 +24,7 @@ import { useCustomersStore } from "./store/customers.js";
 export default {
 	name: "App",
 	components: {
+		NcContent,
 		NcAppContent,
 		Sidebar,
 	},
