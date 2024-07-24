@@ -177,6 +177,10 @@ export default {
 
     .vs__dropdown-menu {
         border-color: var(--vs-border-color) !important;
+		padding-top: 0px !important;
+		padding-right: 0px !important;
+		padding-left: 0px !important;
+		border: none;
     }
 }
 </style>
