@@ -20,10 +20,12 @@
 						<vueSelect v-model="currentLoanUntilPresetId"
 							:placeholder="t('biblio', 'Until')"
 							style="width: 100%;"
-							:options="biblioStore.selectedCollectionLoanUntilPresets"
+							:options="untilPresetOptions"
 							:label="'name'"
 							:reduce="reduce" />
 					</td>
+				</tr>
+				<tr v-if="currentLoanUntilPresetId === 'custom'">
 				</tr>
 				<tr>
 					<td>
@@ -90,6 +92,13 @@ export default {
 	},
 	computed: {
 		...mapStores(useBiblioStore, useNomenclatureStore, useItemInstancesStore),
+		untilPresetOptions() {
+			return [...this.biblioStore.selectedCollectionLoanUntilPresets, {
+				id: "custom",
+				type: "absolute",
+				name: t("biblio", "Select custom date"),
+			}]
+		},
 		currentLoanUntilPreset() {
 			return this.biblioStore.selectedCollectionLoanUntilPresets.find((preset) => (preset.id === this.currentLoanUntilPresetId));
 		},
