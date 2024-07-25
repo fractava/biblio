@@ -53,7 +53,6 @@ OC.L10N.register(
     "Timestamp" : "Timestamp",
     "Could not fetch history" : "Could not fetch history",
     "No collection selected" : "No collection selected",
-    "Select a collection in the sidebar" : "Select a collection in the sidebar",
     "Submit" : "Submit",
     "Add new collection" : "Add new collection",
     "Add new Loan Until Preset" : "Add new Loan Until Preset",

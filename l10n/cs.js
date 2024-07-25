@@ -38,7 +38,6 @@ OC.L10N.register(
     "Timestamp" : "Časové razítko",
     "Could not fetch history" : "Nepodařilo se načíst historii",
     "No collection selected" : "Nevybrána žádná sbírka",
-    "Select a collection in the sidebar" : "Vyberte sbírku z postranního panelu",
     "Submit" : "Odeslat",
     "Add new collection" : "Přidat novou sbírku",
     "Add new Loan Until Preset" : "Přidat nové přednastavení pro zápůjčky do",

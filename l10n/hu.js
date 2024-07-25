@@ -28,7 +28,6 @@ OC.L10N.register(
     "Description" : "Leírás",
     "Timestamp" : "Időbélyeg",
     "No collection selected" : "Nincs kiválasztott gyűjtemény",
-    "Select a collection in the sidebar" : "Válasszon gyűjteményt az oldalsávból",
     "Submit" : "Beküldés",
     "Could not fetch customer fields" : "Nem sikerült lekérni a vásárló mezőket",
     "Could not update customer field" : "Nem sikerült frissíteni a vásárló mezőket",

@@ -37,7 +37,6 @@ OC.L10N.register(
     "Timestamp" : "Marca de temps",
     "Could not fetch history" : "No s'ha pogut obtenir l'historial",
     "No collection selected" : "No hi ha cap col·lecció sel·leccionada",
-    "Select a collection in the sidebar" : "Selecciona una col·lecció a la barra lateral",
     "Submit" : "Envia",
     "Add new collection" : "Afegeix col·lecció nova",
     "Add new Loan Until Preset" : "Afegir nou préstec fins a preselecció",

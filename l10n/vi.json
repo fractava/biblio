@@ -24,8 +24,10 @@
     "List" : "Danh sách",
     "Date" : "Date",
     "Pick a date" : "Chọn ngày",
+    "Date and time" : "Ngày và giờ",
     "Select" : "Chọn",
     "Checkbox" : "Hộp chọn",
-    "Device" : "Thiết bị"
+    "Device" : "Thiết bị",
+    "Customers" : "Khách hàng"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

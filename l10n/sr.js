@@ -53,7 +53,6 @@ OC.L10N.register(
     "Timestamp" : "Временска ознака",
     "Could not fetch history" : "Није успело преузимање историје",
     "No collection selected" : "Није изабрана ниједна колекција",
-    "Select a collection in the sidebar" : "Изаберите колекцију у бочној траци",
     "Submit" : "Пошаљи",
     "Add new collection" : "Додај нову колекцију",
     "Add new Loan Until Preset" : "Додај нову унапред подешену вредност Позајмице до ",

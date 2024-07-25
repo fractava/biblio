@@ -53,7 +53,6 @@ OC.L10N.register(
     "Timestamp" : "Registro de Tempo",
     "Could not fetch history" : "Não foi possível buscar o histórico",
     "No collection selected" : "Nenhuma coleção selecionada",
-    "Select a collection in the sidebar" : "Selecione uma coleção na barra lateral",
     "Submit" : "Enviar",
     "Add new collection" : "Adicionar nova coleção",
     "Add new Loan Until Preset" : "Adicionar novo empréstimo até predefinido",

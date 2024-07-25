@@ -53,7 +53,6 @@ OC.L10N.register(
     "Timestamp" : "Tidsstempel",
     "Could not fetch history" : "Kunne ikke hente historikken",
     "No collection selected" : "Ingen samling valgt",
-    "Select a collection in the sidebar" : "Velg en samling i sidefeltet",
     "Submit" : "Send inn",
     "Add new collection" : "Legg til ny samling",
     "Add new Loan Until Preset" : "Legg til nytt lån til forhåndsinnstilt",

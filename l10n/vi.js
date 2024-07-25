@@ -26,8 +26,10 @@ OC.L10N.register(
     "List" : "Danh sách",
     "Date" : "Date",
     "Pick a date" : "Chọn ngày",
+    "Date and time" : "Ngày và giờ",
     "Select" : "Chọn",
     "Checkbox" : "Hộp chọn",
-    "Device" : "Thiết bị"
+    "Device" : "Thiết bị",
+    "Customers" : "Khách hàng"
 },
 "nplurals=1; plural=0;");

@@ -53,7 +53,6 @@ OC.L10N.register(
     "Timestamp" : "Stampa ama",
     "Could not fetch history" : "Níorbh fhéidir an stair a fháil",
     "No collection selected" : "Níor roghnaíodh aon bhailiúchán",
-    "Select a collection in the sidebar" : "Roghnaigh bailiúchán sa bharra taoibh",
     "Submit" : "Cuir isteach",
     "Add new collection" : "Cuir bailiúchán nua leis",
     "Add new Loan Until Preset" : "Cuir Iasacht nua Go dtí Réamhshocrú",

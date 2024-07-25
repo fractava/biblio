@@ -53,7 +53,6 @@ OC.L10N.register(
     "Timestamp" : "Zeitstempel",
     "Could not fetch history" : "Der Verlauf konnte nicht abgerufen werden",
     "No collection selected" : "Keine Sammlung ausgewählt",
-    "Select a collection in the sidebar" : "Eine Sammlung in der Seitenleiste auswählen",
     "Submit" : "Übermitteln",
     "Add new collection" : "Neue Sammlung hinzufügen",
     "Add new Loan Until Preset" : "Neue Voreinstellung „Ausleihe bis“ hinzufügen",
