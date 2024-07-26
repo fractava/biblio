@@ -5,21 +5,21 @@ namespace OCA\Biblio\Controller;
 use Closure;
 
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 
 use OCA\Biblio\Errors\NotFoundException;
 
 trait Errors {
-	protected function handleNotFound(Closure $callback): DataResponse {
-		try {
-			return new DataResponse($callback());
-		} catch (NotFoundException $e) {
-			return $this->notFoundResponse($e);
-		}
+	private function errorResponse(\Exception $e, $status = Http::STATUS_BAD_REQUEST): JSONResponse {
+		$response = ['error' => get_class($e), 'message' => $e->getMessage()];
+		return new JSONResponse($response, $status);
 	}
 
-	private function notFoundResponse(NotFoundException $e) {
-		$response = ['error' => get_class($e), 'message' => $e->getMessage()];
-		return new DataResponse($response, Http::STATUS_NOT_FOUND);
+	protected function handleNotFound(Closure $callback): JSONResponse {
+		try {
+			return new JSONResponse($callback());
+		} catch (NotFoundException $e) {
+			return $this->errorResponse($e, Http::STATUS_NOT_FOUND);
+		}
 	}
 }

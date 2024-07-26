@@ -10,6 +10,7 @@ use OCP\AppFramework\Db\TTransactional;
 use OCP\IDBConnection;
 
 use OCA\Biblio\Errors\ItemInstanceNotFound;
+use OCA\Biblio\Errors\BarcodeAlreadyExists;
 
 use OCA\Biblio\Db\ItemInstance;
 use OCA\Biblio\Db\ItemInstanceMapper;
@@ -130,6 +131,10 @@ class ItemInstanceService {
 	public function create(int $collectionId, string $barcode, int $itemId, ?int $historySubEntryOf = null) {
 		return $this->atomic(function () use ($collectionId, $barcode, $itemId, $historySubEntryOf) {
 			$item = $this->itemService->find($collectionId, $itemId, ["model"]);
+
+			if($this->mapper->existsByBarcode($collectionId, $barcode)) {
+				throw new BarcodeAlreadyExists($barcode);
+			}
 
 			$itemInstance = new ItemInstance();
 			$itemInstance->setBarcode($barcode);

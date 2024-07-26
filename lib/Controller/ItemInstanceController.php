@@ -4,9 +4,10 @@ namespace OCA\Biblio\Controller;
 
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\ItemInstanceService;
+use OCA\Biblio\Errors\BarcodeAlreadyExists;
+
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -66,8 +67,12 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 */
 	public function create(int $collectionId, string $barcode, int $itemId): JSONResponse {
-		$result = $this->service->create($collectionId, $barcode, $itemId);
-		return new JSONResponse($result, Http::STATUS_OK);
+		try {
+			$result = $this->service->create($collectionId, $barcode, $itemId);
+			return new JSONResponse($result, Http::STATUS_OK);
+		} catch (BarcodeAlreadyExists $e) {
+			return $this->errorResponse($e);
+		}
 	}
 
 	/**
@@ -89,7 +94,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId, int $instanceId): DataResponse {
+	public function destroy(int $collectionId, int $instanceId): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $instanceId) {
 			return $this->service->delete($collectionId, $instanceId);
 		});
@@ -98,7 +103,7 @@ class ItemInstanceController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroyByBarcode(int $collectionId, string $barcode): DataResponse {
+	public function destroyByBarcode(int $collectionId, string $barcode): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $barcode) {
 			return $this->service->deleteByBarcode($collectionId, $barcode);
 		});
@@ -108,7 +113,7 @@ class ItemInstanceController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function barcodePrefix(int $collectionId, int $itemId): DataResponse {
-		return new DataResponse($this->service->getBarcodePrefix($collectionId, $itemId));
+	public function barcodePrefix(int $collectionId, int $itemId): JSONResponse {
+		return new JSONResponse($this->service->getBarcodePrefix($collectionId, $itemId));
 	}
 }

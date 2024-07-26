@@ -4,7 +4,6 @@ namespace OCA\Biblio\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -52,7 +51,7 @@ class ItemController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function show(int $collectionId, int $id, ?string $include): DataResponse {
+	public function show(int $collectionId, int $id, ?string $include): JSONResponse {
 		$includes = $this->parseIncludesString($include);
 
 		return $this->handleNotFound(function () use ($collectionId, $id, $includes) {
@@ -79,7 +78,7 @@ class ItemController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $id, string $title = null): DataResponse {
+	public function update(int $collectionId, int $id, string $title = null): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $id, $title) {
 			return $this->service->update($collectionId, $id, $title);
 		});
@@ -88,7 +87,7 @@ class ItemController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId, int $id): DataResponse {
+	public function destroy(int $collectionId, int $id): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $id) {
 			return $this->service->delete($collectionId, $id);
 		});

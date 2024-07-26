@@ -4,7 +4,6 @@ namespace OCA\Biblio\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -42,7 +41,7 @@ class LoanFieldValueController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function show(int $collectionId, int $loanId, int $fieldId, ?string $include): DataResponse {
+	public function show(int $collectionId, int $loanId, int $fieldId, ?string $include): JSONResponse {
 		$includes = $this->parseIncludesString($include);
 
 		return $this->handleNotFound(function () use ($collectionId, $loanId, $fieldId, $includes) {
@@ -57,7 +56,7 @@ class LoanFieldValueController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $loanId, int $fieldId, string $value = null): DataResponse {
+	public function update(int $collectionId, int $loanId, int $fieldId, string $value = null): JSONResponse {
 		// update value (or create db entry if not set previously)
 		$this->service->updateByLoanAndFieldId($loanId, $fieldId, $value);
 
@@ -74,7 +73,7 @@ class LoanFieldValueController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId, int $loanId, int $fieldId): DataResponse {
+	public function destroy(int $collectionId, int $loanId, int $fieldId): JSONResponse {
 		return $this->handleNotFound(function () use ($loanId, $fieldId) {
 			return $this->service->deleteByLoanAndFieldId($loanId, $fieldId);
 		});

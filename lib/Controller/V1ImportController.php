@@ -5,7 +5,7 @@ namespace OCA\Biblio\Controller;
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\V1ImportService;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
 class V1ImportController extends Controller {
@@ -29,7 +29,7 @@ class V1ImportController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function import(array $data): DataResponse {
-		return new DataResponse($this->service->import($data, $this->userId));
+	public function import(array $data): JSONResponse {
+		return new JSONResponse($this->service->import($data, $this->userId));
 	}
 }

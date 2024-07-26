@@ -4,7 +4,6 @@ namespace OCA\Biblio\Controller;
 
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -42,7 +41,7 @@ class CustomerFieldValueController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
-	public function show(int $collectionId, int $customerId, int $fieldId, ?string $include): DataResponse {
+	public function show(int $collectionId, int $customerId, int $fieldId, ?string $include): JSONResponse {
 		$includes = $this->parseIncludesString($include);
 
 		return $this->handleNotFound(function () use ($collectionId, $customerId, $fieldId, $includes) {
@@ -57,7 +56,7 @@ class CustomerFieldValueController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, int $customerId, int $fieldId, string $value = null): DataResponse {
+	public function update(int $collectionId, int $customerId, int $fieldId, string $value = null): JSONResponse {
 		// update value (or create db entry if not set previously)
 		$this->service->updateByCustomerAndFieldId($customerId, $fieldId, $value);
 
@@ -74,7 +73,7 @@ class CustomerFieldValueController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId, int $customerId, int $fieldId): DataResponse {
+	public function destroy(int $collectionId, int $customerId, int $fieldId): JSONResponse {
 		return $this->handleNotFound(function () use ($customerId, $fieldId) {
 			return $this->service->deleteByCustomerAndFieldId($customerId, $fieldId);
 		});

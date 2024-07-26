@@ -321,7 +321,6 @@ class Version000000Date20210619161300 extends SimpleMigrationStep {
 
 			$table->setPrimaryKey(['id']);
 			$table->addIndex(['barcode'], 'barcodeIndex');
-			$table->addUniqueConstraint(['barcode'], "barcode_unique");
 			$table->addIndex(['item_id'], 'itemIdIndex');
 			$table->addForeignKeyConstraint(
 				$schema->getTable(self::ITEMS_TABLE),

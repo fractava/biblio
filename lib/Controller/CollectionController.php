@@ -6,7 +6,7 @@ use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\CollectionService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
 class CollectionController extends Controller {
@@ -30,15 +30,15 @@ class CollectionController extends Controller {
 	 * Get all collections the current user has access to
 	 * @NoAdminRequired
 	 */
-	public function index(): DataResponse {
-		return new DataResponse($this->service->findAll($this->userId));
+	public function index(): JSONResponse {
+		return new JSONResponse($this->service->findAll($this->userId));
 	}
 
 	/**
 	 * Get specific collection
 	 * @NoAdminRequired
 	 */
-	public function show(int $collectionId): DataResponse {
+	public function show(int $collectionId): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId) {
 			return $this->service->find($collectionId);
 		});
@@ -47,14 +47,14 @@ class CollectionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(string $name, string $itemFieldsOrder = "[]", string $loanFieldsOrder = "[]", string $customerFieldsOrder = "[]"): DataResponse {
+	public function create(string $name, string $itemFieldsOrder = "[]", string $loanFieldsOrder = "[]", string $customerFieldsOrder = "[]"): JSONResponse {
 		if (strlen($name) <= 3) {
-			return new DataResponse([
+			return new JSONResponse([
 				"error" => "Name must be longer than 3 characters"
 			], Http::STATUS_BAD_REQUEST);
 		}
 
-		return new DataResponse($this->service->create($name, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder, $this->userId));
+		return new JSONResponse($this->service->create($name, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder, $this->userId));
 	}
 
 	/**
@@ -68,7 +68,7 @@ class CollectionController extends Controller {
 		?string $nomenclatureCustomer,
 		?string $itemFieldsOrder,
 		?string $loanFieldsOrder,
-		?string $customerFieldsOrder): DataResponse {
+		?string $customerFieldsOrder): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $name, $nomenclatureItem, $nomenclatureInstance, $nomenclatureCustomer, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder) {
 			return $this->service->update($collectionId, $name, $nomenclatureItem, $nomenclatureInstance, $nomenclatureCustomer, $itemFieldsOrder, $loanFieldsOrder, $customerFieldsOrder);
 		});
@@ -77,7 +77,7 @@ class CollectionController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId): DataResponse {
+	public function destroy(int $collectionId): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId) {
 			return $this->service->delete($collectionId);
 		});

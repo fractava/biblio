@@ -5,7 +5,7 @@ namespace OCA\Biblio\Controller;
 use OCA\Biblio\AppInfo\Application;
 use OCA\Biblio\Service\LoanService;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
 class LoanController extends Controller {
@@ -29,15 +29,15 @@ class LoanController extends Controller {
 	 * Get all loans of collection
 	 * @NoAdminRequired
 	 */
-	public function index(int $collectionId): DataResponse {
-		return new DataResponse($this->service->findAll($collectionId));
+	public function index(int $collectionId): JSONResponse {
+		return new JSONResponse($this->service->findAll($collectionId));
 	}
 
 	/**
 	 * Get specific loan
 	 * @NoAdminRequired
 	 */
-	public function show(int $collectionId, string $barcode): DataResponse {
+	public function show(int $collectionId, string $barcode): JSONResponse {
 		return $this->handleNotFound(function () use ($barcode) {
 			return $this->service->findByItemInstanceBarcode($barcode);
 		});
@@ -46,7 +46,7 @@ class LoanController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function create(int $collectionId, string $barcode, int $customerId, int $until, array $fieldValues): DataResponse {
+	public function create(int $collectionId, string $barcode, int $customerId, int $until, array $fieldValues): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $barcode, $customerId, $until, $fieldValues) {
 			return $this->service->createByItemInstanceBarcode($collectionId, $barcode, $customerId, $until, $fieldValues);
 		});
@@ -55,7 +55,7 @@ class LoanController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function update(int $collectionId, string $barcode, ?int $until): DataResponse {
+	public function update(int $collectionId, string $barcode, ?int $until): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $barcode, $until) {
 			return $this->service->updateByItemInstanceBarcode($collectionId, $barcode, $until);
 		});
@@ -64,7 +64,7 @@ class LoanController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 */
-	public function destroy(int $collectionId, string $barcode): DataResponse {
+	public function destroy(int $collectionId, string $barcode): JSONResponse {
 		return $this->handleNotFound(function () use ($collectionId, $barcode) {
 			return $this->service->deleteByItemInstanceBarcode($collectionId, $barcode);
 		});
