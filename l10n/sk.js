@@ -65,6 +65,7 @@ OC.L10N.register(
     "Copy" : "Kopírovať",
     "Customer" : "Zákazník",
     "Devices" : "Zariadenia",
+    "Add new book" : "Pridať novú knih",
     "Customers" : "Zákazníci",
     "Customer renamed from \"{oldName}\" to \"{newName}\"" : "Zákazník bol premenovaný z \"{oldName}\" na \"{newName}\"",
     "Add new customer" : "Pridať nového zákazníka",

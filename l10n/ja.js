@@ -27,6 +27,7 @@ OC.L10N.register(
     "Sorting" : "並べ替え",
     "Export CSV" : "CSVエクスポート",
     "List" : "リスト",
+    "Ends with" : "で終わる",
     "Long text" : "長文",
     "Enter a long text" : "長文回答を入力",
     "Date" : "日付",
