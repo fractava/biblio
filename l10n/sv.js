@@ -8,6 +8,7 @@ OC.L10N.register(
     "Reset" : "Återställ",
     "Value" : "Värde",
     "Description" : "Beskrivning",
+    "User" : "Användare",
     "Timestamp" : "Tidsstämpel",
     "Submit" : "Skicka",
     "Type" : "Typ",
