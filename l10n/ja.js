@@ -25,6 +25,7 @@ OC.L10N.register(
     "Search" : "検索",
     "Back" : "戻る",
     "Sorting" : "並べ替え",
+    "Filtering" : "フィルタリング",
     "Export CSV" : "CSVエクスポート",
     "List" : "リスト",
     "Ends with" : "で終わる",
