@@ -26,6 +26,7 @@ OC.L10N.register(
     "Add Entry" : "Bejegyzés hozzáadása",
     "Value" : "Érték",
     "Description" : "Leírás",
+    "User" : "Felhasználó",
     "Timestamp" : "Időbélyeg",
     "No collection selected" : "Nincs kiválasztott gyűjtemény",
     "Submit" : "Beküldés",
