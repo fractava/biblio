@@ -5,6 +5,7 @@ OC.L10N.register(
     "A library management system" : "Könyvtárkezelő rendszer",
     "Add new Item Instance" : "Új instansz elem hozzáadása",
     "Barcode" : "Vonalkód",
+    "Count" : "Számlálás",
     "Title" : "Cím",
     "Edit" : "Szerkesztés",
     "Add a field" : "Mező hozzáadása",
