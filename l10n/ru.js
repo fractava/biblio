@@ -12,6 +12,7 @@ OC.L10N.register(
     "Reset" : "Сброс",
     "Value" : "Значение",
     "Description" : "Описание",
+    "User" : "Пользователь",
     "Timestamp" : "Метка времени",
     "Submit" : "Отправить ответ",
     "Type" : "Тип",

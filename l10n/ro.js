@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Număr",
     "Title" : "Titlu",
     "Edit" : "Editează",
     "Name" : "Nume",
@@ -9,6 +10,7 @@ OC.L10N.register(
     "Value" : "Valoare",
     "Description" : "Descriere",
     "User" : "Utilizator",
+    "Timestamp" : "Marcaj de timp",
     "Submit" : "Trimite",
     "Type" : "Tip",
     "Time" : "Timp",
@@ -21,8 +23,10 @@ OC.L10N.register(
     "Search" : "Căutare",
     "Back" : "Înapoi",
     "List" : "Listă",
+    "Long text" : "Răspuns lung",
     "Date" : "Date",
     "Pick a date" : "Alege o dată",
+    "Pick a date and time" : "Alegeți o data și un timp",
     "Select" : "Selectează",
     "Checkbox" : "Căsuța de bifat",
     "Device" : "Dispozitiv",
