@@ -10,7 +10,7 @@ OC.L10N.register(
     "Invalid name" : "Nùmene non bàlidu",
     "Delete Field" : "Elìmina campu",
     "Error" : "Errore",
-    "Reset" : "Torra a impostare",
+    "Reset" : "Ripristina",
     "Value" : "Balore",
     "Description" : "Descritzione",
     "User" : "Utente",
