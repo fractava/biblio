@@ -55,6 +55,7 @@ OC.L10N.register(
     "Date and time" : "Дата и время",
     "Pick a date and time" : "Выбрать дату и время",
     "Select" : "Выбрать",
+    "Pick one of the options" : "Выберите один из вариантов",
     "Checkbox" : "Флажок",
     "Checked" : "Проверено",
     "Item" : "Пункт",
