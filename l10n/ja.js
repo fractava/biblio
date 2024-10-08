@@ -46,6 +46,7 @@ OC.L10N.register(
     "Device" : "端末",
     "Copy" : "コピー",
     "Devices" : "端末",
-    "Customers" : "顧客"
+    "Customers" : "顧客",
+    "Resource not found." : "リソースが見つかりません。"
 },
 "nplurals=1; plural=0;");
