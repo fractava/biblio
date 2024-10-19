@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema di gestione bibliotecario",
+    "Count" : "Conto",
     "Title" : "Titolo",
     "Edit" : "Modifica",
     "Add a field" : "Aggiungi un campo",
@@ -26,6 +27,7 @@ OC.L10N.register(
     "Absolute" : "Assoluto",
     "Years" : "Anni",
     "Collections" : "Raccolte",
+    "Properties" : "Proprietà",
     "Members" : "Partecipanti",
     "Lend/Return" : "Prestare/Rendere",
     "History" : "Cronologia",
@@ -50,6 +52,7 @@ OC.L10N.register(
     "Device" : "Dispositivo",
     "Copy" : "Copia",
     "Customer" : "Cliente",
+    "Books" : "Libri",
     "Devices" : "Dispositivi",
     "Customers" : "Clienti"
 },

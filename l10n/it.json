@@ -1,6 +1,7 @@
 { "translations": {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema di gestione bibliotecario",
+    "Count" : "Conto",
     "Title" : "Titolo",
     "Edit" : "Modifica",
     "Add a field" : "Aggiungi un campo",
@@ -24,6 +25,7 @@
     "Absolute" : "Assoluto",
     "Years" : "Anni",
     "Collections" : "Raccolte",
+    "Properties" : "Proprietà",
     "Members" : "Partecipanti",
     "Lend/Return" : "Prestare/Rendere",
     "History" : "Cronologia",
@@ -48,6 +50,7 @@
     "Device" : "Dispositivo",
     "Copy" : "Copia",
     "Customer" : "Cliente",
+    "Books" : "Libri",
     "Devices" : "Dispositivi",
     "Customers" : "Clienti"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
