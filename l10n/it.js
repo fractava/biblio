@@ -33,6 +33,7 @@ OC.L10N.register(
     "History" : "Cronologia",
     "Download" : "Scarica",
     "Search" : "Cerca",
+    "Back" : "Indietro",
     "Sorting" : "Ordina",
     "Return" : "Torna",
     "List" : "Elenco",
