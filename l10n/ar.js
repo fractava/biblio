@@ -70,7 +70,7 @@ OC.L10N.register(
     "Could not create loan field" : "تعذّر إنشاء حقل الاستعارة",
     "Could not delete loan field" : "تعذّر حذف حقل الاستعارة",
     "No presets" : "لا يوجد إعداد مُسبق",
-    "Type" : "حسب النوع",
+    "Type" : "النوع",
     "Time" : "الوقت",
     "Actions" : "الإجراءات",
     "Add Preset" : "إضافة التعيين المُسبَق",
