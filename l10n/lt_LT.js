@@ -9,6 +9,7 @@ OC.L10N.register(
     "Reset" : "Atstatyti",
     "Value" : "Reikšmė",
     "Description" : "Aprašas",
+    "User" : "Naudotojas",
     "Timestamp" : "Laiko žyma",
     "Submit" : "Pateikti",
     "Type" : "Tipas",
