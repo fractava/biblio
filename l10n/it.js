@@ -15,6 +15,7 @@ OC.L10N.register(
     "Add Option" : "Aggiungi opzione",
     "Value" : "Valore",
     "Description" : "Descrizione",
+    "User" : "Utente",
     "Timestamp" : "Marca temporale",
     "Submit" : "Invia",
     "Type" : "Tipo",
