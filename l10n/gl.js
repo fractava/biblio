@@ -83,7 +83,7 @@ OC.L10N.register(
     "Create new collection" : "Crear unha nova colección",
     "Import collection" : "Importar unha colección",
     "Drag to reorder the fields" : "Arrastre para reordenar os campos",
-    "Import from v1" : "Importar dende v!",
+    "Import from v1" : "Importar desde v!",
     "Import a phpmyadmin JSON export of a database used with v1 of this app (before the nextcloud rewrite)" : "Importar un phpmyadmin de JSON exportado dunha base de datos usada con v1 desta aplicación (antes da reescritura de Nextcloud)",
     "Select Type" : "Seleccione o tipo",
     "Delete Preset" : "Eliminar predefinido",
