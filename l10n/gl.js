@@ -126,7 +126,7 @@ OC.L10N.register(
     "Input search" : "Busca de entradas",
     "Input date" : "Data de entrada",
     "Export CSV" : "Exportar a CSV",
-    "Uncheck all" : "Desmarcar todo",
+    "Uncheck all" : "Deseleccionar todo",
     "_%n selected row_::_%n selected rows_" : ["%n fila seleccionada","%n filas seleccionadas"],
     "Could not fetch item instances" : "Non foi posíbel recuperar as instancias do elemento",
     "Customers {firstItemIndex} to {lastItemIndex} visible of {totalRows} customers in total" : "Usuarios {firstItemIndex} a {lastItemIndex} visíbeis de {totalRows} usuarios en total",
