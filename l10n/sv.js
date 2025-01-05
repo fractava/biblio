@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Antal",
     "Title" : "Titel",
     "Edit" : "Redigera",
     "Name" : "Namn",
