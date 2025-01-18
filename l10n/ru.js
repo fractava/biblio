@@ -42,6 +42,7 @@ OC.L10N.register(
     "Input search" : "Поиск ввода",
     "Export CSV" : "Экспорт как CSV",
     "This Item currently has no Instance, that fits the search parameters" : "В данный момент у этого элемента нет экземпляра, соответствующего параметрам поиска.",
+    "Until" : "До",
     "Return" : "Возврат",
     "List" : "Список",
     "Contains" : "Содержит",
