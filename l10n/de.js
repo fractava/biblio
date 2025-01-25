@@ -14,7 +14,7 @@ OC.L10N.register(
     "Suffix" : "Suffix",
     "Press submit to create barcode {barcode}" : "\"Senden“ drücken, um einen Barcode {barcode} zu erstellen",
     "Press submit to create barcodes {firstBarcodesList} and {lastBarcode}" : "\"Senden\" drücken um Barcodes {firstBarcodesList} und {lastBarcode} zu erstellen",
-    "Press submit to create barcodes {firstBarcode}, {secondBarcode}, ... {lastBarcode}" : "\"Senden\" drücken um Barcodes {firstBarcode}, {secondBarcode}, ... {lastBarcode} zu erstellen",
+    "Press submit to create barcodes {firstBarcode}, {secondBarcode}, ... {lastBarcode}" : "\"Senden\" drücken um Barcodes {firstBarcode}, {secondBarcode}, … {lastBarcode} zu erstellen",
     "No barcodes in the selected range already exist" : "Es sind noch keine Barcodes im ausgewählten Bereich vorhanden",
     "Barcode {barcode} already exist and will not be created" : "Der Barcode {barcode} ist bereits vorhanden und wird nicht erstellt",
     "Barcodes {barcodeList} already exist and will not be created" : "Barcodes {barcodeList} existieren bereits und werden nicht erstellt",
