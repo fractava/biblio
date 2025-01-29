@@ -1,5 +1,7 @@
 { "translations": {
+    "Prefix" : "Prefix",
     "Count" : "Antal",
+    "Suffix" : "Suffix",
     "Title" : "Titel",
     "Edit" : "Redigera",
     "Name" : "Namn",
