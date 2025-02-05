@@ -6,6 +6,7 @@ OC.L10N.register(
     "Name" : "Nimi",
     "Error" : "Viga",
     "Reset" : "Lähtesta",
+    "Value" : "Väärtus",
     "Description" : "Kirjeldus",
     "User" : "Kasutaja",
     "Submit" : "Saada",
