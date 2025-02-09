@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Et biblioteksstyringssystem",
+    "Count" : "Antal",
     "Title" : "Titel",
     "Edit" : "Redigér",
     "Add a field" : "Tilføj et felt",
@@ -31,6 +32,7 @@ OC.L10N.register(
     "History" : "Historik",
     "Download" : "Download",
     "Search" : "Søg",
+    "Back" : "Tilbage",
     "Sorting" : "Sortering",
     "Sort asc" : "Sortér stigende",
     "Sort desc" : "Sortér faldende",
@@ -38,6 +40,7 @@ OC.L10N.register(
     "Export CSV" : "Eksporter CSV",
     "Uncheck all" : "Fjern markeringen af ​​alle",
     "_%n selected row_::_%n selected rows_" : ["%n valgt række","%n valgte rækker"],
+    "Until" : "Indtil",
     "List" : "Liste",
     "Contains" : "Indeholder",
     "Short text" : "Kort tekst",
