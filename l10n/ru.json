@@ -9,6 +9,7 @@
     "Name" : "Имя",
     "Delete Field" : "Удалить поле",
     "Error" : "Ошибка",
+    "This field has an invalid value, to reset it click the button below (will only affect this item)" : "Это поле имеет недопустимое значение. Чтобы сбросить его, нажмите кнопку ниже (это повлияет только на этот элемент).",
     "Reset" : "Сброс",
     "This field type has no settings" : "У этого типа поля нет настроек",
     "Value" : "Значение",
