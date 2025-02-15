@@ -117,7 +117,7 @@ OC.L10N.register(
     "Back" : "Atras",
     "Select operator" : "Seleccionar operador",
     "Select operand" : "Seleccionar o operando",
-    "Sorting" : "Ordenando",
+    "Sorting" : "Ordenación",
     "Sort asc" : "Orden asc.",
     "Sort desc" : "Orden desc.",
     "Filtering" : "Filtrado",

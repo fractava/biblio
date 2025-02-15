@@ -1,7 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
+    "Prefix" : "Префікс",
     "Count" : "Лічильник",
+    "Suffix" : "Суфікс",
     "Title" : "Назва",
     "Edit" : "Редагувати",
     "Name" : "Назва",
