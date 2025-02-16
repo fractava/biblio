@@ -79,6 +79,7 @@ OC.L10N.register(
     "After" : "Després",
     "Date and time" : "Data i hora",
     "Pick a date and time" : "Trieu una data i una hora",
+    "Select" : "Seleccioneu",
     "Checkbox" : "Casella de selecció",
     "Item" : "Element",
     "Book" : "Llibre",
