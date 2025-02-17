@@ -21,6 +21,7 @@ OC.L10N.register(
     "Actions" : "Handlinger",
     "Delete" : "Slet",
     "Drag to reorder the fields" : "Træk for at omarrangere felterne",
+    "Select Type" : "Vælg type",
     "Relative" : "Relative",
     "Absolute" : "Absolut",
     "Years" : "År",
