@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Et biblioteksstyringssystem",
+    "Prefix" : "Præfiks",
     "Count" : "Antal",
+    "Suffix" : "Suffiks",
     "Title" : "Titel",
     "Edit" : "Redigér",
     "Add a field" : "Tilføj et felt",
