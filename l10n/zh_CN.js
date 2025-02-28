@@ -14,6 +14,7 @@ OC.L10N.register(
     "Reset" : "重置",
     "Value" : "值",
     "Description" : "描述",
+    "User" : "用户",
     "Timestamp" : "时间戳",
     "Submit" : "提交",
     "Type" : "类型",
