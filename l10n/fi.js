@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Määrä",
     "Title" : "Otsikko",
     "Edit" : "Muokkaa",
     "Add a field" : "Lisää kenttä",
