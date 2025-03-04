@@ -51,6 +51,8 @@ OC.L10N.register(
     "Enter a long text" : "Kirjoita pitkä teksti",
     "Date" : "Päivänmäärä",
     "Pick a date" : "Valitse päivänmäärä",
+    "Before" : "Ennen",
+    "After" : "Jälkeen",
     "Date and time" : "Päivänmäärä ja aika",
     "Pick a date and time" : "Valitse päivänmäärä ja aika",
     "Select" : "Valitse",
