@@ -33,6 +33,7 @@ OC.L10N.register(
     "Search" : "搜索",
     "Back" : "返回",
     "Sorting" : "正在排序",
+    "Until" : "直到",
     "Return" : "返回",
     "List" : "列表",
     "Short text" : "短文本",
