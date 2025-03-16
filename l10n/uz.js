@@ -1,10 +1,13 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Hisoblash",
     "Edit" : "Tahrirlash",
     "Name" : "Name",
     "Error" : "Error",
+    "Value" : "Qiymati",
     "Description" : "Tavsif",
+    "Type" : "Turi",
     "Actions" : "Actions",
     "Delete" : "Delete",
     "Hours" : "Hours",
