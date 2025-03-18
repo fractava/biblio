@@ -2,6 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Count" : "Hisoblash",
+    "Title" : "Sarlavha",
     "Edit" : "Tahrirlash",
     "Name" : "Name",
     "Error" : "Error",
