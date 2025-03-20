@@ -69,6 +69,7 @@ OC.L10N.register(
     "Sorting" : "Ordenació",
     "Export CSV" : "Exporta CSV",
     "_%n selected row_::_%n selected rows_" : ["%n fila seleccionada","%n files seleccionades"],
+    "Until" : "Fins",
     "Return" : "Retorn",
     "List" : "Llista",
     "Short text" : "Text curt",
