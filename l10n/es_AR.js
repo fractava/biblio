@@ -22,6 +22,7 @@ OC.L10N.register(
     "Download" : "Descargar",
     "Search" : "Buscar",
     "Back" : "Volver",
+    "Sorting" : "Orden",
     "List" : "Lista",
     "Long text" : "Texto largo",
     "Date" : "Fecha",

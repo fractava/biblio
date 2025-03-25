@@ -20,6 +20,7 @@ OC.L10N.register(
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",
     "Search" : "Otsi",
+    "Back" : "Tagasi",
     "List" : "Nimekiri",
     "Date" : "Kuupäev",
     "Select" : "Vali",
