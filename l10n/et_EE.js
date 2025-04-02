@@ -21,6 +21,7 @@ OC.L10N.register(
     "Download" : "Laadi alla",
     "Search" : "Otsi",
     "Back" : "Tagasi",
+    "Until" : "Kuni",
     "List" : "Nimekiri",
     "Date" : "Kuupäev",
     "Select" : "Vali",
