@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Kokku",
     "Title" : "Pealkiri",
     "Edit" : "Redigeeri",
     "Name" : "Nimi",
