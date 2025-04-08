@@ -27,6 +27,8 @@
     "Checkbox" : "Märkeruut",
     "Device" : "Seade",
     "Copy" : "Kopeeri",
-    "Devices" : "Seadmed"
+    "Customer" : "Klient",
+    "Devices" : "Seadmed",
+    "Customers" : "Kliendid"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

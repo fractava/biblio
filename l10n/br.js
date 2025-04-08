@@ -17,6 +17,7 @@ OC.L10N.register(
     "Search" : "Klask",
     "List" : "Roll",
     "Date" : "Deiz",
+    "Select" : "Diuzañ",
     "Checkbox" : "Checkbox",
     "Device" : "Ardivink"
 },

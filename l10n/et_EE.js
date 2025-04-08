@@ -29,6 +29,8 @@ OC.L10N.register(
     "Checkbox" : "Märkeruut",
     "Device" : "Seade",
     "Copy" : "Kopeeri",
-    "Devices" : "Seadmed"
+    "Customer" : "Klient",
+    "Devices" : "Seadmed",
+    "Customers" : "Kliendid"
 },
 "nplurals=2; plural=(n != 1);");
