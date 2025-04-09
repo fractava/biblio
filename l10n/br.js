@@ -8,7 +8,7 @@ OC.L10N.register(
     "Description" : "Deskrivadur",
     "User" : "Implijer",
     "Submit" : "Kinnig",
-    "Type" : "Stumm",
+    "Type" : "Seurt",
     "Actions" : "Oberoù",
     "Delete" : "Lemel",
     "Years" : "Bloaz",
