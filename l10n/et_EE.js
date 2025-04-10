@@ -17,6 +17,7 @@ OC.L10N.register(
     "Delete" : "Kustuta",
     "Relative" : "Suhteline",
     "Absolute" : "Absoluutne",
+    "Select Type" : "Vali tüüp",
     "Hours" : "Tunnid",
     "Collections" : "Kollektsioonid",
     "Download" : "Laadi alla",

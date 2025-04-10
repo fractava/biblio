@@ -10,7 +10,7 @@ OC.L10N.register(
     "Submit" : "Kinnig",
     "Type" : "Seurt",
     "Actions" : "Oberoù",
-    "Delete" : "Lemel",
+    "Delete" : "Dilemel",
     "Years" : "Bloaz",
     "Days" : "Deiz",
     "Download" : "Pellgargañ",
