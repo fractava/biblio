@@ -20,6 +20,7 @@ OC.L10N.register(
     "Days" : "Dienas",
     "Hours" : "Stundas",
     "Members" : "Biedri",
+    "Open Collection Settings" : "Atvērt krājuma iestatījumus",
     "History" : "Vēsture",
     "Download" : "Lejupielādēt",
     "Select Page" : "Izvēlieties lappusi",

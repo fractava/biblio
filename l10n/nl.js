@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Een bibliotheekbeheersysteem",
+    "Count" : "Aantal",
     "Title" : "Titel",
     "Edit" : "Bewerken",
     "Add a field" : "Toevoegen veld",
