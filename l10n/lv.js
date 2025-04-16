@@ -13,7 +13,7 @@ OC.L10N.register(
     "Type" : "Veids",
     "Time" : "Laiks",
     "Actions" : "Darbības",
-    "Delete" : "Dzēst",
+    "Delete" : "Izdzēst",
     "Relative" : "Relatīvs",
     "Absolute" : "Absolūts",
     "Years" : "Gadi",

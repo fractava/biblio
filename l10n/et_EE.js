@@ -20,6 +20,7 @@ OC.L10N.register(
     "Select Type" : "Vali tüüp",
     "Hours" : "Tunnid",
     "Collections" : "Kollektsioonid",
+    "Members" : "Liikmed",
     "Download" : "Laadi alla",
     "Search" : "Otsi",
     "Back" : "Tagasi",
