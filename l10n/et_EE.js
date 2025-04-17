@@ -5,6 +5,7 @@ OC.L10N.register(
     "Title" : "Pealkiri",
     "Edit" : "Redigeeri",
     "Name" : "Nimi",
+    "Invalid name" : "Vigane nimi",
     "Error" : "Viga",
     "Reset" : "Lähtesta",
     "Value" : "Väärtus",
