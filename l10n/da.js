@@ -12,6 +12,7 @@ OC.L10N.register(
     "Edit" : "Rediger",
     "Add a field" : "Tilføj et felt",
     "Name" : "Navn",
+    "Invalid name" : "Ugyldigt navn",
     "Delete Field" : "Slet felt",
     "Error" : "Fejl",
     "Reset field" : "Nulstil felt",
