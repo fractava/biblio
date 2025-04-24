@@ -28,6 +28,7 @@ OC.L10N.register(
     "Until" : "Kuni",
     "List" : "Nimekiri",
     "Date" : "Kuupäev",
+    "Pick a date" : "Vali kuupäev",
     "Select" : "Vali",
     "Checkbox" : "Märkeruut",
     "Device" : "Seade",
