@@ -1,7 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
+    "Prefix" : "Prefiks",
     "Count" : "Hisoblash",
+    "Suffix" : "Suffiks",
     "Title" : "Sarlavha",
     "Edit" : "Tahrirlash",
     "Name" : "Name",
@@ -21,6 +23,7 @@ OC.L10N.register(
     "Date" : "Sana",
     "Pick a date" : "Sana tanlang",
     "Select" : "Select",
+    "Checkbox" : "Belgilash katagi",
     "Copy" : "Nusxalash"
 },
 "nplurals=1; plural=0;");

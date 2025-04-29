@@ -31,6 +31,8 @@ OC.L10N.register(
     "Enter a long text" : "Įveskite ilgą atsakymą",
     "Date" : "Data",
     "Pick a date" : "Pasirinkite datą",
+    "Before" : "Prieš",
+    "After" : "Po",
     "Date and time" : "Data ir laikas",
     "Pick a date and time" : "Pasirinkite datą ir laiką",
     "Select" : "Žymėti",

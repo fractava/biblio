@@ -1,5 +1,7 @@
 { "translations": {
+    "Prefix" : "Prefiks",
     "Count" : "Hisoblash",
+    "Suffix" : "Suffiks",
     "Title" : "Sarlavha",
     "Edit" : "Tahrirlash",
     "Name" : "Name",
@@ -19,6 +21,7 @@
     "Date" : "Sana",
     "Pick a date" : "Sana tanlang",
     "Select" : "Select",
+    "Checkbox" : "Belgilash katagi",
     "Copy" : "Nusxalash"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
