@@ -1,7 +1,9 @@
 OC.L10N.register(
     "biblio",
     {
+    "Prefix" : "Eesliide",
     "Count" : "Kokku",
+    "Suffix" : "Järelliide",
     "Title" : "Pealkiri",
     "Edit" : "Redigeeri",
     "Name" : "Nimi",

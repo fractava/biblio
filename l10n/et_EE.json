@@ -1,5 +1,7 @@
 { "translations": {
+    "Prefix" : "Eesliide",
     "Count" : "Kokku",
+    "Suffix" : "Järelliide",
     "Title" : "Pealkiri",
     "Edit" : "Redigeeri",
     "Name" : "Nimi",
