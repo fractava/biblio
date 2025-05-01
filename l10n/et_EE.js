@@ -31,6 +31,7 @@ OC.L10N.register(
     "List" : "Nimekiri",
     "Date" : "Kuupäev",
     "Pick a date" : "Vali kuupäev",
+    "Pick a date and time" : "Vali kuupäev ja kellaaeg",
     "Select" : "Vali",
     "Checkbox" : "Märkeruut",
     "Device" : "Seade",
