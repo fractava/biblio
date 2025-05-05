@@ -57,6 +57,7 @@ OC.L10N.register(
     "Download" : "Prejmi",
     "Select Page" : "Izbor strani",
     "Search" : "Poišči",
+    "Back" : "Nazaj",
     "Sorting" : "Razvrščanje",
     "Sort asc" : "Razvrsti naraščajoče",
     "Sort desc" : "Razvrsti padajoče",
