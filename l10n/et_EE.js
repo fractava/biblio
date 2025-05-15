@@ -22,6 +22,7 @@ OC.L10N.register(
     "Relative" : "Suhteline",
     "Absolute" : "Absoluutne",
     "Select Type" : "Vali tüüp",
+    "Years" : "Aastad",
     "Hours" : "Tunnid",
     "Collections" : "Kollektsioonid",
     "Members" : "Liikmed",
