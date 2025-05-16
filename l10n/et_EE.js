@@ -30,6 +30,7 @@ OC.L10N.register(
     "Create Row" : "Lisa rida",
     "Search" : "Otsi",
     "Back" : "Tagasi",
+    "Sorting" : "Järjestus",
     "Export CSV" : "Ekspordi csv-failina",
     "Uncheck all" : "Eemalda kogu valik",
     "_%n selected row_::_%n selected rows_" : ["%n valitud rida","%n valitud rida"],
