@@ -7,6 +7,7 @@ OC.L10N.register(
     "Title" : "Titel",
     "Edit" : "Redigera",
     "Name" : "Namn",
+    "Invalid name" : "Ogiltig namn",
     "Error" : "Fel",
     "Reset" : "Återställ",
     "Value" : "Värde",
