@@ -26,6 +26,7 @@ OC.L10N.register(
     "Download" : "Lejupielādēt",
     "Select Page" : "Izvēlieties lappusi",
     "Search" : "Meklēt",
+    "_%n selected row_::_%n selected rows_" : ["%n atlasītu rindu","%n atlasīta rinda","%n atlasītas rindas"],
     "List" : "Saraksts",
     "Date" : "Datums",
     "Pick a date" : "Izvēlieties datumu",
