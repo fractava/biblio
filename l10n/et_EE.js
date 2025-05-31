@@ -39,6 +39,7 @@ OC.L10N.register(
     "Long text" : "Pikk tekst",
     "Date" : "Kuupäev",
     "Pick a date" : "Vali kuupäev",
+    "Date and time" : "Kuupäev ja kellaaeg",
     "Pick a date and time" : "Vali kuupäev ja kellaaeg",
     "Select" : "Vali",
     "Checkbox" : "Märkeruut",
