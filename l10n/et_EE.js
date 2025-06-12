@@ -67,6 +67,9 @@ OC.L10N.register(
     "Customer \"{name}\" deleted" : "Klient nimega „{name}“ on kustutatud",
     "[deleted student]" : "[kustutatud õpilane]",
     "[deleted employee]" : "[kustutatud töötaja]",
-    "[deleted customer]" : "[kustutatud klient]"
+    "[deleted customer]" : "[kustutatud klient]",
+    "Request not allowed." : "Päring pole lubatud.",
+    "Resource not found." : "Ressurssi ei leidu.",
+    "Unknown error." : "Tundmatu viga."
 },
 "nplurals=2; plural=(n != 1);");
