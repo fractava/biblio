@@ -1,0 +1,24 @@
+OC.L10N.register(
+    "biblio",
+    {
+    "Count" : "Hesabu",
+    "Edit" : "Hariri",
+    "Name" : "Jina",
+    "Description" : "Maelezo",
+    "Timestamp" : "Muhuri wa muda",
+    "Submit" : "Wasilisha",
+    "Time" : "Muda",
+    "Actions" : "Utendekaji",
+    "Delete" : "Futa",
+    "Members" : "Wanachama",
+    "Download" : "Pakua",
+    "Search" : "Tafuta",
+    "Back" : "Rudi",
+    "List" : "Orodha",
+    "Long text" : "Ujumbe mrefu",
+    "Date" : "Tarehe",
+    "Pick a date" : "Chagua tarehe",
+    "Pick a date and time" : "Chagua tarehe na wakati",
+    "Copy" : "Nakili"
+},
+"nplurals=2; plural=(n != 1);");
