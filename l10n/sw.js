@@ -7,6 +7,7 @@ OC.L10N.register(
     "Description" : "Maelezo",
     "Timestamp" : "Muhuri wa muda",
     "Submit" : "Wasilisha",
+    "Type" : "Aina",
     "Time" : "Muda",
     "Actions" : "Utendekaji",
     "Delete" : "Futa",
