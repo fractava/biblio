@@ -75,6 +75,7 @@ OC.L10N.register(
     "Uncheck all" : "Összes bejelölésének megszüntetése",
     "_%n selected row_::_%n selected rows_" : ["%n kiválasztott sor","%n kiválasztott sor"],
     "Could not fetch customers" : "Nem sikerült lekésdezni a vásárlókat",
+    "Until" : "Eddig",
     "Return" : "Vissza",
     "List" : "Lista",
     "Contains" : "Tartalmazza",

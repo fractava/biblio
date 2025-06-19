@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "System zarządzania biblioteką",
+    "Prefix" : "Przedrostek",
     "Count" : "Ilość pobrań",
+    "Suffix" : "Przyrostek",
     "Title" : "Tytuł",
     "Edit" : "Edycja",
     "Add a field" : "Dodaj pole",
@@ -33,6 +35,7 @@ OC.L10N.register(
     "Lend/Return" : "Wypożyczenie/zwrot",
     "History" : "Historia",
     "Download" : "Pobierz",
+    "Select Page" : "Wybierz stronę",
     "Search" : "Szukaj",
     "Back" : "Poprzednia",
     "Sorting" : "Sortuj",

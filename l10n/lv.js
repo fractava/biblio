@@ -8,6 +8,7 @@ OC.L10N.register(
     "Error" : "Kļūda",
     "Reset" : "Atiestatīt",
     "Value" : "Vērtība",
+    "Renamed to \"{newName}\"" : "Pārdēvēts par \"{newName}\"",
     "Description" : "Apraksts",
     "User" : "Lietotājs",
     "Submit" : "Iesniegt",
@@ -35,6 +36,12 @@ OC.L10N.register(
     "Select" : "Atzīmēt",
     "Device" : "Ierīce",
     "Copy" : "Kopēt",
-    "Devices" : "Ierīces"
+    "Devices" : "Ierīces",
+    "Renamed book from \"{oldTitle}\" to \"{newTitle}\"" : "Grāmata \"{oldTitle}\" pārdēvēta par \"{newTitle}\"",
+    "Renamed device from \"{oldTitle}\" to \"{newTitle}\"" : "Ierīce \"{oldTitle}\" pārdēvēta par \"{newTitle}\"",
+    "Renamed item from \"{oldTitle}\" to \"{newTitle}\"" : "Vienums \"{oldTitle}\" pārdēvēts par \"{newTitle}\"",
+    "Student renamed from \"{oldName}\" to \"{newName}\"" : "Students \"{oldName}\" pārdēvēts par \"{newName}\"",
+    "Employee renamed from \"{oldName}\" to \"{newName}\"" : "Darbinieks \"{oldName}\" pārdēvēts par \"{newName}\"",
+    "Customer renamed from \"{oldName}\" to \"{newName}\"" : "Klients \"{oldName}\" pārdēvēts par \"{newName}\""
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
