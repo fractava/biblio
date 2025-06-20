@@ -4,6 +4,7 @@ OC.L10N.register(
     "Count" : "Hesabu",
     "Edit" : "Hariri",
     "Name" : "Jina",
+    "Error" : "Hitilafu",
     "Description" : "Maelezo",
     "Timestamp" : "Muhuri wa muda",
     "Submit" : "Wasilisha",
