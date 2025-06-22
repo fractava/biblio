@@ -1,10 +1,14 @@
 OC.L10N.register(
     "biblio",
     {
+    "Prefix" : "Kiambishi awali",
     "Count" : "Hesabu",
+    "Suffix" : "Kiambishi tamati",
+    "Title" : "Kichwa cha habari",
     "Edit" : "Hariri",
     "Name" : "Jina",
     "Error" : "Hitilafu",
+    "Reset" : "Pangilia upya",
     "Description" : "Maelezo",
     "Timestamp" : "Muhuri wa muda",
     "Submit" : "Wasilisha",
