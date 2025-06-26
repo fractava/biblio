@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error" : "Hitilafu",
     "Reset" : "Pangilia upya",
     "Description" : "Maelezo",
+    "User" : "Mtumiaji",
     "Timestamp" : "Muhuri wa muda",
     "Submit" : "Wasilisha",
     "Type" : "Aina",
