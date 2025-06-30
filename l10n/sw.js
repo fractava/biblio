@@ -26,6 +26,7 @@ OC.L10N.register(
     "Date" : "Tarehe",
     "Pick a date" : "Chagua tarehe",
     "Pick a date and time" : "Chagua tarehe na wakati",
+    "Device" : "Kifaa",
     "Copy" : "Nakili"
 },
 "nplurals=2; plural=(n != 1);");
