@@ -26,6 +26,7 @@ OC.L10N.register(
     "Date" : "Tarehe",
     "Pick a date" : "Chagua tarehe",
     "Pick a date and time" : "Chagua tarehe na wakati",
+    "Select" : "Chagua",
     "Device" : "Kifaa",
     "Copy" : "Nakili"
 },

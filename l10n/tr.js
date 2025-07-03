@@ -53,7 +53,7 @@ OC.L10N.register(
     "Timestamp" : "Zaman damgası",
     "Could not fetch history" : "Geçmiş alınamadı",
     "No collection selected" : "Herhangi bir derleme seçilmemiş",
-    "Select or create a collection in the sidebar" : "Yan çubuktan bir derleme seçin ya da oluşturun",
+    "Select or create a collection in the sidebar" : "Kenar çubuğundan bir derleme seçin ya da oluşturun",
     "Submit" : "Gönder",
     "Add new collection" : "Yeni derleme ekle",
     "Add new Loan Until Preset" : "Yeni hazır ödünç verme süresi ayarı ekle",
