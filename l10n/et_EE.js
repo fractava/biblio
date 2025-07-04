@@ -11,6 +11,7 @@ OC.L10N.register(
     "Error" : "Viga",
     "Reset" : "Lähtesta",
     "Value" : "Väärtus",
+    "No changes" : "Muudatusi pole",
     "Description" : "Kirjeldus",
     "User" : "Kasutaja",
     "Timestamp" : "Ajatempel",
