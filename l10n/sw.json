@@ -7,6 +7,7 @@
     "Name" : "Jina",
     "Error" : "Hitilafu",
     "Reset" : "Pangilia upya",
+    "Value" : "Thamani",
     "Description" : "Maelezo",
     "User" : "Mtumiaji",
     "Timestamp" : "Muhuri wa muda",
@@ -26,6 +27,7 @@
     "Pick a date and time" : "Chagua tarehe na wakati",
     "Select" : "Chagua",
     "Device" : "Kifaa",
-    "Copy" : "Nakili"
+    "Copy" : "Nakili",
+    "Devices" : "Vifaa"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

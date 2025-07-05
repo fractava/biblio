@@ -9,6 +9,7 @@ OC.L10N.register(
     "Name" : "Jina",
     "Error" : "Hitilafu",
     "Reset" : "Pangilia upya",
+    "Value" : "Thamani",
     "Description" : "Maelezo",
     "User" : "Mtumiaji",
     "Timestamp" : "Muhuri wa muda",
@@ -28,6 +29,7 @@ OC.L10N.register(
     "Pick a date and time" : "Chagua tarehe na wakati",
     "Select" : "Chagua",
     "Device" : "Kifaa",
-    "Copy" : "Nakili"
+    "Copy" : "Nakili",
+    "Devices" : "Vifaa"
 },
 "nplurals=2; plural=(n != 1);");
