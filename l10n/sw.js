@@ -18,6 +18,8 @@ OC.L10N.register(
     "Time" : "Muda",
     "Actions" : "Utendekaji",
     "Delete" : "Futa",
+    "Years" : "Miaka",
+    "Days" : "Siku",
     "Members" : "Wanachama",
     "Download" : "Pakua",
     "Search" : "Tafuta",
@@ -28,6 +30,7 @@ OC.L10N.register(
     "Pick a date" : "Chagua tarehe",
     "Pick a date and time" : "Chagua tarehe na wakati",
     "Select" : "Chagua",
+    "Checkbox" : "Checkbox",
     "Device" : "Kifaa",
     "Copy" : "Nakili",
     "Devices" : "Vifaa"
