@@ -34,6 +34,8 @@ OC.L10N.register(
     "Search" : "Otsi",
     "Back" : "Tagasi",
     "Sorting" : "Järjestus",
+    "Sort asc" : "Järjesta kasvavalt",
+    "Sort desc" : "Järjesta kahanevalt",
     "Export CSV" : "Ekspordi csv-failina",
     "Uncheck all" : "Eemalda kogu valik",
     "_%n selected row_::_%n selected rows_" : ["%n valitud rida","%n valitud rida"],
