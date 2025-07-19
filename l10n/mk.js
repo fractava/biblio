@@ -20,6 +20,7 @@ OC.L10N.register(
     "Download" : "Преземи",
     "Search" : "Барај",
     "Back" : "Назад",
+    "Sorting" : "Сортирање",
     "List" : "Лист",
     "Long text" : "Долг текст",
     "Enter a long text" : "Внесете долг текст",
