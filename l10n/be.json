@@ -13,6 +13,15 @@
     "Back" : "Назад",
     "Date" : "Дата",
     "Select" : "Выбраць",
-    "Copy" : "Капіяваць"
+    "Device" : "Прылада",
+    "Copy" : "Капіяваць",
+    "Devices" : "Прылады",
+    "Device Properties" : "Уласцівасці прылады",
+    "Create device" : "Стварыць прыладу",
+    "Device \"{title}\" created" : "Прылада \"{title}\" створана",
+    "Renamed device from \"{oldTitle}\" to \"{newTitle}\"" : "Прылада перайменавана з \"{oldTitle}\" у \"{newTitle}\"",
+    "Device \"{title}\" deleted" : "Прылада \"{title}\" выдалена",
+    "Add new device" : "Дадаць новую прыладу",
+    "Device title" : "Назва прылады"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }
