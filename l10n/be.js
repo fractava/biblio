@@ -2,6 +2,7 @@ OC.L10N.register(
     "biblio",
     {
     "Title" : "Загаловак",
+    "Edit" : "Рэдагаваць",
     "Name" : "Назва",
     "Error" : "Памылка",
     "Reset" : "Скінуць",
