@@ -14,6 +14,7 @@ OC.L10N.register(
     "Reset" : "Ripristina",
     "Add Option" : "Aggiungi opzione",
     "Value" : "Valore",
+    "No changes" : "Nessun cambiamento",
     "Description" : "Descrizione",
     "User" : "Utente",
     "Timestamp" : "Marca temporale",
