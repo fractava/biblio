@@ -6,6 +6,7 @@ OC.L10N.register(
     "Name" : "Назва",
     "Error" : "Памылка",
     "Reset" : "Скінуць",
+    "Description" : "Апісанне",
     "User" : "Карыстальнік",
     "Type" : "Тып",
     "Actions" : "Дзеянні",
