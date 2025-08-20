@@ -48,6 +48,7 @@ OC.L10N.register(
     "Enter a long text" : "Wpisz długi tekst",
     "Date" : "Data",
     "Pick a date" : "Wybierz datę",
+    "Before" : "Przed",
     "After" : "Po",
     "Date and time" : "Data i godzina",
     "Pick a date and time" : "Wybierz datę i godzinę",
