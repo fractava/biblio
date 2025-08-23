@@ -31,6 +31,7 @@ OC.L10N.register(
     "Checkbox" : "Поле за избирање",
     "Book" : "Книга",
     "Device" : "Уред",
+    "Copy" : "Копирај",
     "Customer" : "Потрошувач",
     "Devices" : "Уреди"
 },
