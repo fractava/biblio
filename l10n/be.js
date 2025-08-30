@@ -22,6 +22,7 @@ OC.L10N.register(
     "Download" : "Спампаваць",
     "Search" : "Пошук",
     "Back" : "Назад",
+    "Sorting" : "Сартаванне",
     "Date" : "Дата",
     "Date and time" : "Дата і час",
     "Select" : "Выбраць",
