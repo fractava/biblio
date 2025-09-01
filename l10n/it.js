@@ -28,6 +28,7 @@ OC.L10N.register(
     "Absolute" : "Assoluto",
     "Select Type" : "Seleziona tipo",
     "Years" : "Anni",
+    "Days" : "Giorni",
     "Collections" : "Raccolte",
     "Properties" : "Proprietà",
     "Members" : "Partecipanti",
