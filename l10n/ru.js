@@ -42,6 +42,7 @@ OC.L10N.register(
     "Download" : "Скачать",
     "Create Row" : "Создать строку",
     "There are currently no rows in this table" : "В настоящее время в этой таблице нет строк",
+    "Select Page" : "Выбрать страницу",
     "Search" : "Поиск",
     "Back" : "Назад",
     "Sorting" : "Сортировка",
