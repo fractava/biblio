@@ -11,6 +11,7 @@ OC.L10N.register(
     "Error" : "Virhe",
     "Reset" : "Palauta",
     "Value" : "Arvo",
+    "No changes" : "Ei muutoksia",
     "Description" : "Kuvaus",
     "User" : "Käyttäjä",
     "Timestamp" : "Aikaleima",
