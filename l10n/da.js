@@ -9,7 +9,7 @@ OC.L10N.register(
     "Count" : "Antal",
     "Suffix" : "Suffiks",
     "Title" : "Titel",
-    "Edit" : "Rediger",
+    "Edit" : "Redigér",
     "Add a field" : "Tilføj et felt",
     "Name" : "Navn",
     "Invalid name" : "Ugyldigt navn",
