@@ -23,6 +23,7 @@ OC.L10N.register(
     "Search" : "Пошук",
     "Back" : "Назад",
     "Sorting" : "Сартаванне",
+    "Until" : "Да",
     "Date" : "Дата",
     "Date and time" : "Дата і час",
     "Select" : "Выбраць",
