@@ -11,6 +11,7 @@ OC.L10N.register(
     "Reset" : "Qayta tiklash",
     "Value" : "Qiymati",
     "Description" : "Tavsif",
+    "Submit" : "Submit",
     "Type" : "Turi",
     "Time" : "Vaqt",
     "Actions" : "Actions",
