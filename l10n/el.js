@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Σύστημα διαχείρισης βιβλιοθηκών",
+    "Count" : "Πλήθος",
     "Suffix" : "Επίθεμα",
     "Title" : "Τίτλος",
     "Edit" : "Επεξεργασία",
