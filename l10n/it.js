@@ -39,6 +39,7 @@ OC.L10N.register(
     "Search" : "Cerca",
     "Back" : "Indietro",
     "Sorting" : "Ordina",
+    "Until" : "Fino al",
     "Return" : "Torna",
     "List" : "Elenco",
     "Short text" : "Testo breve",
