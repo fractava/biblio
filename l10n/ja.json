@@ -3,7 +3,11 @@
     "Edit" : "編集",
     "Name" : "名前",
     "Error" : "エラー",
+    "Reset field" : "Reset field",
     "Reset" : "リセット",
+    "Select Option" : "オプションを選択",
+    "Delete Option" : "選択肢を削除",
+    "Add Option" : "オプションを追加",
     "Value" : "値",
     "Description" : "説明",
     "User" : "ユーザー",
@@ -24,11 +28,15 @@
     "Back" : "戻る",
     "Select operator" : "演算子の選択",
     "Sorting" : "並べ替え",
+    "Sort asc" : "昇順で並べ替え",
+    "Sort desc" : "降順で並べ替え",
     "Filtering" : "フィルタリング",
     "Select Operator" : "演算子の選択",
     "Export CSV" : "CSVエクスポート",
+    "Uncheck all" : "すべてチェックを外す",
     "List" : "リスト",
     "Contains" : "　を含む",
+    "Equals" : "等しい",
     "Ends with" : "で終わる",
     "Long text" : "長文",
     "Enter a long text" : "長文回答を入力",
@@ -44,7 +52,9 @@
     "Device" : "端末",
     "Copy" : "コピー",
     "Devices" : "端末",
+    "Items" : "アイテム",
     "Customers" : "顧客",
-    "Resource not found." : "リソースが見つかりません。"
+    "Resource not found." : "リソースが見つかりません。",
+    "Unknown error." : "不明なエラー"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
