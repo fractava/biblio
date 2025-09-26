@@ -45,6 +45,7 @@ OC.L10N.register(
     "Export CSV" : "Εξαγωγή CSV",
     "Uncheck all" : "Αποεπιλογή όλων",
     "_%n selected row_::_%n selected rows_" : ["%n επιλεγμένη γραμμή","%n επιλεγμένες γραμμές"],
+    "Until" : "Μέχρι",
     "Return" : "Επιστροφή",
     "List" : "Λίστα",
     "Contains" : "Περιέχει",
