@@ -31,7 +31,7 @@ OC.L10N.register(
     "Invalid name" : "Nome incorrecto",
     "Delete Field" : "Eliminar campo",
     "Error" : "Erro",
-    "Reset field" : "Restablecer o campo",
+    "Reset field" : "Restabelecer o campo",
     "This field has an invalid value, to reset it click the button below (will only affect this item)" : "Este campo ten un valor incorrecto, para restabelecelo prema no botón de embaixo (só afectará a este elemento)",
     "Reset" : "Restabelecer",
     "No fields" : "Ningún campo",
