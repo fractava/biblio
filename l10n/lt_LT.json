@@ -38,6 +38,9 @@
     "Device" : "Įrenginys",
     "Copy" : "Kopija",
     "Devices" : "Įrenginiai",
+    "Add new book" : "Pridėti naują knygą",
+    "Add new device" : "Pridėti naują įrenginį",
+    "Add new item" : "Pridėti naują elementą",
     "Resource not found." : "Išteklius nerastas.",
     "Unknown error." : "Nežinoma klaida."
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"

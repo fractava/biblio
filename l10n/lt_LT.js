@@ -40,6 +40,9 @@ OC.L10N.register(
     "Device" : "Įrenginys",
     "Copy" : "Kopija",
     "Devices" : "Įrenginiai",
+    "Add new book" : "Pridėti naują knygą",
+    "Add new device" : "Pridėti naują įrenginį",
+    "Add new item" : "Pridėti naują elementą",
     "Resource not found." : "Išteklius nerastas.",
     "Unknown error." : "Nežinoma klaida."
 },
