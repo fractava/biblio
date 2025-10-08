@@ -202,7 +202,7 @@ OC.L10N.register(
     "Item \"{title}\" deleted" : "Обрисана је ставка „{title}”",
     "Add new book" : "Додај нову књигу",
     "Add new device" : "Додај нов уређај",
-    "Add new item" : "Додај ноу ставк",
+    "Add new item" : "Додај нову ставку",
     "Book title" : "Наслов књиге",
     "Device title" : "Наслов уређаја",
     "Item title" : "Наслов ставке",
