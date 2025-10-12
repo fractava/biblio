@@ -24,6 +24,7 @@ OC.L10N.register(
     "Back" : "Назад",
     "Sorting" : "Сартаванне",
     "Until" : "Да",
+    "List" : "Спіс",
     "Date" : "Дата",
     "Date and time" : "Дата і час",
     "Select" : "Выбраць",
