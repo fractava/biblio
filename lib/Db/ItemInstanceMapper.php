@@ -70,7 +70,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select($qb->createFunction('COUNT(1)'))
+		$qb->selectAlias($qb->createFunction('COUNT(1)'), "cnt")
 			->from(self::TABLENAME, 'instance');
 
 		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
@@ -80,7 +80,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		$qb->where($qb->expr()->eq('instance.barcode', $qb->createNamedParameter($barcode)))
 			->andWhere($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
-		return $qb->executeQuery()->fetch()["COUNT(1)"] === 1;
+		return $qb->executeQuery()->fetch(\PDO::FETCH_COLUMN) === 1;
 	}
 
 	/**
@@ -118,22 +118,22 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 				];
 
 				$itemColumns = [
-					"id" => $filteredRow["itemJoin_id"],
-					"collection_id" => $filteredRow["itemJoin_collection_id"],
-					"title" => $filteredRow["itemJoin_title"],
+					"id" => $filteredRow["item_join_id"],
+					"collection_id" => $filteredRow["item_join_collection_id"],
+					"title" => $filteredRow["item_join_title"],
 				];
 
 				$loanColumns = [
-					"id" => $filteredRow["loanJoin_id"],
-					"item_instance_id" => $filteredRow["loanJoin_item_instance_id"],
-					"customer_id" => $filteredRow["loanJoin_customer_id"],
-					"until" => $filteredRow["loanJoin_until"],
+					"id" => $filteredRow["loan_join_id"],
+					"item_instance_id" => $filteredRow["loan_join_item_instance_id"],
+					"customer_id" => $filteredRow["loan_join_customer_id"],
+					"until" => $filteredRow["loan_join_until"],
 				];
 
 				$loanCustomerColumns = [
-					"id" => $filteredRow["loanCustomerJoin_id"],
-					"collection_id" => $filteredRow["loanCustomerJoin_collection_id"],
-					"name" => $filteredRow["loanCustomerJoin_name"],
+					"id" => $filteredRow["loan_customer_join_id"],
+					"collection_id" => $filteredRow["loan_customer_join_collection_id"],
+					"name" => $filteredRow["loan_customer_join_name"],
 				];
 
 				$entities[] = [
@@ -166,17 +166,17 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('instance.*')
-			->addSelect($qb->createFunction('COUNT(*) OVER () AS totalResultCount'))
-			->addSelect($qb->createFunction('item.id AS itemJoin_id'))
-			->addSelect($qb->createFunction('item.collection_id AS itemJoin_collection_id'))
-			->addSelect($qb->createFunction('item.title AS itemJoin_title'))
-			->addSelect($qb->createFunction('loan.id AS loanJoin_id'))
-			->addSelect($qb->createFunction('loan.item_instance_id AS loanJoin_item_instance_id'))
-			->addSelect($qb->createFunction('loan.customer_id AS loanJoin_customer_id'))
-			->addSelect($qb->createFunction('loan.until AS loanJoin_until'))
-			->addSelect($qb->createFunction('loanCustomer.id AS loanCustomerJoin_id'))
-			->addSelect($qb->createFunction('loanCustomer.collection_id AS loanCustomerJoin_collection_id'))
-			->addSelect($qb->createFunction('loanCustomer.name AS loanCustomerJoin_name'))
+			->addSelect($qb->createFunction('COUNT(*) OVER () AS total_result_count'))
+			->addSelect($qb->createFunction('item.id AS item_join_id'))
+			->addSelect($qb->createFunction('item.collection_id AS item_join_collection_id'))
+			->addSelect($qb->createFunction('item.title AS item_join_title'))
+			->addSelect($qb->createFunction('loan.id AS loan_join_id'))
+			->addSelect($qb->createFunction('loan.item_instance_id AS loan_join_item_instance_id'))
+			->addSelect($qb->createFunction('loan.customer_id AS loan_join_customer_id'))
+			->addSelect($qb->createFunction('loan.until AS loan_join_until'))
+			->addSelect($qb->createFunction('loan_customer.id AS loan_customer_join_id'))
+			->addSelect($qb->createFunction('loan_customer.collection_id AS loan_customer_join_collection_id'))
+			->addSelect($qb->createFunction('loan_customer.name AS loan_customer_join_name'))
 			->from(self::TABLENAME, 'instance');
 
 		$qb->innerJoin('instance', self::ITEMS_TABLENAME, 'item', $qb->expr()->andX(
@@ -185,11 +185,11 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 		->where($qb->expr()->eq('item.collection_id', $qb->createNamedParameter($collectionId, IQueryBuilder::PARAM_INT)));
 
 		$qb->leftJoin('instance', self::LOANS_TABLE, 'loan', $qb->expr()->andX(
-			$qb->expr()->eq('loan.item_instance_id', 'instance.id'),
+			$qb->expr()->eq('instance.id', 'loan.item_instance_id'),
 		));
 
-		$qb->leftJoin('instance', self::CUSTOMERS_TABLENAME, 'loanCustomer', $qb->expr()->andX(
-			$qb->expr()->eq('loanCustomer.id', 'loan.customer_id'),
+		$qb->leftJoin('instance', self::CUSTOMERS_TABLENAME, 'loan_customer', $qb->expr()->andX(
+			$qb->expr()->eq('loan.customer_id', 'loan_customer.id'),
 		));
 
 		if ($includesFieldValueFilters) {
@@ -210,7 +210,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		$this->handleNumberFilter($qb, $filters["loan_until"], 'loan.until');
 		
-		$this->handleStringFilter($this->db, $qb, $filters["loan_customer_name"], 'loanCustomer.name');
+		$this->handleStringFilter($this->db, $qb, $filters["loan_customer_name"], 'loan_customer.name');
 
 		$this->handleIdFilter($qb, $filters["item_id"], 'instance.item_id');
 
@@ -229,7 +229,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 			} elseif ($sort === "loan_until") {
 				$this->handleSortByColumn($qb, 'loan.until', $sortReverse);
 			} elseif ($sort === "loan_customer_name") {
-				$this->handleSortByColumn($qb, 'loanCustomer.name', $sortReverse);
+				$this->handleSortByColumn($qb, 'loan_customer.name', $sortReverse);
 			} elseif ($this->isFieldReference($sort)) {
 				$this->sortByJoinedFieldValue($qb, $sort, $sortReverse, 'loan', self::FIELDS_VALUES_TABLENAME, 'loan_id');
 			}
@@ -239,7 +239,7 @@ class ItemInstanceMapper extends AdvancedQBMapper {
 
 		$this->handleLimit($qb, $limit);
 
-		return $this->findEntitiesAndSeperateColumns($qb, ["totalResultCount"]);
+		return $this->findEntitiesAndSeperateColumns($qb, ["total_result_count"]);
 	}
 
 	private function getFirstBarcode(int $itemId, bool $reverse) {

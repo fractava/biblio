@@ -53,7 +53,7 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 		/* @var $qb IQueryBuilder */
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('i.*')
-			->addSelect($qb->createFunction('COUNT(*) OVER () AS totalResultCount'))
+			->addSelect($qb->createFunction('COUNT(*) OVER () AS total_result_count'))
 			->from(self::TABLENAME, 'i');
 
 		if ($includesFieldValueFilters) {
@@ -89,6 +89,6 @@ class ItemMapper extends \OCA\Biblio\Db\AdvancedQBMapper {
 
 		$this->handleLimit($qb, $limit);
 
-		return $this->findEntitiesAndSeperateColumns($qb, ["totalResultCount"]);
+		return $this->findEntitiesAndSeperateColumns($qb, ["total_result_count"]);
 	}
 }
