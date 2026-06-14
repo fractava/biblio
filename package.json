@@ -68,6 +68,6 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-vue": "^9.26.0",
 		"webpack-bundle-analyzer": "^4.10.2",
-		"webpack-cli": "^5.1.4"
+		"webpack-cli": "^7.0.3"
 	}
 }
