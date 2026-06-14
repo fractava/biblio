@@ -5,7 +5,7 @@ updates:
   schedule:
     interval: daily
     time: "04:00"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 100
   labels:
   - dependencies
 - package-ecosystem: composer
@@ -13,7 +13,7 @@ updates:
   schedule:
     interval: daily
     time: "04:00"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 100
   labels:
   - dependencies
 - package-ecosystem: npm
@@ -21,7 +21,7 @@ updates:
   schedule:
     interval: daily
     time: "04:00"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 100
   labels:
   - dependencies
 - package-ecosystem: "github-actions"
