@@ -36,7 +36,7 @@
 		"@nextcloud/webpack-vue-config": "^6.3.2",
 		"babel-loader": "^10.1.1",
 		"caniuse-lite": "^1.0.30001799",
-		"debounce": "^2.1.0",
+		"debounce": "^3.0.0",
 		"debounce-fn": "^6.0.0",
 		"p-cancelable": "^4.0.1",
 		"p-queue": "^9.3.0",
