@@ -31,6 +31,7 @@ OC.L10N.register(
     "Lend/Return" : "Prestar/Devolver",
     "Download" : "Descargar",
     "Search" : "Buscar",
+    "Back" : "Regresar",
     "Sorting" : "Ordenar",
     "Sort asc" : "Ordenar asc",
     "Sort desc" : "Ordenar desc",

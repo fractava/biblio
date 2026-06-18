@@ -9,11 +9,13 @@
     "Reset" : "Qayta tiklash",
     "Value" : "Qiymati",
     "Description" : "Tavsif",
+    "User" : "Foydalanuvchi",
     "Submit" : "Submit",
     "Type" : "Turi",
     "Time" : "Vaqt",
     "Actions" : "Actions",
     "Delete" : "O'chirish",
+    "Days" : "Kunlar",
     "Hours" : "Hours",
     "Download" : "Yuklab olish",
     "Search" : "Qidirish",
@@ -23,6 +25,7 @@
     "Pick a date" : "Sana tanlang",
     "Select" : "Select",
     "Checkbox" : "Belgilash katagi",
+    "Item" : "Mahsulot",
     "Copy" : "Nusxalash"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

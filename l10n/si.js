@@ -9,6 +9,7 @@ OC.L10N.register(
     "User" : "පරිශීලක",
     "Time" : "වේලාව",
     "Actions" : "ක්‍රියාමාර්ග",
+    "Delete" : "Delete",
     "Years" : "වර්ෂ",
     "Days" : "දින",
     "Download" : "බාගන්න",

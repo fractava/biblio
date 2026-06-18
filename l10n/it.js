@@ -3,7 +3,9 @@ OC.L10N.register(
     {
     "Biblio" : "Biblio",
     "A library management system" : "Un sistema di gestione bibliotecario",
+    "Prefix" : "Prefisso",
     "Count" : "Conto",
+    "Suffix" : "Suffisso",
     "Title" : "Titolo",
     "Edit" : "Modifica",
     "Add a field" : "Aggiungi un campo",
@@ -29,6 +31,7 @@ OC.L10N.register(
     "Select Type" : "Seleziona tipo",
     "Years" : "Anni",
     "Days" : "Giorni",
+    "Hours" : "Ore",
     "Collections" : "Raccolte",
     "Properties" : "Proprietà",
     "Members" : "Partecipanti",
@@ -39,6 +42,9 @@ OC.L10N.register(
     "Search" : "Cerca",
     "Back" : "Indietro",
     "Sorting" : "Ordina",
+    "Sort asc" : "Ordina per ascendente",
+    "Sort desc" : "Ordina per discendente",
+    "Select Operator" : "Seleziona operatore",
     "Until" : "Fino al",
     "Return" : "Torna",
     "List" : "Elenco",
@@ -61,6 +67,10 @@ OC.L10N.register(
     "Customer" : "Cliente",
     "Books" : "Libri",
     "Devices" : "Dispositivi",
-    "Customers" : "Clienti"
+    "Customers" : "Clienti",
+    "Request is not authorized. Are you logged in?" : "La richiesta non è autorizzata. Hai effettuato l'accesso?",
+    "Request not allowed." : "Richiesta non consentita.",
+    "Resource not found." : "Risorsa non trovata.",
+    "Unknown error." : "Errore sconosciuto."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

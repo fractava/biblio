@@ -23,6 +23,7 @@ OC.L10N.register(
     "Download" : "Transferir",
     "Search" : "Pesquisa sobre",
     "Back" : "Voltar",
+    "Sorting" : "Ordenação",
     "List" : "Lista",
     "Long text" : "Texto longo",
     "Enter a long text" : "Escreva um texto longo",

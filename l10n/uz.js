@@ -11,11 +11,13 @@ OC.L10N.register(
     "Reset" : "Qayta tiklash",
     "Value" : "Qiymati",
     "Description" : "Tavsif",
+    "User" : "Foydalanuvchi",
     "Submit" : "Submit",
     "Type" : "Turi",
     "Time" : "Vaqt",
     "Actions" : "Actions",
     "Delete" : "O'chirish",
+    "Days" : "Kunlar",
     "Hours" : "Hours",
     "Download" : "Yuklab olish",
     "Search" : "Qidirish",
@@ -25,6 +27,7 @@ OC.L10N.register(
     "Pick a date" : "Sana tanlang",
     "Select" : "Select",
     "Checkbox" : "Belgilash katagi",
+    "Item" : "Mahsulot",
     "Copy" : "Nusxalash"
 },
 "nplurals=1; plural=0;");

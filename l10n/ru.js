@@ -33,6 +33,7 @@ OC.L10N.register(
     "Absolute" : "В заданное время",
     "Select Type" : "Выбор типа",
     "Years" : "Года",
+    "Days" : "Дней",
     "Hours" : "Часы",
     "Collections" : "Коллекции",
     "Members" : "Участники",

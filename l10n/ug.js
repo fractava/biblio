@@ -127,6 +127,7 @@ OC.L10N.register(
     "Input date" : "كىرگۈزۈش ۋاقتى",
     "Export CSV" : "CSV نى چىقىرىش",
     "Uncheck all" : "ھەممىنى تاللاڭ",
+    "_%n selected row_::_%n selected rows_" : ["تاللانغان %n قۇر","تاللانغان %n قۇر"],
     "Could not fetch item instances" : "تۈر مىسالى ئېلىپ كېلەلمىدى",
     "Customers {firstItemIndex} to {lastItemIndex} visible of {totalRows} customers in total" : "خېرىدارلار {firstItemIndex} دىن {lastItemIndex} غىچە كۆرۈنىدۇ {totalRows} خېرىدارلىرى",
     "Create Instance" : "مىسال قۇرۇش",
