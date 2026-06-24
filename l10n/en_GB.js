@@ -26,7 +26,7 @@ OC.L10N.register(
     "Enter editing mode" : "Enter editing mode",
     "Edit" : "Edit",
     "Add a field" : "Add a field",
-    "Name" : "Surname",
+    "Name" : "Name",
     "Enter a name with at least 3 characters" : "Enter a name with at least 3 characters",
     "Invalid name" : "Invalid name",
     "Delete Field" : "Delete field",
