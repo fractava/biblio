@@ -18,6 +18,8 @@ OC.L10N.register(
     "Relative" : "Relativo",
     "Absolute" : "Absoluto",
     "Select Type" : "Selecionar tipo",
+    "Years" : "Anos",
+    "Days" : "Dias",
     "Hours" : "Horas",
     "Members" : "Membros",
     "Download" : "Transferir",
