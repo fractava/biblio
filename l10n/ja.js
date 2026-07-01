@@ -22,6 +22,8 @@ OC.L10N.register(
     "Relative" : "相対指定",
     "Absolute" : "絶対指定",
     "Years" : "年",
+    "Days" : "日",
+    "Hours" : "時間",
     "Collections" : "コレクション",
     "Members" : "メンバー",
     "Download" : "ダウンロード",
