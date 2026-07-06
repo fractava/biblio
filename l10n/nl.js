@@ -55,12 +55,14 @@ OC.L10N.register(
     "Pick a date and time" : "Kies een datum en tijd",
     "Select" : "Selecteer",
     "Checkbox" : "Aanvinkvakje",
+    "Checked" : "Aangevinkt",
     "Item" : "Object",
     "Book" : "Boek",
     "Device" : "Apparaat",
     "Copy" : "Kopiëren",
     "Customer" : "Klant",
     "Devices" : "Apparaten",
+    "Item title" : "Item titel",
     "Customers" : "Klanten"
 },
 "nplurals=2; plural=(n != 1);");
