@@ -84,7 +84,7 @@ OC.L10N.register(
     "Import collection" : "Імпортний збір",
     "Drag to reorder the fields" : "Перетягніть, щоб змінити порядок полів",
     "Import from v1" : "Імпорт з версії 1",
-    "Import a phpmyadmin JSON export of a database used with v1 of this app (before the nextcloud rewrite)" : "Імпортуйте phpmyadmin JSON-експорт бази даних, що використовується в v1 цього додатка (до наступного перезапису cloud)",
+    "Import a phpmyadmin JSON export of a database used with v1 of this app (before the nextcloud rewrite)" : "Імпортуйте phpmyadmin JSON-експорт бази даних, що використовується в v1 цього застосунку (до наступного перезапису cloud)",
     "Relative" : "Відносно",
     "Absolute" : "Абсолютно.",
     "Select Type" : "Виберіть Тип",
