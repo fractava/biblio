@@ -30,7 +30,7 @@
     "Delete Field" : "Видалити поле",
     "Error" : "Помилка",
     "Reset field" : "Поле скидання",
-    "This field has an invalid value, to reset it click the button below (will only affect this item)" : "Це поле має невірне значення, щоб скинути його, натисніть кнопку нижче (вплине тільки на цей пункт)",
+    "This field has an invalid value, to reset it click the button below (will only affect this item)" : "Це поле має недійсне значення, щоб скинути його, клацніть на кнопку нижче (вплине тільки на цей пункт)",
     "Reset" : "Відхилити зміни",
     "No fields" : "Немає полів",
     "This field type has no settings" : "Цей тип поля не має налаштувань",
