@@ -45,7 +45,7 @@
 		"url-loader": "^4.1.1",
 		"v-click-outside": "^3.2.0",
 		"vue": "^2.7.15",
-		"vue-loader": "^15.11.1",
+		"vue-loader": "^17.4.2",
 		"vue-material-design-icons": "^5.3.1",
 		"vue-papa-parse": "^3.1.0",
 		"vue-router": "^3.6.5",
