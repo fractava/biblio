@@ -113,7 +113,7 @@ OC.L10N.register(
     "Decrement page" : "Önceki sayfa",
     "Select Page" : "Sayfayı seçin",
     "Increment page" : "Sonraki sayfa",
-    "Search" : "Arama",
+    "Search" : "Ara",
     "Back" : "Geri",
     "Select operator" : "İşlemi seçin",
     "Select operand" : "İşleneni seçin",
