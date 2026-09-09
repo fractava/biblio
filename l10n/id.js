@@ -27,6 +27,7 @@ OC.L10N.register(
     "Search" : "Cari",
     "Back" : "Kembali",
     "Sorting" : "Pengurutan",
+    "Until" : "Hingga",
     "Return" : "Kembali",
     "List" : "daftar",
     "Date" : "Date",
