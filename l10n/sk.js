@@ -46,7 +46,7 @@ OC.L10N.register(
     "No changes" : "Žiadne zmeny",
     "Renamed to \"{newName}\"" : "Premenované na \"{newName}\"",
     "Enabled visibility in list views" : "Povolené pre zobrazenie v zozname prehľadov",
-    "Disabled visibility in list views" : "Zakázané zobrazenie v zozname prehľadov",
+    "Disabled visibility in list views" : "Zakázaná viditeľnosť v zobrazeniach zoznamov",
     "Changed settings" : "Nastavenia boli zmenené",
     "Description" : "Popis",
     "User" : "Používateľ",
