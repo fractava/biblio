@@ -126,7 +126,7 @@ OC.L10N.register(
     "Input search" : "Inputsøgning",
     "Input date" : "Inputdato",
     "Export CSV" : "Eksporter CSV",
-    "Uncheck all" : "Fjern markeringen af ​​alle",
+    "Uncheck all" : "Fjern markeringen af alle",
     "_%n selected row_::_%n selected rows_" : ["%n valgt række","%n valgte rækker"],
     "Could not fetch item instances" : "Kunne ikke hente punktforekomster",
     "Customers {firstItemIndex} to {lastItemIndex} visible of {totalRows} customers in total" : "Kunder {firstItemIndex} til {lastItemIndex} synlig {totalRows} kunder i alt",

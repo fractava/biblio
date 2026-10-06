@@ -275,7 +275,7 @@ OC.L10N.register(
     "Device instance \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}" : "Inštancia zariadenia \"{barcode}\" bola požičaná \"{customerName}\" do {untilFormattedDate}",
     "Item copy \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}" : "Kópia položky \"{barcode}\" bola požičaná \"{customerName}\" do {untilFormattedDate}",
     "Item instance \"{barcode}\" loaned to \"{customerName}\" until {untilFormattedDate}" : "Inštancia položky \"{barcode}\" bola požičaná \"{customerName}\" do {untilFormattedDate}",
-    "Book copy \"{barcode}\" returned by \"{customerName}\"" : "Kópia knihy \"{barcode}\" bola vrátená od \"{customerName}\"",
+    "Book copy \"{barcode}\" returned by \"{customerName}\"" : "Kópia knihy \"{barcode}\" bola vrátená zákazníkom \"{customerName}\"",
     "Book instance \"{barcode}\" returned by \"{customerName}\"" : "Inštancia knihy \"{barcode}\" bola vrátená od \"{customerName}\"",
     "Device copy \"{barcode}\" returned by \"{customerName}\"" : "Kópia zariadenia \"{barcode}\" bola vrátená od \"{customerName}\"",
     "Device instance \"{barcode}\" returned by \"{customerName}\"" : "Inštancia zariadenia \"{barcode}\" bola vrátená od \"{customerName}\"",
