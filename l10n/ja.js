@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Barcode" : "バーコード",
     "Title" : "タイトル",
     "Edit" : "編集",
     "Name" : "名前",
