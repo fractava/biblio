@@ -34,6 +34,8 @@ OC.L10N.register(
     "Long text" : "Урт текст",
     "Date" : "Он сар өдөр",
     "Pick a date" : "Огноо сонгох",
+    "Before" : "Өмнө",
+    "After" : "Дараа",
     "Pick a date and time" : "Огноо, цаг сонгох",
     "Select" : "Сонгох",
     "Checkbox" : "Чекбокс",
