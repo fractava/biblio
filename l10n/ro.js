@@ -19,6 +19,8 @@ OC.L10N.register(
     "Delete" : "Șterge",
     "Relative" : "Relativ",
     "Absolute" : "Absolut",
+    "Days" : "Zile",
+    "Hours" : "Ore",
     "Members" : "Membri",
     "Download" : "Descărcare",
     "Search" : "Căutare",
