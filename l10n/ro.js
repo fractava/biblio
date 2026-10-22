@@ -26,6 +26,7 @@ OC.L10N.register(
     "Search" : "Căutare",
     "Back" : "Înapoi",
     "Sorting" : "Sortare",
+    "Until" : "Până la",
     "List" : "Listă",
     "Long text" : "Răspuns lung",
     "Date" : "Date",
