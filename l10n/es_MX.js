@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Recuento",
     "Title" : "Título",
     "Exit editing mode" : "Salir del modo de edición",
     "Edit" : "Editar",

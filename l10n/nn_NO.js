@@ -1,10 +1,12 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Tal",
     "Title" : "Tittel",
     "Edit" : "Rediger",
     "Name" : "Namn",
     "Error" : "Feil",
+    "Reset" : "Tilbakestill",
     "Value" : "Verdi",
     "Description" : "Skildring",
     "User" : "Bruker",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "biblio",
     {
+    "Count" : "Skaits",
     "Title" : "Amats",
     "Exit editing mode" : "Iziet no labošanas",
     "Edit" : "Labot",
