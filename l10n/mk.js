@@ -24,6 +24,7 @@ OC.L10N.register(
     "Search" : "Барај",
     "Back" : "Назад",
     "Sorting" : "Сортирање",
+    "Until" : "До",
     "List" : "Лист",
     "Long text" : "Долг текст",
     "Enter a long text" : "Внесете долг текст",
