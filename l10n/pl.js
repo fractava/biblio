@@ -73,6 +73,7 @@ OC.L10N.register(
     "Pick a date and time" : "Wybierz datę i godzinę",
     "Select" : "Wybierz",
     "Checkbox" : "Pole checkbox",
+    "Checked" : "Sprawdzono",
     "Item" : "Pozycja",
     "Book" : "Książka",
     "Device" : "Urządzenie",
