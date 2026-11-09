@@ -61,6 +61,7 @@ OC.L10N.register(
     "Until" : "Dopóki",
     "Return" : "Powróć",
     "List" : "Lista",
+    "Contains" : "Zawiera",
     "Short text" : "Krótki tekst",
     "Enter a short text" : "Wpisz krótki tekst",
     "Long text" : "Długi tekst",
