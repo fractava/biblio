@@ -12,6 +12,7 @@ OC.L10N.register(
     "Delete Option" : "選択肢を削除",
     "Add Option" : "オプションを追加",
     "Value" : "値",
+    "No changes" : "変更はありません",
     "Description" : "説明",
     "User" : "ユーザー",
     "Timestamp" : "タイムスタンプ",
